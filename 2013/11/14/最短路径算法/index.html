@@ -1,0 +1,602 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ACM,c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Dijaster算法：
+看下面这个视频就知道什么是最短路径了：
+http://www.cnblogs.com/wb-DarkHorse/archive/2013/03/12/2948467.html
+题目介绍就不说了。下面先来看个ACM的写法：
+12345678910111213141516171819202122232425262728293031323334353637383940414243">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最短路径算法">
+<meta property="og:url" content="http://yoursite.com/2013/11/14/最短路径算法/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Dijaster算法：
+看下面这个视频就知道什么是最短路径了：
+http://www.cnblogs.com/wb-DarkHorse/archive/2013/03/12/2948467.html
+题目介绍就不说了。下面先来看个ACM的写法：
+12345678910111213141516171819202122232425262728293031323334353637383940414243">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/11/router.png">
+<meta property="og:updated_time" content="2015-07-25T05:10:45.716Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="最短路径算法">
+<meta name="twitter:description" content="Dijaster算法：
+看下面这个视频就知道什么是最短路径了：
+http://www.cnblogs.com/wb-DarkHorse/archive/2013/03/12/2948467.html
+题目介绍就不说了。下面先来看个ACM的写法：
+12345678910111213141516171819202122232425262728293031323334353637383940414243">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 最短路径算法 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              最短路径算法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-11-14T13:52:32+08:00" content="2013-11-14">
+            2013-11-14
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Dijaster算法：</p>
+<p>看下面这个视频就知道什么是最短路径了：</p>
+<p><a href="http://www.cnblogs.com/wb-DarkHorse/archive/2013/03/12/2948467.html" target="_blank" rel="external">http://www.cnblogs.com/wb-DarkHorse/archive/2013/03/12/2948467.html</a></p>
+<p>题目介绍就不说了。下面先来看个ACM的写法：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="header">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="header">#include &amp;lt;cstring&amp;gt;</span></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">bool vis[105];</span><br><span class="line">int map[<span class="link_label">105</span>][<span class="link_reference">105</span>], dis[105];</span><br><span class="line">const int INF = 100860000;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">int n, m, a, b, c;</span><br><span class="line"></span><br><span class="line">while(cin &amp;amp;gt;&amp;amp;gt; n &amp;amp;gt;&amp;amp;gt; m)</span><br><span class="line">&#123;</span><br><span class="line">if(!n &amp;amp;amp;&amp;amp;amp; !m)</span><br><span class="line">break;</span><br><span class="line">memset(vis, false, sizeof(vis));</span><br><span class="line">memset(map, -1, sizeof(map));</span><br><span class="line">while(m--)</span><br><span class="line">&#123;</span><br><span class="line">scanf(&amp;quot;%d %d %d&amp;quot;, &amp;amp;amp;a, &amp;amp;amp;b, &amp;amp;amp;c);</span><br><span class="line">map[<span class="link_label">a</span>][<span class="link_reference">b</span>] = map[<span class="link_label">b</span>][<span class="link_reference">a</span>] = c;</span><br><span class="line">&#125;</span><br><span class="line">for(int i = 1; i &amp;amp;lt;= n; i++)</span><br><span class="line">dis[i] = INF;</span><br><span class="line">dis[1] = 0;</span><br><span class="line">for(int i = 1; i &amp;amp;lt;= n; i++)</span><br><span class="line">&#123;</span><br><span class="line">int x, m = INF;</span><br><span class="line">for(int y = 1; y &amp;amp;lt;= n; y++)</span><br><span class="line">&#123;</span><br><span class="line">if(!vis[y] &amp;amp;amp;&amp;amp;amp; dis[y] &amp;amp;lt;= m)</span><br><span class="line">m = dis[x=y];</span><br><span class="line">&#125;</span><br><span class="line">vis[x] = true;</span><br><span class="line">for(int y = 1; y &amp;amp;lt;= n; y++) &#123; if(map[<span class="link_label">x</span>][<span class="link_reference">y</span>] &amp;amp;gt;= 0)</span><br><span class="line">dis[<span class="link_label">y</span>] = dis[<span class="link_label">y</span>] &amp;amp;lt; (dis[<span class="link_label">x</span>] + map[<span class="link_label">x</span>][<span class="link_reference">y</span>]) ? dis[<span class="link_label">y</span>] : (map[<span class="link_label">x</span>][<span class="link_reference">y</span>] + dis[x]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">cout &amp;amp;lt;&amp;amp;lt; dis[n] &amp;amp;lt;&amp;amp;lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="more-802"></span></p>
+<p><a href="http://miibotree.com/?attachment_id=806" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/11/router.png" alt="router"></a></p>
+<p>我使用的是邻接表的方式来做的，大家可以看下具体的代码：</p>
+<p>router_table_Dijaster.c</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> node_length 6</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> Infinity	99999</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> True 	1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> False	0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> node</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> vertex;</span><br><span class="line">	<span class="keyword">int</span> weight;</span><br><span class="line">	<span class="keyword">struct</span> node *nextnode;</span><br><span class="line">&#125;*graph;</span><br><span class="line"></span><br><span class="line"><span class="comment">//craete graph</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create_graph</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[][3], <span class="keyword">int</span> num)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">print_graph</span><span class="params">(<span class="keyword">struct</span> node *head, <span class="keyword">int</span> num)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Dijkstra</span><span class="params">(<span class="keyword">struct</span> node *head, <span class="keyword">int</span> start_number)</span></span>; </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">print_router</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> node head[node_length+<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">20</span>][<span class="number">3</span>] = &#123;</span><br><span class="line">			  &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>&#125;, &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>&#125;, &#123;<span class="number">3</span>, <span class="number">1</span>, <span class="number">8</span>&#125;,</span><br><span class="line">			  &#123;<span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>&#125;, &#123;<span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>&#125;, &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>&#125;, &#123;<span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>&#125;,</span><br><span class="line">			  &#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">2</span>&#125;, &#123;<span class="number">4</span>, <span class="number">2</span>, <span class="number">2</span>&#125;, &#123;<span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>&#125;, &#123;<span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>&#125;,</span><br><span class="line">			  &#123;<span class="number">3</span>, <span class="number">5</span>, <span class="number">1</span>&#125;, &#123;<span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>&#125;, &#123;<span class="number">3</span>, <span class="number">6</span>, <span class="number">5</span>&#125;, &#123;<span class="number">6</span>, <span class="number">3</span>, <span class="number">8</span>&#125;,</span><br><span class="line">			  &#123;<span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>&#125;, &#123;<span class="number">5</span>, <span class="number">4</span>, <span class="number">1</span>&#125;, &#123;<span class="number">5</span>, <span class="number">6</span>, <span class="number">2</span>&#125;, &#123;<span class="number">6</span>, <span class="number">5</span>, <span class="number">4</span>&#125;</span><br><span class="line">			 &#125;;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> dis[node_length + <span class="number">1</span>];	<span class="comment">//dis数组保存了最短路径权值和</span></span><br><span class="line"><span class="keyword">int</span> pre[node_length + <span class="number">1</span>];	<span class="comment">//pre数组保存了前一个节点</span></span><br><span class="line"><span class="keyword">int</span> <span class="built_in">set</span>[node_length + <span class="number">1</span>];	<span class="comment">//set数组保存了该节点有没有走过</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= node_length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		head[i].vertex = i;</span><br><span class="line">		head[i].nextnode = NULL;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	result = create_graph(<span class="built_in">array</span>, <span class="number">20</span>);</span><br><span class="line">	<span class="comment">//print_graph(head, node_length);</span></span><br><span class="line">	Dijkstra(head, <span class="number">3</span>); </span><br><span class="line">	print_router();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//利用邻接表创建图</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create_graph</span><span class="params">(<span class="keyword">int</span> <span class="built_in">array</span>[][3], <span class="keyword">int</span> num)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	graph ptr;</span><br><span class="line">	graph newnode;</span><br><span class="line">	<span class="keyword">int</span> from, to;</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; num; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		from = <span class="built_in">array</span>[i][<span class="number">0</span>];</span><br><span class="line">		to   = <span class="built_in">array</span>[i][<span class="number">1</span>];</span><br><span class="line">		newnode = (graph)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));</span><br><span class="line">		newnode-&amp;gt;vertex = to;</span><br><span class="line">		newnode-&amp;gt;weight = <span class="built_in">array</span>[i][<span class="number">2</span>];</span><br><span class="line">		newnode-&amp;gt;nextnode = NULL;</span><br><span class="line"></span><br><span class="line">		ptr = &amp;amp;(head[from]);</span><br><span class="line">		<span class="keyword">while</span>(ptr-&amp;gt;nextnode != NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			ptr = ptr-&amp;gt;nextnode;</span><br><span class="line">		&#125;	</span><br><span class="line">		ptr-&amp;gt;nextnode = newnode;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印图</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">print_graph</span><span class="params">(<span class="keyword">struct</span> node *head, <span class="keyword">int</span> num)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> node *ptr;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;图的邻接表内容\n&amp;quot;);  </span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">1</span>; i &amp;lt;= num; i++)  </span><br><span class="line">    &#123;  </span><br><span class="line">        <span class="built_in">printf</span>(&amp;quot;顶点%d =&amp;gt; &amp;quot;, head[i].vertex);  </span><br><span class="line">        ptr = head[i].nextnode;  </span><br><span class="line">        <span class="keyword">while</span>(ptr != NULL)  </span><br><span class="line">        &#123;  </span><br><span class="line">           <span class="built_in">printf</span>(&amp;quot; %d\tvalue is %d\t&amp;quot;, ptr-&amp;gt;vertex, ptr-&amp;gt;weight);  </span><br><span class="line">            ptr = ptr-&amp;gt;nextnode;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="built_in">printf</span>(&amp;quot;\n&amp;quot;);  </span><br><span class="line">    &#125;  </span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//最短路径算法</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Dijkstra</span><span class="params">(<span class="keyword">struct</span> node *head, <span class="keyword">int</span> start_number)</span> </span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> node *ptr, *ptr_node;</span><br><span class="line">	<span class="keyword">int</span> next_step_number  = start_number;	</span><br><span class="line">	<span class="keyword">int</span> min_value = Infinity;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//初始化操作</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= node_length; i++) 	</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> ( i == start_number )</span><br><span class="line">			dis[i] = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			dis[i] = Infinity;</span><br><span class="line">		pre[i] = -<span class="number">1</span>;</span><br><span class="line">		<span class="built_in">set</span>[i] = False;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//循环node_length次</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= node_length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		min_value = Infinity;</span><br><span class="line">		<span class="comment">//找到下一个最短路径节点</span></span><br><span class="line">		<span class="keyword">for</span>(j = <span class="number">1</span>; j &amp;lt;= node_length; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (<span class="built_in">set</span>[j] == False &amp;amp;&amp;amp; dis[j] &amp;lt; min_value)</span><br><span class="line">			&#123;</span><br><span class="line">				min_value = dis[j];</span><br><span class="line">				next_step_number = j;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">set</span>[next_step_number] = True;</span><br><span class="line">		ptr_node = &amp;amp;head[next_step_number];</span><br><span class="line">		ptr = ptr_node;</span><br><span class="line">		<span class="keyword">while</span>(ptr != NULL)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//需要更新**这里是关键代码**</span></span><br><span class="line">			<span class="keyword">if</span> (dis[ptr_node-&amp;gt;vertex] + ptr-&amp;gt;weight &amp;lt; dis[ptr-&amp;gt;vertex]) </span><br><span class="line">			&#123;</span><br><span class="line">				dis[ptr-&amp;gt;vertex] = dis[ptr_node-&amp;gt;vertex] + ptr-&amp;gt;weight;</span><br><span class="line">				pre[ptr-&amp;gt;vertex] = ptr_node-&amp;gt;vertex;</span><br><span class="line">			&#125;	 </span><br><span class="line">			ptr = ptr-&amp;gt;nextnode; </span><br><span class="line">		&#125;	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//example：打印Node3到其它Node的路由</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">print_router</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j;</span><br><span class="line">	<span class="keyword">int</span> temp;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= node_length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;Node <span class="number">3</span>到Node%d路径的最小代价为%d\n&amp;quot;, i, dis[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;\n&amp;quot;);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;Node <span class="number">3</span>的路由表为\n&amp;quot;);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= node_length; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (i == <span class="number">3</span>)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;Node <span class="number">3</span>到Node %d的路由: &amp;quot;, i, i);</span><br><span class="line">		temp = i;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;Node <span class="number">3</span>-&amp;gt;&amp;quot;);</span><br><span class="line">		<span class="keyword">while</span>( pre[pre[temp]] != -<span class="number">1</span> )</span><br><span class="line">		&#123;</span><br><span class="line">			temp = pre[temp];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;Node %d\n&amp;quot;, temp);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;\n&amp;quot;);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>该示例代码计算Node 3至其它各节点的最小代价路径，并给出Node 3的路由表。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ACM/" rel="tag">#ACM</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/11/27/信息隐藏–DCT图像变换/" rel="prev">信息隐藏–DCT图像变换</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/11/11/Haskell学习笔记–入门/" rel="next">Haskell学习笔记–入门</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

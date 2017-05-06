@@ -1,0 +1,615 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE,c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="尝试着在磁盘中修改PE文件。用到writefile和SetFilePointer这两个函数
+下面先来看看这两个函数：
+&amp;nbsp;
+SyntaxWINAPI SetFilePointer(1  __in         HANDLE hFile,&amp;#10;  __in         LONG lDistanceToMove,&amp;#10;  __inout_opt  PLONG lpDistance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Writefile与SetFilePointer函数的使用">
+<meta property="og:url" content="http://yoursite.com/2012/04/10/Writefile与SetFilePointer函数的使用/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="尝试着在磁盘中修改PE文件。用到writefile和SetFilePointer这两个函数
+下面先来看看这两个函数：
+&amp;nbsp;
+SyntaxWINAPI SetFilePointer(1  __in         HANDLE hFile,&amp;#10;  __in         LONG lDistanceToMove,&amp;#10;  __inout_opt  PLONG lpDistance">
+<meta property="og:updated_time" content="2015-07-25T05:02:24.474Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Writefile与SetFilePointer函数的使用">
+<meta name="twitter:description" content="尝试着在磁盘中修改PE文件。用到writefile和SetFilePointer这两个函数
+下面先来看看这两个函数：
+&amp;nbsp;
+SyntaxWINAPI SetFilePointer(1  __in         HANDLE hFile,&amp;#10;  __in         LONG lDistanceToMove,&amp;#10;  __inout_opt  PLONG lpDistance">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Writefile与SetFilePointer函数的使用 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Writefile与SetFilePointer函数的使用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-10T15:05:50+08:00" content="2012-04-10">
+            2012-04-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>尝试着在磁盘中修改PE文件。用到writefile和SetFilePointer这两个函数</p>
+<p>下面先来看看这两个函数：</p>
+<p>&nbsp;</p>
+<h3 id="Syntax">Syntax</h3><div><br><div><br><div id="CodeSnippetContainerCode_9dc9e9ae-75e0-44ce-950a-ebefc039620b" dir="ltr"><br><div><br><figure class="highlight"><figcaption><span>WINAPI SetFilePointer(</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">  __in         HANDLE hFile,&#10;  __in         LONG lDistanceToMove,&#10;  __inout_opt  PLONG lpDistanceToMoveHigh,&#10;  __in         DWORD dwMoveMethod&#10;);</span><br></pre></td></tr></table></figure><br><br></div><br></div><br></div><br></div>
+
+<h3 id="Parameters">Parameters</h3><dl><br><dt>hFile [in]</dt><br><dd>A handle to the file.The file handle must be created with the GENERIC_READ or GENERIC_WRITE access right. For more information, see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa364399(v=vs.85" target="_blank" rel="external">File Security and Access Rights</a>.aspx).</dd><br><dt>lDistanceToMove [in]</dt><br><dd>The low order 32-bits of a signed value that specifies the number of bytes to move the file pointer.If lpDistanceToMoveHigh is not NULL, lpDistanceToMoveHigh andlDistanceToMove form a single 64-bit signed value that specifies the distance to move.If lpDistanceToMoveHigh is NULL, lDistanceToMove is a 32-bit signed value. A positive value forlDistanceToMove moves the file pointer forward in the file, and a negative value moves the file pointer back.<p></p><br></dd><br><dt>lpDistanceToMoveHigh [in, out, optional]</dt><br><dd>A pointer to the high order 32-bits of the signed 64-bit distance to move.If you do not need the high order 32-bits, this pointer must be set to NULL.When not NULL, this parameter also receives the high order DWORD of the new value of the file pointer. For more information, see the Remarks section in this topic.<p></p><br></dd><br><dt>dwMoveMethod [in]</dt><br><dd>The starting point for the file pointer move.This parameter can be one of the following values.<p></p><br><table><br><tbody><br><tr><br><th>Value</th><br><th>Meaning</th><br></tr><br><tr><br><td><br><dl><br><dt>FILE_BEGIN</dt><br><dt>0</dt><br></dl><br></td><br><td>The starting point is zero or the beginning of the file.</td><br></tr><br><tr><br><td><br><dl><br><dt>FILE_CURRENT</dt><br><dt>1</dt><br></dl><br></td><br><td>The starting point is the current value of the file pointer.</td><br></tr><br><tr><br><td><br><dl><br><dt>FILE_END</dt><br><dt>2</dt><br></dl><br></td><br><td>The starting point is the current end-of-file position.</td><br></tr><br></tbody><br></table><br></dd><br></dl>
+
+<p>这个函数跟c语言里面的fseek函数类似，是利用偏移量确定文件指针的位置。一般我们在第二个参数 lDistanceToMove设置偏移量，如果偏移量不够，大于32位，我们可以用第三个参数设置64位高字节，这样第二个参数和第三个参数同时组成64位的偏移量。具体方法大家可以参考下面这个博客：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;### Syntax&#10;&#10;&#60;div&#62;&#10;&#60;div&#62;&#60;/div&#62;&#10;&#60;div&#62;&#10;&#60;div&#62;&#60;/div&#62;&#10;&#60;div id=&#34;CodeSnippetContainerCode_6d3d6ee3-114c-4d26-8561-be67fd365c5d&#34; dir=&#34;ltr&#34;&#62;&#10;&#60;div&#62;&#10;```BOOL WINAPI WriteFile(&#10;  __in         HANDLE hFile,&#10;  __in         LPCVOID lpBuffer,&#10;  __in         DWORD nNumberOfBytesToWrite,&#10;  __out_opt    LPDWORD lpNumberOfBytesWritten,&#10;  __inout_opt  LPOVERLAPPED lpOverlapped&#10;);</span><br></pre></td></tr></table></figure>
+<p><br><br><br></p>
+<h3 id="Parameters-1">Parameters</h3><dl><br><dt>hFile [in]</dt><br><dd>A handle to the file or I/O device (for example, a file, file stream, physical disk, volume, console buffer, tape drive, socket, communications resource, mailslot, or pipe).The hFile parameter must have been created with the write access. For more information, see <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa446632(v=vs.85" target="_blank" rel="external">Generic Access Rights</a>.aspx) and <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa364399(v=vs.85" target="_blank" rel="external">File Security and Access Rights</a>.aspx).For asynchronous write operations, hFile can be any handle opened with the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85" target="_blank" rel="external">CreateFile</a>.aspx) function using the FILE_FLAG_OVERLAPPED flag or a socket handle returned by the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms740506(v=vs.85" target="_blank" rel="external">socket</a>.aspx) or <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms737526(v=vs.85" target="_blank" rel="external">accept</a>.aspx) function.<p></p><br></dd><br><dt>lpBuffer [in]</dt><br><dd>A pointer to the buffer containing the data to be written to the file or device.This buffer must remain valid for the duration of the write operation. The caller must not use this buffer until the write operation is completed.</dd><br><dt>nNumberOfBytesToWrite [in]</dt><br><dd>The number of bytes to be written to the file or device.A value of zero specifies a null write operation. The behavior of a null write operation depends on the underlying file system or communications technology.<p></p><br>&gt; <div>Windows Server 2003 and Windows XP: Pipe write operations across a network are limited in size per write. The amount varies per platform. For x86 platforms it&#8217;s 63.97 MB. For x64 platforms it&#8217;s 31.97 MB. For Itanium it&#8217;s 63.95 MB. For more information regarding pipes, see the Remarks section.</div><br></dd><br><dt>lpNumberOfBytesWritten [out, optional]</dt><br><dd>A pointer to the variable that receives the number of bytes written when using a synchronous hFile parameter. WriteFile sets this value to zero before doing any work or error checking. Use NULL for this parameter if this is an asynchronous operation to avoid potentially erroneous results.This parameter can be NULL only when the lpOverlapped parameter is not NULL.For more information, see the Remarks section.<p></p><br></dd><br><dt>lpOverlapped [in, out, optional]</dt><br><dd>A pointer to an <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684342(v=vs.85" target="_blank" rel="external">OVERLAPPED</a>.aspx)structure is required if the hFile parameter was opened with FILE_FLAG_OVERLAPPED, otherwise this parameter can be NULL.For an hFile that supports byte offsets, if you use this parameter you must specify a byte offset at which to start writing to the file or device. This offset is specified by setting the Offset and OffsetHigh members of the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684342(v=vs.85" target="_blank" rel="external">OVERLAPPED</a>.aspx)structure. For an hFile that does not support byte offsets, Offset and OffsetHigh are ignored.To write to the end of file, specify both the Offset and OffsetHigh members of the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/ms684342(v=vs.85" target="_blank" rel="external">OVERLAPPED</a>.aspx) structure as 0xFFFFFFFF. This is functionally equivalent to previously calling the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa363858(v=vs.85" target="_blank" rel="external">CreateFile</a>.aspx) function to open hFile using FILE_APPEND_DATA access.<p></p><br><br>For more information about different combinations of lpOverlapped and FILE_FLAG_OVERLAPPED, see the Remarks section and the <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365747(v=vs.85" target="_blank" rel="external">Synchronization and File Position</a>.aspx#synchronization_and_file_position) section.<br><br></dd><br></dl>
+
+<p>自己的英语不好，一开始的时候一直不能理解最后两个参数的用法。</p>
+<p>要了解最后两个参数。我们首先了解下异步和同步的概念。</p>
+<p>这里讲的异步和同步的概念是狭义的，只是针对这个函数而言。</p>
+<p>如果我们把最后一个参数lpOverlapped 设置为NULL，也就是同步的，那么就是等待数据写入内存完毕以后函数才返回。</p>
+<p>如果我们把最后一个参数设置为FILE_FLAG_OVERLAPPED，那么首先必须在createfile函数里面标明异步操作 FILE_APPEND_DATA 这个属性</p>
+<p>如果是异步操作，那么函数不会等待数据写入到内存中才继续执行，而是不管有没有写入都继续执行。这也就是所谓的异步，也就是多线程的处理。</p>
+<p>我们一般的操作是不用异步操作的，所以直接设置最后一个参数是NULL。</p>
+<p>然后倒数第二个参数的作用是什么呢？</p>
+<p>lpNumberOfBytesWritten</p>
+<p>这个参数的作用就是如果成功的写入了，那么写入内存的数据大小就会保存到这个指针所指向的变量里面。</p>
+<p>如果我们设置了最后一个参数是NULL，也就是说我们使用的是同步操作，那么必须设置这个值。</p>
+<p>如果我们设置最后一个参数是FILE_FLAG_OVERLAPPED，那么可以设置这个参数是NULL</p>
+<p>自己有讲的不明白的地方，大家也可以参考下面这个博客：</p>
+<p><a href="http://www.cppblog.com/SpringSnow/archive/2009/02/09/73334.html" target="_blank" rel="external">http://www.cppblog.com/SpringSnow/archive/2009/02/09/73334.html</a></p>
+<p>``````</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/15/修改导入表HOOK-API（ring3-iat-exe-hook-Messagebox）/" rel="prev">修改导入表HOOK API（ring3_iat_exe_hook_Messagebox）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/09/对于参加信息安全全国邀请赛课题选择的一些看法/" rel="next">对于参加信息安全全国邀请赛课题选择的一些看法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Syntax"><span class="nav-text">Syntax</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameters"><span class="nav-text">Parameters</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Parameters-1"><span class="nav-text">Parameters</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

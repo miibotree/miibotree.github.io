@@ -1,0 +1,596 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OpenCV,camshift," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="项目在原有的camshift算法上进行了改进，增加了自启动和自动结束的算法。
+一.三帧差分法作为自启动算法
+三帧差分的基本思路是先提取三帧图像1， 2，3，转成灰度图像。然后第二帧减去第一帧得到diff12，第三帧减去第二帧得到diff23，在将diff12和diff23做比较得出最终的差异。差异计算的时候是基于像素点的比较。当差异范围超过某个阈值的时候，启动camshift算法。具体的自启动函数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[原]Camshift算法改进–自启动和自结束">
+<meta property="og:url" content="http://yoursite.com/2013/08/28/原-Camshift算法改进–自启动和自结束/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="项目在原有的camshift算法上进行了改进，增加了自启动和自动结束的算法。
+一.三帧差分法作为自启动算法
+三帧差分的基本思路是先提取三帧图像1， 2，3，转成灰度图像。然后第二帧减去第一帧得到diff12，第三帧减去第二帧得到diff23，在将diff12和diff23做比较得出最终的差异。差异计算的时候是基于像素点的比较。当差异范围超过某个阈值的时候，启动camshift算法。具体的自启动函数">
+<meta property="og:updated_time" content="2015-07-25T04:52:39.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[原]Camshift算法改进–自启动和自结束">
+<meta name="twitter:description" content="项目在原有的camshift算法上进行了改进，增加了自启动和自动结束的算法。
+一.三帧差分法作为自启动算法
+三帧差分的基本思路是先提取三帧图像1， 2，3，转成灰度图像。然后第二帧减去第一帧得到diff12，第三帧减去第二帧得到diff23，在将diff12和diff23做比较得出最终的差异。差异计算的时候是基于像素点的比较。当差异范围超过某个阈值的时候，启动camshift算法。具体的自启动函数">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> [原]Camshift算法改进–自启动和自结束 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              [原]Camshift算法改进–自启动和自结束
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-28T13:44:42+08:00" content="2013-08-28">
+            2013-08-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>项目在原有的camshift算法上进行了改进，增加了自启动和自动结束的算法。</p>
+<p>一.三帧差分法作为自启动算法</p>
+<p>三帧差分的基本思路是先提取三帧图像1， 2，3，转成灰度图像。然后第二帧减去第一帧得到diff12，第三帧减去第二帧得到diff23，在将diff12和diff23做比较得出最终的差异。差异计算的时候是基于像素点的比较。当差异范围超过某个阈值的时候，启动camshift算法。具体的自启动函数如下：</p>
+<p>CvRect autoRect(CvCapture_ capture, bool _AutoRunFlag, int range = 10)</p>
+<p>如果超过某个阈值，则返回CvRect的结构体用来做camshift算法中矩形框的参数。</p>
+<p><span id="more-725"></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/highgui/highgui.hpp&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/imgproc/imgproc.hpp&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/core/core.hpp&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> threshold_diff1 10 <span class="comment">//设置简单帧差法阈值</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> threshold_diff2 10 <span class="comment">//设置简单帧差法阈值</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> AREA 10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">CvRect <span class="title">autoRect</span><span class="params">(CvCapture* capture, <span class="keyword">bool</span> *AutoRunFlag, <span class="keyword">int</span> range = 10)</span></span>&#123;</span><br><span class="line"><span class="keyword">double</span> mainPart_rows = <span class="number">0</span>,mainPart_cols = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"><span class="comment">//CvPoint p1,p2;</span></span><br><span class="line">CvRect rePoint = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">IplImage * frame1;</span><br><span class="line">IplImage * frame2;</span><br><span class="line">IplImage * frame3;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Mat img_src1,img_src2,img_src3;//3帧法需要3帧图片</span></span><br><span class="line">Mat img_dst,gray1,gray2,gray3;</span><br><span class="line">Mat gray_diff1,gray_diff2;<span class="comment">//存储2次相减的图片</span></span><br><span class="line">Mat gray;<span class="comment">//用来显示前景的</span></span><br><span class="line"></span><br><span class="line">frame1 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame1 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src1</span><span class="params">(frame1)</span></span>;</span><br><span class="line">cvtColor(img_src1,gray1,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">10</span>);</span><br><span class="line">frame2 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame2 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src2</span><span class="params">(frame2)</span></span>;</span><br><span class="line">cvtColor(img_src2,gray2,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">10</span>);</span><br><span class="line">frame3 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame3 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src3</span><span class="params">(frame3)</span></span>;</span><br><span class="line">cvtColor(img_src3,gray3,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">subtract(gray2,gray1,gray_diff1);<span class="comment">//第二帧减第一帧</span></span><br><span class="line">subtract(gray3,gray2,gray_diff2);<span class="comment">//第三帧减第二帧</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&amp;lt;gray_diff1.rows;i++)&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&amp;lt;gray_diff1.cols;j++)&#123;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">abs</span>(gray_diff1.at(i,j))&amp;gt;=threshold_diff1)</span><br><span class="line"><span class="comment">//这里模板参数一定要用unsigned char，否则就一直报错</span></span><br><span class="line">gray_diff1.at(i,j)=<span class="number">255</span>;<span class="comment">//第一次相减阈值处理</span></span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">gray_diff1.at(i,j)=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">abs</span>(gray_diff2.at(i,j))&amp;gt;=threshold_diff2)<span class="comment">//第二次相减阈值处理</span></span><br><span class="line">gray_diff2.at(i,j)=<span class="number">255</span>;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">gray_diff2.at(i,j)=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">bitwise_and(gray_diff1,gray_diff2,gray);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算重心，然后外扩%10得到矩形框的边界</span></span><br><span class="line">mainPart_cols = <span class="number">0</span>;</span><br><span class="line">mainPart_rows = <span class="number">0</span>;</span><br><span class="line">count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &amp;lt; gray.rows;i++)&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &amp;lt; gray.cols;j++)&#123;</span><br><span class="line"><span class="keyword">if</span>(gray.at(i,j) == <span class="number">255</span>)&#123;</span><br><span class="line">mainPart_cols += j;</span><br><span class="line">mainPart_rows += i;</span><br><span class="line">count++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(count != <span class="number">0</span>)&#123;</span><br><span class="line">mainPart_cols = mainPart_cols / count;</span><br><span class="line">mainPart_rows = mainPart_rows / count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CvPoint center;</span><br><span class="line">center.x = cvRound(mainPart_cols);</span><br><span class="line">center.y = cvRound(mainPart_rows);</span><br><span class="line"><span class="keyword">int</span> radius = cvRound(gray.cols / <span class="number">100</span> * AREA);</span><br><span class="line"><span class="keyword">if</span> ( (center.x &amp;gt; radius) &amp;amp;&amp;amp; (center.x &amp;lt; gray.cols - radius) &amp;amp;&amp;amp; (center.y &amp;gt; radius) &amp;amp;&amp;amp; (center.y &amp;lt; gray.rows - radius) &amp;amp;&amp;amp; count &amp;gt; (<span class="keyword">int</span>)(gray.rows * gray.cols / <span class="number">100</span> * (range * range)) )&#123;</span><br><span class="line">rePoint.x = (<span class="keyword">int</span>)(mainPart_cols / <span class="number">1.6</span>);</span><br><span class="line">rePoint.y = (<span class="keyword">int</span>)(mainPart_rows / <span class="number">1.6</span>);</span><br><span class="line">rePoint.height = (<span class="keyword">int</span>)(img_src1.rows / <span class="number">100</span> * AREA / <span class="number">1.6</span>) ;</span><br><span class="line">rePoint.width = (<span class="keyword">int</span>)(img_src1.cols / <span class="number">100</span> * AREA / <span class="number">1.6</span>);</span><br><span class="line">*AutoRunFlag = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">return</span> rePoint;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( cv::Exception&amp;amp; e )&#123;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* err_msg = e.what();</span><br><span class="line"><span class="built_in">printf</span> (<span class="string">"%s\n"</span>, err_msg);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二.利用突变来判断跟踪结束</p>
+<p>算法中，我们有保存了当前帧和上一帧中相似区域数据的2个结构体变量track_window和track_comp.rect。我们设定，当两个结构体中的x成员或y成员发生的突变大于设定阈值时，或2个结构体成员width*height，即相似区域面积发生的突变大于设定阈值时，即可大致判断跟踪目标已经不在画面中，实现自动判断跟踪结束。</p>
+<p>该算法在突变变化大的时候效果比较好，关键代码如下：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (</span><br><span class="line"><span class="built_in">abs</span>(track_window.x - track_comp.<span class="built_in">rect</span>.x) &amp;gt; <span class="number">200</span> ||</span><br><span class="line"><span class="built_in">abs</span>(track_window.y - track_comp.<span class="built_in">rect</span>.y) &amp;gt; <span class="number">200</span> ||</span><br><span class="line"></span><br><span class="line"><span class="built_in">abs</span>(track_window.<span class="variable">width</span> * track_window.<span class="variable">height</span> - track_comp.<span class="built_in">rect</span>.<span class="variable">width</span> * track_comp.<span class="built_in">rect</span>.<span class="variable">height</span>)\</span><br><span class="line">&amp;gt; <span class="number">18000</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">track_object = <span class="number">0</span>;</span><br><span class="line">first_object = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag">#OpenCV</a>
+          
+            <a href="/tags/camshift/" rel="tag">#camshift</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/08/28/wxPython写个简单UI/" rel="prev">wxPython写个简单UI</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/08/28/Camshift算法/" rel="next">Camshift算法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

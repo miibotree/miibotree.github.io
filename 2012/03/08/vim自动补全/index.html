@@ -1,0 +1,663 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux,vim," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="从图书馆里面借的那本《vi和vim编辑器》马上就要还掉了。有点舍不得，自己虽然没看多少，想着赶快再看一会吧。
+想想自己在linux上面写数据结构，没有代码补全还是比较麻烦的。于是就翻到了代码自动补全这里。
+在说代码补全之前，还是得先再复习 一下ctags标签，下面这段话摘自wooin：
+哇,这下可厉害了, Tag文件(标签文件)可是程序员的看家宝呀,你可以不用它,但你不能不知道它,因为Linux内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim自动补全">
+<meta property="og:url" content="http://yoursite.com/2012/03/08/vim自动补全/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="从图书馆里面借的那本《vi和vim编辑器》马上就要还掉了。有点舍不得，自己虽然没看多少，想着赶快再看一会吧。
+想想自己在linux上面写数据结构，没有代码补全还是比较麻烦的。于是就翻到了代码自动补全这里。
+在说代码补全之前，还是得先再复习 一下ctags标签，下面这段话摘自wooin：
+哇,这下可厉害了, Tag文件(标签文件)可是程序员的看家宝呀,你可以不用它,但你不能不知道它,因为Linux内">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201203/8/0_1331190945yD9H.gif">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.918Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim自动补全">
+<meta name="twitter:description" content="从图书馆里面借的那本《vi和vim编辑器》马上就要还掉了。有点舍不得，自己虽然没看多少，想着赶快再看一会吧。
+想想自己在linux上面写数据结构，没有代码补全还是比较麻烦的。于是就翻到了代码自动补全这里。
+在说代码补全之前，还是得先再复习 一下ctags标签，下面这段话摘自wooin：
+哇,这下可厉害了, Tag文件(标签文件)可是程序员的看家宝呀,你可以不用它,但你不能不知道它,因为Linux内">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> vim自动补全 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              vim自动补全
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-08T15:19:56+08:00" content="2012-03-08">
+            2012-03-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>从图书馆里面借的那本《vi和vim编辑器》马上就要还掉了。有点舍不得，自己虽然没看多少，想着赶快再看一会吧。</p>
+<p>想想自己在linux上面写数据结构，没有代码补全还是比较麻烦的。于是就翻到了代码自动补全这里。</p>
+<p>在说代码补全之前，还是得先再复习 一下ctags标签，下面这段话摘自<span style="color: #3333ff;">wooin</span>：</p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">哇</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这下可厉害了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, Tag</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">(</span><span style="font-family: 新宋体,monospace; font-size: x-small;">标签文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">)</span><span style="font-family: 新宋体,monospace; font-size: x-small;">可是程序员的看家宝呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你可以不用它</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">但你不能不知道它</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">因为</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Linux</span><span style="font-family: 新宋体,monospace; font-size: x-small;">内核源码都提供了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;make tags&#8221;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个选项</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">下面我们就来介绍</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Tag</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span></p>
+<p>tags <span style="font-family: 新宋体,monospace; font-size: x-small;">文件是由</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序产生的一个索引文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序其是叫</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;Exuberant Ctags&#8221;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Unix</span><span style="font-family: 新宋体,monospace; font-size: x-small;">上面</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序的替代品</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">并且比它功能强大</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是大多数</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Linux</span><span style="font-family: 新宋体,monospace; font-size: x-small;">发行版上默认的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">那么</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件是做什么用的呢</span><span style="font-family: 新宋体,monospace; font-size: x-small;">?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你在读程序时看了一个函数调用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">或者一个变量</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">或者一个宏等等</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你想知道它们的定义在哪儿</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">怎么办呢</span><span style="font-family: 新宋体,monospace; font-size: x-small;">?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">grep?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">那会搜出很多不相干的地方</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在流行用是的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">谁用谁知道呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">当光标在某个函数或变量上时</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">按下</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;Ctrl+]&#8221;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">光标会自动跳转到其定义处</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">够厉害吧</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你不用再羡慕</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Visual Studio</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的程序员了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">开始羡慕我吧</span><span style="font-family: 新宋体,monospace; font-size: x-small;">~_~.</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">你现在先别急着去按</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你按没用的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">要不要我干什么呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你现在要做的是查查你电脑里有没有</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个程序</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果有</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是什么版本的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Ctags 5.5.4,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">就象我一样</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你最好去装一个</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Ctags 5.6,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个在后面的自动补全章节中会用到</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">在这个网站</span><span style="font-family: 新宋体,monospace; font-size: x-small;">: <a href="http://ctags.sourceforge.net" target="_blank" rel="external">http://ctags.sourceforge.net</a>,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">下载一个类似 </span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags-5.6.tar.gz</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的文件下来</span><span style="font-family: 新宋体,monospace; font-size: x-small;">(</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在好像</span><span style="font-family: 新宋体,monospace; font-size: x-small;">5.7</span><span style="font-family: 新宋体,monospace; font-size: x-small;">版的也出来了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不过我还没用过</span><span style="font-family: 新宋体,monospace; font-size: x-small;">):</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">用下面的命令解压安装</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="298" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="294"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="294"><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;">$ tar -xzvf ctags-5.6.tar.gz<br><br>$ cd ctags-5.6<br><br>$ make<br><br># make install   </span><span><span style="font-family: 新宋体,monospace;">//</span></span></span><span><span style="font-family: 新宋体,monospace;">需要</span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;">root</span></span></span><span style="font-size: x-small;"><span style="font-family: 新宋体,monospace;">权限</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;"></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">然后去你的源码目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你的源码是多层的目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">就去最上层的目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">在该目录下运行命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">: ctags -R</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">我现在以 </span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim71</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的源码目录做演示</span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ cd /home/wooin/vim71<br><br>$ ctags -R</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时在</span><span style="font-family: 新宋体,monospace; font-size: x-small;">/home/wooin/vim71</span><span style="font-family: 新宋体,monospace; font-size: x-small;">目录下会生成一个</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags </span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">打开</span><span style="font-family: 新宋体,monospace; font-size: x-small;">/home/wooin/vim71/src/main.c</span></p>
+<table width="266" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="262"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="262"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ vim /home/wooin/vim71/src/main.c</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">再在</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">中运行命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="268" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="264"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="264"><span style="font-family: 新宋体,monospace; font-size: x-small;">:set tags=/home/wooin/vim71/tags</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">该命令将</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">tags</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件加入到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">vim</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">中来</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">你也可以将这句话放到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">~/.vimrc</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">中去</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你经常在这个工程编程的话</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">.</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">下面要开始真刀实枪的开干了</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">如下图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">将光标放在</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数上</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"></span></p>
+<p>(&#8212; <span style="font-family: 新宋体,monospace; font-size: x-small;">图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">3 &#8212;)</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时按下</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&lt;C-]&gt;,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">光标会自动跳到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数的定义处</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">见下图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">:</span></span></p>
+<p>(&#8212; <span style="font-family: 新宋体,monospace; font-size: x-small;">图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">4 &#8212;)</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">如果此时你还想再跳回刚才的位置</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">你还可以按</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&lt;C-T&gt;,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">这样又跳回到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数被调用的地方了</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">变量</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">结构</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">宏</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">等等</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">都可以的</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">赶快试试吧</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&#8230;..</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时在回头学习一下第</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">3</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">节中说的</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">vim</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">手册吧</span></p>
+<table width="159" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="155"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="155"><span style="font-family: 新宋体,monospace; font-size: x-small;">:help usr_29</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;"></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">不过还有一个小瑕疵</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你修改程序后</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">比如增加了函数定义</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">删除了变量定义</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件不能自动</span><span style="font-family: 新宋体,monospace; font-size: x-small;">rebuild,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你必须手动再运行一下命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="159" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="155"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="155"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ ctags -R</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">使</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件更新一下</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不过让人感到欣慰的是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不用重新启动</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">正在编写的程序也不用退出</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">马上就可以又正确使用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">和</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-T&gt;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span></p>
+<p>&nbsp;</p>
+<p>我自己的工作目录是在home下的Linux-software下面，所以自己是在.vimrc里面添加了下面这句话：</p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">:set tags=/home/gaoxin/Linux-software/tags</span>  （当然了gaoxin是我的家目录名称），这样每次打开新的文件的时候都能用到tags文件里面的标签了，:-)</p>
+<p>&nbsp;</p>
+<p>好了，复习完了ctags之后，可以开始看代码补全了下面列出了不同的代码补全方法：</p>
+<p>&nbsp;</p>
+<table width="328" cellspacing="1" cellpadding="2"><br><colgroup><br><col width="125"><br><col width="190"></colgroup><br><tbody><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+L</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">整行补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+N</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据当前文件里关键字补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+K</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据字典补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+T</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据同义词字典补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+I</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据头文件内关键字补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+]</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据标签补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+F</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全文件名</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+D</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全宏定义</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+V</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">命令</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+U</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">用户自定义补全方式</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+S</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">拼写建议</span></span></td><br></tr><br></tbody><br></table>
+
+<p>&nbsp;</p>
+<p>数据结构中用到最多的肯定就是结构体了。下面看下这个全能补全功能：</p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">我这里要介绍的功能叫</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;new-omni-completion(</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">)&#8221;,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">你可以用下面的命令看看介绍</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:helpnew-omni-completion</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">你还需要在</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">~/.vimrc</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件中增加下面两句</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">filetype pluginindent on</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">打开文件类型检测</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">加了这句才可以用智能补全</span></span></p>
+<table width="357" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="353"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="353"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">setcompleteopt=longest,menu</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">关掉智能补全时的预览窗口</span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">请确定你的</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctags5.6</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">已经安装好</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并且生成的</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件已经可以用了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">那么我们就要抄家伙开搞了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">.</span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">用</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">打开源文件</span></span></p>
+<table width="264" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="260"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="260"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">$ vi/home/wooin/vim71/src/main.c</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">设置</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件</span></span></p>
+<table width="262" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="258"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="258"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:settags=/home/wooin/vim71/tags</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">随便找一个有成员变量的对象</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">比如</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;parmp&#8221;,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">进入</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Insert</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">模式</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">将光标放在</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;-&gt;&#8221;</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">后面</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">然后按下</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;Ctrl+XCtrl+O&#8221;,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">此时会弹出一个下列菜单</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">显示所有匹配的标签</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">如下图</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p>(&#8212;<span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">图</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">18&#8212;)</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">此时有一些快捷键可以用</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></span></p>
+<table width="329" cellspacing="1" cellpadding="2"><br><colgroup><br><col width="61"><br><col width="255"></colgroup><br><tbody><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+P</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">向前切换成员</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+N</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">向后切换成员</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+E</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">表示退出下拉窗口</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并退回到原来录入的文字</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+Y</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">表示退出下拉窗口</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并接受当前选项</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">如果你增加了一些成员变量</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能补全还不能马上将新成员补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">需要你重新生成一下</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">但是你不用重启</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">只是重新生成一下</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件就行了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">这时全能补全已经可以自动补全了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">还真够</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">吧</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">.</span></span></p>
+<p><span style="font-size: x-small;">下面这张截图是help文档里面关于<span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">new-omni-completion</span></span>：</span></p>
+<p><img src="http://hi.csdn.net/attachment/201203/8/0_1331190945yD9H.gif" alt=""></p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/vim/" rel="tag">#vim</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/03/08/关于二级指针与c-中的引用/" rel="prev">关于二级指针与c++中的引用</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/03/01/fedora16中VMware模块加载错误解决方案/" rel="next">fedora16中VMware模块加载错误解决方案</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

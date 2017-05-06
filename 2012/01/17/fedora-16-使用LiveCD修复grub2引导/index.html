@@ -1,0 +1,649 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Fedora16,Linux," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="我承认我这个人太贪心了，自从我的电脑装了fedora16变成双系统以后，竟然又对opensuse感兴趣了，结果兴冲冲的想装个三系统玩玩，但是其实我对linux方面根本不太懂啊，结果在安装的时候把opensuse的grub引导直接安装到了MBR上面，把原来fedora16的grub2引导给覆盖了，结果电脑识别不了fedora16,而且opensuse又识别不了我的无线网卡，整个就杯具了，还好学长及时">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fedora 16 使用LiveCD修复grub2引导">
+<meta property="og:url" content="http://yoursite.com/2012/01/17/fedora-16-使用LiveCD修复grub2引导/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="我承认我这个人太贪心了，自从我的电脑装了fedora16变成双系统以后，竟然又对opensuse感兴趣了，结果兴冲冲的想装个三系统玩玩，但是其实我对linux方面根本不太懂啊，结果在安装的时候把opensuse的grub引导直接安装到了MBR上面，把原来fedora16的grub2引导给覆盖了，结果电脑识别不了fedora16,而且opensuse又识别不了我的无线网卡，整个就杯具了，还好学长及时">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/wronged.gif">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fedora 16 使用LiveCD修复grub2引导">
+<meta name="twitter:description" content="我承认我这个人太贪心了，自从我的电脑装了fedora16变成双系统以后，竟然又对opensuse感兴趣了，结果兴冲冲的想装个三系统玩玩，但是其实我对linux方面根本不太懂啊，结果在安装的时候把opensuse的grub引导直接安装到了MBR上面，把原来fedora16的grub2引导给覆盖了，结果电脑识别不了fedora16,而且opensuse又识别不了我的无线网卡，整个就杯具了，还好学长及时">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> fedora 16 使用LiveCD修复grub2引导 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              fedora 16 使用LiveCD修复grub2引导
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-17T22:10:00+08:00" content="2012-01-17">
+            2012-01-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>我承认我这个人太贪心了<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/wronged.gif" alt="委屈">，自从我的电脑装了fedora16变成双系统以后，竟然又对opensuse感兴趣了，结果兴冲冲的想装个三系统玩玩，但是其实我对linux方面根本不太懂啊，结果在安装的时候把opensuse的grub引导直接安装到了MBR上面，把原来fedora16的grub2引导给覆盖了，结果电脑识别不了fedora16,而且opensuse又识别不了我的无线网卡，整个就杯具了，还好学长及时出马，终于把这个问题解决了，呵呵^_^</p>
+<p></p><p></p>
+<p>现在的孩子都喜欢装系统，win7&#43;fedora，如果先装win7再装fedora，是蛮简单的，如果先装fedora，然后win 7，本文方法也是适用。</p>
+<p>&nbsp;</p>
+<p>如果LiveCD不知为何物，请百度</p>
+<p>如果知LiveCD不知如何制作，请百度</p>
+<p>如果做好LiveCD不知如何用其引导，请百度</p>
+<p>&nbsp;</p>
+<p><span style="color:#ff00ff">【为了照顾一些刚想玩fedora的奋斗青年，省去你的百度时间吧】</span></p>
+<p><span style="color:#ff00ff">step1:<a href="http://fedoraproject.org/&amp;nbsp" target="_blank" rel="external">http://fedoraproject.org/&amp;nbsp</a>; 下载600多M的livecd镜像文件，首页是32位，你可以点更多下载64位</span></p>
+<p><span style="color:#ff00ff">step2:<a href="https://fedorahosted.org/liveusb-creator/" target="_blank" rel="external">https://fedorahosted.org/liveusb-creator/</a> 下载liveusb的制作软件，官方的。</span></p>
+<p><span style="color:#ff00ff">step3:准备一个U盘，（里面有数据也没关系，制作的时候不像pe，会把你&#26684;式化，他保留原有数据），</span></p>
+<p><span style="color:#ff00ff">用那个软件选择刚才你下载好的ISO，然后选择你的U盘盘符，persistent storage 选择个100M（这个相当于</span></p>
+<p><span style="color:#ff00ff">Livecd里的/home挂载点，除了这个之外的其他挂载点是不用写入的U盘的），点击creat就可以完成制作了。</span></p>
+<p><span style="color:#ff00ff">step4:调整你的bios启动顺序或者现在笔记本都支持quick boot，选择U盘启动就可以了。</span></p>
+<p><span style="color:#ff00ff">启动后会出现start fedora 16 ，按回车就可以进入了</span></p>
+<p><span style="color:#ff00ff">【有些U盘用官方的windows版本liveusb creator制作之后会启动不了，换个U盘尝试。或者到</span></p>
+<p><span style="color:#ff00ff"><a href="http://unetbootin.sourceforge.net/下载这个软件尝试】" target="_blank" rel="external">http://unetbootin.sourceforge.net/下载这个软件尝试】</a></span></p>
+<p><span style="color:#3366ff">【进入之后默认是英文，如果你英文不好请单击屏幕右上角的live用户名，选择system settings，然后</span></p>
+<p><span style="color:#3366ff">选择region and&nbsp; language（单击即可），在出来的对话框选中 chinese。再去右上角单击用户名，log out，</span></p>
+<p><span style="color:#3366ff">注销之后会问你是否更改home下面的文件夹名字，我建议不要该成中文，因为这样你在shell里面比较麻烦】</span></p>
+<p>用LiveCD启动之后，首先应该明确的是你的fedora装在哪个分区，现在的硬盘都应该是sata的吧，那么就对应</p>
+<p>/dev/sdax，x是个数字，1~4表示主分区，5开始是逻辑分区。如果你在可伶的用着IDE硬盘，那么就对应/dev/hdax</p>
+<p>打开你的磁盘实用工具，或者叫Disk unity,找到fedora安装所在分区，我的在sda10，所以下面就拿这个说明了。。</p>
+<div><br><div id="highlighter_656609" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>su</code></div><br><div class="line number2 index1 alt1"><code>mount</code> <code>-t ext4 -o rw ``/dev/sda10</code>&nbsp;&nbsp; <code>/media</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>把fedora的安装分区挂载到当前的LiveCD文件系统下，当然如果你比较偷懒的话，比如我：）,直接在文件管理器里面双击</p>
+<p>一下那个分区，然后就会在/media/_FEDORA__*_ 下挂载了</p>
+<p>原来安装在硬盘上的fedora只是把文件目录挂上来了，一点硬件资源也木有，啥事也干不了，只能用来copy/paste一下数据，</p>
+<p>现在把当前系统的资源给他</p>
+<div><br><div id="highlighter_77519" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br><div class="line number4 index3 alt1">4</div><br><div class="line number5 index4 alt2">5</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>su</code></div><br><div class="line number2 index1 alt1"><code>mount</code> <code>-t proc none ``/media/proc</code></div><br><div class="line number3 index2 alt2"><code>mount</code> <code>-o bind ``/dev</code> <code>/media/dev</code></div><br><div class="line number4 index3 alt1"><code>mount</code> <code>-o bind ``/sys</code> <code>/media/sys</code></div><br><div class="line number5 index4 alt2"><code>mount</code> <code>-t devpts devpts ``/media/dev/pts</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>特别看清楚上面的指令，千万别把 /dev 写成了/dev/,如果这样就会出现</p>
+<p>/dev is not a block device了</p>
+<p>挂完后用chroot命令切换到原来的fedora中去</p>
+<p>&nbsp;</p>
+<div><br><div id="highlighter_295476" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>su</code></div><br><div class="line number2 index1 alt1"><code>chroot ``/media</code></div><br><div class="line number3 index2 alt2"><code>grub2-``install</code><br><br><code>/dev/sda</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>当然上述指令是讲grub2安装到硬盘MBR上恢复引导，如果你想装在当前分区中让其他软件来引导就应该是</p>
+<p>grub2-install /dev/sda10</p>
+<p>OK，做下扫尾工作</p>
+<p>&nbsp;</p>
+<div><br><div id="highlighter_300013" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br><div class="line number4 index3 alt1">4</div><br><div class="line number5 index4 alt2">5</div><br><div class="line number6 index5 alt1">6</div><br><div class="line number7 index6 alt2">7</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>exit</code></div><br><div class="line number2 index1 alt1"><code>umount</code> <code>/media/proc</code></div><br><div class="line number3 index2 alt2"><code>umount</code> <code>/media/dev/pts</code></div><br><div class="line number4 index3 alt1"><code>umount</code> <code>/media/sys</code></div><br><div class="line number5 index4 alt2"><code>umount</code> <code>/media/dev</code></div><br><div class="line number6 index5 alt1"><code>umount</code> <code>/media</code></div><br><div class="line number7 index6 alt2"><code>reboot</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>当然，上述修复的grub是原来的grub，opensuse没了，其实grub2很强大，能自动识别n多系统，只需重新生成配置</p>
+<p>文件即可。</p>
+<div><br><div id="highlighter_893145" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>su</code></div><br><div class="line number2 index1 alt1"><code>grub2-mkconfig&amp;nbsp; -o&amp;nbsp;
+
+``/boot/grub2/grub``.cfg</code></div><br><div class="line number3 index2 alt2"><code>reboot</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>congratulations</p>
+<p><span style="color:#0000cd">今天在帮别人修复的时候，又遇到一些问题，写下来分享</span></p>
+<p>首先：这台电脑的分区并不是我上面写的简单的一个 / 分区，用的LVM和一个boot分区(sda8)，那么在挂载的时候就要分别挂载了。在LVM里有一个 root的逻辑卷组和一个swap卷组，位于/dev/mapper/vg_fedora_root，和/dev/mapper/vg_fedora_swap（这个的取名是自己定义的，如果采用系统自己默认的分区安装，不是手动的话，名字不同)</p>
+<p>&nbsp;</p>
+<div><br><div id="highlighter_663830" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>su</code></div><br><div class="line number2 index1 alt1"><code>mount</code> <code>-o rw&amp;nbsp; ``/dev/mapper/vg_fedora_root</code>&nbsp;&nbsp; <code>/media</code></div><br><div class="line number3 index2 alt2"><code>mount</code> <code>-o rw ``/dev/sda8</code>&nbsp; <code>/media/boot</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>然后挂载上述写的资源。</p>
+<p>其次：在执行grub2-install 的时候，遇到错误</p>
+<div><br><div id="highlighter_471574" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br><div class="line number2 index1 alt1">2</div><br><div class="line number3 index2 alt2">3</div><br><div class="line number4 index3 alt1">4</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>[root@Fedora sunhao]``# grub2-install /dev/sda</code></div><br><div class="line number2 index1 alt1"><code>/sbin/grub2-setup``: warn: Your embedding area is unusually small.&amp;nbsp; core.img won&#39;t fit
+
+``in</code> <code>it..</code></div><br><div class="line number3 index2 alt2"><code>/sbin/grub2-setup``: warn: Embedding is not possible.&amp;nbsp; GRUB can only be installed
+
+``in</code> <code>this setup by using blocklists.&amp;nbsp; However, blocklists are UNRELIABLE and their use is discouraged..</code></div><br><div class="line number4 index3 alt1"><code>/sbin/grub2-setup``: error: will not proceed with blocklists.</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>网上查的是mbr和sda1之间的那块embedding area太小了，应该是默认的63，如果是32的话会出现这个问题，但是我执行fdisk&nbsp; -lu,显示这电脑已经是63了，不明原因。</p>
+<p>google了一把，没找到解决方案还是安装不上去，后来我在wiki上面，看到了这个用法，强制安装。</p>
+<div><br><div id="highlighter_686990" class="syntaxhighlighter  bash"><br><table border="0" cellpadding="0" cellspacing="0"><br><tbody><br><tr><br><td class="gutter"><br><div class="line number1 index0 alt2">1</div><br></td><br><td class="code"><br><div class="container"><br><div class="line number1 index0 alt2"><code>grub2-``install</code>&nbsp;<br><br><code>--force&amp;nbsp; ``/dev/sda</code></div><br></div><br></td><br></tr><br></tbody><br></table><br></div><br></div>
+
+<p>竟然可以装上去，并且成功启动～</p>
+<p>我只是想推广一下学长的这篇技术博客，想分享给喜欢玩linux的朋友，希望大家支持哦</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fedora16/" rel="tag">#Fedora16</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/20/windowsSDK利用子窗口控件设置窗口透明/" rel="prev">windowsSDK利用子窗口控件设置窗口透明</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/16/windowsSDK加速键实例分析/" rel="next">windowsSDK加速键实例分析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

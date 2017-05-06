@@ -1,0 +1,1497 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/6/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/10/HTTP协议之Transfer-Encoding/" itemprop="url">
+                HTTP协议之Transfer-Encoding
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-10T15:38:06+08:00" content="2013-10-10">
+            2013-10-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>之前在用socket收图片数据的时候，讲收到的所有数据保存在一个文件中，去掉http的文件头，本来以为剩下的数据就是完整的图片数据。</p>
+<p>但是通过测试发现接收的数据相比原来的图片数据会多出几个字节。</p>
+<p>通过传输全0字节的测试，发现每隔若干长度出现下列字节：</p>
+<p>0D0A323030300D0A</p>
+<p>0D0A6630630D0A</p>
+<p>在论坛上面提问也没有人回答。最后发现是由于HTTP文本传输本身的协议。</p>
+<p>&nbsp;</p>
+<p>&#8220;Transfer-Encoding: chunked&#8221;是这样编码的：</p>
+<p>HTTP头</p>
+<p>\r\n</p>
+<p>\r\n &#8211;连续的两个\r\n之后就是HTTP体了</p>
+<p>16进制值代表的数据长度</p>
+<p>\r\n</p>
+<p>上面所指的数据长度</p>
+<p>\r\n &#8211;每段数据结束后，以\r\n标识</p>
+<p>16进制代表的第二段数据</p>
+<p>\r\n</p>
+<p>XX长度的数据</p>
+<p>\r\n</p>
+<p>………… (反复通过这样的方式表示每次传输的数据长度)</p>
+<p>0 &#8211;数据结束部分用0表示，然后是连续的两个\r\n</p>
+<p>\r\n</p>
+<p>\r\n</p>
+<p>0D0A323030300D0A 0D0A是回车换行，32303030 是ASCII码的2000 表示后续有2000H个字符等待传输，0D0A和前一个对应组成一个括号；</p>
+<p>当2000字符传递完毕后，正好又出现一组这样的标签，开始下一组2000H个字符的传输，</p>
+<p>等传到最后一组不到2000H个字符了，于是变为 0D0A6630630D0A 个字符了。</p>
+<p>参考博客：</p>
+<p><a href="http://www.cnblogs.com/jcli/archive/2012/10/19/2730440.html" target="_blank" rel="external">http://www.cnblogs.com/jcli/archive/2012/10/19/2730440.html</a></p>
+<p><span id="more-747"></span></p>
+<h3 id="Transfer-Encoding简介">Transfer-Encoding简介</h3><p>transfer-eccoding所描述的是消息请求(request)和响应(response)所附带的实体对象(entity)的传输形式，规范定义格式如下：</p>
+<blockquote>
+<p>_Transfer-Encoding = &#8220;Transfer-Encoding&#8221; &#8220;:&#8221; 1#transfer-coding　_</p>
+</blockquote>
+<p>举个例子：Transfer-Encoding: chunked</p>
+<p>transfer-encoding的可选值有：<strong>chunked</strong>,<strong>identity ;**</strong></p>
+<p>**transfer-encoding的可选值有：chunked,identity，从字面意义可以理解，前者指把要发送传输的数据切割成一系列的块数据传输，后者指传输时不做任何处理，自身的本质数据形式传输。举个例子，如果我们要传输一本“红楼梦”小说到服务器，chunked方式就会先把这本小说分成一章一章的，然后逐个章节上传，而identity方式则是从小说的第一个字按顺序传输到最后一个字结束。</p>
+<h3 id="相关的头定义">相关的头定义</h3><p>Content-Encoding ： content-encoding和transfer-encoding所作用的对象不同，行为目标也不同，前者是对数据内容采用什么样的编码方式，后者是对数据传输采用什么样的编码。前者通常是对数据内容进行一些<strong>压缩编码</strong>操作，后者通常是对传传输采用<strong>分块策略</strong>之类的。</p>
+<p>Content-length : content-length头的作用是指定待传输的内容的字节长度。比如上面举的例子中，我们要上传一本红楼梦小说，则可以指定其长度大小，如：content-length:731017。细心的读者可能会有疑惑，它和transfer-encoding又有什么关系呢？如果想知道它们的关系，只要反过来问下自己，为什么transfer-encoding会有identity和chunked两种，各在什么上下文情景中要用到。比如chunked方式，把数据分块传输在很多地方就非常有用，如服务端在处理一个复杂的问题时，其返回结果是阶段性的产出，不能一次性知道最终的返回的总长度(content-lenght值)，所以这时候返回头中就不能有content-lenght头信息，有也要忽略处理。所以你可以这样理解，transfer-encoding在不能一次性确定消息实体(entity)内容时自定义一些传输协议，如果能确定的话，则可以在消息头中加入content-length头信息指示其长度，可以把transfer-encoding和content-length看成互斥性的两种头。</p>
+<h3 id="transfer-encoding详解">transfer-encoding详解</h3><p><strong>chunked格式(rfc2616 3.6.1):</strong></p>
+<div><br><div><a title="复制代码"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></div><br><figure class="highlight"><figcaption><span>= *chunk</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;last-chunk&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;trailer&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;CRLF&#10;chunk        = chunk-size [ chunk-extension ] CRLF&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288; chunk-data CRLF&#10;chunk-size   = 1*HEX&#10;last-chunk   = 1*(&#34;0&#34;) [ chunk-extension ] CRLF&#10;chunk-extension= *( &#34;;&#34; chunk-ext-name [ &#34;=&#34; chunk-ext-val ] )&#10;chunk-ext-name = token&#10;chunk-ext-val = token | quoted-string&#10;chunk-data = chunk-size(OCTET)&#10;trailer = *(entity-header CRLF)</span><br></pre></td></tr></table></figure><br><br><div><a title="复制代码"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></div><br></div>
+
+<p>还是以上传“红楼梦”这本书举例：<img src="http://pic002.cnblogs.com/images/2012/322405/2012101912451656.png" alt=""></p>
+<p><strong>24E5</strong>是指第一个块数据长度为24E5(16进制格式字符串表示)，<strong>CRLF</strong>为换行控制符。紧接着是第一个块数据内容，其长度就是上面定义的24E5，以CRLF标志结束。<strong>3485</strong>是指第二块数据长度为3485，<strong>CRLF</strong>结束，然后后面是第二块的数据内容&#8230;&#8230;，以这样的格式直到所有的块数据结束。最后以<strong>“0”CRLF</strong>结束，表示数据传输完成(这里对比rfc规范内容，省略了<strong>chunk-extension</strong>和<strong>trailer</strong>的东西,因为这并不重要)。</p>
+<p>有了这些知识之后，终于可以修改代码了：</p>
+<p>获得单行数据流（以\r\n结束）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetHeaderLine</span><span class="params">(SOCKET LinkSocket, <span class="keyword">char</span> * HeaderLineBuffer, <span class="keyword">int</span> *HeaderLineLength, <span class="keyword">bool</span> *EndFlag)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>( (*(HeaderLineBuffer + *HeaderLineLength - <span class="number">1</span>) != SI) &amp;<span class="preprocessor">#038;&amp;#038; (*(HeaderLineBuffer + *HeaderLineLength - 2) != ER) )</span></span><br><span class="line">	&#123;	</span><br><span class="line">		recv(LinkSocket, (<span class="keyword">char</span> *)HeaderLineBuffer + *HeaderLineLength, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		(*HeaderLineLength)++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先解析http包头：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">memset<span class="list">(<span class="keyword">HeaderLineBuffer</span>, <span class="number">0</span>, sizeof<span class="list">(<span class="keyword">HeaderLineBuffer</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">			int HeaderLineLength = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">			GetHeaderLine<span class="list">(<span class="keyword">LinkSocket</span>, HeaderLineBuffer, <span class="keyword">&amp;#038</span><span class="comment">;HeaderLineLength, &amp;#038;EndFlag);</span></span><br><span class="line">			WriteFile<span class="list">(<span class="keyword">hFile</span>, HeaderLineBuffer, HeaderLineLength, <span class="keyword">&amp;#038</span><span class="comment">;dwWritten, NULL);</span></span></span></span><br></pre></td></tr></table></figure>
+<p>然后根据chunked格式来拼接数据：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//由于传输的是Transfer-Encoding: chunked 来粘包</span></span><br><span class="line">while <span class="params">(<span class="number">1</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	ChuBufLength = <span class="number">0</span>;</span><br><span class="line">	ChuBufLen_CharLen = <span class="number">0</span>;</span><br><span class="line">	ResponseLen = <span class="number">0</span>;</span><br><span class="line">	memset<span class="params">(Chunckedbuffer, <span class="number">0</span>, sizeof<span class="params">(Chunckedbuffer)</span>)</span>;</span><br><span class="line">	memset<span class="params">(ChuBufLen_Char, <span class="number">0</span>, sizeof<span class="params">(ChuBufLen_Char)</span>)</span>;</span><br><span class="line"></span><br><span class="line">	GetHeaderLine<span class="params">(LinkSocket, ChuBufLen_Char, &amp;#<span class="number">038</span>;ChuBufLen_CharLen, &amp;#<span class="number">038</span>;EndFlag)</span>;<span class="comment">//获得数据长度（以\r\n结尾）</span></span><br><span class="line">	ChuBufLen_Char[ChuBufLen_CharLen - <span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">	ChuBufLength = strtol<span class="params">(ChuBufLen_Char, NULL, <span class="number">16</span>)</span>;<span class="comment">//转换为10进制的int类型</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="params">(ChuBufLength == <span class="number">0</span>)</span><span class="comment">//表示数据传输结束</span></span><br><span class="line">	&#123;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while<span class="params">(ResponseLen &lt; ChuBufLength)</span><span class="comment">//循环的条件是ChuBufLength 的长度</span></span><br><span class="line">	&#123;	</span><br><span class="line">		RecvNum = recv<span class="params">(LinkSocket, <span class="params">(char *)</span>Chunckedbuffer+ResponseLen, <span class="number">1</span>, <span class="number">0</span>)</span>;</span><br><span class="line">		<span class="keyword">if</span> <span class="params">(RecvNum == <span class="number">0</span>)</span></span><br><span class="line">			break;</span><br><span class="line">		ResponseLen += RecvNum;</span><br><span class="line">	&#125;</span><br><span class="line">	WriteFile<span class="params">(hFile, Chunckedbuffer, ChuBufLength, &amp;#<span class="number">038</span>;dwWritten, NULL)</span>;</span><br><span class="line">	<span class="comment">//接收数据尾部的\r\n</span></span><br><span class="line">	RecvNum = recv<span class="params">(LinkSocket, <span class="params">(char *)</span>HeaderLineBuffer, <span class="number">2</span>, <span class="number">0</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/10/10/操作系统–自己写CreateThread线程函数-1/" itemprop="url">
+                操作系统–自己写CreateThread线程函数(1)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-10T14:45:43+08:00" content="2013-10-10">
+            2013-10-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>关于线程的概念，在我的博客里面就不再讲了，大家可以自己去查找相关资料。这里记录的是操纵系统实验课程中自己设计一个基于DOS的多任务系统，实现线程的创建和撤销，CPU调度，同步机制，通信机制等。</p>
+<p>今天这篇博客完成第一步：写一个线程创建函数create</p>
+<p>先来看看Windows API的CreateThread函数：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">HANDLE</span> CreateThread(</span><br><span class="line">　LPSECURITY_ATTRIBUTES lpThreadAttributes, <span class="comment">// SD</span></span><br><span class="line">　SIZE_T dwStackSize, <span class="comment">// initial stack size</span></span><br><span class="line">　LPTHREAD_START_ROUTINE lpStartAddress, <span class="comment">// thread function</span></span><br><span class="line">　LPVOID lpParameter, <span class="comment">// thread argument</span></span><br><span class="line">　DWORD dwCreationFlags, <span class="comment">// creation option</span></span><br><span class="line">　LPDWORD lpThreadId <span class="comment">// thread identifier</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>我们就依葫芦画瓢，三个参数分别为外标识符名称，线程处理函数和线程初始化私有堆栈大小。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(far *codeptr)</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create</span><span class="params">(<span class="keyword">char</span> *name, codeptr code, <span class="keyword">int</span> <span class="built_in">stack</span>)</span></span>;</span><br></pre></td></tr></table></figure>
+<p><span id="more-744"></span></p>
+<p>create函数中我们首先要创建一个线程的TCB（线程环境块）,TCB结构体如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*TCB structs*/</span></span><br><span class="line"><span class="keyword">struct</span> TCB&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="built_in">stack</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> 	ss;</span><br><span class="line">	<span class="keyword">unsigned</span> 	sp;</span><br><span class="line">	<span class="keyword">char</span> 		state;</span><br><span class="line">	<span class="keyword">char</span>		name[<span class="number">10</span>];</span><br><span class="line">&#125;tcb[NTCB];</span><br></pre></td></tr></table></figure>
+<p>对其初始化操作：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> initTcb()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">id</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">id</span> = <span class="number">0</span>; <span class="keyword">id</span> &lt; NTCB; <span class="keyword">id</span>++)</span><br><span class="line">	&#123;</span><br><span class="line">		tcb[<span class="keyword">id</span>]<span class="variable">.stack</span> = <span class="literal">NULL</span>;</span><br><span class="line">		tcb[<span class="keyword">id</span>]<span class="variable">.ss</span> = <span class="number">0</span>;</span><br><span class="line">		tcb[<span class="keyword">id</span>]<span class="variable">.sp</span> = <span class="number">0</span>;</span><br><span class="line">		tcb[<span class="keyword">id</span>]<span class="variable">.state</span> = FINISHED;</span><br><span class="line">		tcb[<span class="keyword">id</span>]<span class="variable">.name</span>[<span class="number">0</span>] = <span class="string">'\0'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在create中我们需要完成的事情：</p>
+<p>1.为新分配的线程分配一个空闲的线程控制块TCB</p>
+<p>2.为新线程的私有堆栈分配内存空间</p>
+<p>3.初始化新线程的私有堆栈</p>
+<p>4.初始化线程控制块，设置好线程私有堆栈的地址，段地址和栈顶指针，状态设置成READY就绪状态</p>
+<p>5.返回线程的内部标识符</p>
+<p>下面是自己写的代码（只是第一步，以后会慢慢完善）：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;dos.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> null 0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NTCB 10</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*thread state*/</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FINISHED 	0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> RUNNING 	1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> READY		2</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> BLOCKED		3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*TCB structs*/</span></span><br><span class="line"><span class="keyword">struct</span> TCB&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span>* <span class="built_in">stack</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> 	ss;</span><br><span class="line">	<span class="keyword">unsigned</span> 	sp;</span><br><span class="line">	<span class="keyword">char</span> 		state;</span><br><span class="line">	<span class="keyword">char</span>		name[<span class="number">10</span>];</span><br><span class="line">&#125;tcb[NTCB];</span><br><span class="line"></span><br><span class="line"><span class="comment">/*register structs*/</span></span><br><span class="line"><span class="keyword">struct</span> int_regs&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> BP, DI, SI, DS, ES, DX, CX, BX, AX, IP, CS, Flags, Off, Seg;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(far *codeptr)</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create</span><span class="params">(<span class="keyword">char</span> *name, codeptr code, <span class="keyword">int</span> <span class="built_in">stack</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">thread_func</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initTcb</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> out_id = <span class="number">0</span>;</span><br><span class="line">	initTcb();</span><br><span class="line"></span><br><span class="line">	out_id = create(&amp;quot;Mii&amp;quot;, (codeptr)thread_func, <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initTcb</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">for</span> (id = <span class="number">0</span>; id &amp;lt; NTCB; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		tcb[id].<span class="built_in">stack</span> = NULL;</span><br><span class="line">		tcb[id].ss = <span class="number">0</span>;</span><br><span class="line">		tcb[id].sp = <span class="number">0</span>;</span><br><span class="line">		tcb[id].state = FINISHED;</span><br><span class="line">		tcb[id].name[<span class="number">0</span>] = &amp;<span class="preprocessor">#039;\0&amp;#039;;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create</span><span class="params">(<span class="keyword">char</span> *name, codeptr code, <span class="keyword">int</span> <span class="built_in">stack</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">/*init thread TCB*/</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">struct</span> int_regs *thread_regs;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*find avail tcb id*/</span></span><br><span class="line">	<span class="keyword">for</span> (id = <span class="number">0</span>; id &amp;lt; NTCB; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[id].state == FINISHED)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (id == NTCB)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;thread create failed\n&amp;quot;);</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">/*create private stack for new thread*/</span></span><br><span class="line">		tcb[id].<span class="built_in">stack</span> = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">stack</span>);</span><br><span class="line">		thread_regs = (<span class="keyword">struct</span> int_regs *)(tcb[id].<span class="built_in">stack</span> + <span class="built_in">stack</span>);</span><br><span class="line">		<span class="comment">/*thread_regs = thread_regs - sizeof(int_regs);*/</span></span><br><span class="line">		thread_regs--;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*init TCB*/</span></span><br><span class="line">		tcb[id].ss = FP_SEG(thread_regs);</span><br><span class="line">		tcb[id].sp = FP_OFF(thread_regs);</span><br><span class="line">		tcb[id].state = READY;</span><br><span class="line">		<span class="built_in">strcpy</span>(tcb[id].name, name);</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*init registers*/</span></span><br><span class="line">		thread_regs-&amp;gt;IP = FP_SEG(code);</span><br><span class="line">		thread_regs-&amp;gt;CS = FP_OFF(code);</span><br><span class="line">		thread_regs-&amp;gt;DS = tcb[id].ss;</span><br><span class="line">		thread_regs-&amp;gt;ES = tcb[id].ss;</span><br><span class="line">		thread_regs-&amp;gt;Flags = <span class="number">0x200</span>;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*turn to code proc*/</span></span><br><span class="line">		code();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">thread_func</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;This is the thread proc\n&amp;quot;);</span><br><span class="line">	system(&amp;quot;pause&amp;quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：程序在TurboC 2.0上面调试成功。</p>
+<p>因为后面在调度CPU操作需要直接对CPU进行调度，故使用TurboC的tcc编译器。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/09/11/利用Camshif获得的结果操作鼠标/" itemprop="url">
+                利用Camshif获得的结果操作鼠标
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-09-11T21:13:48+08:00" content="2013-09-11">
+            2013-09-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>前面讲到了Camshift算法， 本篇博客利用Camshift算法获得的rect矩形框的结构体，操纵鼠标的移动。</p>
+<p>cvCamshift函数如下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cvCamShift<span class="list">( <span class="keyword">backproject</span>, track_window,</span><br><span class="line">cvTermCriteria<span class="list">( <span class="keyword">CV_TERMCRIT_EPS</span> | CV_TERMCRIT_ITER, <span class="number">10</span>, <span class="number">1</span> )</span>,</span><br><span class="line"><span class="keyword">&amp;amp</span><span class="comment">;track_comp, &amp;amp;track_box );</span></span><br><span class="line">//使用MeanShift算法对backproject中的内容进行搜索,返回跟踪结果</span></span><br></pre></td></tr></table></figure>
+<p>track_window里面存的是上一帧的矩形框结构体，camshift算法返回的结果存在track_comp里面的cvRect矩形框结构体里面。</p>
+<p>通过两个矩形框的中心点之差，计算出(delta x，delta y)，然后利用GetCursorPos和SetCursorPos两个函数移动鼠标。关键代码如下：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算diff_window差异值，进行鼠标</span></span><br><span class="line">diff_point.x = (track_comp.<span class="built_in">rect</span>.x + track_comp.<span class="built_in">rect</span>.<span class="variable">width</span> / <span class="number">2</span> ) - (track_window.x + track_window.<span class="variable">width</span> / <span class="number">2</span> );</span><br><span class="line">diff_point.y = (track_comp.<span class="built_in">rect</span>.y + track_comp.<span class="built_in">rect</span>.<span class="variable">height</span> / <span class="number">2</span> ) - (track_window.y + track_window.<span class="variable">height</span> / <span class="number">2</span> );</span><br><span class="line"><span class="comment">//模拟鼠标移动</span></span><br><span class="line">POINT MousePos;</span><br><span class="line">GetCursorPos(&amp;amp;MousePos);</span><br><span class="line">MousePos.x += diff_point.x;</span><br><span class="line">MousePos.y += diff_point.y;</span><br><span class="line">SetCursorPos(MousePos.x, MousePos.y);</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/08/29/SWIG-Python的C扩展/" itemprop="url">
+                SWIG Python的C扩展
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-29T15:17:29+08:00" content="2013-08-29">
+            2013-08-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>以前写C语言比较多，看python的时候就想着怎么把两者给结合起来。SWIG是一个不错的选择。</p>
+<p>编写好C语言之后，用SWIG和编译器能够生成让python使用的共享库</p>
+<p><a href="http://www.swig.org/" title="swig" target="_blank" rel="external">http://www.swig.org/</a> 上可以下载swig，但是这个网站必须翻墙。</p>
+<p>提供一个goagent的链接,翻墙的教程网上很多，就不发了：<a href="https://code.google.com/p/goagent/" target="_blank" rel="external">https://code.google.com/p/goagent/</a></p>
+<p>如果是windows的用户，可以用vs编译，也可以用gcc编译。我拿gcc做例子，使用MinGW。Mac 和linux用户可以直接无视。</p>
+<p>下面这个例子大家可以参考，写的很清楚：</p>
+<p><a href="http://my.oschina.net/costaxu/blog/69634" target="_blank" rel="external">http://my.oschina.net/costaxu/blog/69634</a></p>
+<p>这里给出我的步骤：</p>
+<p><span id="more-732"></span></p>
+<p>&nbsp;</p>
+<p>1.编写C语言代码，写个验证回文数的函数 palindrome.c</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">#include</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> is_palindrome(<span class="built_in">char</span> *<span class="built_in">text</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">int</span> i, n = strlen(<span class="built_in">text</span>);</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt;= n / <span class="number">2</span>; ++i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">text</span>[i] != <span class="built_in">text</span>[n-i-<span class="number">1</span>])</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.编写接口文件 .i后缀表示接口文件，让swig去调用</p>
+<p>palindrome.i</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">%module palindrome</span><br><span class="line">%&#123;</span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line">%&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">is_palindrome</span><span class="params">(<span class="keyword">char</span> *text)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>这段.i文件分成3个部分：</p>
+<p>第一部分是 %module palindrome， %module是SWIG脚本的一个命令，它表示生成的包装器将在一个模块内的名称。</p>
+<p>第二部分是%{&#8230; %}，这一部分的内容会原封不动的插入到 xxxx_wrap.c或 xxxx_wrap.cxx文件中。</p>
+<p>第三部分就是剩下的部分了。这部分就是C语言或者C++语言的接口声明了。和C/C++的语法是一样的。</p>
+<p>3.运行SWIG，如果在windows下面注意设置环境变量以便在cmd下使用:</p>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">swig </span>-python palindrome.i</span><br></pre></td></tr></table></figure>
+<p>会生成两个文件：palindrome.py 和 palindrome_wrap.c</p>
+<p>palindrome.py是Python的包装代码</p>
+<p>4.使用gcc编译，链接</p>
+<p>以我的windows下为例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -<span class="built_in">c</span> palindrome.<span class="built_in">c</span></span><br></pre></td></tr></table></figure>
+<p>这一步生成palindrome.o文件。关于gcc的编译流程可以参考下面这个博客：</p>
+<p><a href="http://www.cnblogs.com/showna/articles/1013399.html" target="_blank" rel="external">http://www.cnblogs.com/showna/articles/1013399.html</a></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">gcc</span> -I<span class="variable">$PYTHON_HOME</span> -I<span class="variable">$PYTHON_HOME</span>/Include -c palindrome_wrap.c</span><br></pre></td></tr></table></figure>
+<p>这里$PYTHON_HOME就是Python的安装目录。为的就是找到pyconfig.h 和 Python.h两个头文件</p>
+<p>这一步生成了palindrome_wrap.o文件</p>
+<p>最后把两个文件合起来生成动态库，linux下面是.so文件，windows下面是.dll文件</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared palindrome<span class="class">.o</span> palindrome_wrap<span class="class">.o</span> D:\Python27\libs\libpython27<span class="class">.a</span> -o _palindrome.dll</span><br></pre></td></tr></table></figure>
+<p>该步D:\Python27\libs\libpython27.a根据自己安装的python版本和路径不同，这里只是我自己的路径。</p>
+<p>如果是linux可以参考上面那个博客的例子。</p>
+<p>生成了_palindrome.dll</p>
+<p>最后我们来测试一下：</p>
+<p>将_palindrome.dll改成_palindrome.pyd（这里不是很明白，看这个博客可能会有一些解惑 <a href="http://blog.csdn.net/chishui2/article/details/2254961" target="_blank" rel="external">http://blog.csdn.net/chishui2/article/details/2254961</a>），把_palindrome.pyd 文件和palindrome.py 一起丢到一个test目录下面（测试了一下，palindrome.py可以不需要），写一个调用该库的python测试文件：</p>
+<p>test.py</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import palindrome</span><br><span class="line">import os</span><br><span class="line">print palindrome.<span class="function"><span class="title">is_palindrome</span><span class="params">(<span class="string">'aba'</span>)</span></span></span><br><span class="line"><span class="function"><span class="title">raw_input</span><span class="params">(<span class="string">"Press "</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>终端运行一下这个文件，执行成功！~</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/08/28/wxPython写个简单UI/" itemprop="url">
+                wxPython写个简单UI
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-28T21:37:31+08:00" content="2013-08-28">
+            2013-08-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>拿着本Python基础教程挑着看，看到UI这部分感觉挺好玩的，于是就看了这一节。</p>
+<p>首先安装wxPython，我是Windows下的，安装起来很方便：链接在下面</p>
+<p><a href="http://wiki.wxpython.org/How%20to%20install%20wxPython" title="wxPython Install" target="_blank" rel="external">http://wiki.wxpython.org/How%20to%20install%20wxPython</a></p>
+<p>安装好了之后在使用的时候import wx的库就好了，用起来也挺方便的。以前写SDK的时候写个对话框100多行代码，python5行就能搞定。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import wx</span><br><span class="line">app = wx.<span class="function"><span class="title">App</span><span class="params">()</span></span></span><br><span class="line">win = wx.<span class="function"><span class="title">Frame</span><span class="params">(None)</span></span></span><br><span class="line">win.<span class="function"><span class="title">Show</span><span class="params">()</span></span></span><br><span class="line">app.<span class="function"><span class="title">MainLoop</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>接下来加上位置，尺寸器和布局，事件处理函数写个简单的编辑器：</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">import wx</span><br><span class="line"></span><br><span class="line">def <span class="function"><span class="title">load</span><span class="params">(event)</span></span>:</span><br><span class="line">file = <span class="function"><span class="title">open</span><span class="params">(filename.GetValue()</span></span>)</span><br><span class="line">contents.<span class="function"><span class="title">SetValue</span><span class="params">(file.read()</span></span>)</span><br><span class="line">file.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">def <span class="function"><span class="title">save</span><span class="params">(event)</span></span>:</span><br><span class="line">file = <span class="function"><span class="title">open</span><span class="params">(filename.GetValue()</span></span>, <span class="string">'w'</span>)</span><br><span class="line">file.<span class="function"><span class="title">write</span><span class="params">(contents.GetValue()</span></span>)</span><br><span class="line">file.<span class="function"><span class="title">close</span><span class="params">()</span></span></span><br><span class="line"></span><br><span class="line">app = wx.<span class="function"><span class="title">App</span><span class="params">()</span></span></span><br><span class="line">win = wx.<span class="function"><span class="title">Frame</span><span class="params">(None, title=<span class="string">"Simple Editor"</span>, size=(<span class="number">410</span>, <span class="number">335</span>)</span></span>)</span><br><span class="line"></span><br><span class="line">bkg = wx.<span class="function"><span class="title">Panel</span><span class="params">(win)</span></span></span><br><span class="line"></span><br><span class="line">loadButton = wx.<span class="function"><span class="title">Button</span><span class="params">(bkg, label = <span class="string">"Open"</span>)</span></span></span><br><span class="line">loadButton.<span class="function"><span class="title">Bind</span><span class="params">(wx.EVT_BUTTON, load)</span></span></span><br><span class="line"></span><br><span class="line">saveButton = wx.<span class="function"><span class="title">Button</span><span class="params">(bkg, label = <span class="string">"Save"</span>)</span></span></span><br><span class="line">saveButton.<span class="function"><span class="title">Bind</span><span class="params">(wx.EVT_BUTTON, save)</span></span></span><br><span class="line"></span><br><span class="line">filename=wx.<span class="function"><span class="title">TextCtrl</span><span class="params">(bkg)</span></span></span><br><span class="line">contents=wx.<span class="function"><span class="title">TextCtrl</span><span class="params">(bkg, style=wx.TE_MULTILINE | wx.HSCROLL)</span></span></span><br><span class="line"></span><br><span class="line">hbox = wx.<span class="function"><span class="title">BoxSizer</span><span class="params">()</span></span></span><br><span class="line">hbox.<span class="function"><span class="title">Add</span><span class="params">(filename, proportion=<span class="number">1</span>, flag=wx.EXPAND)</span></span></span><br><span class="line">hbox.<span class="function"><span class="title">Add</span><span class="params">(loadButton, proportion=<span class="number">0</span>, flag=wx.LEFT, border=<span class="number">5</span>)</span></span></span><br><span class="line">hbox.<span class="function"><span class="title">Add</span><span class="params">(saveButton, proportion=<span class="number">0</span>, flag=wx.LEFT, border=<span class="number">5</span>)</span></span></span><br><span class="line"></span><br><span class="line">vbox = wx.<span class="function"><span class="title">BoxSizer</span><span class="params">(wx.VERTICAL)</span></span></span><br><span class="line">vbox.<span class="function"><span class="title">Add</span><span class="params">(hbox, proportion=<span class="number">0</span>, flag=wx.EXPAND | wx.ALL, border=<span class="number">5</span>)</span></span></span><br><span class="line">vbox.<span class="function"><span class="title">Add</span><span class="params">(contents, proportion=<span class="number">1</span>, flag=wx.EXPAND | wx.LEFT | wx.BOTTOM | wx.RIGHT, border=<span class="number">5</span>)</span></span></span><br><span class="line"></span><br><span class="line">bkg.<span class="function"><span class="title">SetSizer</span><span class="params">(vbox)</span></span></span><br><span class="line"></span><br><span class="line">win.<span class="function"><span class="title">Show</span><span class="params">()</span></span></span><br><span class="line">app.<span class="function"><span class="title">MainLoop</span><span class="params">()</span></span></span><br></pre></td></tr></table></figure>
+<p>很多都是布局代码，最重要的就是两个事件处理函数：</p>
+<p>loadButton.Bind(wx.EVT_BUTTON, load)</p>
+<p>这个是将loadButton这个按钮 和load事件绑定起来，load函数完成了文件读取的功能，具体如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">load</span><span class="params">(event)</span>:</span></span><br><span class="line">file = open(filename.GetValue())</span><br><span class="line">contents.SetValue(file.read())</span><br><span class="line">file.close()</span><br></pre></td></tr></table></figure>
+<p>saveButton.Bind(wx.EVT_BUTTON, save)与之类似。</p>
+<p>最后运行的效果图：</p>
+<p><a href="http://miibotree.com/?attachment_id=730" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/08/1.png" alt="1"></a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/08/28/原-Camshift算法改进–自启动和自结束/" itemprop="url">
+                [原]Camshift算法改进–自启动和自结束
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-28T13:44:42+08:00" content="2013-08-28">
+            2013-08-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>项目在原有的camshift算法上进行了改进，增加了自启动和自动结束的算法。</p>
+<p>一.三帧差分法作为自启动算法</p>
+<p>三帧差分的基本思路是先提取三帧图像1， 2，3，转成灰度图像。然后第二帧减去第一帧得到diff12，第三帧减去第二帧得到diff23，在将diff12和diff23做比较得出最终的差异。差异计算的时候是基于像素点的比较。当差异范围超过某个阈值的时候，启动camshift算法。具体的自启动函数如下：</p>
+<p>CvRect autoRect(CvCapture_ capture, bool _AutoRunFlag, int range = 10)</p>
+<p>如果超过某个阈值，则返回CvRect的结构体用来做camshift算法中矩形框的参数。</p>
+<p><span id="more-725"></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/highgui/highgui.hpp&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/imgproc/imgproc.hpp&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;opencv2/core/core.hpp&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> threshold_diff1 10 <span class="comment">//设置简单帧差法阈值</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> threshold_diff2 10 <span class="comment">//设置简单帧差法阈值</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> AREA 10</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> cv;</span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">CvRect <span class="title">autoRect</span><span class="params">(CvCapture* capture, <span class="keyword">bool</span> *AutoRunFlag, <span class="keyword">int</span> range = 10)</span></span>&#123;</span><br><span class="line"><span class="keyword">double</span> mainPart_rows = <span class="number">0</span>,mainPart_cols = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> count;</span><br><span class="line"><span class="comment">//CvPoint p1,p2;</span></span><br><span class="line">CvRect rePoint = &#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">try</span>&#123;</span><br><span class="line">IplImage * frame1;</span><br><span class="line">IplImage * frame2;</span><br><span class="line">IplImage * frame3;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Mat img_src1,img_src2,img_src3;//3帧法需要3帧图片</span></span><br><span class="line">Mat img_dst,gray1,gray2,gray3;</span><br><span class="line">Mat gray_diff1,gray_diff2;<span class="comment">//存储2次相减的图片</span></span><br><span class="line">Mat gray;<span class="comment">//用来显示前景的</span></span><br><span class="line"></span><br><span class="line">frame1 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame1 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src1</span><span class="params">(frame1)</span></span>;</span><br><span class="line">cvtColor(img_src1,gray1,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">10</span>);</span><br><span class="line">frame2 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame2 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src2</span><span class="params">(frame2)</span></span>;</span><br><span class="line">cvtColor(img_src2,gray2,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">waitKey(<span class="number">10</span>);</span><br><span class="line">frame3 = cvQueryFrame( capture );</span><br><span class="line"><span class="comment">//cvShowImage( "CamShiftDemo", frame3 );</span></span><br><span class="line"><span class="function">Mat <span class="title">img_src3</span><span class="params">(frame3)</span></span>;</span><br><span class="line">cvtColor(img_src3,gray3,CV_BGR2GRAY);</span><br><span class="line"></span><br><span class="line">subtract(gray2,gray1,gray_diff1);<span class="comment">//第二帧减第一帧</span></span><br><span class="line">subtract(gray3,gray2,gray_diff2);<span class="comment">//第三帧减第二帧</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&amp;lt;gray_diff1.rows;i++)&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&amp;lt;gray_diff1.cols;j++)&#123;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">abs</span>(gray_diff1.at(i,j))&amp;gt;=threshold_diff1)</span><br><span class="line"><span class="comment">//这里模板参数一定要用unsigned char，否则就一直报错</span></span><br><span class="line">gray_diff1.at(i,j)=<span class="number">255</span>;<span class="comment">//第一次相减阈值处理</span></span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">gray_diff1.at(i,j)=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(<span class="built_in">abs</span>(gray_diff2.at(i,j))&amp;gt;=threshold_diff2)<span class="comment">//第二次相减阈值处理</span></span><br><span class="line">gray_diff2.at(i,j)=<span class="number">255</span>;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line">gray_diff2.at(i,j)=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">bitwise_and(gray_diff1,gray_diff2,gray);</span><br><span class="line"></span><br><span class="line"><span class="comment">//计算重心，然后外扩%10得到矩形框的边界</span></span><br><span class="line">mainPart_cols = <span class="number">0</span>;</span><br><span class="line">mainPart_rows = <span class="number">0</span>;</span><br><span class="line">count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &amp;lt; gray.rows;i++)&#123;</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>;j &amp;lt; gray.cols;j++)&#123;</span><br><span class="line"><span class="keyword">if</span>(gray.at(i,j) == <span class="number">255</span>)&#123;</span><br><span class="line">mainPart_cols += j;</span><br><span class="line">mainPart_rows += i;</span><br><span class="line">count++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(count != <span class="number">0</span>)&#123;</span><br><span class="line">mainPart_cols = mainPart_cols / count;</span><br><span class="line">mainPart_rows = mainPart_rows / count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CvPoint center;</span><br><span class="line">center.x = cvRound(mainPart_cols);</span><br><span class="line">center.y = cvRound(mainPart_rows);</span><br><span class="line"><span class="keyword">int</span> radius = cvRound(gray.cols / <span class="number">100</span> * AREA);</span><br><span class="line"><span class="keyword">if</span> ( (center.x &amp;gt; radius) &amp;amp;&amp;amp; (center.x &amp;lt; gray.cols - radius) &amp;amp;&amp;amp; (center.y &amp;gt; radius) &amp;amp;&amp;amp; (center.y &amp;lt; gray.rows - radius) &amp;amp;&amp;amp; count &amp;gt; (<span class="keyword">int</span>)(gray.rows * gray.cols / <span class="number">100</span> * (range * range)) )&#123;</span><br><span class="line">rePoint.x = (<span class="keyword">int</span>)(mainPart_cols / <span class="number">1.6</span>);</span><br><span class="line">rePoint.y = (<span class="keyword">int</span>)(mainPart_rows / <span class="number">1.6</span>);</span><br><span class="line">rePoint.height = (<span class="keyword">int</span>)(img_src1.rows / <span class="number">100</span> * AREA / <span class="number">1.6</span>) ;</span><br><span class="line">rePoint.width = (<span class="keyword">int</span>)(img_src1.cols / <span class="number">100</span> * AREA / <span class="number">1.6</span>);</span><br><span class="line">*AutoRunFlag = <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">return</span> rePoint;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">catch</span>( cv::Exception&amp;amp; e )&#123;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* err_msg = e.what();</span><br><span class="line"><span class="built_in">printf</span> (<span class="string">"%s\n"</span>, err_msg);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二.利用突变来判断跟踪结束</p>
+<p>算法中，我们有保存了当前帧和上一帧中相似区域数据的2个结构体变量track_window和track_comp.rect。我们设定，当两个结构体中的x成员或y成员发生的突变大于设定阈值时，或2个结构体成员width*height，即相似区域面积发生的突变大于设定阈值时，即可大致判断跟踪目标已经不在画面中，实现自动判断跟踪结束。</p>
+<p>该算法在突变变化大的时候效果比较好，关键代码如下：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (</span><br><span class="line"><span class="built_in">abs</span>(track_window.x - track_comp.<span class="built_in">rect</span>.x) &amp;gt; <span class="number">200</span> ||</span><br><span class="line"><span class="built_in">abs</span>(track_window.y - track_comp.<span class="built_in">rect</span>.y) &amp;gt; <span class="number">200</span> ||</span><br><span class="line"></span><br><span class="line"><span class="built_in">abs</span>(track_window.<span class="variable">width</span> * track_window.<span class="variable">height</span> - track_comp.<span class="built_in">rect</span>.<span class="variable">width</span> * track_comp.<span class="built_in">rect</span>.<span class="variable">height</span>)\</span><br><span class="line">&amp;gt; <span class="number">18000</span></span><br><span class="line"></span><br><span class="line">)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">track_object = <span class="number">0</span>;</span><br><span class="line">first_object = <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/08/28/Camshift算法/" itemprop="url">
+                Camshift算法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-28T13:25:05+08:00" content="2013-08-28">
+            2013-08-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>由于接下来要开始用camshift结合机器学习做手势识别的项目，这里就把暑假项目里面做的camshift算法给总结一下。</p>
+<p>opencv的书里面有camshift的算法介绍和相关的例子，这里还是先把概念来说一下：</p>
+<p>一.Camshift算法介绍</p>
+<p>Camshift算法是MeanShift算法的改进，称为连续自适应的MeanShift算法，它的基本思想是视频图像的所有帧作MeanShift运算，并将上一帧的结果（即Search Window的中心和大小）作为下一帧MeanShift算法的Search Window的初始值，如此迭代下去。</p>
+<p><span id="more-722"></span></p>
+<p>Camshift算法可以分为三个部分：</p>
+<p>1.RGB颜色空间对光照亮度变化较为敏感，为了减少此变化对跟踪效果的影响，首先将图像从RGB空间转换到HSV空间。</p>
+<p>2.对其中的H分量作直方图，在直方图中代表了不同H分量值出现的概率或者像素个数，就是说可以查找出H分量大小为h的概率或者像素个数，即得到了颜色概率查找表。</p>
+<p>3.将图像中每个像素的值用其颜色出现的概率对替换，就得到了颜色概率分布图。这个过程就叫反向投影，颜色概率分布图是一个灰度图像。</p>
+<p>二.MeanShift算法</p>
+<p>刚才说到Camshift算法是对Meanshift算法的改进，所以下面介绍一下Meanshift算法：</p>
+<p>Meanshift算法是一种密度函数梯度估计的非参数方法，通过迭代寻优找到概率分布的极值来定位目标。算法过程如下：</p>
+<p>1.在颜色概率分布图中自动或者手动选取搜索窗口</p>
+<p>2.计算零阶矩：</p>
+<p>3.计算一阶矩：</p>
+<p>4.计算搜索窗的质心：</p>
+<p>5.调整搜索框大小</p>
+<p>6.移动搜索窗的中心到质心，如果移动距离大于预设的固定阈值，则重复2)3)4)，直到搜索窗的中心与质心间的移动距离小于预设的固定阈值，或者循环运算的次数达到某一最大值，停止计算。</p>
+<p>三.跟踪算法的OpenCV实现</p>
+<p>1：函数的原型为</p>
+<p>RotatedRectCamShift(InputArrayprobImage, Rect&amp; window, TermCriteria criteria)；</p>
+<p>其中probImage为输入图像直方图的反向投影图，window为要跟踪目标的初始位置矩形框，criteria为算法结束条件。函数返回一个有方向角度的矩阵。该函数的实现首先是利用meanshift算法计算出要跟踪的中心，然后调整初始窗口的大小位置和方向角度。在camshift内部调用了meanshift算法计算目标的重心。</p>
+<p>下面是具体的代码：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br></pre></td><td class="code"><pre><span class="line">#ifdef _CH_</span><br><span class="line">#pragma <span class="keyword">package</span> &amp;lt;opencv&amp;gt;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#ifndef _EiC</span><br><span class="line">#include &amp;quot;cv.h&amp;quot;</span><br><span class="line">#include &amp;quot;highgui.h&amp;quot;</span><br><span class="line">#include &amp;lt;stdio.h&amp;gt;</span><br><span class="line">#include &amp;lt;ctype.h&amp;gt;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">IplImage *<span class="built_in">image</span> = <span class="number">0</span>, *hsv = <span class="number">0</span>, *<span class="built_in">hue</span> = <span class="number">0</span>, *mask = <span class="number">0</span>, *backproject = <span class="number">0</span>, *histimg = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用HSV中的Hue分量进行跟踪</span></span><br><span class="line">CvHistogram *hist = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//直方图类</span></span><br><span class="line"><span class="built_in">int</span> backproject_mode = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> select_object = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> track_object = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> show_hist = <span class="number">1</span>;</span><br><span class="line">CvPoint origin;</span><br><span class="line">CvRect selection;</span><br><span class="line">CvRect track_window;</span><br><span class="line">CvBox2D track_box;</span><br><span class="line"><span class="comment">//Meanshift跟踪算法返回的Box类</span></span><br><span class="line"><span class="comment">//typedef struct CvBox2D&#123;</span></span><br><span class="line"><span class="comment">//CvPoint2D32f center;</span></span><br><span class="line"><span class="comment">//CvSize2D32f size;</span></span><br><span class="line"><span class="comment">//float angle;</span></span><br><span class="line"><span class="comment">//&#125;CvBox2D;</span></span><br><span class="line">CvConnectedComp track_comp;</span><br><span class="line"><span class="comment">//连接部件 </span></span><br><span class="line"><span class="comment">//typedef struct CvConnectedComp&#123;</span></span><br><span class="line"><span class="comment">//double area;</span></span><br><span class="line"><span class="comment">//float value;</span></span><br><span class="line"><span class="comment">//CvRect rect;</span></span><br><span class="line"><span class="comment">//&#125; CvConnectedComp;</span></span><br><span class="line"><span class="built_in">int</span> hdims = <span class="number">16</span>;</span><br><span class="line"><span class="comment">//划分直方图bins的个数，越多越精确</span></span><br><span class="line"><span class="built_in">float</span> hranges_arr[] = &#123;<span class="number">0</span>,<span class="number">180</span>&#125;;</span><br><span class="line"><span class="comment">//像素值的范围</span></span><br><span class="line"><span class="built_in">float</span>* hranges = hranges_arr;</span><br><span class="line"><span class="comment">//用于初始化CvHistogram类</span></span><br><span class="line"><span class="built_in">int</span> vmin = <span class="number">10</span>, vmax = <span class="number">256</span>, smin = <span class="number">30</span>;</span><br><span class="line"><span class="comment">//用于设置滑动条</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> on_mouse( <span class="built_in">int</span> event, <span class="built_in">int</span> x, <span class="built_in">int</span> y, <span class="built_in">int</span> flags, <span class="keyword">void</span>* param )</span><br><span class="line"><span class="comment">//鼠标回调函数,该函数用鼠标进行跟踪目标的选择</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>( !<span class="built_in">image</span> )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( <span class="built_in">image</span>-&amp;gt;origin )</span><br><span class="line">        y = <span class="built_in">image</span>-&amp;gt;<span class="variable">height</span> - y;</span><br><span class="line">    <span class="comment">//如果图像原点坐标在左下,则将其改为左上</span></span><br><span class="line">    <span class="keyword">if</span>( select_object )</span><br><span class="line">    <span class="comment">//select_object为1,表示在用鼠标进行目标选择</span></span><br><span class="line">    <span class="comment">//此时对矩形类selection用当前的鼠标位置进行设置</span></span><br><span class="line">    &#123;</span><br><span class="line">        selection.x = MIN(x,origin.x);</span><br><span class="line">        selection.y = MIN(y,origin.y);</span><br><span class="line">        selection.<span class="variable">width</span> = selection.x + CV_IABS(x - origin.x);</span><br><span class="line">        selection.<span class="variable">height</span> = selection.y + CV_IABS(y - origin.y);</span><br><span class="line"></span><br><span class="line">        selection.x = MAX( selection.x, <span class="number">0</span> );</span><br><span class="line">        selection.y = MAX( selection.y, <span class="number">0</span> );</span><br><span class="line">        selection.<span class="variable">width</span> = MIN( selection.<span class="variable">width</span>, <span class="built_in">image</span>-&amp;gt;<span class="variable">width</span> );</span><br><span class="line">        selection.<span class="variable">height</span> = MIN( selection.<span class="variable">height</span>, <span class="built_in">image</span>-&amp;gt;<span class="variable">height</span> );</span><br><span class="line">        selection.<span class="variable">width</span> -= selection.x;</span><br><span class="line">        selection.<span class="variable">height</span> -= selection.y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>( event )</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> CV_EVENT_LBUTTONDOWN:</span><br><span class="line">    <span class="comment">//鼠标按下,开始点击选择跟踪物体</span></span><br><span class="line">        origin = cvPoint(x,y);</span><br><span class="line">        selection = cvRect(x,y,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        select_object = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> CV_EVENT_LBUTTONUP:</span><br><span class="line">    <span class="comment">//鼠标松开,完成选择跟踪物体</span></span><br><span class="line">        select_object = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>( selection.<span class="variable">width</span> &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; selection.<span class="variable">height</span> &amp;gt; <span class="number">0</span> )</span><br><span class="line">        <span class="comment">//如果选择物体有效，则打开跟踪功能</span></span><br><span class="line">            track_object = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CvScalar hsv2rgb( <span class="built_in">float</span> <span class="built_in">hue</span> )</span><br><span class="line"><span class="comment">//用于将Hue量转换成RGB量</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> rgb[<span class="number">3</span>], p, sector;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">int</span> sector_data[][<span class="number">3</span>]=</span><br><span class="line">        &#123;&#123;<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>&#125;, &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>&#125;, &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>&#125;, &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>&#125;&#125;;</span><br><span class="line">    <span class="built_in">hue</span> *= <span class="number">0.033333333333333333333333333333333</span>f;</span><br><span class="line">    sector = cvFloor(<span class="built_in">hue</span>);</span><br><span class="line">    p = cvRound(<span class="number">255</span>*(<span class="built_in">hue</span> - sector));</span><br><span class="line">    p ^= sector &amp;amp; <span class="number">1</span> ? <span class="number">255</span> : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    rgb[sector_data[sector][<span class="number">0</span>]] = <span class="number">255</span>;</span><br><span class="line">    rgb[sector_data[sector][<span class="number">1</span>]] = <span class="number">0</span>;</span><br><span class="line">    rgb[sector_data[sector][<span class="number">2</span>]] = p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cvScalar(rgb[<span class="number">2</span>], rgb[<span class="number">1</span>], rgb[<span class="number">0</span>],<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main( <span class="built_in">int</span> argc, <span class="built_in">char</span>** argv )</span><br><span class="line">&#123;</span><br><span class="line">    CvCapture* capture = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( argc == <span class="number">1</span> || (argc == <span class="number">2</span> &amp;amp;&amp;amp; strlen(argv[<span class="number">1</span>]) == <span class="number">1</span> &amp;amp;&amp;amp; isdigit(argv[<span class="number">1</span>][<span class="number">0</span>])))</span><br><span class="line">    <span class="comment">//打开摄像头</span></span><br><span class="line">        capture = cvCaptureFromCAM( argc == <span class="number">2</span> ? argv[<span class="number">1</span>][<span class="number">0</span>] - &amp;#<span class="number">039</span>;<span class="number">0</span>&amp;#<span class="number">039</span>; : <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( argc == <span class="number">2</span> )</span><br><span class="line">    <span class="comment">//打开avi</span></span><br><span class="line">        capture = cvCaptureFromAVI( argv[<span class="number">1</span>] ); </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( !capture )</span><br><span class="line">    <span class="comment">//打开视频流失败</span></span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,&amp;quot;Could not initialize capturing...\n&amp;quot;);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    printf( &amp;quot;Hot keys: \n&amp;quot;</span><br><span class="line">        &amp;quot;\tESC - quit the program\n&amp;quot;</span><br><span class="line">        &amp;quot;\tc - stop the tracking\n&amp;quot;</span><br><span class="line">        &amp;quot;\tb - <span class="keyword">switch</span> to/from backprojection view\n&amp;quot;</span><br><span class="line">        &amp;quot;\th - show/hide object histogram\n&amp;quot;</span><br><span class="line">        &amp;quot;To initialize tracking, select the object with mouse\n&amp;quot; );</span><br><span class="line"><span class="comment">//打印程序功能列表</span></span><br><span class="line">    cvNamedWindow( &amp;quot;Histogram&amp;quot;, <span class="number">1</span> );</span><br><span class="line">    <span class="comment">//用于显示直方图</span></span><br><span class="line">    cvNamedWindow( &amp;quot;CamShiftDemo&amp;quot;, <span class="number">1</span> );</span><br><span class="line">    <span class="comment">//用于显示视频</span></span><br><span class="line">    cvSetMouseCallback( &amp;quot;CamShiftDemo&amp;quot;, on_mouse, <span class="number">0</span> );</span><br><span class="line">    <span class="comment">//设置鼠标回调函数</span></span><br><span class="line">    cvCreateTrackbar( &amp;quot;Vmin&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;vmin, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    cvCreateTrackbar( &amp;quot;Vmax&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;vmax, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    cvCreateTrackbar( &amp;quot;Smin&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;smin, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    <span class="comment">//设置滑动条</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    <span class="comment">//进入视频帧处理主循环</span></span><br><span class="line">    &#123;</span><br><span class="line">        IplImage* frame = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> i, bin_w, c;</span><br><span class="line"></span><br><span class="line">        frame = cvQueryFrame( capture );</span><br><span class="line">        <span class="keyword">if</span>( !frame )</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( !<span class="built_in">image</span> )</span><br><span class="line">        <span class="comment">//image为0,表明刚开始还未对image操作过,先建立一些缓冲区</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">image</span> = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="built_in">image</span>-&amp;gt;origin = frame-&amp;gt;origin;</span><br><span class="line">            hsv = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="built_in">hue</span> = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            mask = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配掩膜图像空间</span></span><br><span class="line">            backproject = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配反向投影图空间,大小一样,单通道</span></span><br><span class="line">            hist = cvCreateHist( <span class="number">1</span>, &amp;amp;hdims, CV_HIST_ARRAY, &amp;amp;hranges, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配直方图空间</span></span><br><span class="line">            histimg = cvCreateImage( cvSize(<span class="number">320</span>,<span class="number">200</span>), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="comment">//分配用于直方图显示的空间</span></span><br><span class="line">            cvZero( histimg );</span><br><span class="line">            <span class="comment">//置背景为黑色</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cvCopy( frame, <span class="built_in">image</span>, <span class="number">0</span> );</span><br><span class="line">        cvCvtColor( <span class="built_in">image</span>, hsv, CV_BGR2HSV );</span><br><span class="line">        <span class="comment">//把图像从RGB表色系转为HSV表色系</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( track_object )</span><br><span class="line">        <span class="comment">//track_object非零,表示有需要跟踪的物体</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> _vmin = vmin, _vmax = vmax;</span><br><span class="line"></span><br><span class="line">            cvInRangeS( hsv, cvScalar(<span class="number">0</span>,smin,MIN(_vmin,_vmax),<span class="number">0</span>),</span><br><span class="line">                        cvScalar(<span class="number">180</span>,<span class="number">256</span>,MAX(_vmin,_vmax),<span class="number">0</span>), mask );</span><br><span class="line">            <span class="comment">//制作掩膜板，只处理像素值为H：0~180，S：smin~256，V：vmin~vmax之间的部分</span></span><br><span class="line">            cvSplit( hsv, <span class="built_in">hue</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> );</span><br><span class="line"><span class="comment">//分离H分量</span></span><br><span class="line">            <span class="keyword">if</span>( track_object &amp;lt; <span class="number">0</span> )</span><br><span class="line">            <span class="comment">//如果需要跟踪的物体还没有进行属性提取，则进行选取框类的图像属性提取</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">float</span> max_val = <span class="number">0.</span>f;</span><br><span class="line">                cvSetImageROI( <span class="built_in">hue</span>, selection );</span><br><span class="line">                <span class="comment">//设置原选择框为ROI</span></span><br><span class="line">                cvSetImageROI( mask, selection );</span><br><span class="line">                <span class="comment">//设置掩膜板选择框为ROI</span></span><br><span class="line">                cvCalcHist( &amp;amp;<span class="built_in">hue</span>, hist, <span class="number">0</span>, mask );</span><br><span class="line">                <span class="comment">//得到选择框内且满足掩膜板内的直方图</span></span><br><span class="line">                cvGetMinMaxHistValue( hist, <span class="number">0</span>, &amp;amp;max_val, <span class="number">0</span>, <span class="number">0</span> );</span><br><span class="line">                cvConvertScale( hist-&amp;gt;bins, hist-&amp;gt;bins, max_val ? <span class="number">255</span>\. / max_val : <span class="number">0.</span>, <span class="number">0</span> );</span><br><span class="line">                <span class="comment">// 对直方图的数值转为0~255</span></span><br><span class="line">                cvResetImageROI( <span class="built_in">hue</span> );</span><br><span class="line">                <span class="comment">//去除ROI</span></span><br><span class="line">                cvResetImageROI( mask );</span><br><span class="line">                <span class="comment">//去除ROI</span></span><br><span class="line">                track_window = selection;</span><br><span class="line">                track_object = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//置track_object为1,表明属性提取完成</span></span><br><span class="line">                cvZero( histimg );</span><br><span class="line">                bin_w = histimg-&amp;gt;<span class="variable">width</span> / hdims;</span><br><span class="line">                <span class="keyword">for</span>( i = <span class="number">0</span>; i &amp;lt; hdims; i++ )</span><br><span class="line">                <span class="comment">//画直方图到图像空间</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">int</span> val = cvRound( cvGetReal1D(hist-&amp;gt;bins,i)*histimg-&amp;gt;<span class="variable">height</span>/<span class="number">255</span> );</span><br><span class="line">                    CvScalar <span class="built_in">color</span> = hsv2rgb(i*<span class="number">180.</span>f/hdims);</span><br><span class="line">                    cvRectangle( histimg, cvPoint(i*bin_w,histimg-&amp;gt;<span class="variable">height</span>),</span><br><span class="line">                                 cvPoint((i+<span class="number">1</span>)*bin_w,histimg-&amp;gt;<span class="variable">height</span> - val),</span><br><span class="line">                                 <span class="built_in">color</span>, -<span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span> );</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cvCalcBackProject( &amp;amp;<span class="built_in">hue</span>, backproject, hist );</span><br><span class="line">            <span class="comment">//计算hue的反向投影图</span></span><br><span class="line">            cvAnd( backproject, mask, backproject, <span class="number">0</span> );</span><br><span class="line">            <span class="comment">//得到掩膜内的反向投影</span></span><br><span class="line">            cvCamShift( backproject, track_window,</span><br><span class="line">                        cvTermCriteria( CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, <span class="number">10</span>, <span class="number">1</span> ),</span><br><span class="line">                        &amp;amp;track_comp, &amp;amp;track_box );</span><br><span class="line">            <span class="comment">//使用MeanShift算法对backproject中的内容进行搜索,返回跟踪结果</span></span><br><span class="line">            track_window = track_comp.<span class="built_in">rect</span>;</span><br><span class="line">            <span class="comment">//得到跟踪结果的矩形框</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( backproject_mode )</span><br><span class="line">                cvCvtColor( backproject, <span class="built_in">image</span>, CV_GRAY2BGR );</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( <span class="built_in">image</span>-&amp;gt;origin )</span><br><span class="line">                track_box.angle = -track_box.angle;</span><br><span class="line">            cvEllipseBox( <span class="built_in">image</span>, track_box, CV_RGB(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>), <span class="number">3</span>, CV_AA, <span class="number">0</span> );</span><br><span class="line">            <span class="comment">//画出跟踪结果的位置</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( select_object &amp;amp;&amp;amp; selection.<span class="variable">width</span> &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; selection.<span class="variable">height</span> &amp;gt; <span class="number">0</span> )</span><br><span class="line">        <span class="comment">//如果正处于物体选择，画出选择框</span></span><br><span class="line">        &#123;</span><br><span class="line">            cvSetImageROI( <span class="built_in">image</span>, selection );</span><br><span class="line">            cvXorS( <span class="built_in">image</span>, cvScalarAll(<span class="number">255</span>), <span class="built_in">image</span>, <span class="number">0</span> );</span><br><span class="line">            cvResetImageROI( <span class="built_in">image</span> );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cvShowImage( &amp;quot;CamShiftDemo&amp;quot;, <span class="built_in">image</span> );</span><br><span class="line">        cvShowImage( &amp;quot;Histogram&amp;quot;, histimg );</span><br><span class="line"></span><br><span class="line">        c = cvWaitKey(<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>( (<span class="built_in">char</span>) c == <span class="number">27</span> )</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">switch</span>( (<span class="built_in">char</span>) c )</span><br><span class="line">        <span class="comment">//按键切换功能</span></span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;b&amp;#<span class="number">039</span>;:</span><br><span class="line">            backproject_mode ^= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;c&amp;#<span class="number">039</span>;:</span><br><span class="line">            track_object = <span class="number">0</span>;</span><br><span class="line">            cvZero( histimg );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;h&amp;#<span class="number">039</span>;:</span><br><span class="line">            show_hist ^= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>( !show_hist )</span><br><span class="line">                cvDestroyWindow( &amp;quot;Histogram&amp;quot; );</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cvNamedWindow( &amp;quot;Histogram&amp;quot;, <span class="number">1</span> );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cvReleaseCapture( &amp;amp;capture );</span><br><span class="line">    cvDestroyWindow(&amp;quot;CamShiftDemo&amp;quot;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#ifdef _EiC</span><br><span class="line">main(<span class="number">1</span>,&amp;quot;camshiftdemo.c&amp;quot;);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/06/02/Machine-Learning-Week6-Ex5/" itemprop="url">
+                Machine Learning Week6 Ex5
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-06-02T15:39:50+08:00" content="2013-06-02">
+            2013-06-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>在做这次的作业的时候遇到了一个问题。</p>
+<p>首先我们来搞明白一个问题：</p>
+<p><a href="http://miibotree.com/?attachment_id=708" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/06/11.jpg" alt="11"></a></p>
+<p>以上定义中 计算error的三个公式里面都没有用到regularization，也就是说没有用到lambda，也就是说lambda是0</p>
+<p>下面这个函数用来获得J最小的thetafunction [theta] = trainLinearReg(X, y, lambda)</p>
+<p>在得到了theta之后，我们可以用来计算train_error和cv_error了:</p>
+<p>learningCurve.m的关键代码如下：</p>
+<p>lambda = 0;</p>
+<p>for i = 1 : m</p>
+<p>[train_theta] = trainLinearReg(X(1:i, ：), y(1:i), lambda);</p>
+<p>[error_train(i)] = linearRegCostFunction(X(1:i,：), y(1:i), train_theta, lambda);</p>
+<p>[error_val(i)]   = linearRegCostFunction(Xval, yval, train_theta, lambda);</p>
+<p>end</p>
+<p>计算出来的结果跟预计是一样的，但是submit提交的时候老是提示出错。</p>
+<p>去讨论组里面看了一下，发现了问题所在：</p>
+<p><a href="https://class.coursera.org/ml-003/forum/thread?thread_id=3504" target="_blank" rel="external">https://class.coursera.org/ml-003/forum/thread?thread_id=3504</a></p>
+<p>改成这样就可以了：</p>
+<p>for i = 1 : m</p>
+<p>[train_theta] = trainLinearReg(X(1:i, ：), y(1:i), lambda);</p>
+<p>[error_train(i)] = linearRegCostFunction(X(1:i, ：), y(1:i), train_theta, 0);</p>
+<p>[error_val(i)]   = linearRegCostFunction(Xval, yval, train_theta, 0);</p>
+<p>end</p>
+<p>至于具体原因，论坛上有人说好像是硬编码的问题。自己不是很清楚。估计跟强制类型转换有关。</p>
+<p>同理，在最后validationCurve.m的时候，最后传linearRegCostFunction参数时候的lambda也必须直接写0！</p>
+<p>[error_train(i), grad_train] = linearRegCostFunction(X, y, theta, 0);</p>
+<p>[error_val(i),   grad_val]   = linearRegCostFunction(Xval, yval, theta, 0);</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/06/02/6-Advice-for-applying-machine-learning/" itemprop="url">
+                (6)Advice for applying machine learning
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-06-02T12:50:43+08:00" content="2013-06-02">
+            2013-06-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>Machine Learning系列</p>
+<p>以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</p>
+<p><strong>第六讲. 怎样选择机器学习方法——Advice for applying machine learning</strong></p>
+<p><strong>===============================</strong></p>
+<p><strong>候选机器学习方法</strong></p>
+<p><strong>评价方法假设</strong></p>
+<p>**☆模型选择和训练、验证实验数据</p>
+<p>**</p>
+<p>**☆区别诊断偏离bias和偏差variance</p>
+<p>**</p>
+<p>**☆规则化 和 bias/variance</p>
+<p>**</p>
+<p><strong>Learning Curve：什么时候增加训练数据training set才是有效的？</strong></p>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>候选机器学习方法——Deciding what to try next</strong></p>
+<hr>
+<p>还用房价的prediction举例，假设我们已经实现了用规则化的线性回归方法预测房价：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343437816_4254.jpg" alt=""></p>
+<p>但发现该预测应用于一个新的训练数据上时有很大误差（error），这时应采取一些解决方案：</p>
+<div>Get more training examples</div><br><div><br><div>Try smaller sets of features</div><br><div>Try getting additional features</div><br><div>Try adding polynomial features (e.g.  x1^2, x2^2, x1x2&#8230;)</div><br><div>Try decreasing λ</div><br><div>Try increasing λ</div><br></div><br><div></div>
+
+<p>Machine Learning 方法的诊断：</p>
+<ul>
+<li>什么是诊断Dignostic呢？诊断就是能够判断一种学习算法能不能work，并且改善该算法性能的一个测试。</li>
+</ul>
+<p><span id="more-704"></span></p>
+<p>Diagnostic: A test that you can run to gain insight what is/isn&#8217;t working with a learning algorithm, and gain guidance as to how best to improve its performance.</p>
+<p>-诊断的效果：Diagnostics can take time to implement, but doing so can be a very good use of your time.</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343480103_4705.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>评价方法假设——Evaluating a hypothesis</p>
+<p>首先呢，我们将所有数据分为两个集合，一个Trainning set和一个Testing set，用Training set得到参数向量，用Testing set进行测试（比如分类）。</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343480369_4168.jpg" alt=""></p>
+<p>这时，将test set的error分为线性回归linear regression和逻辑回归logistic regression两类：</p>
+<p>-线性回归的error：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343481688_4647.jpg" alt=""></p>
+<p>-逻辑回归的error：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343481862_6058.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>模型选择和训练、验证实验数据</p>
+<p>&nbsp;</p>
+<p>面 对模型选择问题，如何才能得到一个just fit的模型而不会导致underfit 或者overfit呢？我们引入一类数据集，叫做cross validation set，即交叉验证数据集。将所有数据按&lt;6,2,2&gt;分为training set , cross validation set , testing set三类，如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343482366_9247.jpg" alt=""></p>
+<p>其error计算公式如下，其实三类计算方法大同小异，相同的公式只是换了数据及而已：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343482446_9803.jpg" alt=""></p>
+<p>进行模型选择的方法其实很简单，对应下图大家来看：</p>
+<p>-首先，建立d个model 假设（图中有10个，d表示其id），分别在training set 上求使其training error最小的θ向量，那么得到d个θ</p>
+<p>-然后，对这d个model假设，带入θ，在cross validation set上计算J(cv)，即cv set error最小的一个model 作为 hypothesis，如下图中J(cv)在第4组中最小，便取d=4的假设。</p>
+<p>PS: 其实d表示dimension，也就是维度，表示该hypothesis的最大polynomial项是d维的。</p>
+<p>PS&#8217;: 一般地，J(cv)是大于等于J(train)的</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343483553_5115.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>区别诊断偏离bias和偏差variance</p>
+<p>前面的课程中我们曾讲过相同数据不同回归情况：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343483884_1140.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>这一节中，我们给大家区分两个概念：bias vs. variance。</p>
+<p>如下图所示为error随不同dimension的model变化图，可以想见，随d上升是一个由underfit到overfit的过程，这个过程中，training set的error逐渐下降，而cv set的error先降后升。</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343484056_3257.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>这里就产生了bias和variance的概念：</p>
+<p>bias：J(train)大，J(cv)大，J(train)≈J(cv)，bias产生于d小，underfit阶段；</p>
+<p>variance：J(train)小，J(cv)大，J(train)&lt;&lt;J(cv)，variance产生于d大，overfit阶段；</p>
+<p>如下图所示：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343484595_6134.jpg" alt=""></p>
+<p>来来，做道题：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489907_1825.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
+<p>&nbsp;</p>
+<p>好，有了初步概念，现在我们来看bias和variance的由来及具体定义：</p>
+<p>给定数据及D（比如一个点集吧），对于这些数据集上的点我们可以计算每个index下点的平均值（即期望）t(x) = E(y|x)，则我们有mean square error:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div>MSE = 1/n * Σ(f(x)-t(x))^2</div><br><div></div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350019398_2892.jpg" alt=""></div><br><div></div><br><div>MSE（mean square error） = Bias2 + Variance +noise</div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350019410_6409.jpg" alt=""></div><br><div></div><br><div></div>
+
+<p>定义上是这么讲的：</p>
+<p>&nbsp;</p>
+<p>Variance: measures the extent to which the solutions for individual data sets vary around their average, hence this measures the extent to which the function f(x) is sensitive to theparticular choice of data set.</p>
+<p>Bias: represents the extent to which the average prediction over all data sets differs from the desired regression function.</p>
+<p>Our goal is to minimize the expected loss, which we havedecomposed into the sum of a (squared) bias, a variance, and a constant noiseterm. As we shall see, there is a trade-off between bias and variance, with very flexible models（overfit） having low bias and high variance, and relatively rigid models（underfit） having high bias and low variance</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>总结一下：</p>
+<p>variance：估计本身的方差。</p>
+<p>bias：估计的期望和样本数据样本希望得到的回归函数之间的差别。</p>
+<p>&nbsp;</p>
+<p>具 体来讲，我有一个统计量D（比如统计某大学研一学生身高在[0.5-1],[1,1.1],[1.1,1.2]……[1.9,2]之间的人数），这样可以 形成一些离散点。然后呢，本校研一有20个班，每个班就都可以拟合成一条估计曲线f(x)，这20条曲线呢，有一个平均值，也就是估计期望（均值）曲线 E(f(x,D))。</p>
+<p>&nbsp;</p>
+<p>variance是指，这20条估计曲线与最后估计期望（均值）之间的距离，也就是估计曲线本身的方差，是不可能为0的。</p>
+<p>bias是指，20条估计曲线的均值与实际最佳拟合情况之间的距离。</p>
+<p>&nbsp;</p>
+<p>这样一来呢，对于regularization项中的λ，</p>
+<p>&nbsp;</p>
+<p>λ小 -&gt; α大 -&gt; overfit（flexible） -&gt;</p>
+<p>对于不同的训练数据集（不同班级的数据）的拟合结果抖动很大 -&gt; variance大</p>
+<p>bias是估计均值与实际值期望的偏差 -&gt; bias小</p>
+<p>下图中，左图为拟合的20条曲线；右图红线为20条曲线的期望，绿色为实际数据期望所得的拟合曲线。</p>
+<p>&nbsp;</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350022126_6772.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>λ大 -&gt; α小 -&gt; underfit（stable） -&gt;</p>
+<p>对于不同的训练数据集（不同班级的数据）的拟合结果抖动较小 -&gt; variance小</p>
+<p>bias是估计均值与实际值期望的偏差 ，不能很好地进行回归-&gt; bias大</p>
+<p>下图中，左图为拟合的20条曲线；右图红线为20条曲线的期望，绿色为实际数据期望所得的拟合曲线。</p>
+<div></div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350022146_1286.jpg" alt=""></div>
+
+<p>&nbsp;</p>
+<p>下图所示为λ与bias, variance, error之间的关系：</p>
+<p>&nbsp;</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350026192_9384.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>我们希望的数据的variance和bias都不要大：</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350022363_3386.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>那么着就是一个variance和bias之间的tradeoff 了~</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>规则化 和 bias/variance</p>
+<p>&nbsp;</p>
+<p>上面一节中讲了bias和variance的诞生，那么这一节中偶们就将他们应用于regularization中。</p>
+<p>大家还记的什么是<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">regularization</a>么？regularization就是为了防止overfit而在cost function中引入的一个分量。</p>
+<p>还不清楚？看下图吧，regularization项就是cost function J(θ)中的最后一项，其中λ太大导致underfit，λ太小导致overfit……</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343485336_9809.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>将λ从0，0.01，一直往上每次乘以2，那么到10.24总共可以试12次λ。</p>
+<p>这12个λ会得到12个model的 cost function，每个对应有J(θ)和 Jcv(θ).</p>
+<p>和模型选择的方法相同，首先选出每个cost function下令J(θ)最小的θ，然后取出令Jcv（θ）最小的一组定为最终的λ。</p>
+<div><img src="file:///C:/Temp/ISLZT%60Q$@7Z85N$JT99OQAW.gif" alt=""></div>
+
+<p><img src="http://my.csdn.net/uploads/201207/28/1343488015_9752.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>来来，看看你做的对不：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489949_8716.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>图画出来就是这个样子滴：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489520_3981.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>λ太小导致overfit，产生variance，J(train)&lt;&lt;J(cv)</p>
+<p>λ太大导致underfit，产生bias，J(train) ≈ J(cv)</p>
+<p>能明白我的意思么？</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p><strong>Learning Curve：什么时候增加训练数据training set才是有效的？</strong></p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343491055_2077.jpg" alt=""></p>
+<p>这 一小节想要讲讲训练数据个数m和error之间的关系。从上面这幅图中我们可知（不知的话用极限思维想想），训练数据越少（如果只有一 个），J(train)越小，J(cv)越大；m越大，J(train)越大（因为越难perfectly拟合），J(cv)越小（因为越精确），懂我的 意思吧？</p>
+<p>&nbsp;</p>
+<p>那么我们分别就High Bias 和 High Variance来看看增加training set个数，即m，是否有意义？！</p>
+<p>&nbsp;</p>
+<p>Underfit 的 High bias: 增加m无济于事！</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491397_1191.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>Overfit的 High Variance: 增加m使得J(train)和J(cv)之间gap减小，有助于performance提高！</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491414_9656.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>来来，做道题：</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491551_2985.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>由图中可见，增加训练数据的个数对于过拟合是有用的，对于underfit是徒劳！</p>
+<p>下面总结一下，重温最初的解决方案列表：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491833_8587.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>针对underfit和overfit，分别是什么情况呢？见下图：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491992_8029.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>这章非常有用，讲了选择最佳拟合model的问题，是machine learning的常见问题，希望能对大家选择ml 模型有所帮助。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/05/27/5-Neural-Network-Learning/" itemprop="url">
+                (5) Neural Network Learning
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-05-27T14:32:59+08:00" content="2013-05-27">
+            2013-05-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>Machine Learning系列</p>
+<p>以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</p>
+<p><strong>第五讲——Neural Networks 神经网络的表示</strong></p>
+<p><strong>===============================</strong></p>
+<p><strong>（一）、Cost function</strong></p>
+<p><strong>（二）、Backpropagation algorithm</strong></p>
+<p>**（三）、Backpropagation intuition</p>
+<p>**</p>
+<p>**（四）、Implementation note: Unrolling parameters</p>
+<p>**</p>
+<p>**（五）、Gradient checking</p>
+<p>**</p>
+<p>**（六）、Random initialization</p>
+<p>**</p>
+<p><strong>（七）、Putting it together</strong></p>
+<hr>
+<hr>
+<p><span id="more-700"></span></p>
+<p><strong>===============================</strong></p>
+<p><strong>（一）、Cost function</strong></p>
+<hr>
+<p>假设神经网络的训练样本有m个，每个包含一组输入x和一组输出信号y，L表示神经网络层数，S<sub>l</sub>表示每层的neuron个数(SL表示输出层神经元个数)。</p>
+<p>将神经网络的分类定义为两种情况：二类分类和多类分类，</p>
+<p>卐二类分类：S<sub>L</sub>=1, y=0 or 1表示哪一类；</p>
+<p>卐K类分类：S<sub>L</sub>=K, y<sub>i </sub>= 1表示分到第i类；（K&gt;2）</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342592677_7744.jpg" alt=""></p>
+<p>我们在前几章中已经知道，Logistic hypothesis的Cost Function如下定义：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593231_9363.jpg" alt=""></p>
+<p>其中，前半部分表示hypothesis与真实值之间的距离，后半部分为对参数进行regularization的bias项，神经网络的cost function同理：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg" alt=""></p>
+<p>hypothesis与真实值之间的距离为 每个样本-每个类输出 的加和，对参数进行regularization的bias项处理所有参数的平方和</p>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（二）、Backpropagation algorithm</strong></p>
+<p>前面我们已经讲了cost function的形式，下面我们需要的就是最小化J(Θ)</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342598576_3338.jpg" alt=""></p>
+<p>想要根据gradient descent的方法进行参数optimization，首先需要得到cost function和一些参数的表示。根据forward propagation,我们首先进行training dataset 在神经网络上的各层输出值：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342598667_2585.jpg" alt=""></p>
+<p>我们定义神经网络的总误差为：</p>
+<center><a href="http://www.codecogs.com/eqnedit.php?latex=E%20=%20%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%7D%7B%28y_i-a_i%29%5E2%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?E%20=%20%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%7D%7B%28y_i-a_i%29%5E2%7D" alt="" title="E = \frac{1}{2}\sum_{i}{(y_i-a_i)^2}"></a></center><center>希望通过调整权重参数W（也就是theta）来最小化E。</center><center>由于</center><center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%20W%20%5Cpropto%20-%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20W%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%20W%20%5Cpropto%20-%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20W%7D" alt="" title="\Delta W \propto -\frac{\partial E}{\partial W}"></a></center><center></center><center>所以每一层按如下方式进行更新：</center><center><img src="http://latex.codecogs.com/gif.latex?%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%20=%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D+%5CDelta%5CTheta_%7Bij%7D%5E%7B%28l%29%7D=%5CTheta_%7Bij%7D%5E%7B%28l%29%7D-%5Calpha%20%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%7D" alt="" title="\Theta_{ij}^{(l)} = \Theta_{ij}^{(l)}+\Delta\Theta_{ij}^{(l)}=\Theta_{ij}^{(l)}-\alpha \frac{\partial E(\Theta)}{\partial \Theta_{ij}^{(l)}}"></center><center></center></center><center><center>根据backpropagation算法进行梯度的计算，这里引入了error变量δ，该残差表明了该节点对最终输出值的残差产生了多少影响。</center><center>对于最后一层，我们可以直接算出网络产生的输出<img src="http://latex.codecogs.com/gif.latex?a_i%5E%7B%28l%29%7D" alt="" title="a_i^{(l)}">与实际值之间的差距，我们将这个差距定义为<img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D" alt="" title="\delta_{i}^{(l)}">。对于隐藏单元我们如何处理呢？我们将通过计算各层节点残差的加权平均值计算hidden layer的残差。读者可以自己验证下，其实<img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D" alt="" title="\delta_{i}^{(l)}">就是E对b求导的结果。</center></center><center><center>在最后一层中，</center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20%5Cfrac%7B1%7D%7B2%7D%28y-a_i%5E%7B%28l%29%7D%29%5E2%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20[%5Cfrac%7B1%7D%7B2%7D%28y-g%28z_i%5E%7B%28l%29%7D%29%29%5E2]%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%20%28a_i%5E%7B%28l%29%7D-y%29%5Ccdot%20g%7B%E2%80%99%7D%27%28z_i%5E%7B%28l%29%7D%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20%5Cfrac%7B1%7D%7B2%7D%28y-a_i%5E%7B%28l%29%7D%29%5E2%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20[%5Cfrac%7B1%7D%7B2%7D%28y-g%28z_i%5E%7B%28l%29%7D%29%29%5E2]%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%20%28a_i%5E%7B%28l%29%7D-y%29%5Ccdot%20g%7B%E2%80%99%7D%27%28z_i%5E%7B%28l%29%7D%29" alt="" title="\delta_{i}^{(l)} = \frac{\partial E}{\partial z_i^{(l)}}=\frac{\partial \frac{1}{2}(y-a_i^{(l)})^2}{\partial z_i^{(l)}}=\frac{\partial [\frac{1}{2}(y-g(z_i^{(l)}))^2]}{\partial z_i^{(l)}}= (a_i^{(l)}-y)\cdot g{’}"></a></center></center><center><center>对于前面的每一层，都有</center><center><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D%5C%5C%20=%20%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20[%5Csum_%7Bk%7D%5E%7BN%5E%7Bl%7D%7D%5CTheta_%7Bjk%7D%5Ccdot%20g%28z_k%5E%7B%28l%29%7D%29]%20%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D,i%5Cin%20k%5C%5C%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" alt="" title="\delta_{i}^{(l)} = \frac{\partial E}{\partial z_i^{(l)}}=\sum_{j}^{N^{(l+1)}} \frac{\partial E}{\partial z_j^{(l+1)}} \cdot \frac{\partial z_j^{(l+1)}}{\partial z_i^{(l)}}\\ = \sum_{j}^{N^{(l+1)}} \delta_{j}^{(l+1)}\cdot \frac{\partial [\sum_{k}^{N^{l}}\Theta_{jk}\cdot g(z_k^{(l)})] }{\partial z_i^{(l)}},i\in k\\ =\sum_{j}^{N^{(l+1)}} (\delta_{j}^{(l+1)}\cdot \Theta_{ji}) \cdot g{"></center></center><center><center>由此得到第l层第i个节点的残差计算方法：</center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l@plus;1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l@plus;1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" alt="" title="\delta_{i}^{(l)} =\sum_{j}^{N^{(l+1)}} (\delta_{j}^{(l+1)}\cdot \Theta_{ji}) \cdot g{"></a></center></center><center><center>由于我们的真实目的是计算<a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%7D" alt="" title="\frac{\partial E(\Theta)}{\partial \Theta_{ji}}"></a>,且</center><center></center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfn_cm%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l@plus;1%29%7D%7D%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20z_i%5E%7B%28l@plus;1%29%7D%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%5Cdelta_i%5E%7B%28l@plus;1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" alt="" title="\fn_cm \frac{\partial E}{\partial \Theta_{ji}^{l}} = \frac{\partial E}{\partial z_i^{(l+1)}}\cdot \frac {\partial z_i^{(l+1)}}{\partial \Theta_{ji}^{l}} =\delta_i^{(l+1)}\cdot a_j^{(l)}"></a></center><center></center><center><center>所以我们可以得到神经网络中权重的update方程：</center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfn_cm%20%5CTheta_%7Bji%7D%5E%7Bl%7D%20=%20%5CTheta_%7Bji%7D%5E%7Bl%7D-%5Calpha%5Ccdot%20%5Cdelta_i%5E%7B%28l@plus;1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5CTheta_%7Bji%7D%5E%7Bl%7D%20=%20%5CTheta_%7Bji%7D%5E%7Bl%7D-%5Calpha%5Ccdot%20%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" alt="" title="\fn_cm \Theta_{ji}^{l} = \Theta_{ji}^{l}-\alpha\cdot \delta_i^{(l+1)}\cdot a_j^{(l)}"></a><center>不断迭代直到落入local optima,就是backpropagation的算法过程。</center><center></center></center><center><center></center><center><strong>============================================================</strong></center><center><strong>Example of logistical cost:</strong></center><center></center></center><center><center>下面我们针对logistical cost给出计算的例子：</center><center>而对于每一层，其误差可以定义为：</center></center><center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%20%5CTheta_%7Bk-1%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5CTheta%20_%7Bk-1%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%20%5CTheta_%7Bk-1%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5CTheta%20_%7Bk-1%7D%7D" alt="" title="\Delta \Theta_{k-1} = \frac{\partial E}{\partial a_k}\cdot \frac{\partial a_k}{\partial z_k} \cdot \frac{\partial z_k}{\Theta _{k-1}}"></a></center></center>
+
+<div>分别代入即得</div>
+
+<center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%20=%20a_k-y%20%5C%5C%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20g%28z_k%29%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7Be%5E%7B-z%7D%7D%7B%281@plus;e%5E%7B-z%7D%29%5E2%7D%20=%20a_k%281-a_k%29%5C%5C%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20%5CTheta%20_%7Bk-1%7D%7D%20=%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%20=%20a_k-y%20%5C%5C%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20g%28z_k%29%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7Be%5E%7B-z%7D%7D%7B%281+e%5E%7B-z%7D%29%5E2%7D%20=%20a_k%281-a_k%29%5C%5C%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20%5CTheta%20_%7Bk-1%7D%7D%20=%20a_%7Bk-1%7D" alt="" title="\frac{\partial E}{\partial a_k} = a_k-y \\ \frac{\partial a_k}{\partial z_k} = \frac{\partial g(z_k))}{\partial z_k} = \frac{e^{-z}}{(1+e^{-z})^2} = a_k(1-a_k)\\ \frac{\partial z_k}{\partial \Theta _{k-1}} = a_{k-1}"></a></center><center></center><center>由此得来\theta_{k}的update方程：</center>
+
+<div></div>
+
+<p><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CTheta_%7Bk%7D%20=%20%5Cxi%20%28y-a_k%29a_k%281-a_k%29a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_%7Bk%7D%20=%20%5Cxi%20%28y-a_k%29a_k%281-a_k%29a_%7Bk-1%7D" alt="" title="\Theta_{k} = \xi (y-a_k)a_k(1-a_k)a_{k-1}"></a></center><center></center><center>如果将误差对激励函数（activation function）的导数记做δ，则有：</center><center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bk%7D%20=%20%28y-a_k%29a_k%281-a_k%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bk%7D%20=%20%28y-a_k%29a_k%281-a_k%29" alt="" title="\delta_{k} = (y-a_k)a_k(1-a_k)"></a></center><center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" alt="" title="\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}"></a></center><center></center><center>对于前面一层 ,更新同理，<a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" alt="" title="\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}"></a>，只是上一层\Theta梯度的第一个分量E对a_k求导有所变化，</center><center></center><center>[![](<a href="http://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a</a>_%7Bj%7D%7D=%5Csum_%7Bk%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20a_%7Bj%7D%7D%5C%5C%20=%20%5Csum_%7Bk%7D%28y-a_k%29%5Ccdot%20a_k%281-a_k%29%5Ccdot%20%5CTheta_j%20%5Cend%7Balign_%7D “\begin{align_} \frac{\partial E}{\partial a_{j}}=\sum_{k} \frac{\partial E}{\partial a_k}\cdot \frac{\partial a_k}{\partial z_k}\cdot \frac{\partial z_k}{\partial a_{j}}\ = \sum_{k}(y-a_k)\cdot a_k(1-a_k)\cdot \Theta_j \end{align_}”)](<a href="http://www.codecogs.com/eqnedit.php?latex=%5Cbegin%7Balign" target="_blank" rel="external">http://www.codecogs.com/eqnedit.php?latex=%5Cbegin%7Balign</a>_%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_%7Bj%7D%7D=%5Csum_%7Bk%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20a_%7Bj%7D%7D%5C%5C%20=%20%5Csum_%7Bk%7D%28y-a_k%29%5Ccdot%20a_k%281-a_k%29%5Ccdot%20%5CTheta_j%20%5Cend%7Balign*%7D)</center>但是[![](<a href="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a</a>_%7Bk-1%7D “\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}”)](<a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D)始终是不变的。" target="_blank" rel="external">http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D)始终是不变的。</a></p>
+<p>&nbsp;</p>
+<p><center>下图就是上面推导得出的结果：</center><img src="http://my.csdn.net/uploads/201207/18/1342598929_7260.jpg" alt=""></p>
+<p>由上图我们得到了error变量δ的计算，下面我们来看backpropagation算法的伪代码：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342599882_9006.jpg" alt=""></p>
+<p>ps：最后一步之所以写+=而非直接赋值是把Δ看做了一个矩阵，每次在相应位置上做修改。</p>
+<p>从后向前此计算每层依的δ，用Δ表示全局误差，每一层都对应一个Δ(l)。再引入D作为cost function对参数的求导结果。下图左边j是否等于0影响的是是否有最后的bias regularization项。左边是定义，右边可证明（比较繁琐）。</p>
+<p><img src="http://my.csdn.net/uploads/201207/19/1342669084_1797.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（三）、Backpropagation intuition</strong></p>
+<p>上面讲了backpropagation算法的步骤以及一些公式，在这一小节中我们讲一下最简单的back-propagation模型是怎样learning的。</p>
+<p>首先根据forward propagation方法从前往后计算z<sup>(j)</sup>,a<sup>(j) </sup>;</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342755240_7990.jpg" alt=""></p>
+<p>然后将原cost function 进行简化，去掉下图中后面那项regularization项，</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg" alt=""></p>
+<p>那么对于输入的第i个样本(xi,yi)，有</p>
+<p>Cost(i)=y<sup>(i)</sup>log(h<sub>θ</sub>(x<sup>(i)</sup>))+(1- y<sup>(i)</sup>)log(1- h<sub>θ</sub>(x<sup>(i)</sup>))</p>
+<p>&nbsp;</p>
+<p>由上文可知，</p>
+<p><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_k%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20a_k%7D%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5CTheta_%7Bk%7D%5Cdelta_%7Bk@plus;1%7D%5Ccdot%20g%27%28z_k%29%20%5C%5C%20%5CDelta%20w_%7Bij%7D%20=%20%5CDelta%20w_%7Bij%7D%20@plus;%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5CDelta%20w_%7Bij%7D%20@plus;%20a_j%5El%20%5Ccdot%20%5Cdelta_k%5E%28l@plus;1%29%5C%5C%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20w_%7Bij%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_k%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20a_k%7D%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5CTheta_%7Bk%7D%5Cdelta_%7Bk+1%7D%5Ccdot%20g%27%28z_k%29%20%5C%5C%20%5CDelta%20w_%7Bij%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20a_j%5El%20%5Ccdot%20%5Cdelta_k%5E%28l+1%29%5C%5C%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20w_%7Bij%7D%7D" alt="" title="\delta_k = \frac{\partial J(\Theta)}{\partial z_k} = \frac{\partial J(\Theta)}{\partial a_k}\frac{\partial a_k}{\partial z_k} = \Theta_{k}\delta_{k+1}\cdot g"></a></p>
+<p>&nbsp;</p>
+<div>其中J就是cost。那么将其进行简化，暂时不考虑g&#8217;(zk) = ak(1-ak)的部分，就有：</div>
+
+<p><img src="http://my.csdn.net/uploads/201207/20/1342755924_6084.jpg" alt=""></p>
+<p>经过求导计算可得，对于上图有</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342756492_7306.jpg" alt=""></p>
+<p>换句话说, 对于每一层来说，δ分量都等于后面一层所有的δ加权和，其中权值就是参数Θ。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>(四)、Implementation note: Unrolling parameters</strong></p>
+<p>这一节讲述matlab中如何实现unrolling parameter。</p>
+<p>前几章中已经讲过<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">在matlab中利用梯度下降方法进行更新</a>的<a href="http://blog.csdn.net/abcjennifer/article/details/7716281" target="_blank" rel="external">根本</a>，两个方程：</p>
+<div>function [jVal, gradient] = costFunction(theta)</div><br><div>optTheta = fminunc(@costFunction, initialTheta, options)</div>
+
+<p>与linear regression和logistic regression不同，在神经网络中，参数非常多，每一层j有一个参数向量Θj和Derivative向量Dj。那么我们首先将各层向量连起来，组成大vectorΘ和D，传入function，再在计算中进行下图中的reshape，分别取出进行计算。</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342758124_6714.jpg" alt=""></p>
+<p>计算时，方法如下：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342758617_6030.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p>&nbsp;</p>
+<p><strong>（五）、Gradient checking</strong></p>
+<hr>
+<p>神经网络中计算起来数字千变万化难以掌握，那我们怎么知道它里头工作的对不对呢？不怕，我们有法宝，就是gradient checking，通过check梯度判断我们的code有没有问题，ok？怎么做呢，看下边：</p>
+<p>对于下面这个【Θ-J(Θ)】图，取Θ点左右各一点（Θ+ε），（Θ-ε），则有点Θ的导数（梯度）近似等于(J（Θ+ε）-J（Θ-ε）)/(2ε)。<img src="http://my.csdn.net/uploads/201207/20/1342760070_2369.jpg" alt=""></p>
+<p>对于每个参数的求导公式如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342760372_7886.jpg" alt=""></p>
+<p>由于在back-propagation算法中我们一直能得到J(Θ)的导数D（derivative），那么就可以将这个近似值与D进行比较，如果这两个结果相近就说明code正确，否则错误，如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342760485_3627.jpg" alt=""></p>
+<p>Summary: 有以下几点需要注意</p>
+<p>-在back propagation中计算出J(θ)对θ的导数D，并组成vector（Dvec）</p>
+<p>-用numerical gradient check方法计算大概的梯度gradApprox=(J（Θ+ε）-J（Θ-ε）)/(2ε)</p>
+<p>-看是否得到相同（or相近）的结果</p>
+<p>-（这一点非常重要）停止check，只用back propagation 来进行神经网络学习（否则会非常慢，相当慢）</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342763419_5311.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p>&nbsp;</p>
+<p>（六）、Random Initialization</p>
+<p>&nbsp;</p>
+<p>对于参数θ的initialization问题，我们之前采用全部赋0的方法，比如：</p>
+<p><img src="http://img.my.csdn.net/uploads/201207/20/1342765350_2992.jpg" alt=""></p>
+<p>this means all of your hidden units are computing all of the exact same function of the input. So this is a highly redundant representation. 因为一层内的所有计算都可以归结为1个，而这使得一些interesting的东西被ignore了。</p>
+<p>所以我们应该打破这种symmetry，randomly选取每一个parameter，在[-ε,ε]范围内：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342765672_2379.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（七）、Putting it together</strong></p>
+<p>1. 选择神经网络结构</p>
+<p>我们有很多choices of network :</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342766687_6181.jpg" alt=""></p>
+<p>那么怎么选择呢？</p>
+<p>No. of input units: Dimension of features</p>
+<p>No. output units: Number of classes</p>
+<p>Reasonable default: 1 hidden layer, or if &gt;1 hidden layer, have same no. of hidden units in every layer (usually the more the better)</p>
+<p>2. 神经网络的训练</p>
+<p>① Randomly initialize weights</p>
+<p>② Implement forward propagation to get h<sub>θ</sub>(x<sup>(i)</sup>) for anyx<sup>(i)</sup></p>
+<p>③ Implement code to compute cost function J(θ)</p>
+<p>④ Implement backprop to compute partial derivatives<img src="http://my.csdn.net/uploads/201207/20/1342767581_5098.jpg" alt=""></p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342767872_4774.jpg" alt=""></p>
+<p>⑤</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768036_8648.jpg" alt=""></p>
+<p>⑥</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768080_8986.jpg" alt=""></p>
+<p>test:</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768354_6576.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<p>本章讲述了神经网络学习的过程，重点在于back-propagation算法，gradient-checking方法，希望能够有人用我之前<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">这篇文章中的类似方法</a>予以实现神经网络。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/5/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/7/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

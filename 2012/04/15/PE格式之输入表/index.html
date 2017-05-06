@@ -1,0 +1,613 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。还是copy小甲鱼的课件。。。。
+
+输入表结构回顾一下，在 PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIPTOR(简称IID) 的数组开始。每个被 PE文件链接进来的 DL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE格式之输入表">
+<meta property="og:url" content="http://yoursite.com/2012/04/15/PE格式之输入表/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。还是copy小甲鱼的课件。。。。
+
+输入表结构回顾一下，在 PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIPTOR(简称IID) 的数组开始。每个被 PE文件链接进来的 DL">
+<meta property="og:image" content="http://www.fishc.com/uploads/allimg/120113/9_120113233038_1.gif">
+<meta property="og:image" content="http://www.fishc.com/uploads/allimg/120113/9_120113233224_1.gif">
+<meta property="og:updated_time" content="2015-07-25T05:08:12.064Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PE格式之输入表">
+<meta name="twitter:description" content="紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。还是copy小甲鱼的课件。。。。
+
+输入表结构回顾一下，在 PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIPTOR(简称IID) 的数组开始。每个被 PE文件链接进来的 DL">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> PE格式之输入表 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              PE格式之输入表
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-15T20:50:43+08:00" content="2012-04-15">
+            2012-04-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。">紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。</h2><div>还是copy小甲鱼的课件。。。。</div><br><div></div>
+
+<h2 id="输入表结构">输入表结构</h2><p>回顾一下，在 PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIPTOR(简称IID) 的数组开始。每个被 PE文件链接进来的 DLL文件都分别对应一个 IID数组结构。在这个 IID数组中，并没有指出有多少个项(就是没有明确指明有多少个链接文件)，但它最后是以一个全为NULL(0) 的 IID 作为结束的标志。</p>
+<p>&nbsp;</p>
+<p>IMAGE_IMPORT_DESCRIPTOR 结构定义如下：</p>
+<p>IMAGE_IMPORT_DESCRIPTOR STRUCT</p>
+<p>union</p>
+<p>Characteristics              DWORD   ?</p>
+<p>OriginalFirstThunk        DWORD   ?</p>
+<p>ends</p>
+<p>TimeDateStamp                 DWORD   ?</p>
+<p>ForwarderChain                 DWORD   ?</p>
+<p>Name                                  DWORD   ?</p>
+<p>FirstThunk                          DWORD   ?</p>
+<p>IMAGE_IMPORT_DESCRIPTOR ENDS</p>
+<p>&nbsp;</p>
+<h2 id="成员介绍:">成员介绍:</h2><h3 id="OriginalFirstThunk">OriginalFirstThunk</h3><p>它指向first thunk，IMAGE_THUNK_DATA，该 thunk 拥有 Hint 和 Function name 的地址。</p>
+<p>&nbsp;</p>
+<h3 id="TimeDateStamp">TimeDateStamp</h3><p>该字段可以忽略。如果那里有绑定的话它包含时间/数据戳（time/data stamp）。如果它是0，就没有绑定在被导入的DLL中发生。在最近，它被设置为0xFFFFFFFF以表示绑定发生。</p>
+<p>&nbsp;</p>
+<h3 id="ForwarderChain">ForwarderChain</h3><p>一般情况下我们也可以忽略该字段。在老版的绑定中，它引用API的第一个forwarder chain（传递器链表）。它可被设置为0xFFFFFFFF以代表没有forwarder。</p>
+<p>&nbsp;</p>
+<h3 id="Name">Name</h3><p>它表示DLL 名称的相对虚地址（译注：相对一个用null作为结束符的ASCII字符串的一个RVA，该字符串是该导入DLL文件的名称，如：KERNEL32.DLL）。</p>
+<p>&nbsp;</p>
+<h3 id="FirstThunk">FirstThunk</h3><p>它包含由IMAGE_THUNK_DATA定义的 first thunk数组的虚地址，通过loader用函数虚地址初始化thunk。在Orignal First Thunk缺席下，它指向first thunk：Hints和The Function names的thunks。</p>
+<p>这个OriginalFirstThunk 和 FirstThunk明显是亲家，两家伙首先名字就差不多哈。那他们有什么不可告人的秘密呢？来，我们看下面一张图（画的很辛苦，大家仔细看哈）：</p>
+<p>&nbsp;</p>
+<div><img src="http://www.fishc.com/uploads/allimg/120113/9_120113233038_1.gif" alt="PE教程,PE视频教程,PE原理,PE头教程"></div><br><div></div><br><div><br><div>我们看到：OriginalFirstThunk 和 FirstThunk 他们都是两个类型为IMAGE_THUNK_DATA 的数组，它是一个指针大小的联合（union）类型。每一个IMAGE_THUNK_DATA 结构定义一个导入函数信息（即指向结构为IMAGE_IMPORT_BY_NAME 的家伙，这家伙稍后再议），然后数组最后以一个内容为0 的 IMAGE_THUNK_DATA 结构作为结束标志。</div><br><div></div><br><div>我们得到 IMAGE_THUNK_DATA 结构的定义如下：</div><br><div>IMAGE_THUNK_DATA STRUC</div><br><div>    union u1</div><br><div>    ForwarderString       DWORD  ?        ; 指向一个转向者字符串的RVA</div><br><div>    Function                   DWORD  ?        ; 被输入的函数的内存地址</div><br><div>    Ordinal                     DWORD  ?        ; 被输入的API 的序数值</div><br><div>    AddressOfData        DWORD  ?        ; 指向 IMAGE_IMPORT_BY_NAME</div><br><div>    ends</div><br><div>IMAGE_THUNK_DATA ENDS</div><br><div></div><br><div>我们可以看出由于是union结构，所以IMAGE_THUNK_DATA 事实上是一个双字大小。该结构在不同时候赋予不同的意义（伟大神奇不得鸟……）。其实union这种数据结构很容易理解：说白了就是当时穷，能省就省，再说白了，就是几兄弟姐妹轮流穿一条裤子去相亲！理解了吧？哈哈~</div><br><div></div><br><div>那我们怎么来区分何时是何意义呢？</div><br><div>规定如下：</div><br><div>当 IMAGE_THUNK_DATA 值的最高位为 1时，表示函数以序号方式输入，这时候低 31位被看作一个函数序号。</div><br><div>当 IMAGE_THUNK_DATA 值的最高位为 0时，表示函数以字符串类型的函数名方式输入，这时双字的值是一个 RVA，指向一个 IMAGE_IMPORT_BY_NAME 结构。（演示请看小甲鱼解密系列视频讲座）</div><br><div></div><br><div>好，那接着我们讨论下指向的这个 IMAGE_IMPORT_BY_NAME 结构。IMAGE_IMPORT_BY_NAME 结构仅仅只有一个字型数据的大小，存有一个输入函数的相关信息结构。其结构如下：</div><br><div>IMAGE_IMPORT_BY_NAME STRUCT</div><br><div>    Hint        WORD    ?</div><br><div>    Name      BYTE      ?</div><br><div>IMAGE_IMPORT_BY_NAME ENDS</div><br><div></div><br><div>结构中的 Hint 字段也表示函数的序号，不过这个字段是可选的，有些编译器总是将它设置为 0，Name 字段定义了导入函数的名称字符串，这是一个以 0 为结尾的字符串。</div><br><div>整个过程看起来有点绕有点烦，别急，后边我们有演示哈。</div><br><div></div><br><div></div>
+
+<h2 id="输入地址表（IAT）">输入地址表（IAT）</h2><div></div><br><div>为什么由两个并行的指针数组同时指向 IMAGE_IMPORT_BY_NAME 结构呢？第一个数组（由 OriginalFirstThunk 所指向）是单独的一项，而且不能被改写，我们前边称为 INT。第二个数组（由 FirstThunk 所指向）事实上是由 PE 装载器重写的。</div><br><div></div><br><div>好了，那么 PE 装载器的核心操作时如何的呢？这里就给大家揭秘啦~</div><br><div>PE 装载器首先搜索 OriginalFirstThunk ，找到之后加载程序迭代搜索数组中的每个指针，找到每个 IMAGE_IMPORT_BY_NAME 结构所指向的输入函数的地址，然后加载器用函数真正入口地址来替代由 FirstThunk 数组中的一个入口，因此我们称为输入地址表（IAT）。所以，当我们的 PE 文件装载内存后准备执行时，刚刚的图就会转化为下图：</div><br><div></div><br><div><img src="http://www.fishc.com/uploads/allimg/120113/9_120113233224_1.gif" alt="PE教程,PE视频教程,PE原理,PE头教程"></div><br><div></div><br><div><br><div>此时，输入表中其他部分就不重要了，程序依靠 IAT 提供的函数地址就可正常运行。</div><br><div></div><br><div>自己在写的时候遇到了很多问题：</div><br><div>1.输入表一定在.idata区块里面吗？</div><br><div>答：当然不是了。在VC编译器下面是这样的，但是不同的编译器下面是不一样的。而且区块的名称只是名称而已，没有什么大用处。</div><br><div>2.注意一下IMAGE_THUNK_DATA这个数据结构，可以回上去看看小甲鱼的课件，它是一个联合体类型。</div><br><div></div><br><div><br><div></div><br><div>当 IMAGE_THUNK_DATA 值的最高位为 0时，表示函数以字符串类型的函数名方式输入，这时双字的值是一个 RVA，指向一个</div><br><div>这个时候很好办，我们可以找到这个RVA换算成offset 最终获得它的函数名称</div><br><div></div><br><div>当 IMAGE_THUNK_DATA 值的最高位为 1时，表示函数以序号方式输入，这时候低 31位被看作一个函数序号。</div><br><div>这个时候就讨厌了，如果没有考虑到这个情况的话，程序很可能会因为错误的指针而出错。</div><br><div>这个时候我们就应该用一个if语句来进行一下判断：</div><br><div></div><br><div><br><figure class="highlight"><figcaption><span>SrcImageThunkData = (PIMAGE_THUNK_DATA) PINT;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if ( ! (SrcImageThunkData[i].u1.Ordinal &#38;amp; 0x80000000))</span><br></pre></td></tr></table></figure><br><br><div></div><br><div>这里用到了 &amp; 按位与运算<br><br>注意一下这里的 0&#215;80000000是十六进制的，0&#215;8转换成二进制就是1000 这样最高位就是1了<br><br>通过这个if条件的判断，就可以知道联合体的成员是ForwarderString 还是Ordinal<br><br>好吧，下面把我自己写的代码贴上来，虽然说有点乱，只是当做自己的笔记。大家可以不看的。因为代码写的很不工整。。。。</div><br><div></div><br><div></div><br></div><br></div><br></div><br><div><br><figure class="highlight"><figcaption><span>&lt;stdio.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;windows.h&#38;gt;&#10;#include &#38;lt;tchar.h&#38;gt;&#10;#include &#38;lt;winnt.h&#38;gt;&#10;&#10;const TCHAR* FileName = L&#34;d:\PING.exe&#34;;&#10;//&#25991;&#20214;&#30446;&#24405;&#10;const TCHAR* NewFileName = L&#34;d:\PING2.exe&#34;;&#10;//&#22797;&#21046;&#30340;&#25991;&#20214;&#30446;&#24405;&#10;HANDLE hFile;&#10;//&#25991;&#20214;&#21477;&#26564;&#10;BYTE* pBase = NULL;&#10;//&#22522;&#22320;&#22336;&#10;int NumberOfSections;&#10;//&#21306;&#22359;&#34920;&#30340;&#20010;&#25968;&#10;DWORD IMPORT_RVA = NULL;&#10;//&#36755;&#20837;&#34920;&#30340;RVA&#10;DWORD IMPORT_OFFSET = NULL;&#10;//&#36755;&#20837;&#34920;&#30340;offset&#10;DWORD IN_IMPORT_RVA = NULL;&#10;//&#36755;&#20837;&#34920;&#25152;&#22312;&#30340;&#21306;&#22359;&#30340;&#36215;&#22987;RVA&#10;DWORD IN_IMPORT_OFFSET = NULL;&#10;//&#36755;&#20837;&#34920;&#25152;&#22312;&#21306;&#22359;&#30340;&#29289;&#29702;&#36215;&#22987;&#22320;&#22336;&#10;BYTE* fnReadFile();&#10;//&#35835;&#21462;&#25991;&#20214;&#10;int fnReadPE (BYTE *pBuffer);&#10;//&#35835;&#21462;PE&#25991;&#20214;&#20449;&#24687;&#10;BYTE* fnReadDosHeader(BYTE* pBuffer);&#10;//&#35835;&#21462;dos&#25991;&#20214;&#22836;&#20449;&#24687;&#10;int fnReadNTHeader(BYTE* pBuffer);&#10;//&#35835;&#21462; PE&#25991;&#20214;&#22836;&#20449;&#24687;&#10;int fnReadFileHeader(BYTE* ImageFileHeader);&#10;//&#35835;&#21462;PE&#25991;&#20214;&#22836;&#20013;&#30340;FileHeader&#32467;&#26500;&#30340;&#20449;&#24687;&#10;int fnReadOptionalHeader(BYTE* ImageOptionalHeader);&#10;//&#35835;&#21462;PE&#25991;&#20214;&#22836;&#20013;&#30340;OptionalHeader&#32467;&#26500;&#30340;&#20449;&#24687;&#10;int fnReadSectionHeader(BYTE* ImageSectionHeader);&#10;//&#35835;&#21462;&#21306;&#22359;&#34920;&#10;int fnReadImportTable(BYTE* ImportTable);&#10;//&#35835;&#21462;&#36755;&#20837;&#34920;&#10;int fnReadDllName(BYTE* PDllName);&#10;//&#35835;&#21462;DLL&#21517;&#31216;&#10;int fnReadINT(BYTE* PINT);&#10;//&#35835;&#21462;INT&#10;int fnReadFunctionName(BYTE* PFunctionName);&#10;//&#35835;&#21462;&#20989;&#25968;&#21517;&#31216;&#10;//int fnAddSectionTable(LONG offset);&#10;//&#28155;&#21152;PE&#21306;&#22359;&#34920;&#10;int Copy();&#10;//&#22797;&#21046;&#25991;&#20214;&#65292;&#38450;&#27490;&#25991;&#20214;&#34987;&#30772;&#22351;&#10;&#10;IMAGE_SECTION_HEADER  Own_Section_Header;&#10;/*&#10;Own_Section_Header.Name[Own_Section_Header] = &#34;.carl&#34;;&#10;Own_Section_Header.VirtualAddress = 9A010000 ;               // &#33410;&#21306;&#30340; RVA &#22320;&#22336;&#10;Own_Section_Header.SizeOfRawData =00100000 ;              // &#22312;&#25991;&#20214;&#20013;&#23545;&#40784;&#21518;&#30340;&#23610;&#23544;&#10;Own_Section_Header.PointerToRawData = 00020000;         // &#22312;&#25991;&#20214;&#20013;&#30340;&#20559;&#31227;&#37327;&#10;Own_Section_Header.PointerToRelocations = 00040000;     // &#22312;OBJ&#25991;&#20214;&#20013;&#20351;&#29992;&#65292;&#37325;&#23450;&#20301;&#30340;&#20559;&#31227;&#10;Own_Section_Header.PointerToLinenumbers = 00000000;   // &#34892;&#21495;&#34920;&#30340;&#20559;&#31227;&#65288;&#20379;&#35843;&#35797;&#20351;&#29992;&#22320;&#65289;&#10;Own_Section_Header.NumberOfRelocations =0000;      // &#22312;OBJ&#25991;&#20214;&#20013;&#20351;&#29992;&#65292;&#37325;&#23450;&#20301;&#39033;&#25968;&#30446;&#10;Own_Section_Header.NumberOfLinenumbers = 0000;    // &#34892;&#21495;&#34920;&#20013;&#34892;&#21495;&#30340;&#25968;&#30446;&#10;Own_Section_Header.Characteristics = 20000060;              // &#33410;&#23646;&#24615;&#22914;&#21487;&#35835;&#65292;&#21487;&#20889;&#65292;&#21487;&#25191;&#34892;&#31561;&#10;*/&#10;int main()&#10;&#123;&#10;&#9;Copy();&#10;&#9;BYTE* pBuffer = fnReadFile();&#10;&#10;&#9;fnReadPE (pBuffer);&#10;&#10;&#9;return 0;&#10;&#125;&#10;&#10;BYTE* fnReadFile()&#10;&#123;&#10;&#9;printf(&#34;&#26144;&#23556;&#25991;&#20214;...n&#34;);&#10;&#9;hFile = CreateFile(NewFileName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);&#10;&#9;//&#35835;&#21462;&#25991;&#20214;&#10;&#9;if (hFile == INVALID_HANDLE_VALUE)&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;&#25171;&#24320;&#25991;&#20214;&#20986;&#38169;n&#34;);&#10;&#9;&#9;return 0;&#10;&#9;&#125;&#10;&#9;DWORD dwFileSize = GetFileSize(hFile, NULL);&#10;&#9;//&#33719;&#24471;&#25991;&#20214;&#22823;&#23567;&#10;&#9;BYTE* pBuffer = new BYTE[dwFileSize];&#10;&#9;//new&#30456;&#24403;&#20110;malloc&#10;&#9;DWORD dwSizeOfRead;&#10;&#10;&#9;if(!ReadFile(hFile, pBuffer, dwFileSize, &#38;amp;dwSizeOfRead, NULL))&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;&#35835;&#21462;&#25991;&#20214;&#20986;&#38169;n&#34;);&#10;&#9;&#9;pBase = NULL;&#10;&#9;&#9;return 0;&#10;&#9;&#125;&#10;&#9;pBase = pBuffer;&#10;&#9;return pBase;&#10;&#9;//&#22522;&#22320;&#22336;&#10;&#125;&#10;&#10;int fnReadPE(BYTE *pBuffer)&#10;&#123;&#10;&#9;printf(&#34;&#35835;&#21462;PE&#20449;&#24687;...n&#34;);&#10;&#9;BYTE* pBaseNTHeader = fnReadDosHeader(pBuffer);&#10;&#9;//&#35843;&#29992;fnReadDosHeader&#20989;&#25968;&#33719;&#21462;Dos&#22836;&#20449;&#24687;,&#24182;&#19988;&#33719;&#24471;PE&#25991;&#20214;&#22836;&#30340;&#22522;&#22320;&#22336;&#10;&#9;if (!pBaseNTHeader)&#10;&#9;&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#10;&#9;if (!fnReadNTHeader(pBaseNTHeader))&#10;&#9;&#9;//&#35835;&#21462;PE&#25991;&#20214;&#22836;&#20449;&#24687;&#10;&#9;&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;&#10;&#10;BYTE* fnReadDosHeader(BYTE* pBuffer)&#10;//&#35835;&#21462;dos&#25991;&#20214;&#22836;&#20449;&#24687;&#10;&#123;&#10;&#9;printf(&#34;&#35835;&#21462;DOS&#25991;&#20214;&#22836;...n&#34;);&#10;&#9;PIMAGE_DOS_HEADER SrcImageDosHeader = (PIMAGE_DOS_HEADER)pBuffer;&#10;&#9;if (SrcImageDosHeader-&#38;gt;e_magic != IMAGE_DOS_SIGNATURE)&#10;&#9;&#123;&#10;&#9;&#9;return 0;&#10;&#9;&#125;&#10;&#9;else&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;IMAGE_DOS_HEADER&#32467;&#26500;n&#34;);&#10;&#9;&#9;printf(&#34;e_magic   :%04x   DOS&#21487;&#25191;&#34892;&#25991;&#20214;&#26631;&#35760;n&#34;,SrcImageDosHeader-&#38;gt;e_magic);&#10;&#9;&#9;printf(&#34;e_cblp    :%04x   Bytes on last page of filen&#34;,SrcImageDosHeader-&#38;gt;e_cblp);&#10;&#9;&#9;printf(&#34;e_cp      :%04x   Page in filen&#34;, SrcImageDosHeader-&#38;gt;e_cp);&#10;&#9;&#9;printf(&#34;e_crlc    :%04x   Relocationsn&#34;, SrcImageDosHeader-&#38;gt;e_crlc);&#10;&#9;&#9;printf(&#34;e_cparhdr :%04x   Size of header in paragraphsn&#34;, SrcImageDosHeader-&#38;gt;e_cparhdr);&#10;&#9;&#9;printf(&#34;e_minalloc:%04x   Minimum extra paragraphs neededn&#34;, SrcImageDosHeader-&#38;gt;e_minalloc);&#10;&#9;&#9;printf(&#34;e_maxalloc:%04x   Maximum extra paragraphs neededn&#34;, SrcImageDosHeader-&#38;gt;e_maxalloc);&#10;&#9;&#9;printf(&#34;e_ss      :%04x   Initial (relative) SS value DOS&#20195;&#30721;&#30340;&#21021;&#22987;&#21270;&#22534;&#26632;SSn&#34;, SrcImageDosHeader-&#38;gt;e_ss);&#10;&#9;&#9;printf(&#34;e_sp      :%04x   Initial SP value DOS&#20195;&#30721;&#30340;&#21021;&#22987;&#21270;&#22534;&#26632;&#25351;&#38024;SPn&#34;, SrcImageDosHeader-&#38;gt;e_sp);&#10;&#9;&#9;printf(&#34;e_csum    :%04x   Checksumn&#34;, SrcImageDosHeader-&#38;gt;e_csum);&#10;&#9;&#9;printf(&#34;e_ip      :%04x   Initial IP value DOS&#20195;&#30721;&#30340;&#21021;&#22987;&#21270;&#25351;&#38024;&#20837;&#21475;n&#34;, SrcImageDosHeader-&#38;gt;e_ip);&#10;&#9;&#9;printf(&#34;e_cs      :%04x   Initial (relative) CS value DOS&#20195;&#30721;&#30340;&#21021;&#22987;&#22534;&#26632;&#20837;&#21475;n&#34;, SrcImageDosHeader-&#38;gt;e_cs);&#10;&#9;&#9;printf(&#34;e_lfarlc  :%04x   File address of elocation tablen&#34;, SrcImageDosHeader-&#38;gt;e_lfarlc);&#10;&#9;&#9;printf(&#34;e_ovno    :%04x   Overlay numbern&#34;, SrcImageDosHeader-&#38;gt;e_ovno);&#10;&#9;&#9;printf(&#34;e_res[4]  :%04x, %04x, %04x, %04x   Reserved wordsn&#34;, SrcImageDosHeader-&#38;gt;e_res[0],SrcImageDosHeader-&#38;gt;e_res[1],SrcImageDosHeader-&#38;gt;e_res[2],SrcImageDosHeader-&#38;gt;e_res[3]);&#10;&#9;&#9;printf(&#34;e_oemid   :%04x   OEM identifier (for e_oeminfo)n&#34;, SrcImageDosHeader-&#38;gt;e_oemid);&#10;&#9;&#9;printf(&#34;e_oeminfo :%04x   OEM information; e_oemid specificn&#34;, SrcImageDosHeader-&#38;gt;e_oeminfo);&#10;&#9;&#9;printf(&#34;e_res2[10]:%04x,%04x,%04x,%04x,%04x,%04x,%04x,%04x,%04x,%04x,   Reserved wordsn&#34;, SrcImageDosHeader-&#38;gt;e_res2[0],SrcImageDosHeader-&#38;gt;e_res2[1],SrcImageDosHeader-&#38;gt;e_res2[2],SrcImageDosHeader-&#38;gt;e_res2[3],SrcImageDosHeader-&#38;gt;e_res2[4],SrcImageDosHeader-&#38;gt;e_res2[5],SrcImageDosHeader-&#38;gt;e_res2[6],SrcImageDosHeader-&#38;gt;e_res2[7],SrcImageDosHeader-&#38;gt;e_res2[8],SrcImageDosHeader-&#38;gt;e_res2[9]);&#10;&#9;&#9;printf(&#34;e_lfanew  :%04x   File address of new exe header &#25351;&#21521;PE&#25991;&#20214;&#22836;n&#34;, SrcImageDosHeader-&#38;gt;e_lfanew);&#10;&#9;&#125;&#10;&#9;LONG  test = (LONG) (SrcImageDosHeader-&#38;gt;e_lfanew);&#10;&#9;//fnAddSectionTable(test);//PE&#25991;&#20214;&#22836;&#30340;&#24320;&#22987;&#20301;&#32622;&#10;&#10;&#9;return (BYTE*) (pBuffer + SrcImageDosHeader-&#38;gt;e_lfanew);&#10;&#125;&#10;&#10;int fnReadNTHeader(BYTE* pBaseNTBuffer)&#10;&#123;&#10;&#9;printf(&#34;&#35835;&#21462;PE&#25991;&#20214;&#22836;...n&#34;);&#10;&#9;PIMAGE_NT_HEADERS SrcImageNTHeader = (PIMAGE_NT_HEADERS)(pBaseNTBuffer);&#10;&#9;if (SrcImageNTHeader-&#38;gt;Signature != IMAGE_NT_SIGNATURE)&#10;&#9;&#123;&#10;&#9;&#9;return 1;&#10;&#9;&#125;&#10;&#9;else&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;IMAGE_NT_HEADERS&#32467;&#26500;n&#34;);&#10;&#9;&#9;printf(&#34;Signature   :%08xn&#34;, SrcImageNTHeader-&#38;gt;Signature);&#10;&#9;&#9;fnReadFileHeader((BYTE*)&#38;amp;SrcImageNTHeader-&#38;gt;FileHeader);&#10;&#9;&#9;//&#35835;&#21462;FileHeader&#32467;&#26500;&#30340;&#20449;&#24687;&#10;&#9;&#9;fnReadOptionalHeader((BYTE*) &#38;amp;SrcImageNTHeader-&#38;gt;OptionalHeader);&#10;&#9;&#9;//&#35835;&#21462;OptionalHeader&#32467;&#26500;&#30340;&#20449;&#24687;&#10;&#9;&#9; fnReadSectionHeader((BYTE*)IMAGE_FIRST_SECTION(pBaseNTBuffer));&#10;&#9;&#9; //&#35835;&#21462;&#21306;&#22359;&#34920;&#10;&#9;&#9; fnReadImportTable((BYTE*) (pBase+IMPORT_OFFSET));&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadFileHeader(BYTE* ImageFileHeader)&#10;&#123;&#10;&#10;&#9;PIMAGE_FILE_HEADER SrcImageFileHeader = (PIMAGE_FILE_HEADER)ImageFileHeader;&#10;&#9;printf(&#34;IMAGE_FILE_HEADERS&#32467;&#26500;n&#34;);&#10;&#9;printf(&#34;Machine:              %04xn&#34;,  SrcImageFileHeader-&#38;gt;Machine);&#10;&#9;printf(&#34;NumberOfSections:     %04xn&#34;,  SrcImageFileHeader-&#38;gt;NumberOfSections);&#10;&#9;printf(&#34;TimeDateStamp:        %08xn&#34;,  SrcImageFileHeader-&#38;gt;TimeDateStamp);&#10;&#9;printf(&#34;PointerToSymbolTable: %08xn&#34;,  SrcImageFileHeader-&#38;gt;PointerToSymbolTable);&#10;&#9;printf(&#34;NumberOfSymbols:      %08xn&#34;,  SrcImageFileHeader-&#38;gt;NumberOfSymbols);&#10;&#9;printf(&#34;SizeOfOptionalHeader: %04xn&#34;,  SrcImageFileHeader-&#38;gt;SizeOfOptionalHeader);&#10;&#9;printf(&#34;Characteristics:      %04xn&#34;,  SrcImageFileHeader-&#38;gt;Characteristics);&#10;&#9;NumberOfSections = SrcImageFileHeader-&#38;gt;NumberOfSections;&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadOptionalHeader(BYTE* ImageOptionalHeader)&#10;&#123;&#10;&#9;PIMAGE_OPTIONAL_HEADER SrcImageOptional_Header = (PIMAGE_OPTIONAL_HEADER)ImageOptionalHeader;&#10;&#9;printf(&#34;IMAGE_OPTIONAL_HEADER&#32467;&#26500;n&#34;);&#10;&#10;&#9;// Standard fields.&#10;&#9;printf(&#34;Magic:                        %04xn&#34;, SrcImageOptional_Header-&#38;gt;Magic);&#10;&#9;printf(&#34;MajorLinkerVersion:            %02xn&#34;, SrcImageOptional_Header-&#38;gt;MajorLinkerVersion);&#10;&#9;printf(&#34;MinorLinkerVersion:            %02xn&#34;, SrcImageOptional_Header-&#38;gt;MinorLinkerVersion);&#10;&#9;printf(&#34;SizeOfCode:                    %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfCode);&#10;&#9;printf(&#34;SizeOfInitializedData:        %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfInitializedData);&#10;&#9;printf(&#34;SizeOfUninitializedData:    %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfUninitializedData);&#10;&#9;printf(&#34;AddressOfEntryPoint:        %08xn&#34;, SrcImageOptional_Header-&#38;gt;AddressOfEntryPoint);&#10;&#9;printf(&#34;BaseOfCode:                    %08xn&#34;, SrcImageOptional_Header-&#38;gt;BaseOfCode);&#10;&#9;printf(&#34;BaseOfData:                    %08xn&#34;, SrcImageOptional_Header-&#38;gt;BaseOfData);&#10;&#10;&#9;// NT additional fields.&#10;&#9;printf(&#34;ImageBase:                  %08xn&#34;, SrcImageOptional_Header-&#38;gt;ImageBase);&#10;&#9;printf(&#34;SectionAlignment:           %08xn&#34;, SrcImageOptional_Header-&#38;gt;SectionAlignment);&#10;&#9;printf(&#34;FileAlignmen:               %08xn&#34;, SrcImageOptional_Header-&#38;gt;FileAlignment);&#10;&#9;printf(&#34;MajorOperatingSystemVersion:%04xn&#34;, SrcImageOptional_Header-&#38;gt;MajorOperatingSystemVersion);&#10;&#9;printf(&#34;MinorOperatingSystemVersion:%04xn&#34;, SrcImageOptional_Header-&#38;gt;MinorOperatingSystemVersion);&#10;&#9;printf(&#34;MajorImageVersion;          %04xn&#34;, SrcImageOptional_Header-&#38;gt;MajorImageVersion);&#10;&#9;printf(&#34;MinorImageVersion:          %04xn&#34;, SrcImageOptional_Header-&#38;gt;MinorImageVersion);&#10;&#9;printf(&#34;MajorSubsystemVersion:      %04xn&#34;, SrcImageOptional_Header-&#38;gt;MajorSubsystemVersion);&#10;&#9;printf(&#34;MinorSubsystemVersion:      %04xn&#34;, SrcImageOptional_Header-&#38;gt;MinorSubsystemVersion);&#10;&#9;printf(&#34;Win32VersionValue:          %08xn&#34;, SrcImageOptional_Header-&#38;gt;Win32VersionValue);&#10;&#9;printf(&#34;SizeOfImage:                %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfImage);&#10;&#9;printf(&#34;SizeOfHeaders:              %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfHeaders);&#10;&#9;printf(&#34;CheckSum:                   %08xn&#34;, SrcImageOptional_Header-&#38;gt;CheckSum);&#10;&#9;printf(&#34;Subsystem:                  %04xn&#34;, SrcImageOptional_Header-&#38;gt;Subsystem);&#10;&#9;printf(&#34;DllCharacteristics:         %04xn&#34;, SrcImageOptional_Header-&#38;gt;DllCharacteristics);&#10;&#9;printf(&#34;SizeOfStackReserve:         %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfStackReserve);&#10;&#9;printf(&#34;SizeOfStackCommit:          %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfStackCommit);&#10;&#9;printf(&#34;SizeOfHeapReserve:          %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfHeapCommit);&#10;&#9;printf(&#34;SizeOfHeapCommit:           %08xn&#34;, SrcImageOptional_Header-&#38;gt;SizeOfHeapCommit);&#10;&#9;printf(&#34;LoaderFlags:                %08xn&#34;, SrcImageOptional_Header-&#38;gt;LoaderFlags);&#10;&#9;printf(&#34;NumberOfRvaAndSizes:        %08xn&#34;, SrcImageOptional_Header-&#38;gt;NumberOfRvaAndSizes);&#10;&#9;//&#33719;&#24471;&#25968;&#25454;&#30446;&#24405;&#34920;&#20013;&#36755;&#20837;&#34920;&#30340;&#22823;&#23567;&#21644;RVA&#22320;&#22336;&#10;&#9;printf(&#34;IMAGE_DIRECTORY_ENTRY_EXPOET Size:   %08xn&#34;, SrcImageOptional_Header-&#38;gt;DataDirectory[1].Size);&#10;&#9;printf(&#34;IMAGE_DIRECTORY_ENTRY_EXPOET VirtualAddress(RVA):   %08xn&#34;, SrcImageOptional_Header-&#38;gt;DataDirectory[1].VirtualAddress);&#10;&#9;IMPORT_RVA = SrcImageOptional_Header-&#38;gt;DataDirectory[1].VirtualAddress;&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadSectionHeader(BYTE* ImageSectionHeader)&#123;&#10;&#9;int i = 0;&#10;&#9;int NUMBER_OF_RVA = NULL;&#10;&#9;//&#33719;&#24471;&#36755;&#20837;&#34920;&#25152;&#22312;&#30340;&#21306;&#22359;&#20301;&#32622;&#10;&#9;PIMAGE_SECTION_HEADER SrcImageSectionHeader = (PIMAGE_SECTION_HEADER) ImageSectionHeader;&#10;&#9;//&#25968;&#32452;&#21517;&#21487;&#20197;&#30475;&#25104;&#26159;&#25351;&#38024;&#65292;&#25152;&#20197;&#19979;&#38754;&#21487;&#20197;&#29992;&#25968;&#32452;&#30340;&#26041;&#24335;&#26469;&#34920;&#31034;&#30456;&#24403;&#20110; &#65288;i+1&#65289; *sizeof(PIMAGE_SECTION_HEADER)&#10;&#9;printf(&#34;IMAGE_SECTION_HEADER&#32467;&#26500;n&#34;);&#10;&#9;for (i = 0; i &#38;lt; NumberOfSections; i++)&#10;&#9;&#123;&#10;&#9;&#9;char SectionName[9];&#10;&#9;&#9;memset(SectionName, 0, sizeof(SectionName));&#10;&#9;&#9;memcpy(SectionName, SrcImageSectionHeader[i].Name, 8);&#10;&#9;&#9;printf(&#34;name:%sn&#34;, SectionName);&#10;&#9;&#9;printf(&#34;Misc:                %08xn&#34;, SrcImageSectionHeader[i].Misc);&#10;&#9;&#9;printf(&#34;VirtualAddres:       %08xn&#34;, SrcImageSectionHeader[i].VirtualAddress);&#10;&#9;&#9;printf(&#34;SizeOfRawData:       %08xn&#34;, SrcImageSectionHeader[i].SizeOfRawData);&#10;&#9;&#9;printf(&#34;PointerToRawData:    %08xn&#34;, SrcImageSectionHeader[i].PointerToRawData);&#10;&#9;&#9;printf(&#34;PointerToRelocations:%08xn&#34;, SrcImageSectionHeader[i].PointerToRelocations);&#10;&#9;&#9;printf(&#34;PointerToLinenumbers:%08xn&#34;, SrcImageSectionHeader[i].PointerToLinenumbers);&#10;&#9;&#9;printf(&#34;NumberOfRelocations: %04xn&#34;, SrcImageSectionHeader[i].NumberOfRelocations);&#10;&#9;&#9;printf(&#34;NumberOfLinenumbers: %04xn&#34;, SrcImageSectionHeader[i].NumberOfLinenumbers);&#10;&#9;&#9;printf(&#34;Characteristics:     %08xn&#34;, SrcImageSectionHeader[i].Characteristics);&#10;&#9;&#9;if (i &#38;lt; NumberOfSections - 1)&#10;&#9;&#9;if (IMPORT_RVA &#38;gt;= SrcImageSectionHeader[i].VirtualAddress &#38;amp;&#38;amp; IMPORT_RVA &#38;lt; SrcImageSectionHeader[i+1].VirtualAddress)&#10;&#9;&#9;&#9;NUMBER_OF_RVA = i;&#10;&#9;&#125;&#10;&#9;printf(&#34;&#36755;&#20837;&#34920;&#25152;&#22312;&#30340;&#21306;&#22359;&#26159;&#22312;&#31532;%d&#20010;&#21306;&#22359;n&#34;, NUMBER_OF_RVA+1);&#10;&#9;IMPORT_OFFSET = IMPORT_RVA - (SrcImageSectionHeader[NUMBER_OF_RVA].VirtualAddress - SrcImageSectionHeader[NUMBER_OF_RVA].PointerToRawData);&#10;&#10;&#9;//printf(&#34;%08xn&#34;, SrcImageSectionHeader[NUMBER_OF_RVA].VirtualAddress);&#10;&#9;//printf(&#34;%08xn&#34;, SrcImageSectionHeader[NUMBER_OF_RVA].PointerToRawData);&#10;&#10;&#9;IN_IMPORT_RVA = SrcImageSectionHeader[NUMBER_OF_RVA].VirtualAddress;&#10;&#9;//&#36755;&#20837;&#34920;&#25152;&#22312;&#30340;&#21306;&#22359;&#30340;&#36215;&#22987;RVA&#10;&#9;IN_IMPORT_OFFSET = SrcImageSectionHeader[NUMBER_OF_RVA].PointerToRawData;&#10;&#9;//&#36755;&#20837;&#34920;&#25152;&#22312;&#21306;&#22359;&#30340;&#29289;&#29702;&#36215;&#22987;&#22320;&#22336;&#10;&#10;&#9;//printf(&#34;&#36755;&#20837;&#34920;&#30340;RVA&#26159;%08xn&#34;, IMPORT_RVA);&#10;&#9;//printf(&#34;&#36755;&#20837;&#34920;&#30340;offset&#26159;%08xn&#34;, IMPORT_OFFSET);&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadImportTable(BYTE* ImportTable)&#10;&#123;&#10;&#9;PIMAGE_IMPORT_DESCRIPTOR SrcImageImportDescriptor = (PIMAGE_IMPORT_DESCRIPTOR)ImportTable;&#10;&#9;printf(&#34;&#36755;&#20837;&#34920;&#20869;&#23481;.....n&#34;);&#10;&#9;for (int i = 0; SrcImageImportDescriptor[i].OriginalFirstThunk != 0; i++)&#10;&#9;//IID&#26368;&#21518;&#19968;&#20010;&#32467;&#26500;&#22914;&#26524;&#20840;&#37096;&#20026;0&#26631;&#24535;&#30528;&#32467;&#26463;&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;OriginalFirstThunk is %08xn&#34;,SrcImageImportDescriptor[i].OriginalFirstThunk);&#10;&#9;&#9;printf(&#34;TimeDataStamp is %08xn&#34;, SrcImageImportDescriptor[i].TimeDateStamp);&#10;&#9;&#9;printf(&#34;ForwarderChain is %08xn&#34;,SrcImageImportDescriptor[i].ForwarderChain);&#10;&#9;&#9;printf(&#34;Name is %08xn&#34;, SrcImageImportDescriptor[i].Name);&#10;&#9;&#9;printf(&#34;FirstChunk is  %08xn &#34;,SrcImageImportDescriptor[i].FirstThunk);&#10;&#9;&#9;printf(&#34;n&#34;);&#10;&#10;&#9;&#9;fnReadDllName((BYTE*)(SrcImageImportDescriptor[i].Name - IN_IMPORT_RVA + IN_IMPORT_OFFSET + pBase));&#10;&#9;&#9;fnReadINT((BYTE*) (SrcImageImportDescriptor[i].OriginalFirstThunk - IN_IMPORT_RVA + IN_IMPORT_OFFSET + pBase) );&#10;&#10;&#9;&#9;//BYTE * SrcImageThunkData = SrcImageImportDescriptor[i].OriginalFirstThunk;&#10;&#9;&#9;//PIMAGE_THUNK_DATA SrcImageThunkData = &#10;&#10;&#9;&#125;&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadDllName(BYTE* PDllName)&#10;&#123;&#10;&#9;char* Dll;&#10;&#9;Dll = (char*)PDllName;&#10;&#9;printf(&#34;Dll name is %sn&#34;, Dll);&#10;&#9;printf(&#34;n&#34;);&#10;&#9;return 0;&#10;&#125;&#10;&#10;int fnReadINT(BYTE* PINT)&#10;&#123;&#10;&#9;PIMAGE_THUNK_DATA SrcImageThunkData = (PIMAGE_THUNK_DATA) PINT;&#10;&#9;for (int i = 0; SrcImageThunkData[i].u1.AddressOfData != 0; i++)&#10;&#9;&#123;&#10;&#9;&#9;//printf(&#34;IMAGE_THUNK_DATA INT  is  %08xn&#34;, SrcImageThunkData[i].u1);&#10;&#10;&#9;&#9;PIMAGE_IMPORT_BY_NAME SrcImageImportByName = (PIMAGE_IMPORT_BY_NAME)(SrcImageThunkData[i].u1.AddressOfData - IN_IMPORT_RVA + IN_IMPORT_OFFSET + pBase);&#10;&#9;&#9;if ( ! (SrcImageThunkData[i].u1.Ordinal &#38;amp; 0x80000000))&#10;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;&#9;//&#36825;&#37324;&#30340;8&#26159;16&#36827;&#21046;&#30340;&#65292;&#36716;&#25442;&#20026;2&#36827;&#21046;&#23601;&#26159;1000&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;char* FunctionName;&#10;&#9;&#9;&#9;FunctionName = (char*)(SrcImageImportByName) + sizeof(char) * 2;&#10;&#9;&#9;&#9;printf(&#34;Function name is %sn&#34;, FunctionName);&#10;&#9;&#9;&#9;printf(&#34;n&#34;);&#9;&#9;&#9;&#10;&#9;&#9;&#125;&#10;&#9;&#9;/*&#10;&#9;&#9;else&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;printf(&#34;%08xn&#34;,SrcImageThunkData[i].u1.Ordinal &#38;amp; 0x80000000);&#9;&#10;&#9;&#9;&#125;&#10;&#9;&#9;*/&#10;&#9;&#125;&#10;&#10;&#9;//fnReadFunctionName((BYTE*) (SrcImageThunkData-&#38;gt;u1.AddressOfData - IN_IMPORT_RVA + IN_IMPORT_OFFSET + pBase) );&#10;&#9;return 0;&#10;&#125;&#10;int fnReadFunctionName(BYTE* PFunctionName)&#10;&#123;&#10;&#9;char* FunctionName;&#10;&#9;FunctionName = (char*)PFunctionName;&#10;&#9;printf(&#34;Function name is %sn&#34;, FunctionName);&#10;&#9;printf(&#34;n&#34;);&#10;&#9;return 0;&#10;&#125;&#10;/*&#10;int fnAddSectionTable(LONG offset)&#10;&#123;&#10;&#9;DWORD dwSizeOfWrite;&#10;&#9;DWORD add = 0x6C726163;&#10;&#9;LPDWORD lpNumberOfBytesWritten = NULL;&#10;&#9;PIMAGE_SECTION_HEADER p = &#38;amp;Own_Section_Header;&#10;&#9;//BYTE* ChangeAddress = ImageSectionTable - 2 *sizeof(BYTE);&#10;&#9;//BYTE* lpWriteBuffer = ImageSectionTable - 8 * sizeof(BYTE);&#10;&#10;&#9;//Own_Section_Header.Name[Own_Section_Header] = &#34;.carl&#34;;&#10;&#9;//Own_Section_Header.VirtualAddress = 9A010000 ;               // &#33410;&#21306;&#30340; RVA &#22320;&#22336;&#10;&#9;Own_Section_Header.SizeOfRawData =00100000 ;              // &#22312;&#25991;&#20214;&#20013;&#23545;&#40784;&#21518;&#30340;&#23610;&#23544;&#10;&#9;Own_Section_Header.PointerToRawData = 00020000;         // &#22312;&#25991;&#20214;&#20013;&#30340;&#20559;&#31227;&#37327;&#10;&#9;Own_Section_Header.PointerToRelocations = 00040000;     // &#22312;OBJ&#25991;&#20214;&#20013;&#20351;&#29992;&#65292;&#37325;&#23450;&#20301;&#30340;&#20559;&#31227;&#10;&#9;Own_Section_Header.PointerToLinenumbers = 00000000;   // &#34892;&#21495;&#34920;&#30340;&#20559;&#31227;&#65288;&#20379;&#35843;&#35797;&#20351;&#29992;&#22320;&#65289;&#10;&#9;Own_Section_Header.NumberOfRelocations =0000;      // &#22312;OBJ&#25991;&#20214;&#20013;&#20351;&#29992;&#65292;&#37325;&#23450;&#20301;&#39033;&#25968;&#30446;&#10;&#9;Own_Section_Header.NumberOfLinenumbers = 0000;    // &#34892;&#21495;&#34920;&#20013;&#34892;&#21495;&#30340;&#25968;&#30446;&#10;&#9;Own_Section_Header.Characteristics = 20000060;              // &#33410;&#23646;&#24615;&#22914;&#21487;&#35835;&#65292;&#21487;&#20889;&#65292;&#21487;&#25191;&#34892;&#31561;&#10;&#10;&#9;SetFilePointer( hFile,  offset,  NULL,&#9;FILE_BEGIN ); &#10;&#9;if (WriteFile(hFile,  p,  1 * sizeof(Own_Section_Header), &#38;amp;dwSizeOfWrite, NULL ))&#10;&#9;&#9;printf(&#34;&#27491;&#30830;&#20889;&#20837;&#25991;&#20214;n&#34;);&#10;&#9;else&#10;&#9;&#9;printf(&#34;&#20889;&#20837;&#25991;&#20214;&#38169;&#35823;n&#34;);&#10;&#10;&#9;return 0;&#10;&#125;&#10;*/&#10;&#10;int Copy()&#10;&#123;&#10;&#9;BOOL Flag = TRUE;&#10;&#10;&#9;if(CopyFile(FileName, NewFileName, Flag))&#10;&#9;&#9;printf(&#34;&#25104;&#21151;&#22797;&#21046;&#25991;&#20214;n&#34;);&#10;&#9;else&#10;&#9;&#9;printf(&#34;&#22797;&#21046;&#25991;&#20214;&#22833;&#36133;n&#34;);&#10;&#9;return 0;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br></div><br></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/22/关于dword-ptr-指令/" rel="prev">关于dword ptr 指令</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/15/PE格式之千里追踪输入表/" rel="next">PE格式之千里追踪输入表</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。"><span class="nav-text">紧接着上一篇的千里追踪输入表，现在终于可以开始看输入表里面的神奇东东了。。。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入表结构"><span class="nav-text">输入表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#成员介绍:"><span class="nav-text">成员介绍:</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OriginalFirstThunk"><span class="nav-text">OriginalFirstThunk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TimeDateStamp"><span class="nav-text">TimeDateStamp</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ForwarderChain"><span class="nav-text">ForwarderChain</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Name"><span class="nav-text">Name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FirstThunk"><span class="nav-text">FirstThunk</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#输入地址表（IAT）"><span class="nav-text">输入地址表（IAT）</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

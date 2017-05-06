@@ -1,0 +1,800 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="&amp;lt;!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+--&amp;gt;
+
+
+
+LINUX命令行小结
+安装fedora16大概也有一个月了，虽然说安装了双系统以后还是经常会在windows上跑，但是毕竟还是快速地浏览了一下linux命令行一本比较基础的书。虽然没有深入，但是覆盖了几乎所有的命令行。
+所以现在是时候总结一下学到的东西了。
+1.安装命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 命令行（给自己看的）">
+<meta property="og:url" content="http://yoursite.com/2011/12/02/linux-命令行（给自己看的）/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="&amp;lt;!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+--&amp;gt;
+
+
+
+LINUX命令行小结
+安装fedora16大概也有一个月了，虽然说安装了双系统以后还是经常会在windows上跑，但是毕竟还是快速地浏览了一下linux命令行一本比较基础的书。虽然没有深入，但是覆盖了几乎所有的命令行。
+所以现在是时候总结一下学到的东西了。
+1.安装命令">
+<meta property="og:updated_time" content="2015-07-25T05:10:14.092Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 命令行（给自己看的）">
+<meta name="twitter:description" content="&amp;lt;!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+--&amp;gt;
+
+
+
+LINUX命令行小结
+安装fedora16大概也有一个月了，虽然说安装了双系统以后还是经常会在windows上跑，但是毕竟还是快速地浏览了一下linux命令行一本比较基础的书。虽然没有深入，但是覆盖了几乎所有的命令行。
+所以现在是时候总结一下学到的东西了。
+1.安装命令">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> linux 命令行（给自己看的） // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              linux 命令行（给自己看的）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-02T16:42:00+08:00" content="2011-12-02">
+            2011-12-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><html>
+
+<head><br><br><style type="text/css"><br><!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+--><br></style><br><br></head>
+
+<body>
+
+<p><span style="font-family:Liberation Serif,serif">LINUX</span>命令行小结</p>
+<p>安装<span style="font-family:Liberation Serif,serif">fedora16</span>大概也有一个月了，虽然说安装了双系统以后还是经常会在<span style="font-family:Liberation Serif,serif">windows</span>上跑，但是毕竟还是快速地浏览了一下<span style="font-family:Liberation Serif,serif">linux</span>命令行一本比较基础的书。虽然没有深入，但是覆盖了几乎所有的命令行。</p>
+<p>所以现在是时候总结一下学到的东西了。</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>安装命令</p>
+<p><span style="font-family:Liberation Serif,serif">rpm</span>和<span style="font-family:Liberation Serif,serif">yum</span>命令<span style="font-family:Liberation Serif,serif">(yum</span>业已经取代<span style="font-family:Liberation Serif,serif">rpm</span>成为从在线仓库安装<span style="font-family:Liberation Serif,serif">rpm</span>包的不二选择<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumlist</span></p>
+<p></p>
+<p><span style="font-family:Liberation Serif,serif">yumsearch</span></p>
+<p></p>
+<p><span style="font-family:Liberation Serif,serif">yuminstall (</span>注意提权<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumupdate</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumremove</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumclean</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-ivh(</span>安装软件包<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-Uhv</span>（升级软件包）</p>
+<p><span style="font-family:Liberation Serif,serif">rpm-e (</span>删除软件包<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-q rsunc(</span>查询版本号<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">2.</span>使用<span style="font-family:Liberation Serif,serif">shell</span></p>
+<p><span style="font-family:Liberation Serif,serif">history5 (</span>列出历史<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">!!(</span>运行上一个命令<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">!997</span>（运行第<span style="font-family:Liberation Serif,serif">997</span>个历史命令）</p>
+<p><span style="font-family:Liberation Serif,serif">!ls</span>（运行上一个历史命令）</p>
+<p><span style="font-family:Liberation Serif,serif">&lt;tab&gt;</span>命令行补全</p>
+<p><span style="font-family:Liberation Serif,serif">&lt;tab&gt;&lt;tab&gt;</span>自动列出所有有关命令</p>
+<p>输出重定向</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt; output.txt</span></p>
+<p>标准错误流</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt;2 errors.txt</span></p>
+<p>追加至某个文件而不是覆盖</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt;&gt; output.txt</span></p>
+<p>位元桶文件</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp 2&gt; /dev/null</span></p>
+<p>管道的使用</p>
+<p>输出重定向到进程</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp | sort</span></p>
+<p><span style="font-family:Liberation Serif,serif">aliascp=&#8217;cp -i&#8217;</span></p>
+<p>监视命令<span style="font-family:Liberation Serif,serif">watch&#8217;cat /proc/loadavg&#8217; (</span>监视系统平均负载<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>获得超级用户权限 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>su</p>
+<p>使用<span style="font-family:Liberation Serif,serif">sudo</span>授权<span style="font-family:Liberation Serif,serif">sudo</span></p>
+<p><span style="font-family:Liberation Serif,serif">shell</span>设定环境变量</p>
+<p><span style="font-family:Liberation Serif,serif">set |less</span></p>
+<p>简单的 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>bash编程</p>
+<p>硬链接和符号链接的概念</p>
+<p>命名管道和套接字</p>
+<p>创建空白文件 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>touch/tmp/newfile.txt</p>
+<p><span style="font-family:Liberation Serif,serif">&gt; /tmp/newfile.txt</span></p>
+<p>创建目录<span style="font-family:Liberation Serif,serif">mkdir</span></p>
+<p><span style="font-family:Liberation Serif,serif">mkdir-p /tmp/a/b/c/new</span></p>
+<p><span style="font-family:Liberation Serif,serif">mkdir-m 700 /tmp/new2</span></p>
+<p><span style="font-family:Liberation Serif,serif">-</span>表示文件（硬链接也是如此）</p>
+<p><span style="font-family:Liberation Serif,serif">l</span>表示链接（符号链接）</p>
+<p><span style="font-family:Liberation Serif,serif">p</span>表示管道<span style="font-family:Liberation Serif,serif">(pipe)</span></p>
+<p><span style="font-family:Liberation Serif,serif">s</span>表示套接字（<span style="font-family:Liberation Serif,serif">socket</span>）</p>
+<p><span style="font-family:Liberation Serif,serif">c</span>字符设备</p>
+<p><span style="font-family:Liberation Serif,serif">b</span>块设备</p>
+<p><span style="font-family:Liberation Serif,serif">drwxrwxrwx</span></p>
+<p>文件类型指示符 用户 用户组其他用户</p>
+<p>可读 可写 可执行 </p>
+<p><span style="font-family:Liberation Serif,serif">4 2 1</span></p>
+<p>使用<span style="font-family:Liberation Serif,serif">chmod</span>更改权限</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>使用八进制数字</p>
+<p><span style="font-family:Liberation Serif,serif">chmod0700</span></p>
+<p>如果原来是任意的话将变成 <span style="font-family:Liberation Serif,serif">drwx&#8212;&#8212;</span></p>
+<p><span style="font-family:Liberation Serif,serif">2.</span>使用字母更改权限</p>
+<p><span style="font-family:Liberation Serif,serif">a</span>表示所有组</p>
+<p><span style="font-family:Liberation Serif,serif">u</span>表示用户</p>
+<p><span style="font-family:Liberation Serif,serif">g</span>表示用户组</p>
+<p><span style="font-family:Liberation Serif,serif">o</span>表示其他组</p>
+<p><span style="font-family:Liberation Serif,serif">&#43;</span>增加</p>
+<p><span style="font-family:Liberation Serif,serif">-</span>除去</p>
+<p>例如</p>
+<p><span style="font-family:Liberation Serif,serif">chmod g&#43;w (</span>增加用户组的可写权限<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">-R</span>能递归执行</p>
+<p>粘滞位的目录</p>
+<p><span style="font-family:Liberation Serif,serif">umask0066</span></p>
+<p>设定文件何目录创建时的权限</p>
+<p><span style="font-family:Liberation Serif,serif">chown</span></p>
+<p><span style="font-family:Liberation Serif,serif">chgrp</span></p>
+<p>切换目录<span style="font-family:Liberation Serif,serif">cd</span></p>
+<p><span style="font-family:Liberation Serif,serif">cd</span>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd$HOME</span></p>
+<p>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd~</span></p>
+<p>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd~francois</span></p>
+<p>切换至<span style="font-family:Liberation Serif,serif">francois</span>的主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd-</span></p>
+<p>切换至前一个工作目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd..</span></p>
+<p>当前目录的上一层目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd/usr/bin</span></p>
+<p>根目录下的<span style="font-family:Liberation Serif,serif">bin</span></p>
+<p><span style="font-family:Liberation Serif,serif">cdusr/bin</span></p>
+<p>当前目录下的<span style="font-family:Liberation Serif,serif">bin</span></p>
+<p><span style="font-family:Liberation Serif,serif">pwd</span>显示当前目录</p>
+<p>复制文件</p>
+<p><span style="font-family:Liberation Serif,serif">cp-i index.html /var/www/html/</span></p>
+<p><span style="font-family:Liberation Serif,serif">-il</span>硬链接</p>
+<p><span style="font-family:Liberation Serif,serif">-a</span>保留所有权限设定</p>
+<p><span style="font-family:Liberation Serif,serif">-R</span>递归分配当前时间戳</p>
+<p><span style="font-family:Liberation Serif,serif">ddif=/dev/zero of=/tmp/mynullfile count=1</span></p>
+<p>搜索文件</p>
+<p><span style="font-family:Liberation Serif,serif">locate-i(</span>不区分大小写<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>可以使用正则表达式来查找</p>
+<p><span style="font-family:Liberation Serif,serif">find</span></p>
+<p>列出文件信息</p>
+<p><span style="font-family:Liberation Serif,serif">ls</span></p>
+<p>处理文本</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>使用正则表达式</p>
+<p><span style="font-family:Liberation Serif,serif">2.catmyfile.txt(</span>查看文本文件<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">3.grep</span>搜索文本</p>
+<p><span style="font-family:Liberation Serif,serif">sed</span>替换文本</p>
+<p><span style="font-family:Liberation Serif,serif">diff</span>检查文件差异</p>
+<p>文本文件的&#26684;式转换</p>
+<p><span style="font-family:Liberation Serif,serif">unix2dos&lt; myunixfile.txt &gt; mydocfile.txt</span></p>
+<p>多媒体的处理</p>
+<p><span style="font-family:Liberation Serif,serif">ogg123</span>播放器</p>
+<p><span style="font-family:Liberation Serif,serif">mpg123mpg321</span></p>
+<p>转换音频文件<span style="font-family:Liberation Serif,serif">sox</span></p>
+<p><span style="font-family:Liberation Serif,serif">soxhead.wav tail.wav output.wav</span></p>
+<p>图像处理</p>
+<p><span style="font-family:Liberation Serif,serif">identifyp1.jpg</span></p>
+<p><span style="font-family:Liberation Serif,serif">converttree.jpg tree.qng</span></p>
+<p>利用创建缩略图（这个很有效啊，可以自己<span style="font-family:Liberation Serif,serif">diy</span>头像，不用什么复杂的<span style="font-family:Liberation Serif,serif">ps</span>，一个命令行搞定）</p>
+<p><span style="font-family:Liberation Serif,serif">convert-rotate 270</span></p>
+<p>翻转</p>
+<p><span style="font-family:Liberation Serif,serif">convert-sepia-tone 75% house.jpg oldhouse.png (</span>棕褐色调<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">-charcoal</span></p>
+<p>（炭笔画）</p>
+<p><span style="font-family:Liberation Serif,serif">-colorize175</span></p>
+<p>（指定颜色&#20540;）</p>
+<p>其实我对这个还是比较感兴趣的，有兴趣的大家可以上网搜一下，如果能稍微记住几个的话那就无敌了，完胜<span style="font-family:Liberation Serif,serif">ps</span>有木有啊</p>
+<p>批量转换图像</p>
+<p>管理文件系统</p>
+<p><span style="font-family:Liberation Serif,serif">ext3</span>增加了日志功能</p>
+<p>使用<span style="font-family:Liberation Serif,serif">fdisk</span>进行分区</p>
+<p>这个在我安装<span style="font-family:Liberation Serif,serif">gentoo</span>的时候纠结了好长时间，所以对于这个命令印象十分深刻啊。</p>
+<p>复制分区表 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>sfdisk-d /dev/sda &gt; sda-table</p>
+<p>使用<span style="font-family:Liberation Serif,serif">parted(</span></p>
+<p>使用后会立即生效，所以慎用<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>&#26684;式化文件系统</p>
+<p><span style="font-family:Liberation Serif,serif">mkfs-t ext3 /dev/sdb1</span></p>
+<p>挂载<span style="font-family:Liberation Serif,serif">tune2fs-c 31 /dev/sda1</span></p>
+<p><span style="font-family:Liberation Serif,serif">mount</span>手工挂载</p>
+<p><span style="font-family:Liberation Serif,serif">umount</span>命令卸载文件系统</p>
+<p>检查文件系统<span style="font-family:Liberation Serif,serif">badblocks</span></p>
+<p>检查<span style="font-family:Liberation Serif,serif">raid</span>磁盘</p>
+<p>查看文件系统使用情况 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>df-h</p>
+<p>显示<span style="font-family:Liberation Serif,serif">/home</span>目录的磁盘空间使用情况</p>
+<p><span style="font-family:Liberation Serif,serif">du-h /home/ </span></p>
+<p><span style="font-family:Liberation Serif,serif">du -sch /home /var</span></p>
+<p><span style="font-family:Liberation Serif,serif">LVM</span>卷</p>
+<p>备份何可移动存储介质</p>
+<p><span style="font-family:Liberation Serif,serif">tar</span>表示归档，归档以后文件后缀名为<span style="font-family:Liberation Serif,serif">.tar</span></p>
+<p>压缩的话有好几种方式 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>bz2(使用<span style="font-family:Liberation Serif,serif">bzip2</span>压缩<span style="font-family:Liberation Serif,serif">) gz</span>（<span style="font-family:Liberation Serif,serif">gzip</span>压缩）</p>
+<p><span style="font-family:Liberation Serif,serif">lzo</span>（<span style="font-family:Liberation Serif,serif">lzop</span></p>
+<p>压缩）</p>
+<p><span style="font-family:Liberation Serif,serif">bzip2</span>压缩用时多压缩比相对<span style="font-family:Liberation Serif,serif">lzop</span>提高一倍</p>
+<p>速度从快到慢，压缩率从低到高依次为 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>lzop gzip bzip2</p>
+<p>由于<span style="font-family:Liberation Serif,serif">tar</span>命令的话比较古老，故不用连字符</p>
+<p><span style="font-family:Liberation Serif,serif">-</span></p>
+<p><span style="font-family:Liberation Serif,serif">tarc *.txt | grip -c &gt; myfiles.tar.gz</span></p>
+<p>解压缩解包</p>
+<p><span style="font-family:Liberation Serif,serif">gunzip-c myfiles.tar.gz |tar x</span></p>
+<p></p><p style="margin-bottom:0cm">使用压缩工具</p>
+<p><span style="font-family:Liberation Serif,serif">tarcjvf myfiles.tar.bz2 *.txt</span></p>
+<p></p>
+<p>关于链接 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>ftp的步骤</p>
+<p><span style="font-family:Liberation Serif,serif">lftp-u ftp</span>网址</p>
+</body></html></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/12/05/“最小化所有窗口”和“显示桌面”之间的区别/" rel="prev">“最小化所有窗口”和“显示桌面”之间的区别</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/12/01/linux使用yum命令产生的进程锁问题/" rel="next">linux使用yum命令产生的进程锁问题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

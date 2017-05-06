@@ -1,0 +1,663 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++,free," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="昨天在写单项链表的时候碰到这样一个问题。
+我一次性malloc十个单位节点的内存空间出来赋值给L， 现在我想一次性删除从第3个到第6个节点，我是这么做的：
+1.将第六个节点的next指针指向NULL
+2.将L指针指向第三个单位空间的地址，再free(L)。
+等到把代码写完之后，才发现其中的问题：这里我的free(L)用的对吗？
+编译运行了一下才发现了问题所在。
+为了清楚地看到这个错误，将这个问题简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="free函数在操作系统内存中的实现">
+<meta property="og:url" content="http://yoursite.com/2012/10/15/free函数在操作系统内存中的实现/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="昨天在写单项链表的时候碰到这样一个问题。
+我一次性malloc十个单位节点的内存空间出来赋值给L， 现在我想一次性删除从第3个到第6个节点，我是这么做的：
+1.将第六个节点的next指针指向NULL
+2.将L指针指向第三个单位空间的地址，再free(L)。
+等到把代码写完之后，才发现其中的问题：这里我的free(L)用的对吗？
+编译运行了一下才发现了问题所在。
+为了清楚地看到这个错误，将这个问题简">
+<meta property="og:updated_time" content="2015-07-25T04:45:55.316Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="free函数在操作系统内存中的实现">
+<meta name="twitter:description" content="昨天在写单项链表的时候碰到这样一个问题。
+我一次性malloc十个单位节点的内存空间出来赋值给L， 现在我想一次性删除从第3个到第6个节点，我是这么做的：
+1.将第六个节点的next指针指向NULL
+2.将L指针指向第三个单位空间的地址，再free(L)。
+等到把代码写完之后，才发现其中的问题：这里我的free(L)用的对吗？
+编译运行了一下才发现了问题所在。
+为了清楚地看到这个错误，将这个问题简">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> free函数在操作系统内存中的实现 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              free函数在操作系统内存中的实现
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-15T13:08:39+08:00" content="2012-10-15">
+            2012-10-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>昨天在写单项链表的时候碰到这样一个问题。</p>
+<p>我一次性malloc十个单位节点的内存空间出来赋值给L， 现在我想一次性删除从第3个到第6个节点，我是这么做的：</p>
+<p>1.将第六个节点的next指针指向NULL</p>
+<p>2.将L指针指向第三个单位空间的地址，再free(L)。</p>
+<p>等到把代码写完之后，才发现其中的问题：这里我的free(L)用的对吗？</p>
+<p>编译运行了一下才发现了问题所在。</p>
+<p>为了清楚地看到这个错误，将这个问题简化出来，请看下面的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> *p = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">10</span>);</span><br><span class="line"><span class="keyword">char</span> *q = p;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (; i &amp;lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%08Xn"</span>, q + i);</span><br><span class="line">q = q + <span class="number">2</span>;</span><br><span class="line"><span class="built_in">free</span>(q);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译执行之后结果如下：</p>
+<p><span id="more-462"></span></p>
+<p>0863E008</p>
+<p>0863E009</p>
+<p><strong>0863E00A</strong></p>
+<p>0863E00B</p>
+<p>0863E00C</p>
+<p>0863E00D</p>
+<p>0863E00E</p>
+<p>0863E00F</p>
+<p>0863E010</p>
+<p>0863E011</p>
+<p><strong>_ glibc detected _</strong> ./free: free(): invalid pointer: <strong>0x0863e00a</strong> _*_</p>
+<p>======= Backtrace: =========</p>
+<p>/lib/libc.so.6[0x4481d9f2]</p>
+<p>./free[0x8048487]</p>
+<p>/lib/libc.so.6(__libc_start_main+0xf3)[0x447be6b3]</p>
+<p>./free[0x8048391]</p>
+<p>======= Memory map: ========</p>
+<p>&#8230;&#8230;</p>
+<p>已放弃(吐核)</p>
+<p>在linux下面可以看到free这句代码是不能被运行的。</p>
+<p>那么为什么执行会出错呢？</p>
+<p>这里首先要谈谈malloc和free这两个函数的用法了。</p>
+<p>首先我们要知道的一个原则就是：malloc 和free是成对使用的。</p>
+<p>你可能会奇怪为什么malloc指定了内存分配的长度，而free的时候没有指定释放的内存长度。</p>
+<p>因为是成对使用的，所以满足下面两个原则：</p>
+<p>1.我们free的指针必须是malloc出来返回给你的指针。</p>
+<p>2. 所以，free的长度是你malloc要求分配的长度。</p>
+<p>看到这里可能有人会问：你是怎么得出这两个结论的呢？</p>
+<p>好吧，现在我们就来深究一下，free函数在操作系统内存中究竟是怎么实现的。</p>
+<p>但是毕竟自己实力有限，还是菜鸟一枚，如果让我阅读free 和malloc 的源代码，肯定是不现实的，貌似有1500多行。。。。</p>
+<p>CSDN下面这个帖子讲了一点东西：</p>
+<p><a href="http://topic.csdn.net/u/20090714/07/9ee25af0-8ecf-42e9-9ae5-ec2bdd1f72b8.html" target="_blank" rel="external">http://topic.csdn.net/u/20090714/07/9ee25af0-8ecf-42e9-9ae5-ec2bdd1f72b8.html</a></p>
+<p>自己摘除了一点基本信息：</p>
+<p>malloc/free 是操作系统提供的接口</p>
+<p>不同的系统可能使用不同的库</p>
+<p>接口形式相同，但是实现方式可能不同</p>
+<p>这主要取决于操作系统内存管理模式</p>
+<p>VC使用的CRT，而GCC使用的是libc</p>
+<p>下面这个帖子也讲了一点东西</p>
+<p><a href="http://topic.csdn.net/u/20090714/07/f7ddd06a-917b-42d0-9c99-ac4deac08904.html?21758" target="_blank" rel="external">http://topic.csdn.net/u/20090714/07/f7ddd06a-917b-42d0-9c99-ac4deac08904.html?21758</a></p>
+<p>里面有几段比较经典的话。虽然正确性还有待考证。摘录如下：</p>
+<p>1.</p>
+<p>free只是释放了malloc所申请的内存，并不改变指针的值；</p>
+<p>2)、由于指针所指向的内存已经被释放，所以其它代码有机会改写其中的内容，相当于该指针从此指向了自己无法控制的地方，也称为野指针；</p>
+<p>3)、为了避免失误，最好在free之后，将指针指向NULL。</p>
+<p>2.</p>
+<p>内核通过一个红黑树来记录了空闲的内存，malloc就是从树中查找一块大小适合的内存并把地址给你，然后把这个节点从树中摘除，避免被别人分配到产生冲突。这个内存现在归你一个人用了。</p>
+<p>free函数是把你的这个内存重新放回到红黑树中，让别人可以申请到这个内存。从逻辑上来说，你现在不能在使用这个内存了，因为它已经不属于你。但是系统的实现上目前没有做到，所以你还是能访问这个地址。</p>
+<p>另外，系统也不会帮你覆盖内存中的数据，因为做这一个操作浪费时间，没有必要。</p>
+<p>打一个简单的比方。你租了一套房子，后来租期到了，房子回到房东手里，或者又转租给别人。但是你拿着原来的钥匙还是能进入那套房子，虽然这个是不合法的。</p>
+<p>3.</p>
+<p>应该确切讲是不变的。内存管理多数是通过一个MBC链表实现的，及你实际分配的内存空间为：(nSize + 3) / 4 * 4 + sizeof(MBC）的大小，在malloc之后，系统程序实际返回的是分配的MBC地址+sizeof(MBC），释放内存时，free所做的第一个动作是ptr &#8211; sizeof(MBC)得到实际的MBC块，在这个MBC块中包含了该内存的大小，内存MBC链的指针等信息；所以，如果你使用了超出实际分配内存大小的空间，会造成整个MBC链的混乱，最直接表现是程序在free时在另一个不相关的地方出现了异常；所以您可以看出来，在执行了free之后，该块内存并没有改变，即使该块内存相邻内存为空，而发生了内存块的合并，您刚才使用的内存空间也没有发生改变（你看到的），改变的是MBC链表；</p>
+<p>详细的内存管理程序您可以参考一些库，如dlmalloc，这个库除了使用了MBC链外，还是用了沙箱机制；事实上早期DOS的内存管理程序也是使用的MBC链；</p>
+<p>4.</p>
+<p>1）我注意到之上的回复多数是基于系统端的，（如红黑树，我在Understand Linux kernal中还真没有听说过红黑树，最后居然在国内网站找到了 &#8212;- 不知道是不是只是国内学术名词，是内核的内存管理）；系统内存分配涉及属性、内存页面以及是否有MCU；但是注意一点malloc和free并不是直接使用系统内存管理程序，在多数Linux程序中malloc和free一般是通过标准库，及我说过的DL内存管理程序实现的；因此，内核的内存管理和我们在应用层面的内存管理（如malloc/free）不要混为一谈；</p>
+<p>2）DL的内存管理从效能上要比直接使用系统的内存管理效能要高，如经过我们实测：在随机大小、随机顺序申请释放 &#8212;- 目的在制造最差情况，DL内存管理程序是直接使用系统的3~3.9倍，考虑使用realloc，DL内存管理程序是系统的10~43.35倍；所以，实际情况下，我们并不是直接使用系统内存管理 &#8212;- 只是我们并不知道。</p>
+<p>唉。。。涉及到操作系统的内存管理跟数据结构的东西，自己也没有学过，只能先这样理解下。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/free/" rel="tag">#free</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/10/16/windows内存堆的数据结构/" rel="prev">windows内存堆的数据结构</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/10/14/c-新手学习笔记之多态性和虚函数（1）/" rel="next">c++新手学习笔记之多态性和虚函数（1）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

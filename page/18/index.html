@@ -1,0 +1,1636 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/18/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/03/11/LINK-error-LNK2001-无法解析的外部符号-mainCRTStartup/" itemprop="url">
+                LINK : error LNK2001 无法解析的外部符号_mainCRTStartup
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-11T11:18:43+08:00" content="2012-03-11">
+            2012-03-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>刚安装Microsoft visual C++ 2010 学习版，运行一段代码，出现了如下图错误：</p>
+<p><img src="http://hiphotos.baidu.com/rabbit_anubis/pic/item/2bd5566c381947ba42169405.jpg" alt=""> 在网上找了半天类似的错误，有说建项目属性=》链接器=》系统，应该设置为windows，我设置了也不好使。我建项目是严格按照“Win32控制台应用程序”设置的“空项目”，所执行的.cpp文件也有main（）方法，那到底错哪儿了呢？最后，再一次看独行剑侠的“<a href="http://hi.baidu.com/_%E2d_%B7%B3_%DE%B2%C2%D2/blog/item/91be6d7aa1f561e02e73b391.html" target="_blank" rel="external">《Visual C++ 2010入门教程》系列二：安装、配置和首次使用VS2010</a>”，才明白我错哪儿了！</p>
+<p><strong>错误原因：</strong>我原来学的是C语言，c文件在Visual c++ 6.0中创建的步骤是：文件=》新建=》工程，然后选择“Win32 Console Application”</p>
+<p><img src="http://hiphotos.baidu.com/rabbit_anubis/pic/item/8e38f944d3cb227e879473a5.jpg" alt=""></p>
+<p>工程建好之后，再点击文件=》新建=》文件，选择C语言的h文件，这样新建的h文件也就自动在建好的工程里面了，而我在Visual C++ 2010也按照原来的步骤操作，结果就出现了上面的错误，归根结底还是像“剑侠”文章里所说的，我建的项目是一个空项目，在编译的时候找不到main（）方法，虽然我点击文件=》新建=》文件=》Visual C++里面的C++文件(.cpp)，但是建好的cpp文件却不是在项目里面，也就是皇帝的新装，写了很多，也无语法错误，但都是裸露的！</p>
+<p><strong>解决办法：</strong>在建好的项目点击右键=》添加=》新建项</p>
+<p><img src="http://hiphotos.baidu.com/rabbit_anubis/pic/item/7bccfb53ed8f844f0df3e348.jpg" alt=""></p>
+<p>填写了我要新建cpp文件的名称，最后编译代码，一切比想象的都顺利！</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/03/08/关于二级指针与c-中的引用/" itemprop="url">
+                关于二级指针与c++中的引用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-08T18:36:15+08:00" content="2012-03-08">
+            2012-03-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>最近开始看数据结构。不过没有学过c++直接看数据结构。借了本书本也没有说用的是c还是c++语言进行描述。结果才刚开始看链表就遇到了很多问题。。。</p>
+<p>下面这段代码是单链表里面尾插法建表的函数，是从《数据结构教程 第2版 》李春葆编里摘抄下来的：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#define ElemType int</span><br><span class="line"></span><br><span class="line">typedef struct LNode</span><br><span class="line">&#123;</span><br><span class="line">ElemType data<span class="comment">;</span></span><br><span class="line">struct LNode *next<span class="comment">;</span></span><br><span class="line">&#125;LinkList<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">void CreateListF(LinkList *&amp;amp<span class="comment">;L, ElemType a[], int n)</span></span><br><span class="line">&#123;</span><br><span class="line">LinkList *s, *r<span class="comment">;</span></span><br><span class="line">int i<span class="comment">;</span></span><br><span class="line">L = (LinkList *)malloc(sizeof(LinkList))<span class="comment">;</span></span><br><span class="line">r = L<span class="comment">;</span></span><br><span class="line">for (i = 0<span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">&#123;</span><br><span class="line">s = (LinkList *)malloc(sizeof(LinkList))<span class="comment">;</span></span><br><span class="line">s-&gt;data = a[i]<span class="comment">;</span></span><br><span class="line">r-&gt;next = s<span class="comment">;</span></span><br><span class="line">r = s<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">r-&gt;next = NULL<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自己是在linux上面用的vim编辑器，用的是ddd调试器。</p>
+<p>由于没学过c++，一看到行参列表我就慌了～～～～</p>
+<p>void CreateListF(LinkList *&amp;L, ElemType a[], int n)</p>
+<p>*&amp;L 这个是什么东西啊？？</p>
+<p>后来问了学长，才发现这厮是c++里面的货色没学过c++的看数据结构伤不起啊</p>
+<p>果断百度c++里面有关“引用”的知识点。下面这段话来自百度百科</p>
+<p>引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
+<p>（1）&amp;；在此不是求地址运算，而是起标识作用。</p>
+<p>（2）类型标识符是指目标变量的类型。</p>
+<p>（3）声明引用时，必须同时对其进行初始化。</p>
+<p>（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。　　ra=1; 等价于 a=1;</p>
+<p>（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储   单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>（7）不能建立引用的引用，不能建立指向引用的指针。因为引用不是一种数据类型，所以没有引用的引用，没有引用的指针。</p>
+<p>例如：　　int n；</p>
+<p>int &amp;&amp;r=n；//错误，编译系统把&#8221;int &amp;&#8221;看成一体，把&#8221;&amp;r&#8221;看成一体，即建立了引用的引用，引用的对象应当是某种数据类型的变量</p>
+<p>int &amp;_p=n;//错误，编译系统把&#8221;int &amp;&#8221;看成一体，把&#8221; _p &#8220;看成一体，即建立了指向引用的指针，指针只能指向某种数据类型的变量</p>
+<p>（8）值得一提的是，可以建立指针的引用　　例如：　　int _p;　　int _&amp;q=p;//正确，编译系统把&#8221; int * &#8220;看成一体，把&#8221;&amp;q&#8221;看成一体，即建立指针p的引用，亦即给指针p起别名q。　　注意：学会这种分析方法，把什么看成一体，又把什么看成一体　　引用格式：一般在文章的注解中提到或在文中直接写出，也可以加引号（20字以下不用）</p>
+<p>看看7.8点。这样上面的问题就懂了一半。再百度一下，找到下面这个例子还有人家的分析解释：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> term</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">double</span> coef;    <span class="comment">//系数</span></span><br><span class="line"><span class="keyword">int</span> expn;    <span class="comment">//指数</span></span><br><span class="line"><span class="keyword">struct</span> term *next;    <span class="comment">//指向下一个结点的指针</span></span><br><span class="line">&#125;LinkList;</span><br><span class="line"><span class="keyword">void</span> Polynomial::CreateLinkList(LinkList *&amp;amp;L,<span class="keyword">double</span> Coef[],<span class="keyword">int</span> Exp[],<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">L=(LinkList *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkList));</span><br><span class="line">L-&gt;next=L;</span><br><span class="line">LinkList *p,*q;</span><br><span class="line">p=L;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;n;i++)</span><br><span class="line">&#123;</span><br><span class="line">q=(LinkList*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkList)); <span class="comment">//创建新结点</span></span><br><span class="line">q-&gt;coef=Coef[i];</span><br><span class="line">q-&gt;expn=Exp[i];</span><br><span class="line">q-&gt;next=L;</span><br><span class="line">p-&gt;next=q;</span><br><span class="line">p=q;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>LinkList _&amp;L什么意思？L=(LinkList _)malloc(sizeof(LinkList));？</p>
+<p>答：指针的引用而已，因CreateLinkList这个函数要修改链表，所以如果传一个指针类型的参数达不到修改目的的（因为传进去在函数里面改变的只是形参，实参没有改变。），所以用引用（c++里面独有的）。</p>
+<p>举个例子，void swap(int i,int j)这个函数是不能真正达到交换两个实参的值的，明白吧？因为是值传递，所以只是交换了形参，实参没有变。但是void swap(int &amp;i,int &amp;j)就能交换了</p>
+<p>指针也一样，如果想在函数里改变指针本身，就需要把形参类型设为指针的指针或者是指针的引用。</p>
+<p>那么我用c语言应该怎么来实现最开始那个创建链表呢？其实想通了很简单，只要传一个二级指针进去就可以了。</p>
+<p>void CreateListF(LinkList **L, ElemType a[], int n)//形参列表是二级指针，故可以在函数里面改变一级指针（这里L存放的是头节点的地址）</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">&#123;</span><br><span class="line">LinkList *s, *r;</span><br><span class="line">int i;</span><br><span class="line">*L = <span class="list">(<span class="keyword">LinkList</span> *)</span>malloc<span class="list">(<span class="keyword">sizeof</span><span class="list">(<span class="keyword">LinkList</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">r = *L;</span><br><span class="line">for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line"><span class="collection">&#123;</span><br><span class="line">s = <span class="list">(<span class="keyword">LinkList</span> *)</span>malloc<span class="list">(<span class="keyword">sizeof</span><span class="list">(<span class="keyword">LinkList</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">s-&gt;data = a<span class="collection">[i]</span><span class="comment">;</span></span><br><span class="line">r-&gt;next = s;</span><br><span class="line">r = s;</span><br><span class="line">&#125;</span></span><br><span class="line">r-&gt;next = NULL;</span><br><span class="line">&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>以上是自己的理解。若有错误的地方还请大家指正。谢谢大家^_^</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/03/08/vim自动补全/" itemprop="url">
+                vim自动补全
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-08T15:19:56+08:00" content="2012-03-08">
+            2012-03-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>从图书馆里面借的那本《vi和vim编辑器》马上就要还掉了。有点舍不得，自己虽然没看多少，想着赶快再看一会吧。</p>
+<p>想想自己在linux上面写数据结构，没有代码补全还是比较麻烦的。于是就翻到了代码自动补全这里。</p>
+<p>在说代码补全之前，还是得先再复习 一下ctags标签，下面这段话摘自<span style="color: #3333ff;">wooin</span>：</p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">哇</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这下可厉害了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, Tag</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">(</span><span style="font-family: 新宋体,monospace; font-size: x-small;">标签文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">)</span><span style="font-family: 新宋体,monospace; font-size: x-small;">可是程序员的看家宝呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你可以不用它</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">但你不能不知道它</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">因为</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Linux</span><span style="font-family: 新宋体,monospace; font-size: x-small;">内核源码都提供了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;make tags&#8221;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个选项</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">下面我们就来介绍</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Tag</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span></p>
+<p>tags <span style="font-family: 新宋体,monospace; font-size: x-small;">文件是由</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序产生的一个索引文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序其是叫</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;Exuberant Ctags&#8221;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Unix</span><span style="font-family: 新宋体,monospace; font-size: x-small;">上面</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序的替代品</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">并且比它功能强大</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是大多数</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Linux</span><span style="font-family: 新宋体,monospace; font-size: x-small;">发行版上默认的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">程序</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">那么</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件是做什么用的呢</span><span style="font-family: 新宋体,monospace; font-size: x-small;">?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你在读程序时看了一个函数调用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">或者一个变量</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">或者一个宏等等</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你想知道它们的定义在哪儿</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">怎么办呢</span><span style="font-family: 新宋体,monospace; font-size: x-small;">?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">grep?</span><span style="font-family: 新宋体,monospace; font-size: x-small;">那会搜出很多不相干的地方</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在流行用是的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">谁用谁知道呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">当光标在某个函数或变量上时</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">按下</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&#8220;Ctrl+]&#8221;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">光标会自动跳转到其定义处</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">够厉害吧</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你不用再羡慕</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Visual Studio</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的程序员了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">开始羡慕我吧</span><span style="font-family: 新宋体,monospace; font-size: x-small;">~_~.</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">你现在先别急着去按</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你按没用的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">要不要我干什么呀</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你现在要做的是查查你电脑里有没有</span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个程序</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果有</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">是什么版本的</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Ctags 5.5.4,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">就象我一样</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你最好去装一个</span><span style="font-family: 新宋体,monospace; font-size: x-small;">Ctags 5.6,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">这个在后面的自动补全章节中会用到</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span><span style="font-family: 新宋体,monospace; font-size: x-small;">在这个网站</span><span style="font-family: 新宋体,monospace; font-size: x-small;">: <a href="http://ctags.sourceforge.net" target="_blank" rel="external">http://ctags.sourceforge.net</a>,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">下载一个类似 </span><span style="font-family: 新宋体,monospace; font-size: x-small;">ctags-5.6.tar.gz</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的文件下来</span><span style="font-family: 新宋体,monospace; font-size: x-small;">(</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在好像</span><span style="font-family: 新宋体,monospace; font-size: x-small;">5.7</span><span style="font-family: 新宋体,monospace; font-size: x-small;">版的也出来了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不过我还没用过</span><span style="font-family: 新宋体,monospace; font-size: x-small;">):</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">用下面的命令解压安装</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="298" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="294"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="294"><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;">$ tar -xzvf ctags-5.6.tar.gz<br><br>$ cd ctags-5.6<br><br>$ make<br><br># make install   </span><span><span style="font-family: 新宋体,monospace;">//</span></span></span><span><span style="font-family: 新宋体,monospace;">需要</span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;">root</span></span></span><span style="font-size: x-small;"><span style="font-family: 新宋体,monospace;">权限</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;"></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">然后去你的源码目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你的源码是多层的目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">就去最上层的目录</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">在该目录下运行命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">: ctags -R</span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">我现在以 </span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim71</span><span style="font-family: 新宋体,monospace; font-size: x-small;">的源码目录做演示</span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ cd /home/wooin/vim71<br><br>$ ctags -R</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时在</span><span style="font-family: 新宋体,monospace; font-size: x-small;">/home/wooin/vim71</span><span style="font-family: 新宋体,monospace; font-size: x-small;">目录下会生成一个</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags </span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">现在用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">打开</span><span style="font-family: 新宋体,monospace; font-size: x-small;">/home/wooin/vim71/src/main.c</span></p>
+<table width="266" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="262"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="262"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ vim /home/wooin/vim71/src/main.c</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">再在</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">中运行命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="268" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="264"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="264"><span style="font-family: 新宋体,monospace; font-size: x-small;">:set tags=/home/wooin/vim71/tags</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">该命令将</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">tags</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件加入到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">vim</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">中来</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">你也可以将这句话放到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">~/.vimrc</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">中去</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">如果你经常在这个工程编程的话</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">.</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">下面要开始真刀实枪的开干了</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">如下图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">将光标放在</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数上</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"></span></p>
+<p>(&#8212; <span style="font-family: 新宋体,monospace; font-size: x-small;">图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">3 &#8212;)</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时按下</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&lt;C-]&gt;,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">光标会自动跳到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数的定义处</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">见下图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">:</span></span></p>
+<p>(&#8212; <span style="font-family: 新宋体,monospace; font-size: x-small;">图</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">4 &#8212;)</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">如果此时你还想再跳回刚才的位置</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">你还可以按</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&lt;C-T&gt;,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">这样又跳回到</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">setmouse()</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">函数被调用的地方了</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">变量</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">结构</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">宏</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">等等</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">都可以的</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">,</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">赶快试试吧</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">&#8230;..</span></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">此时在回头学习一下第</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">3</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">节中说的</span><span style="font-family: Liberation Serif,serif; font-size: x-small;"><span style="font-family: 新宋体,monospace;">vim</span></span><span style="font-family: 新宋体,monospace; font-size: x-small;">手册吧</span></p>
+<table width="159" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="155"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="155"><span style="font-family: 新宋体,monospace; font-size: x-small;">:help usr_29</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;"></span></p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">不过还有一个小瑕疵</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你修改程序后</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">比如增加了函数定义</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">删除了变量定义</span><span style="font-family: 新宋体,monospace; font-size: x-small;">, tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件不能自动</span><span style="font-family: 新宋体,monospace; font-size: x-small;">rebuild,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">你必须手动再运行一下命令</span><span style="font-family: 新宋体,monospace; font-size: x-small;">:</span></p>
+<table width="159" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="155"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="155"><span style="font-family: 新宋体,monospace; font-size: x-small;">$ ctags -R</span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">使</span><span style="font-family: 新宋体,monospace; font-size: x-small;">tags</span><span style="font-family: 新宋体,monospace; font-size: x-small;">文件更新一下</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不过让人感到欣慰的是</span><span style="font-family: 新宋体,monospace; font-size: x-small;">vim</span><span style="font-family: 新宋体,monospace; font-size: x-small;">不用重新启动</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">正在编写的程序也不用退出</span><span style="font-family: 新宋体,monospace; font-size: x-small;">,</span><span style="font-family: 新宋体,monospace; font-size: x-small;">马上就可以又正确使用</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-]&gt;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">和</span><span style="font-family: 新宋体,monospace; font-size: x-small;">&lt;C-T&gt;</span><span style="font-family: 新宋体,monospace; font-size: x-small;">了</span><span style="font-family: 新宋体,monospace; font-size: x-small;">.</span></p>
+<p>&nbsp;</p>
+<p>我自己的工作目录是在home下的Linux-software下面，所以自己是在.vimrc里面添加了下面这句话：</p>
+<p><span style="font-family: 新宋体,monospace; font-size: x-small;">:set tags=/home/gaoxin/Linux-software/tags</span>  （当然了gaoxin是我的家目录名称），这样每次打开新的文件的时候都能用到tags文件里面的标签了，:-)</p>
+<p>&nbsp;</p>
+<p>好了，复习完了ctags之后，可以开始看代码补全了下面列出了不同的代码补全方法：</p>
+<p>&nbsp;</p>
+<table width="328" cellspacing="1" cellpadding="2"><br><colgroup><br><col width="125"><br><col width="190"></colgroup><br><tbody><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+L</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">整行补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+N</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据当前文件里关键字补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+K</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据字典补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+T</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据同义词字典补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+I</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据头文件内关键字补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+]</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">根据标签补全</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+F</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全文件名</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+D</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全宏定义</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+V</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">命令</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+U</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">用户自定义补全方式</span></span></td><br></tr><br><tr valign="TOP"><br><td width="125"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+X Ctrl+S</span></span></td><br><td width="190"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">拼写建议</span></span></td><br></tr><br></tbody><br></table>
+
+<p>&nbsp;</p>
+<p>数据结构中用到最多的肯定就是结构体了。下面看下这个全能补全功能：</p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">我这里要介绍的功能叫</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;new-omni-completion(</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">)&#8221;,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">你可以用下面的命令看看介绍</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:helpnew-omni-completion</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">你还需要在</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">~/.vimrc</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件中增加下面两句</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></p>
+<table width="213" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="209"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="209"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">filetype pluginindent on</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">打开文件类型检测</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">加了这句才可以用智能补全</span></span></p>
+<table width="357" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="353"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="353"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">setcompleteopt=longest,menu</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">关掉智能补全时的预览窗口</span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">请确定你的</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctags5.6</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">已经安装好</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并且生成的</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件已经可以用了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">那么我们就要抄家伙开搞了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">.</span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">用</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">打开源文件</span></span></p>
+<table width="264" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="260"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="260"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">$ vi/home/wooin/vim71/src/main.c</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">设置</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件</span></span></p>
+<table width="262" cellspacing="0" cellpadding="2"><br><colgroup><br><col width="258"></colgroup><br><tbody><br><tr><br><td valign="TOP" bgcolor="#cccccc" width="258"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:settags=/home/wooin/vim71/tags</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">随便找一个有成员变量的对象</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">比如</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;parmp&#8221;,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">进入</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Insert</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">模式</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">将光标放在</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;-&gt;&#8221;</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">后面</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">然后按下</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;Ctrl+XCtrl+O&#8221;,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">此时会弹出一个下列菜单</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">显示所有匹配的标签</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">如下图</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p>(&#8212;<span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">图</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">18&#8212;)</span></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">此时有一些快捷键可以用</span></span><span style="font-family: Liberation Serif,serif;"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">:</span></span></span></p>
+<table width="329" cellspacing="1" cellpadding="2"><br><colgroup><br><col width="61"><br><col width="255"></colgroup><br><tbody><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+P</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">向前切换成员</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+N</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">向后切换成员</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+E</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">表示退出下拉窗口</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并退回到原来录入的文字</span></span></td><br></tr><br><tr valign="TOP"><br><td width="61"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">Ctrl+Y</span></span></td><br><td width="255"><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">表示退出下拉窗口</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">并接受当前选项</span></span></td><br></tr><br></tbody><br></table>
+
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;"></span></span></p>
+<p><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">如果你增加了一些成员变量</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能补全还不能马上将新成员补全</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">需要你重新生成一下</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">但是你不用重启</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">vim,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">只是重新生成一下</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">tags</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">文件就行了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">这时全能补全已经可以自动补全了</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">,</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">还真够</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">全能</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">&#8220;</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">吧</span></span><span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">.</span></span></p>
+<p><span style="font-size: x-small;">下面这张截图是help文档里面关于<span style="font-family: 新宋体,monospace;"><span style="font-size: x-small;">new-omni-completion</span></span>：</span></p>
+<p><img src="http://hi.csdn.net/attachment/201203/8/0_1331190945yD9H.gif" alt=""></p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/03/01/fedora16中VMware模块加载错误解决方案/" itemprop="url">
+                fedora16中VMware模块加载错误解决方案
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-01T22:05:39+08:00" content="2012-03-01">
+            2012-03-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>fedora16内核版本升级以后，vmwareworkstation进入的时候模块加载出现如下错误</p>
+<p>Unable to build kernel module.</p>
+<p>See log file /tmp/vmware-root/modconfig-3064.log for details.</p>
+<p>自己的fedora16版本3.2.5-3.fc16.i686</p>
+<p>vm版本Workstation 8.0.2</p>
+<p>然后搜索了一下，找到了下面的解决方案</p>
+<p><a href="http://communities.vmware.com/thread/344213" target="_blank" rel="external">http://communities.vmware.com/thread/344213</a></p>
+<p>下载FabiorCork提供的sh脚本安装一下就好了</p>
+<h1 id="-/patch-modules_3-2-0-sh">./patch-modules_3.2.0.sh</h1><h1 id="sh_patch-modules_3-2-0-sh">sh patch-modules_3.2.0.sh</h1></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/29/windowsSDK移位加密算法实现/" itemprop="url">
+                windowsSDK移位加密算法实现
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-29T10:05:17+08:00" content="2012-02-29">
+            2012-02-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>昨天老师让我们用MFC写一个凯撒加密，花了一会时间完成后，又花了半天自己写了个移位加密算法，是用SDK写的。</p>
+<p>算法部分请教了自己学ACM的同学，这里先谢谢他了。</p>
+<p>移位算法描述：</p>
+<div>变位加密不隐藏明文的字符，即明文的字母保持相同，但其顺序被打乱重新排列成另一种不同的格式。</div><br><div>1）简单变位加密。预先约定好一组数字表示密钥，将文字依次写在密钥下，再按数字次序重新组织文字实现加密，也有人喜欢将明文逆序输出作为密文。例如</div><br><div>密钥：5 2 4 1 6 3   (密文排列次序)</div><br><div>明文：信息安全技术</div><br><div>密文：技息全信术安</div>
+
+<p>先用c++描述加密解密算法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">1001</span>], ans[<span class="number">1001</span>], fin[<span class="number">1001</span>], temp[<span class="number">1001</span>];</span><br><span class="line"><span class="keyword">int</span> key[<span class="number">1001</span>];</span><br><span class="line"><span class="comment">//map = Proclaim 这里是写SDK的时候把名字变过去了，对照一下</span></span><br><span class="line"><span class="comment">//ans = Key</span></span><br><span class="line"><span class="comment">//fin = Cryptograph</span></span><br><span class="line"><span class="comment">//lenk= Key_Length</span></span><br><span class="line"><span class="comment">//lenm= Proclaim_Length</span></span><br><span class="line"><span class="comment">//key = Key_Each</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cin</span> &amp;gt;&amp;gt; <span class="built_in">map</span>;</span><br><span class="line"><span class="built_in">cin</span> &amp;gt;&amp;gt; ans;</span><br><span class="line"><span class="keyword">int</span> lenk = <span class="built_in">strlen</span>(ans);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; lenk; i++)</span><br><span class="line">key[i] = ans[i] - <span class="string">'0'</span>;</span><br><span class="line"><span class="keyword">int</span> lenm = <span class="built_in">strlen</span>(<span class="built_in">map</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = lenm; i &amp;lt; <span class="number">1001</span>; i++)</span><br><span class="line"><span class="built_in">map</span>[i] = <span class="string">'0'</span>;</span><br><span class="line"><span class="comment">//memset(fin, '0', sizeof(fin));解密时候加上</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; lenm; ) <span class="comment">//这里注意一下，最后一个条件是空的!!!!!!</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">temp[j] = <span class="built_in">map</span>[i++];</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">i--;</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">fin[i++] = temp[key[j]-<span class="number">1</span>];</span><br><span class="line"><span class="comment">//fin[key[j]-1+i] = temp[j];解密算法</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">puts</span>(fin);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是自己的SDK实现</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21464;&#20301;&#21152;&#23494;&#35299;&#23494;&#31639;&#27861;&#10;By MiiBotree&#10;------------------------------------------------------------*/&#10;&#10;#include &#38;lt;windows.h&#38;gt;&#10;#include &#38;lt;string.h&#38;gt;&#10;&#10;#define IDC_BUTTON1 1&#10;#define IDC_BUTTON2 2&#10;#define IDC_EDIT1 3&#10;#define IDC_EDIT2 4&#10;#define IDC_EDIT3 5&#10;#define IDC_EDIT4 6&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;static TCHAR szAppName[] = TEXT (&#34;Caesar&#34;) ;&#10;HWND hwnd ;&#10;MSG msg ;&#10;WNDCLASS wndclass ;&#10;&#10;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;wndclass.lpfnWndProc = WndProc ;&#10;wndclass.cbClsExtra = 0 ;&#10;wndclass.cbWndExtra = 0 ;&#10;wndclass.hInstance = hInstance ;&#10;wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION) ;&#10;wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;&#10;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;wndclass.lpszMenuName = NULL ;&#10;wndclass.lpszClassName = szAppName ;&#10;&#10;if (!RegisterClass (&#38;amp;wndclass))&#10;&#123;&#10;MessageBox (NULL, TEXT (&#34;This program requires Windows NT!&#34;),&#10;szAppName, MB_ICONERROR) ;&#10;return 0 ;&#10;&#125;&#10;&#10;hwnd = CreateWindow (szAppName,&#10;TEXT (&#34;&#21464;&#20301;&#31639;&#27861;By MiiBotree&#34;),&#10;WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |&#10;WS_THICKFRAME | WS_MINIMIZEBOX,&#10;CW_USEDEFAULT,&#10;CW_USEDEFAULT,&#10;700,&#10;550,&#10;NULL,&#10;NULL,&#10;hInstance,&#10;NULL) ;&#10;&#10;ShowWindow (hwnd, iCmdShow) ;&#10;UpdateWindow (hwnd) ;&#10;&#10;while (GetMessage (&#38;amp;msg, NULL, 0, 0))&#10;&#123;&#10;TranslateMessage (&#38;amp;msg) ;&#10;DispatchMessage (&#38;amp;msg) ;&#10;&#125;&#10;return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;HDC hdc ;&#10;PAINTSTRUCT ps ;&#10;RECT rect ;&#10;HWND hwndButton;&#10;HWND hwndEdit;&#10;static int cxChar, cyChar;&#10;switch (message)&#10;&#123;&#10;&#10;case WM_CREATE:&#10;cxChar = LOWORD (GetDialogBaseUnits ()) ;&#10;cyChar = HIWORD (GetDialogBaseUnits ()) ;&#10;hwndButton = CreateWindow ( TEXT(&#34;button&#34;),&#10;TEXT(&#34;&#21152;&#23494;&#34;),&#10;WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,&#10;cxChar + 420, cyChar * (1 + 2 * 1)+100,&#10;10 * cxChar, 7 * cyChar / 4,&#10;hwnd, (HMENU) IDC_BUTTON1,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndButton = CreateWindow ( TEXT(&#34;button&#34;),&#10;TEXT(&#34;&#35299;&#23494;&#34;),&#10;WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,&#10;cxChar + 420 , cyChar * (1 + 2 * 1)+200,&#10;10 * cxChar, 7 * cyChar / 4,&#10;hwnd, (HMENU) IDC_BUTTON2,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+40,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT1,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+140,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT2,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+240,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT3,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+340,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT4,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;return 0 ;&#10;&#10;case WM_PAINT:&#10;LOGFONT a;&#10;a.lfHeight=25;&#10;a.lfWidth=10;&#10;a.lfEscapement=0;&#10;a.lfWeight=700;&#10;a.lfItalic=FALSE;&#10;a.lfUnderline=FALSE;&#10;a.lfStrikeOut=FALSE;&#10;a.lfCharSet =GB2312_CHARSET;&#10;hdc = BeginPaint (hwnd, &#38;amp;ps);&#10;GetClientRect (hwnd, &#38;amp;rect);&#10;SelectObject(hdc,CreateFontIndirect(&#38;amp;a));&#10;SetTextColor(hdc,(255,255,255));&#10;TextOut(hdc, 100, 100, L&#34;&#26126;&#25991;&#34;, wcslen(L&#34;&#26126;&#25991;&#34;));&#10;TextOut(hdc, 100, 200, L&#34;&#23494;&#38053;&#34;, wcslen(L&#34;&#23494;&#38053;&#34;));&#10;TextOut(hdc, 100, 300, L&#34;&#23494;&#25991;&#34;, wcslen(L&#34;&#23494;&#25991;&#34;) );&#10;TextOut(hdc, 100, 400, L&#34;&#26126;&#25991;&#35299;&#34;, wcslen(L&#34;&#26126;&#25991;&#35299;&#34;) );&#10;TextOut(hdc, 500, 450, L&#34;MiiBotree&#21046;&#20316;&#34;, wcslen(L&#34;MiiBotree&#21046;&#20316;&#34;) );&#10;&#10;ReleaseDC(hwnd, hdc);&#10;EndPaint (hwnd, &#38;amp;ps);&#10;return 0;&#10;&#10;case WM_COMMAND:&#10;if (LOWORD (wParam == IDC_BUTTON1))&#10;&#123;&#10;TCHAR Proclaim[256];//&#26126;&#25991;&#10;TCHAR Cryptograph[256];//&#23494;&#25991;&#10;TCHAR Key[256];//&#23494;&#38053;&#10;TCHAR temp[256];&#10;int Key_Length = 0, Proclaim_Length;&#10;//&#23494;&#38053;&#30340;&#38271;&#24230;&#65292; &#26126;&#25991;&#30340;&#38271;&#24230;&#10;int Key_Each[256];&#10;GetDlgItemText(hwnd, IDC_EDIT1, Proclaim, sizeof(Proclaim));&#10;GetDlgItemText(hwnd, IDC_EDIT2, Key, sizeof(Key));&#10;Key_Length = wcslen(Key);&#10;Proclaim_Length = wcslen(Proclaim);&#10;&#10;if (Key_Length &#38;gt; Proclaim_Length)//&#21028;&#26029;&#36755;&#20837;&#26159;&#21542;&#26377;&#38169;&#35823;&#10;MessageBox(hwnd,TEXT(&#34;&#26126;&#25991;&#25110;&#32773;&#23494;&#38053;&#36755;&#20837;&#26377;&#35823;&#65292;&#35831;&#37325;&#26032;&#36755;&#20837;&#34;), TEXT(&#34;&#20986;&#38169;&#21862;&#34;), MB_OK);&#10;&#10;if (Key_Length == 0)&#10;MessageBox(hwnd,TEXT(&#34;&#26126;&#25991;&#25110;&#32773;&#23494;&#38053;&#36755;&#20837;&#26377;&#35823;&#65292;&#35831;&#37325;&#26032;&#36755;&#20837;&#34;), TEXT(&#34;&#20986;&#38169;&#21862;&#34;), MB_OK);&#10;if (Proclaim_Length % Key_Length != 0)//&#26126;&#25991;&#34917;&#20840;&#10;&#123;&#10;for (int i = Proclaim_Length; i &#38;lt;= (Proclaim_Length / Key_Length + 1)*Key_Length-1; i++)&#10;Proclaim[i] = &#39;0&#39;;&#10;Proclaim[(Proclaim_Length / Key_Length + 1)*Key_Length] = NULL;&#10;&#125;&#10;//&#26126;&#25991;&#34917;&#20840;&#32467;&#26463;&#10;&#10;for (int i = 0; i &#38;lt; Key_Length; i++)&#10;Key_Each[i] = Key[i] - &#39;0&#39;;&#10;&#10;for(int i = 0; i &#38;lt; Proclaim_Length;)&#10;&#123;&#10;int j = 0;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;temp[j] = Proclaim[i++];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i--;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;Cryptograph[i++] = temp[Key_Each[j]-1];&#10;&#125;&#10;if (Proclaim_Length % Key_Length != 0)&#10;Cryptograph[(Proclaim_Length / Key_Length + 1)*Key_Length] = NULL;&#10;else&#10;Cryptograph[Proclaim_Length]=NULL;&#10;&#10;SetDlgItemText(hwnd,IDC_EDIT3,Cryptograph);&#10;&#10;&#125;&#10;&#10;if (LOWORD (wParam == 2))&#10;&#123;&#10;TCHAR Cryptograph[256];//&#23494;&#25991;&#10;TCHAR Key[256];//&#23494;&#38053;&#10;TCHAR ReProclaim[256];//&#36824;&#21407;&#26126;&#25991;&#10;TCHAR temp[256];&#10;int Key_Length, Cryptograph_Length;&#10;//&#23494;&#38053;&#30340;&#38271;&#24230;&#65292; &#23494;&#25991;&#30340;&#38271;&#24230;&#10;int Key_Each[256];&#10;&#10;GetDlgItemText(hwnd, IDC_EDIT3,Cryptograph, sizeof(Cryptograph));&#10;GetDlgItemText(hwnd, IDC_EDIT2, Key, sizeof(Key));&#10;Key_Length = wcslen(Key);&#10;Cryptograph_Length = wcslen(Cryptograph);&#10;&#10;for (int i = 0; i &#38;lt; Key_Length; i++)&#10;Key_Each[i] = Key[i] - &#39;0&#39;;&#10;memset(ReProclaim, &#39;0&#39;, sizeof(ReProclaim));&#10;&#10;for(int i = 0; i &#38;lt; Cryptograph_Length; )&#10;&#123;&#10;int j = 0;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;temp[j] = Cryptograph[i++];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i--;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;ReProclaim[Key_Each[j]-1+i] = temp[j];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i++;&#10;&#125;&#10;ReProclaim[Cryptograph_Length]=NULL;&#10;SetDlgItemText(hwnd,IDC_EDIT4,ReProclaim);&#10;&#125;&#10;return 0;&#10;case WM_DESTROY:&#10;PostQuitMessage (0) ;&#10;return 0 ;&#10;&#125;&#10;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>最后发张效果图</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/02/0_1330094592EUII.gif.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/02/0_1330094592EUII.gif-300x233.png" alt="" title="加密算法"></a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/22/JAVA学习笔记/" itemprop="url">
+                JAVA学习笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-22T20:55:00+08:00" content="2012-02-22">
+            2012-02-22
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这个学期报了一门android的课程，可是自己连java都没有学习过，所以自己借了本java的书本看了起来。也看了大概一个礼拜了，感觉java里面的一些关于对象，继承的东西比较抽象，不知道是不是我借的这本书太难了，很多专业术语记住就忘记了。所以还是自己在这里做个笔记，免得忘记。</p>
+<p>&nbsp;</p>
+<p>首先java与c的大致语法是一样的，只不过有一些区别：</p>
+<p>1.java里面是没有指针的概念的</p>
+<p>2.java里面的方法对应c里面的函数</p>
+<p>3.java里面的状态对应c里面的变量</p>
+<p>4.自己以前写c是从main函数开始的，而java的话是从类开始的</p>
+<p>5.java多了以下概念：</p>
+<p>&nbsp;</p>
+<p>这里重点记录的是一些关于面向对象的知识点</p>
+<p><strong><span style="color: #3366ff;">1.对象</span></strong></p>
+<p>软件对象是现实世界对象的模式化产物，他们也有状态</p>
+<p>和行为。软件对象把状态用数据表示并存放在变量里，而行为则用方法实现。实际上，软件</p>
+<p>对象还包括了数据结构和使用这些数据结构的代码。因此也可以说：软件对象是现实世界客</p>
+<p>观事务的软件化模拟，是变量（数据和数据结构）和相关方法（对数据操作和对象管理的程</p>
+<p>序）的软件组合。</p>
+<p>&nbsp;</p>
+<p>创建对象包括声明、实例化和初始化三方面的内容。通常的格式为  :</p>
+<p><span style="color: #993399;"><span style="background-color: #ffffff;">1.  声明对象</span></span></p>
+<p>对象声明实际上是给对象命名，也称定义一个实例变量。对象声明的一般格式为：</p>
+<p>type name</p>
+<p>其中，type是一个类的类名，用它声明的对象将属于改类；name 是对象名。</p>
+<p>例如：</p>
+<p>Date today；</p>
+<p>Rectangle myRectangle;</p>
+<p>第一条语句说明了对象today属于Date类，第二条语句说明了对象 myRectangle</p>
+<p>属于 Rectangle 类。对象说明并没有体现一个具体的对象，只有通过实例化后的对</p>
+<p>象才能被使用。</p>
+<p><span style="color: #993399;">2.  实例化对象 </span></p>
+<p>实例化对象就是创建一个对象。<span style="color: #ff0000;">实例化对象意味着给对象分配必要的存储空间</span>，用</p>
+<p>来保存对象的数据和代码。实例化后的每个对象均占有自己的一块内存区域，实例</p>
+<p>化时，每个对象分配有一个“引用” （reference）保存到一个实例变量中。“引用”</p>
+<p>实际上是一个指针，此指针指向对象所占有的内存区域。</p>
+<p>因此，对象名（变量）实际上存放的是一个被实例化之后的对象所占有的内存区域</p>
+<p>的指针。</p>
+<p>例如：</p>
+<p>type objectName = new type ( [paramlist] );</p>
+<p>运算符 new 为对象分配内存空间 ,实例化一个对象  。new 调用对象的构造方法,返</p>
+<p>回对该对象的一个引用(即该对象所在的内存地址)。用 new 可以为一个类实例化，</p>
+<p>多个不同的对象。这些对象分别占用不同的内存空间，因此改变其中一个对象的状</p>
+<p>态不会影响其它对象的状态  。</p>
+<p><span style="color: #993399;">3．初始化对象</span></p>
+<p>生成对象的最后一步是执行构造方法,进行初始化。由于对构造方法可以进行重写</p>
+<p>，所以通过给出不同个数或类型的参数会分别调用不同的构造方法。</p>
+<p>例子：以类 Rectangle 为例,我们生成类 Rectangle的对象:</p>
+<p>Rectangle  p1=new Rectangle ();</p>
+<p>Rectangle  p2=new Rectangle (30，40);</p>
+<p><span style="color: #ff0000;">关于对象的引用</span></p>
+<p>这个概念自己一开始没有想明白，查找了相关的资料：</p>
+<p>&nbsp;</p>
+<p>1. 引用类型（reference type）：引用类型是用在对象上的。一个对象可以被多个引用所指向，但同一时刻，每个引用只能指向唯一的一个对象。如果一个对象被多个引用所指向，那么无论哪个引用对对象的属性进行了修改，都会反映到其他的引用当中。</p>
+<p>2.在java里，永远无法直接操作对象，对对象的所有操作都是通过对象的引用来间接完成的。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">People</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> age = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change</span>(<span class="params">People people</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">people = <span class="keyword">new</span> People();</span><br><span class="line">people.age = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">People people = <span class="keyword">new</span> People();</span><br><span class="line"><span class="keyword">int</span> age = people.age;</span><br><span class="line">System.<span class="keyword">out</span>.println(age); <span class="comment">//输出 20</span></span><br><span class="line">people.change(people);</span><br><span class="line"><span class="keyword">int</span> age2 = people.age;</span><br><span class="line">System.<span class="keyword">out</span>.println(age2); <span class="comment">//还是输出20</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>People people=new People(); //这句话在内存的堆中生成了一个 People类型的对象，并且在内存的栈中生成了一个 People类型的引用，这个引用指向了堆中生成的People类型的对象</p>
+<p>people.change(people); //传到方法的时候创建了一个新的引用，也指向刚才在堆中生成的People类型的对象</p>
+<p>public void change(People people)</p>
+<p>{</p>
+<p>people = new People(); //在内存的堆中又生成了一个 People类型的对象，并将方法中的那个引用从指向旧的People对象改成指向这个新的对象</p>
+<p>&nbsp;</p>
+<p>people.age = 30; //这里通过新的引用修改的是方法中新产生的对象的age属性，而不是外面那个对象的age属性</p>
+<p>}</p>
+<p>3. 如果一个类包含了属性与方法，那么该类的每一个对象都具有自己的属性，但无论一个类有多少个对象，这些对象共享同一个方法（引用同一个方法）。</p>
+<p>4. 关于方法参数传递的总结：对于Java中的方法参数传递，无论传递的是原生数据类型还是引用类型，统一是传值（pass by value），而不是传递内存地址。C#里面有ref可以传递内存地址</p>
+<p>5. 什么类型的引用就能指向什么类型的对象，不能指向其他类型的对象，比如People类型的引用就能指向People类型的对象，但不能指向Student类型的对象。比如：</p>
+<p>People people = new People(); // 正确</p>
+<p>People people = new Student(); //错误</p>
+<p>6. 构造方法（Constructor）：构造方法用于完成对象属性的初始化工作，构造方法的特点：</p>
+<p>a) 构造方法的名字必须与类名完全一致（包含大小写）</p>
+<p>b) 构造方法没有返回值，连void也不能出现。</p>
+<p>c) 如果在定义一个类的时候，没有为类声明构造方法，那么Java编译器会自动为类添加一个没有参数且方法体为空的构造方法（默认的构造方法）</p>
+<p>d) 如果在定义一个类的时候，为类声明了构造方法，那么Java编译器就不会再为类添加构造方法了。</p>
+<p>e) 不能显式调用类的构造方法，构造方法通常是通过new关键字隐式调用。</p>
+<p>7. 默认的构造方法：构造方法没有参数且方法体为空。</p>
+<p>8. new关键字在生成对象时完成了三件事情：</p>
+<p>a) 为对象开辟内存空间。</p>
+<p>b) 调用类的构造方法进行对象的一系列的初始化。</p>
+<p>c) 将生成的对象的地址返回。</p>
+<p>9. 使用new来生成对象的时候，后面的小括号()表示构造方法的参数列表，如果构造方法不接收参数，那么小括号中的内容为空；如果构造方法接收参数，那么小括号中的实际参数就需要与构造方法定义中的形式参数保持一致（参数数量一致、参数类型一致、按照顺序逐一赋值）。</p>
+<p>&nbsp;</p>
+<p><strong><span style="color: #3366ff;">2.封装</span></strong></p>
+<p>“封装”是 OOP 语言的优点之一。把一个对象的数据加以包装并置于其方法的保护之下</p>
+<p>称为封装。所谓封装就是对数据的隐藏。封装实现了把数据和操作这些数据的代码包装成为</p>
+<p>一个对象（即离散的部件），而数据和操作细节（方法）隐藏起来。如果增加某些限制，使</p>
+<p>得对数据的访问可按照统一的方式进行，那些能比较容易地产生更为强壮的代码。</p>
+<p>OOP 语言提出一种（或称为协议），以保证对数据进行统一的操作。通常的做法是：程</p>
+<p>序和对象数据的交互作用通过一个公开的接口进行，而不直接进行操作。由于把数据封装在</p>
+<p>对象中，所以，访问对象中的数据只有一种途径，那就是利用一个公开的接口。</p>
+<p>实际上，封装在程序和数据之间设置了一道栅栏，它可以阻止一部分的设计错误，不至</p>
+<p>于涉足应用程序其他部分的数据。</p>
+<p><strong><span style="color: #3366ff;">3.消息</span></strong></p>
+<p>一个单独的对象一般不十分有用，而作为一员出现在包含有许多其他对象的大程序或应</p>
+<p>程序之中，通过这些对象的相互作用，程序员可实现高层次的操作和更负责的功能。某此</p>
+<p>象通过向其他对象发送消息与其他对象进行交互作用和通信。</p>
+<p>消息是以参数的形式传递给某方法的。一个消息通常由三部分组成：</p>
+<ol>
+<li><p>消息传送到对象的名称。</p>
+</li>
+<li><p>要执行的方法的名称。</p>
+</li>
+<li><p>方法需要的任意参数。</p>
+</li>
+</ol>
+<p>&nbsp;</p>
+<p><strong><span style="color: #3366ff;">4.类</span></strong></p>
+<p>类是一个蓝图或样板，定义了某种类型的所有对象的变量和方法。</p>
+<p>在 java 语言中，Java  程序的基本单位是类，也就是说：一个 Java 程序是由多个类组成</p>
+<p>的。定义一个类与定义一个数据类型是有区别的。在程序设计语言中，把定义数据类型的能</p>
+<p>力作为一种很重要的能力来对待。在面向对象的语言中，类的功能更强大，这是因为类不仅</p>
+<p>含有定义数据类型的功能，而且还包含了对方法的定义。</p>
+<p>对象实际是类中的一个实例。生成实例的过程叫做把“一个对象实例化”。一个实例化</p>
+<p>的对象实际上是由若干个实例变量和实例方法组成的。当你创建出一个类的实例时，系统将</p>
+<p>为实例变量指定内存，然后你就可以利用实例方法去做某些事情。</p>
+<p>&nbsp;</p>
+<p>类是组成 Java 程序的基本要素。它封装了一类对象的<span style="color: #ff0000;">状态和方法</span>，是这一类对象的</p>
+<p>原型。定义一个类，实际上就是指定该类所包含的数据和对数据进行操作的代码。</p>
+<p>类通过关键字 class 来定义，一般格式为：</p>
+<p>【类说明修饰符】class类名【extends  子句】【implements子句】</p>
+<p>type instance-varable;</p>
+<p>the methodname(parameter-list){method-body;}</p>
+<p>（1）  class 是类说明关键字。</p>
+<p>（2） 类名是由程序员自己定义的 Java 标识符，每个类说明必须有 class 和类名。</p>
+<p>（3） 类说明修饰符包括：</p>
+<p>abstract  说明一个类为抽象类，抽象类是指不能直接实例化对象的类。</p>
+<p>final  说明一个类为最终类，即改类不能再有子类。</p>
+<p>public  说明类为公共类，该类可以被当前包以外的类和对象使用。</p>
+<p>private  说明类为私有类。</p>
+<p>（4）  extends 子句用于说明类的直接超类。</p>
+<p>（5）  implements子句用于说明类中将实现哪些<span style="color: #ff0000;">接口</span>，接口是 Java 的一种引用类</p>
+<p>型。</p>
+<p>（6） 类体包含了<span style="color: #ff0000;">变量和方法</span>。在类体中定义的数据、变量和方法称为类的成员，</p>
+<p>或称为实例变量和实例方法。</p>
+<p><img src="http://hi.csdn.net/attachment/201202/21/0_1329809138elsP.gif" alt=""></p>
+<p>5.继承</p>
+<p>继承是指建立子类的能力。子类继承了父亲的特征和功能。类的层次结构类似于一棵数</p>
+<p>结构，也像一个家庭谱系。它显示了根和它的导出类之间的关系。</p>
+<p>子类从它先辈类那里继承了代码和数据，这样，它就可以执行先辈类的功能和访问先辈</p>
+<p>的数据。一个纯面向对象程序设计的语言将具有严格的继承性。</p>
+<p>通过对象、类，我们实现了封装，通过子类我们可以实现继承。例如，公共汽车、出租</p>
+<p>、货车等都是汽车，但它们是不同的汽车，除了具有汽车的共性外，它们还具有自己的特</p>
+<p>如不同的操作方法，不同的用途等)。这时我们可以把它们作为汽车的子类来实现，它们</p>
+<p>承父类(汽车)的所有状态和行为，同时增加自己的状态和行为。通过父类和子类，我们实</p>
+<p>了类的的层次，可以从最一般的类开始，逐步特殊化，定义一系列的子类。同时，通过继</p>
+<p>也实现了代码的复用，使程序的复杂性线性地增长，而不是呈几何级数增长。</p>
+<p>&nbsp;</p>
+<p>6.抽象</p>
+<p>面向对象的程序设计系统鼓励充分利用“抽象”。在现实世界中，人们正是通过抽象来</p>
+<p>理解复杂的事务。例如：人们并没有把汽车当作成百上千的零件组成来认识，而是把它当作</p>
+<p>具有自己特定行为的对象。人们可以忽略发动机、液压传输、刹车系统等如何工作的细节，</p>
+<p>而习惯于把汽车当作一个整体来认识。</p>
+<p>包含通用对象类的库叫作类库。</p>
+<p>7.多态性</p>
+<p>面向对象程序的最后一个概念是多态性。凭借多态性，你可以创建一个新的对象，它具</p>
+<p>有与基对象相同的功能，但是这些功能中的一个或多个是通过不同的方式完成的。例如：在</p>
+<p>Java 中你可以凭借多态性，通过一个画圆的对象，来创建一个画椭圆或矩形的对象。不管是</p>
+<p>画圆，画椭圆还是画矩形的方法，它们都有一个相同的方法名，但以不同的方式完成他们的</p>
+<p>画圆的功能</p>
+<p>&nbsp;</p>
+<p>8.包</p>
+<p>包是一种命名和可视控制的机制，用户可以把某些类定义在一个包</p>
+<p>中，也可以对定义在这个包中的类施加访问权限，以限定包外或包</p>
+<p>内的程序对其中的某些类进行访问。</p>
+<p>定义包的格式：</p>
+<p>package pkg；</p>
+<p>Java 的文件系统将存储和管理这个包。例如：属于 pkg 包中的.class</p>
+<p>文件将存储到目录 pkg。注意：目录与包的名字完全一样。</p>
+<p>package 语句可以创建包的层次结构，通过使用逗号，把每个包分开。</p>
+<p>多级包层次结构的一般格式为：</p>
+<p>package pkg1[.pkg2[.pkg3]]</p>
+<p>包层次结构必须反映 Java 开发系统的文件系统。比如：pacakge</p>
+<p>java.awt.Image;</p>
+<p>9.接口</p>
+<p>接口与类存在着本质的差别，类有它的成员变量和方法，而接口只<span style="color: #ff0000;">有</span></p>
+<p>常量和方法协议，从概念来讲，接口是一组方法协议和常量的集合。</p>
+<p>接口在方法协议与方法体实体之间只起到一种称之为界面的作用，这</p>
+<p>种界面限定了方法实体中的参数类型一定要与方法协议中所规定的</p>
+<p>参数类型保持一致，除此以外，这种界面还限定了方法名、参数个数</p>
+<p>及方法返回类型的一致性。因此，在使用接口时，类与接口之间并不</p>
+<p>存在子类与父类的那种继承关系，在实现接口所规定的某些操作时只</p>
+<p>存在类中的方法与接口之间保持一致的关系，而且一个类可以和多个</p>
+<p>接口之间保持这种关系，即一个类可以实现多个接口。</p>
+<p>当初看接口这个概念并不是很理解，所以又看了一遍，下面是自己对接口的理解：</p>
+<p><span style="color: #3333ff;">1.由于java中的类不支持</span><span style="color: #3333ff;"><span style="color: #ff0000;">多重继承</span>，也就是说一个类只能有一个直接父类。但是接口就不一样了，接口可以连接多个类</span></p>
+<p><span style="color: #3333ff;">，这样就弥补了java不支持多重继承的缺点。</span></p>
+<p><span style="color: #3333ff;"><span style="background-color: #ffffff;">2.接口中的各个类是没有关联的，这样用起来肯定比较简便嘛。</span></span></p>
+<p>&nbsp;</p>
+<p>1.14.2.2  接口的定义</p>
+<p>格式：</p>
+<p>access interface name</p>
+<p>{</p>
+<p>return method-name(parameter-list);</p>
+<p>type final-varname=value;</p>
+<p>}</p>
+<p>其中，access是访问修饰符。它只有 public 和未指定访问修饰符</p>
+<p>两种情况。当未指定访问修饰符时，该接口只能为同一个包中的</p>
+<p>其他成员所用；当 public修饰符说明时，该接口可以被其他任何</p>
+<p>代码使用。name 是接口的名字，可以是任何有效的标识符。接</p>
+<p>口体包括方法协议和常量，它们都用分号结束。在接口中定义的</p>
+<p>常量必须用变量名标识。他们隐式为 final 和 static，不能被实现</p>
+<p>类所改变。</p>
+<p>例：interface Back</p>
+<p>{</p>
+<p>void c_back(int param);</p>
+<p>int SOON=4;</p>
+<p>}</p>
+<p>该接口定义了一个方法协议，其参数为整数类型；还定义了一整</p>
+<p>数常量，其变量名为 SOON。该接口只能为同一个包中其他成员</p>
+<p>所用。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div align="left"><span style="font-size: 10pt;">　<span style="color: #3366ff;">　</span></span><span style="color: #3366ff;"><span style="font-size: 10pt;">java</span><span style="font-size: 10pt;">的接口到底起什么作用</span><span style="font-size: 10pt;">？</span></span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">1、从书中看到的是java程序的接口中只定义了常量及空方法，空的方法有什么用呢？还要在类中写方法体，那还要接口干什么？</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">2、一个程序中写了2个接口，并在同一个类中写方法体，这与多继承有什么关系。</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">3、包中那些已定义的接口，怎么知道那里面定义了什么方法。</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">说到底，接口有什么实际意义，哪本书都不讲，一味的讲是多继承，不结合实际实在不好懂。</span></div><br><div align="left"></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">Madai</span><span style="font-size: 10pt;">的理解是</span><span style="font-size: 10pt;">：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">java接口的用处主要体现在下面几个方面：</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（1）通过接口可以实现不相关类的相同行为，而不需要了解对象所对应的类。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（2）通过接口可以指明多个类需要实现的方法。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（3）通过接口可以了解对象的交互界面，而不需了解对象所对应的类。</span></div><br><div align="left"></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">Clkrst给出了更详细的解释：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">类描述了一个实体，包括实体的状态，也包括实体可能发出的动作。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">接口定义了一个实体可能发出的动作。但是只是定义了这些动作的原型，没有实现，也没有任何状态信息。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">所以接口有点象一个规范、一个协议，是一个抽象的概念；而类则是实现了这个协议，满足了这个规范的具体实体，是一个具体的概念。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">从程序角度，简单理解，接口就是函数声明，类就是函数实现。需要注意的是同一个声明可能有很多种实现。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">所以就你的问题：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">1、接口中定义类方法的原型，但是不能说是空方法，因为空方法的意思是有实现体，只不过实现体是空操作。实际上接口没有定义任何实现体。具体的实现体都是在实现接口的类中，接口只是定义了这些方法的调用方式。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">你当然也可以不用接口，直接在类里面写方法，但是如果你的一组方法需要在很多类里实现，那么把它们抽象出来，做成一个接口规范，不是更好么？</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">2、一个类描述了一个实体，这个实体可能是一个复杂的对象，它的动作很多，如果把这些动作分类，用接口a定义其中的某一组动作，接口b定义其中的另外一组动作，这样的结构，比较清楚。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">这种方式具备了多继承的优点，避免了多继承的缺陷。实际上在历史上，接口在很大程度上，是为了解决多继承带来的种种问题而设计出来的。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">3、包中那些已定义的接口，怎么知道那里面定义了什么方法。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">接口里定义了方法的输入输出，这些都是协议，具体的实现都在每个类中。对于很多只需要抽象接口的地方，不需要知道具体的类是什么，只要这个类实现了这个接口就可以了。</span></div>
+
+<p>&nbsp;</p>
+<p><span style="color: #330099;"><strong>由于以前没java基础，看这部分抽象东西的时候真的是很头疼，所以做做笔记还是很必要的。</strong></span><img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/struggle.gif" alt="奋斗"></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/20/口令登陆创新的一些想法/" itemprop="url">
+                口令登陆创新的一些想法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-20T21:55:00+08:00" content="2012-02-20">
+            2012-02-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>刚刚上完创造学的课回来，上课的时候教授老是讲机械方面的东西，自己又不懂，脑子里面胡思乱想，于是就随便想了些东西，产生了对口令登陆创新的一些想法。</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">1.传统的口令登陆</span></strong></p>
+<p>我们在输入密码的时候使用*号或者是黑色的实心圆圈输入密码的方式已经沿用了不知道多少时间了。再神秘的东西接触了这么长的时间以后可能也会感到没有新鲜感了吧。</p>
+<p>或者就像是linux里面的口令输入，干脆就是什么都不显示，倒也是一个不错的方法。</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">2.口令登陆的创新</span></strong></p>
+<p>（一）其实最初有这个想法还是在看了<strong><span style="color: #3366ff;">win8</span></strong>的图片密码登陆后产生的。下面来看看win8的图片密码登陆功能：</p>
+<p>，微软公司透露了win8的一项新功能，出了传统密码设置外，用户还可通过&ldquo;图片密码&rdquo;来实现系统登录。</p>
+<p><a href="http://www.pcpop.com/doc/pic/002243575.html" target="_blank" rel="external"><img src="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243575.jpg" alt="Windows 8 支持图片密码登录 "></a></p>
+<center></center>
+
+<p>用户可增设图像密码保护自己的相关资料</p>
+<p>&nbsp;&nbsp;&nbsp; 据了解，该功能融合了个人图片和手势的密码存放方式，它可以增加密码的安全性和可记忆程度。用户仅需一个手势，即可解锁Windows 8，他人很难看出自定义图像中的玄机。</p>
+<p><a href="http://www.pcpop.com/doc/pic/002243576.html" target="_blank" rel="external"><img src="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243576.jpg" alt="Windows 8 支持图片密码登录 "></a></p>
+<p>用户可增设图像密码保护自己的相关资料</p>
+<p>&nbsp;&nbsp;&nbsp; 此外微软还补充表示，该功能为可选，并不会取代传统字符密码。</p>
+<p>**<span style="color: #000099;"></span></p>
+<p>**</p>
+<p><strong><span style="color: #000099;">（二）手机解锁</span></strong></p>
+<p><span style="color: #33cc00;">i）迷宫解锁</span></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_1329743856RRt8.gif" alt=""></p>
+<p><span style="color: #33cc00;">ii）指纹解锁</span></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_1329743821suM0.gif" alt=""></p>
+<p><span style="color: #33cc00;">iii）模拟指纹解锁</span></p>
+<p>我的诺基亚不支持多点触控，所以以前下载过一款软件，将手指按上去，每隔一段时间自动进行一次&ldquo;扫描&rdquo;，并发出一次&ldquo;嘟&rdquo;的声音。你可以提前设定好声音的次数，当达到你设定声音次数的时候松开手指，这个时候解锁成功。它的本质是通过判断声音的次数来进行解锁的判断</p>
+<p><strong><span style="color: #3366ff;">（三）中银e令</span></strong></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_13297441283E1U.gif" alt=""></p>
+<p>通过每隔一段时间变换e口令来实现动态口令变化</p>
+<p>与这类似的还有无线上网登录时候的短信动态（静态）口令登陆</p>
+<p><strong><span style="color: #3366ff;">（四）无线上网动态口令</span></strong></p>
+<p>通过短信发送自动生成的动态密码的方式实现</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">3.实现口令登陆创新需要考虑到的因素</span></strong></p>
+<p><strong><span style="color: #3366ff;">（一）口令的唯一性</span></strong></p>
+<p>这里需要运用概率论的知识。保证用户在登陆的时候口令的唯一性。这个口令的概率要小到一定范围以内，减少偶然碰撞与恶意碰撞，同时避免重复</p>
+<p><strong><span style="color: #3366ff;">（二）简单性</span></strong></p>
+<p>为什么普通的字符串口令登陆能流行这么长时间？很重要的原因就是它的简单性。同时它便于数据的管理，以及密码学基础能够对密码进行加密的各种方式。尤其是现代密码体制更加强了这种口令的安全性。</p>
+<p><strong><span style="color: #3366ff;">（三）考虑到不同年龄段</span></strong></p>
+<p>老年人可能更倾向于简单的密码设置。这在带来方便的同时也降低了密码的安全度。而年轻人倾向于创建很多不同的密码，到后来由于缺乏统一的管理和记忆最后把很多密码都忘记了。</p>
+<p><strong><span style="color: #3366ff;">（四）趣味性</span></strong></p>
+<p>上面的例子中，win8的图片密码方式和手机解锁方式很好地体现了口令的创新机制。所以我认为以后的口令创新方式可能是多种多样的，同时也是富有一定的趣味性的。不会让人觉得输入你的口令是一件很枯燥的事情。</p>
+<p><strong><span style="font-size: 16px; color: #ffcc33;">4.实现口令创新的一些想法</span></strong></p>
+<p><strong><span style="color: #3366ff;">（一）类的继承（母体-&gt;子体）</span></strong></p>
+<p>创建一个父类，在继承父类的基础上扩展子类的功能，这样减少了密码记忆的难度。</p>
+<p>同时联系你注册的网站的信息进行不同子类的扩展。</p>
+<p>但是这种方法有很大的缺陷和局限性。</p>
+<p><strong><span style="color: #3366ff;">（二）基因突变</span></strong></p>
+<p>生物中的基因结构的碱基对排列确实是很神奇啊。所以心想能不能借鉴这种算法来实现口令排列？关于利用遗传算法实现这种口令排列。</p>
+<p>当然这只是我的构想而已。</p>
+<p><strong><span style="color: #3366ff;">（三）从静态到动态</span></strong></p>
+<p>用&ldquo;文字&rdquo;的形式实现口令登陆当然是最基础的，win8实现图像进行口令登陆。所以我想能不能利用声音，图像，等其它多媒体技术来实现相对动态的口令登陆。</p>
+<p>但是利用这种方式会设计到更多算法，以及更多的数据储存。</p>
+<p><strong><span style="color: #3366ff;">（四）联想 与 信息</span></strong></p>
+<p>关于联想，其实跟（一）有一点相似之处。但是具体怎么联想，自己还没有想到。</p>
+<p>关于信息， 我想利用头脑风暴法来实现尽量多的信息实现来将信息&ldquo;嵌入&rdquo;到口令中。</p>
+<p>&nbsp;</p>
+<p>暂时就想到这些信息了，以上内容只是自己随便想想的，很多不实际，错误的地方还请大家指正。谢谢。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/17/关于计算机专业的人如何学好编程/" itemprop="url">
+                关于计算机专业的人如何学好编程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-17T19:24:00+08:00" content="2012-02-17">
+            2012-02-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这篇文章是写给低年级的人的，已经工作的就不用来看我废话浪费时间了。</p>
+<p>　　最近总是有人问如何确定自己方向的问题，说是看到有的人在搞手机，有的人在搞网页，有的人在搞游戏，还有其他的什么的，然后说自己只懂得这么一点东西不知道该怎么办之类的事情。我一直在一些做软件开发的群里面混，里面有很多学生，也有很多从业者。那些人对于人们在基础不够扎实的情况下就“做各种各样具体的项目”有两种说法，一种说是浮躁，另一种说是这样开阔&#30524;界是好的。</p>
+<p>　　大学就四年。学校通常安排前两年学数学英语，然后大一学语言大二学数据结构。到了大三有很多比较具体而且复杂的课程，然后就要找实习，大四其实就是在找工作，课也没有，卫生也不检查了，等于在租学校的宿舍住。</p>
+<p>　　于是在这短短的三年里面想在计算机那么多领域里面找到自己喜欢的，然后钻研下去，最后还有所成就的话，还是比较难的。因此很多人经常会看到自己周围突然有两三个人就干了点什么很有成就感的事情了，一问，以前学过的。这种人我也接触了几个。我有一个同学说是高中的时候被称为代码狂人，给emule写了点代码，然后还自己做了个即时通讯工具卖了出去。到了大学就一直在重写这个东西，最后实习就到腾讯去了。前几天还遇到个人，说是小学就在折腾flash里面的action script了，后来投靠perl，说是一直到了大一才写了一个超过2000行的程序。我也没去求证，只是觉得比较不可思议。</p>
+<p>　　于是我想，就照着那些传统的路子先搞定一门语言（《C&#43;&#43;Primer》），然后学数据结构（《算法导论》），再去学点库（《STL源代码分析》《深入浅出MFC》），之后弄点设计模式（《设计模式》），最后写个某某管理系统（笑）什么的，也是无聊了点。竟然要学了那么多东西，才能弄出一个看得见摸得着的程序，也太考验人的意志力了吧。几乎是个人都是从拖控件开始的。那些一开始就摸着黑白屏幕狂搞算法的人，要么是NOI出身，要么是ACM出身，然后对着几道算法题乐此不疲。但是最后有所成就的，很少。我在学校认识了那么多个ACM出身的，最后也就一个去了google。感觉风险还是有点大啊。</p>
+<p>　　但是反过来也是有问题的。要是一开始就从界面开始弄，人也是很容易浮躁的。很多人因此就陷入了对花花世界的追求了（根据对群里面的人的统计），譬如说特别关心怎么在ListView前面画棵树什么的。这种人里面，其中一些有追求的，最后都会沿着Windows SDK，再走到DDK，最后写驱动，一脚踏进泥坑，从此不能自拔，当然这些人也是少数。每当有少数人对着剩下的多数人说跟“我今天实现了让Word不能打开某某文件”差不多的这些事情的时候，他们两&#30524;大放光芒，然后就开始跪求源码，狂问用了什么API，最后当代码终于到手的时候，就放进之前精心准备好的一个文件夹里面，封存万世，从此再也不去看了。当然也有其他的版本，譬如说老是下载书，而且还是rar，然后从不解压一样。曾经有这么一个人就在群上炫耀说自己有多少多少G的电子书。我让他上截图，结果全是rar。根本就没看嘛，他自己也承认了。</p>
+<p>　　于是怎么看两条路都是很有危险的，这就是为了什么到了大四的时候，能学成的人总是不多的缘故。&nbsp;<strong>太容易陷进去了</strong>&nbsp;。这是什么意思呢？人总是只对自己做得好的事情感兴趣。对自己还没做的事情感兴趣那种是好奇，需要严肃对待。当人终于做好了一件事情之后，就会一直不断的钻研下去，这当然是好事。但是，从此只见树木不见森林，以为全天下的编程就那一件事情，那当然是要吃亏的。</p>
+<p>　　所以首先要开阔&#30524;界，知道世界上原来还有这么多的东西可以做。&nbsp;<strong>在差不多知道编程是什么东西的时候，需要这个玩一玩，那个玩一玩</strong>&nbsp;。不然就会看到旁边的同学这个用Java在手机上跑一个能告诉你1&#43;1=2的东西，那个人用PHP&#43;MYSQL弄了个留言版，看得唾液直流，心里发慌，说自己对着C&#43;&#43;的黑白屏幕弄了这么久居然连那点小玩意都做不出来，自尊心很容易受到打击的。</p>
+<p>　　<strong>于是在玩过了之后呢，要及时收手，就专门做一件事情好了</strong>&nbsp;。因为这个时候自己已经大概知道自己看见的东西差不多就是那个样子，想做自己也做得出来，看着别人写那些花边的程序也就不会给自己施加太多压力了。专门做一件事情的意思就是，选定一个方向，然后找书，找人，看代码，写程序。&nbsp;<strong>譬如说可以去弄图形做游戏，也可以去弄脚本引擎做做编译器，还可以跟着老师去搞什么数据挖掘啊嵌入式什么的</strong>&nbsp;。对一个领域的深入研究最大的用处是可以让自己接触<strong>复杂的问题</strong>&nbsp;。</p>
+<p>　　当然，当研究得深入了之后，程序就越写越大了，这个时候就会出现很多各种各样的问题了。譬如说效率太低啦，程序一出错就要全盘推倒重来啦（这个还是比较可悲的），代码太多很难组织函数啊类什么的啦，或者说名字给你用光啦等等。这个时候就需要各种各样的理论知识了，譬如说数据结构与算法，还有设计模式什么的。当然讲来讲去也就这几样，因为“这世界上没有银弹”，所以那些通用的东西必然不多，剩下的还是要靠在同各领域里面其他人的积累或者自己的研究才能最终解决的。</p>
+<p>　　上面所说的可以做的各种各样的事情还是偏向于理论化一点，其实有一个学术上的领域还是不够的，因为最终一个程序在跟计算机打交道的时候靠的是输入输出，也就是俗称IO的东西了。这究竟是什么呢？也就是说，知道那个地方放着你要的数据，你要把它拿过来。你自己算出了什么，知道要往哪里放，你要会放。这里面包含的东西很多，譬如说典型的，键盘和屏幕上的输入输出，网络要用的Socket啦Web Service啦，那些看得见的窗口啦控件啦，读写硬盘啦，还有其他什么的。这种<strong>在某一平台上的专用的API</strong>都是至少要熟悉一种的。不然你光学会这个算法那个算法有什么用啊，譬如说你想对一个图片进行压缩，专门学了那个知识，但是一个bmp放在硬盘上你却读不进来，那岂不没意义了么。</p>
+<p>　　于是说了这么多，无非就是刚开始的时候要去见识世面，然后挑一个来慢慢研究，最后研究着研究着程序搞大了，就自然会碰到很多高级的问题了。这个时候去解决了，其实本科需要你具备的水平其实也差不多达到了。</p>
+<p>　　所以很多人都洗心革面，终于开始努力研究一个领域的问题了。领域总是复杂的，这个时候会遇到很多编程上的问题，譬如说算法太复杂表达不出来啦，文件读着读着就挂啦，一不小心越界了之后造成了很多奇怪的问题啦（C&#43;&#43;）等等。这种关于调试的问题，一般只能够靠自己错得多错得离谱了，最后就成才了。当然前人也总结出了经验，写了本叫《&nbsp;<strong>Why Programs Fail</strong>&nbsp;》的书，想看的话可以自己去下载。其次，&nbsp;<strong>具体的库总是有很多书和文档的，没事也要多看点</strong>&nbsp;，譬如说用Visual</p>
+<p> Studio的人都得把MSDN给装了。</p>
+<p>　　话也差不多说完了，虽然我自己也觉得这篇文章比较虚，因为这也是“通用的东西”。具体自己该怎么办自己得好好想想。我就把这篇东西献给现在大一大二那些还在迷宫里转的弟弟妹妹了，要是有什么特殊的疑难杂症的话，就私底下联系我吧。</p>
+<p>　　总之，无论什么时候，手头上都要留有一个可以研究的问题才好。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/17/Linux多线程编程/" itemprop="url">
+                Linux多线程编程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-17T19:21:00+08:00" content="2012-02-17">
+            2012-02-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><a href="http://www.cnblogs.com/skynet/archive/2010/10/30/1865267.html" target="_blank" rel="external">http://www.cnblogs.com/skynet/archive/2010/10/30/1865267.html</a></p>
+<p>作者：吴秦</p>
+<p>——本文一个例子展开，介绍Linux下面线程的操作、多线程的同步和互斥。</p>
+<h1 id="前言">前言</h1><p>线程？为什么有了进程还需要线程呢，他们有什么区别？使用线程有什么优势呢？还有多线程编程的一些细节问题，如线程之间怎样同步、互斥，这些东西将在本文中介绍。我在某QQ群里见到这样一道面试题：</p>
+<blockquote>
+<p>是否熟悉POSIX多线程编程技术？如熟悉，编写程序完成如下功能：</p>
+<p>1）有一int型全局变量g_Flag初始值为0；</p>
+<p>2） 在主线称中起动线程1，打印“this is thread1”，并将g_Flag设置为1</p>
+<p>3） 在主线称中启动线程2，打印“this is thread2”，并将g_Flag设置为2</p>
+<p>4） 线程序1需要在线程2退出后才能退出</p>
+<p>5） 主线程在检测到g_Flag从1变为2，或者从2变为1的时候退出</p>
+</blockquote>
+<p>我们带着这题开始这篇文章，结束之后，大家就都会做了。本文的框架如下：</p>
+<ul>
+<li>1、进程与线程</li>
+<li>2、使用线程的理由</li>
+<li>3、有关线程操作的函数</li>
+<li>4、线程之间的互斥</li>
+<li>5、线程之间的同步</li>
+<li>6、试题最终代码</li>
+</ul>
+<h1 id="1、进程与线程">1、进程与线程</h1><p>进程是程序执行时的一个实例，即它是程序已经执行到何种程度的数据结构的汇集。<span style="font-size: 13px; color: #c0504d;">从内核的观点看，进程的目的就是担当分配系统资源（CPU时间、内存等）的基本单位</span>。</p>
+<p>线程是进程的一个<span style="font-size: 13px; color: #d16349;">执行流，是CPU调度和分派的基本单位，它是比进程更小的能独立运行的基本单位</span>。一个进程由几个线程组成（拥有很多相对独立的执行流的用户程序共享应用程序的大部分数据结构），线程与同属一个进程的其他的线程共享进程所拥有的全部资源。</p>
+<blockquote>
+<p>&#8220;进程——资源分配的最小单位，线程——程序执行的最小单位&#8221;</p>
+</blockquote>
+<p>进程有独立的地址空间，一个进程崩溃后，在保护模式下不会对其它进程产生影响，而线程只是一个进程中的不同执行路径。线程有自己的堆栈和局部变量，但线程没有单独的地址空间，一个线程死掉就等于整个进程死掉，所以多进程的程序要比多线程的程序健壮，但在进程切换时，耗费资源较大，效率要差一些。但对于一些要求同时进行并且又要共享某些变量的并发操作，只能用线程，不能用进程。</p>
+<h1 id="2、使用线程的理由">2、使用线程的理由</h1><p>从上面我们知道了进程与线程的区别，其实这些区别也就是我们使用线程的理由。总的来说就是：<span style="font-size: 13px; color: #d16349;">进程有独立的地址空间，线程没有单独的地址空间（同一进程内的线程共享进程的地址空间）</span>。（下面的内容摘自<a href="http://fanqiang.chinaunix.net/a4/b8/20010811/0905001105.html" target="_blank" rel="external">Linux下的多线程编程</a>）</p>
+<p>使用多线程的<span style="font-size: 13px;"><strong>理由之一</strong></span>是和进程相比，它是一种非常&#8221;节俭&#8221;的多任务操作方式。我们知道，在Linux系统下，启动一个新的进程必须分配给它独立的地址空间，建立众多的数据表来维护它的代码段、堆栈段和数据段，这是一种&#8221;昂贵&#8221;的多任务工作方式。而运行于一个进程中的多个线程，它们彼此之间使用相同的地址空间，共享大部分数据，启动一个线程所花费的空间远远小于启动一个进程所花费的空间，而且，线程间彼此切换所需的时间也远远小于进程间切换所需要的时间。据统计，总的说来，一个进程的开销大约是一个线程开销的30倍左右，当然，在具体的系统上，这个数据可能会有较大的区别。</p>
+<p>使用多线程的<span style="font-size: 13px;"><strong>理由之二</strong></span>是线程间方便的通信机制。对不同进程来说，它们具有独立的数据空间，要进行数据的传递只能通过通信的方式进行，这种方式不仅费时，而且很不方便。线程则不然，由于同一进程下的线程之间共享数据空间，所以一个线程的数据可以直接为其它线程所用，这不仅快捷，而且方便。当然，数据的共享也带来其他一些问题，有的变量不能同时被两个线程所修改，有的子程序中声明为static的数据更有可能给多线程程序带来灾难性的打击，这些正是编写多线程程序时最需要注意的地方。</p>
+<p>除了以上所说的优点外，不和进程比较，多线程程序作为一种多任务、并发的工作方式，当然有以下的优点：</p>
+<ul>
+<li>提高应用程序响应。这对图形界面的程序尤其有意义，当一个操作耗时很长时，整个系统都会等待这个操作，此时程序不会响应键盘、鼠标、菜单的操作，而使用多线程技术，将耗时长的操作（time consuming）置于一个新的线程，可以避免这种尴尬的情况。</li>
+<li>使多CPU系统更加有效。操作系统会保证当线程数不大于CPU数目时，不同的线程运行于不同的CPU上。</li>
+<li>改善程序结构。一个既长又复杂的进程可以考虑分为多个线程，成为几个独立或半独立的运行部分，这样的程序会利于理解和修改。</li>
+</ul>
+<p>=============================</p>
+<p>从函数调用上来说，进程创建使用<span style="color: #d16349;">fork()</span>操作；线程创建使用<span style="color: #d16349;">clone()</span>操作。<span style="font-size: 10px;">Richard Stevens</span>大师这样说过：</p>
+<ul>
+<li><p><span style="font-size: 10px;"><tt>fork</tt> is expensive. Memory is copied from the parent to the child, all descriptors are duplicated in the child, and so on. Current implementations use a technique called copy-on-write, which avoids a copy of the parent&#8217;s</span></p>
+<p>data space to the child until the child needs its own copy. But, regardless of this optimization,<tt>fork</tt> is expensive.</p>
+</li>
+<li><p><span style="font-size: 10px;">IPC is required to pass information between the parent and child after the<tt>fork</tt>. Passing information from the parent to the child before the</span></p>
+<p><tt>fork</tt> is easy, since the child starts with a copy of the parent&#8217;s data space and with a copy of all the parent&#8217;s descriptors. But, returning information from the child to the parent takes more work.</p>
+</li>
+</ul>
+<p><span style="font-size: 10px;">Threads help with both problems. Threads are sometimes called lightweight processes since a thread is &#8220;lighter weight&#8221; than a process. That is, thread creation can be 10–100 times faster than process creation.</span></p>
+<p><span style="font-size: 10px;">All threads within a process share the same global memory. This makes the sharing of information easy between the threads, but along with this simplicity comes the problem of synchronization.</span></p>
+<p>=============================</p>
+<h1 id="3、有关线程操作的函数">3、有关线程操作的函数</h1><div><br><figure class="highlight"><figcaption><span>&lt;pthread.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_create(pthread_t *tid, &#60;span style=&#34;color: #0000ff;&#34;&#62;const&#60;/span&#62; pthread_attr_t *attr, &#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; *(*func) (&#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; *), &#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; *arg);&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_join (pthread_t tid, &#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; ** status);&#10;pthread_t pthread_self (&#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62;);&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_detach (pthread_t tid);&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; pthread_exit (&#60;span style=&#34;color: #0000ff;&#34;&#62;void&#60;/span&#62; *status);</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p><span style="font-size: 10px; color: #d16349;">pthread_create</span>用于创建一个线程，成功返回0，否则返回Exxx（为正数）。</p>
+<ul>
+<li>pthread_t _tid：线程id的类型为pthread_t，通常为无符号整型，当调用pthread_create成功时，通过_tid指针返回。</li>
+<li><span style="color: #0000ff;">const</span> pthread_attr_t *attr：指定创建线程的属性，如线程优先级、初始栈大小、是否为守护进程等。可以使用NULL来使用默认值，通常情况下我们都是使用默认值。</li>
+<li><span style="color: #0000ff;">void</span> _(_func) (<span style="color: #0000ff;">void</span> *)：函数指针func，指定当新的线程创建之后，将执行的函数。</li>
+<li><span style="color: #0000ff;">void</span> *arg：线程将执行的函数的参数。如果想传递多个参数，请将它们封装在一个结构体中。</li>
+</ul>
+<p><span style="font-size: 10px; color: #d16349;">pthread_join</span>用于等待某个线程退出，成功返回0，否则返回Exxx（为正数）。</p>
+<ul>
+<li>pthread_t tid：指定要等待的线程ID</li>
+<li><span style="color: #0000ff;">void</span> ** status：如果不为NULL，那么线程的返回值存储在status指向的空间中（这就是为什么status是二级指针的原因！这种才参数也称为“值-结果”参数）。</li>
+</ul>
+<p><span style="font-size: 10px; color: #d16349;">pthread_self</span>用于返回当前线程的ID。</p>
+<p><span style="font-size: 10px; color: #d16349;">pthread_detach</span>用于是指定线程变为<strong>分离</strong>状态，就像进程脱离终端而变为后台进程类似。成功返回0，否则返回Exxx（为正数）。变为分离状态的线程，如果线程退出，它的所有资源将全部释放。而如果不是分离状态，线程必须保留它的线程ID，退出状态直到其它线程对它调用了<span style="font-size: 10px; color: #d16349;">pthread_join</span>。</p>
+<blockquote>
+<p>进程也是类似，这也是当我们打开进程管理器的时候，发现有很多<span style="font-size: 10px;">僵死</span>进程的原因！也是为什么一定要有僵死这个进程状态。</p>
+</blockquote>
+<p><span style="font-size: 10px; color: #d16349;">pthread_exit</span>用于终止线程，可以指定返回值，以便其他线程通过<span style="font-size: 10px; color: #d16349;">pthread_join</span>函数获取该线程的返回值。</p>
+<ul>
+<li><span style="color: #0000ff;">void</span> *status：指针线程终止的返回值。</li>
+</ul>
+<p>知道了这些函数之后，我们试图来完成本文一开始的问题：</p>
+<p>1）有一int型全局变量g_Flag初始值为0；</p>
+<p>2）在主线称中起动线程1，打印“this is thread1”，并将g_Flag设置为1</p>
+<p>3）在主线称中启动线程2，打印“this is thread2”，并将g_Flag设置为2</p>
+<p>这3点很简单嘛！！！不就是调用pthread_create创建线程。代码如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * 1）有一int型全局变量g_Flag初始值为0；</span><br><span class="line"> *</span><br><span class="line"> * 2）在主线称中起动线程1，打印&amp;ldquo;this is thread1&amp;rdquo;，并将g_Flag设置为1</span><br><span class="line"> *</span><br><span class="line"> * 3）在主线称中启动线程2，打印&amp;ldquo;this is thread2&amp;rdquo;，并将g_Flag设置为2</span><br><span class="line"> *</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;pthread.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;errno.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;unistd.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> g_Flag=<span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span>* thread1(<span class="keyword">void</span>*);</span><br><span class="line"><span class="keyword">void</span>* thread2(<span class="keyword">void</span>*);</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * when program is started, a single thread is created, called the initial thread or main thread.</span><br><span class="line"> * Additional threads are created by pthread_create.</span><br><span class="line"> * So we just need to create two thread in main().</span><br><span class="line"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>** argv)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter mainn&amp;quot;);</span><br><span class="line">	<span class="keyword">pthread_t</span> tid1, tid2;</span><br><span class="line">	<span class="keyword">int</span> rc1=<span class="number">0</span>, rc2=<span class="number">0</span>;</span><br><span class="line">	rc2 = pthread_create(&amp;amp;tid2, NULL, thread2, NULL);</span><br><span class="line">	<span class="keyword">if</span>(rc2 != <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;%s: %dn&amp;quot;,__func__, strerror(rc2));</span><br><span class="line"></span><br><span class="line">	rc1 = pthread_create(&amp;amp;tid1, NULL, thread1, &amp;amp;tid2);</span><br><span class="line">	<span class="keyword">if</span>(rc1 != <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;%s: %dn&amp;quot;,__func__, strerror(rc1));</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave mainn&amp;quot;);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);	</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * thread1() will be execute by thread1, after pthread_create()</span><br><span class="line"> * it will set g_Flag = 1;</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">void</span>* thread1(<span class="keyword">void</span>* arg)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter thread1n&amp;quot;);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread1, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	g_Flag = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread1, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave thread1n&amp;quot;);</span><br><span class="line">	pthread_exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> * thread2() will be execute by thread2, after pthread_create()</span><br><span class="line"> * it will set g_Flag = 2;</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">void</span>* thread2(<span class="keyword">void</span>* arg)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter thread2n&amp;quot;);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread2, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	g_Flag = <span class="number">2</span>;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread1, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave thread2n&amp;quot;);</span><br><span class="line">	pthread_exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样就完成了1）、2）、3）这三点要求。编译执行得如下结果：</p>
+<p>netsky@ubuntu:~/workspace/pthead_test$ gcc <span style="color: #ff0000;">-lpthread</span> test.c</p>
+<p>如果程序中使用到了pthread库中的函数，除了要#include&lt;pthread.h&gt;，在编译的时候还有加上<span style="color: #ff0000;">-lpthread</span> 选项。</p>
+<p>netsky@ubuntu:~/workspace/pthead_test$ ./a.out</p>
+<p>enter main</p>
+<p>enter thread2</p>
+<p>this is thread2, g_Flag: 0, thread id is 3079588720</p>
+<p>this is thread1, g_Flag: 2, thread id is 3079588720</p>
+<p>leave thread2</p>
+<p>leave main</p>
+<p>enter thread1</p>
+<p>this is thread1, g_Flag: 2, thread id is 3071196016</p>
+<p>this is thread1, g_Flag: 1, thread id is 3071196016</p>
+<p>leave thread1</p>
+<p>但是运行结果不一定是上面的，还有可能是：</p>
+<p>netsky@ubuntu:~/workspace/pthead_test$ ./a.out</p>
+<p>enter main</p>
+<p>leave main</p>
+<p>enter thread1</p>
+<p>this is thread1, g_Flag: 0, thread id is 3069176688</p>
+<p>this is thread1, g_Flag: 1, thread id is 3069176688</p>
+<p>leave thread1</p>
+<p>或者是：</p>
+<p>netsky@ubuntu:~/workspace/pthead_test$ ./a.out</p>
+<p>enter main</p>
+<p>leave main</p>
+<p>等等。这也很好理解因为，这取决于主线程main函数何时终止，线程thread1、thread2是否能够来得急执行它们的函数。这也是多线程编程时要注意的问题，因为有可能一个线程会影响到整个进程中的所有其它线程！如果我们在main函数退出前，sleep()一段时间，就可以保证thread1、thread2来得及执行。</p>
+<blockquote>
+<p><img src="http://images.cnblogs.com/cnblogs_com/skynet/Windows-Live-Writer/60a844af5df3_CA6D/wlEmoticon-vampirebat_2.png" alt="吸血蝙蝠"><span style="font-size: 10px; color: #ff0000;">Attention:</span>大家肯定已经注意到了，我们在线程函数thread1()、thread2()执行完之前都调用了<span style="font-size: 10px; color: #d16349;">pthread_exit</span>。如果我是调用<span style="font-size: 10px; color: #d16349;">exit()</span>又或者是<span style="font-size: 10px; color: #d16349;">return</span>会怎样呢？自己动手试试吧！</p>
+<p>pthread_exit()用于线程退出，可以指定返回值，以便其他线程通过pthread_join（）函数获取该线程的返回值。</p>
+<p>return是函数返回，只有线程函数return，线程才会退出。</p>
+<p>exit是进程退出，如果在线程函数中调用exit，进程中的所有函数都会退出！</p>
+</blockquote>
+<p>“4） 线程序1需要在线程2退出后才能退出”第4点也很容易解决，直接在thread1的函数退出之前调用<span style="font-size: 10px; color: #d16349;">pthread_join</span>就OK了。</p>
+<h1 id="4、线程之间的互斥">4、线程之间的互斥</h1><p>上面的代码似乎很好的解决了问题的前面4点要求，其实不然！！！因为g_Flag是一个全局变量，线程thread1和thread2可以同时对它进行操作，需要对它进行加锁保护，thread1和thread2要互斥访问才行。下面我们就介绍如何加锁保护——互斥锁。</p>
+<blockquote>
+<h4 id="互斥锁："><strong>互斥锁：</strong></h4><p>使用互斥锁（互斥）可以使线程按顺序执行。通常，互斥锁通过确保一次只有一个线程执行代码的临界段来同步多个线程。互斥锁还可以保护单线程代码。</p>
+</blockquote>
+<p>互斥锁的相关操作函数如下：</p>
+<div><br><figure class="highlight"><figcaption><span>&lt;pthread.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_mutex_lock(pthread_mutex_t * mptr);&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_mutex_unlock(pthread_mutex_t * mptr);&#10;&#60;span style=&#34;color: #008000;&#34;&#62;//Both return: 0 if OK, positive Exxx value on error&#60;/span&#62;</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>在对临界资源进行操作之前需要<span style="font-size: 10px; color: #d16349;">pthread_mutex_lock</span>先加锁，操作完之后<span style="font-size: 10px; color: #d16349;">pthread_mutex_unlock</span>再解锁。而且在这之前需要声明一个<span style="font-size: 10px; color: #d16349;">pthread_mutex_t</span>类型的变量，用作前面两个函数的参数。具体代码见第5节。</p>
+<h1 id="5、线程之间的同步">5、线程之间的同步</h1><p>第5点——主线程在检测到g_Flag从1变为2，或者从2变为1的时候退出。就需要用到线程同步技术！线程同步需要条件变量。</p>
+<blockquote>
+<h4 id="条件变量："><strong>条件变量：</strong></h4><p>使用条件变量可以以原子方式阻塞线程，直到某个特定条件为真为止。条件变量始终与互斥锁一起使用。对条件的测试是在互斥锁（互斥）的保护下进行的。</p>
+<p>如果条件为假，线程通常会基于条件变量阻塞，并以原子方式释放等待条件变化的互斥锁。如果另一个线程更改了条件，该线程可能会向相关的条件变量发出信号，从而使一个或多个等待的线程执行以下操作：</p>
+<ul>
+<li>唤醒</li>
+<li>再次获取互斥锁</li>
+<li>重新评估条件</li>
+</ul>
+<p>在以下情况下，条件变量可用于在进程之间同步线程：</p>
+<ul>
+<li>线程是在可以写入的内存中分配的</li>
+<li>内存由协作进程共享</li>
+</ul>
+</blockquote>
+<p>“<span style="font-size: 10px;">使用条件变量可以以原子方式阻塞线程，直到某个特定条件为真为止。</span>”即可用到第5点，主线程main函数阻塞于等待g_Flag从1变为2，或者从2变为1。条件变量的相关函数如下：</p>
+<div><br><figure class="highlight"><figcaption><span>&lt;pthread.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_cond_wait(pthread_cond_t *cptr, pthread_mutex_t *mptr);&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; pthread_cond_signal(pthread_cond_t *cptr);&#10;&#60;span style=&#34;color: #008000;&#34;&#62;//Both return: 0 if OK, positive Exxx value on error&#60;/span&#62;</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p><span style="font-size: 10px; color: #d16349;">pthread_cond_wait</span>用于等待某个特定的条件为真，<span style="font-size: 10px; color: #d16349;">pthread_cond_signal</span>用于通知阻塞的线程某个特定的条件为真了。在调用者两个函数之前需要声明一个<span style="font-size: 10px; color: #d16349;">pthread_cond_t</span>类型的变量，用于这两个函数的参数。</p>
+<p>为什么条件变量始终与互斥锁一起使用，对条件的测试是在互斥锁（互斥）的保护下进行的呢？因为“某个特性条件”通常是在多个线程之间共享的某个变量。互斥锁允许这个变量可以在不同的线程中设置和检测。</p>
+<p>通常，<span style="font-size: 10px; color: #d16349;">pthread_cond_wait</span>只是唤醒等待某个条件变量的一个线程。如果需要唤醒所有等待某个条件变量的线程，需要调用：</p>
+<div><br><figure class="highlight"><figcaption><span>style="color: #0000ff;">int</span> <span style="font-size: 10px; color: #d16349;">pthread_cond_broadcast</span> (pthread_cond_t * cptr);```</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;/div&#62;&#10;&#10;&#40664;&#35748;&#24773;&#20917;&#19979;&#38754;&#65292;&#38459;&#22622;&#30340;&#32447;&#31243;&#20250;&#19968;&#30452;&#31561;&#24453;&#65292;&#30693;&#36947;&#26576;&#20010;&#26465;&#20214;&#21464;&#37327;&#20026;&#30495;&#12290;&#22914;&#26524;&#24819;&#35774;&#32622;&#26368;&#22823;&#30340;&#38459;&#22622;&#26102;&#38388;&#21487;&#20197;&#35843;&#29992;&#65306;&#10;&#10;&#60;div&#62;&#10;```&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; &#60;span style=&#34;font-size: 10px; color: #d16349;&#34;&#62;pthread_cond_timedwait&#60;/span&#62; (pthread_cond_t * cptr, pthread_mutex_t *mptr, &#60;span style=&#34;color: #0000ff;&#34;&#62;const&#60;/span&#62; &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; timespec *abstime);</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>如果时间到了，条件变量还没有为真，仍然返回，返回值为<tt>ETIME。</tt></p>
+<h1 id="6、试题最终代码">6、试题最终代码</h1><p>通过前面的介绍，我们可以轻松的写出代码了，如下所示：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line"> *     是否熟悉POSIX多线程编程技术？如熟悉，编写程序完成如下功能：</span><br><span class="line"> *  1）有一int型全局变量g_Flag初始值为0；</span><br><span class="line"> *  2）在主线称中起动线程1，打印&amp;ldquo;this is thread1&amp;rdquo;，并将g_Flag设置为1</span><br><span class="line"> *  3）在主线称中启动线程2，打印&amp;ldquo;this is thread2&amp;rdquo;，并将g_Flag设置为2</span><br><span class="line"> *  4）线程序1需要在线程2退出后才能退出</span><br><span class="line"> *  5）主线程在检测到g_Flag从1变为2，或者从2变为1的时候退出</span><br><span class="line"> */</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;pthread.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;errno.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;unistd.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span>* (*fun)(<span class="keyword">void</span>*);<span class="comment">//这里不太明白</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> g_Flag = <span class="number">0</span>;<span class="comment">//设置全局标志</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_mutex_t</span> mutex = PTHREAD_MUTEX_INITIALIZER;<span class="comment">//进程锁初始化</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">pthread_cond_t</span>  cond  = PTHREAD_COND_INITIALIZER;<span class="comment">//条件变量初始化</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span>* thread1(<span class="keyword">void</span>*);<span class="comment">//声明两个线程函数</span></span><br><span class="line"><span class="keyword">void</span>* thread2(<span class="keyword">void</span>*);</span><br><span class="line"></span><br><span class="line"><span class="comment">//pthread_t tid1, tid2;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>**argv)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter mainn&amp;quot;);</span><br><span class="line">	<span class="keyword">pthread_t</span> tid1, tid2;<span class="comment">//线程id</span></span><br><span class="line">	<span class="keyword">int</span> rc1 = <span class="number">0</span>, rc2 = <span class="number">0</span>;<span class="comment">//线程创建成功返回0，否则返回正数</span></span><br><span class="line">	rc2 = pthread_create(&amp;amp;tid2, NULL, thread2, NULL);</span><br><span class="line">	<span class="keyword">if</span> (rc2 != <span class="number">0</span>)<span class="comment">//说明创建错误</span></span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;%s: %dn&amp;quot;, __func__, strerror(rc1));<span class="comment">//不知道这里的__func__是什么意思</span></span><br><span class="line"></span><br><span class="line">	rc1 = pthread_create(&amp;amp;tid1, NULL, thread1, NULL);</span><br><span class="line">	<span class="keyword">if</span> (rc1 != <span class="number">0</span>)</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;%s: %dn&amp;quot;, __func__, strerror(rc1));</span><br><span class="line">	sleep(<span class="number">2</span>);</span><br><span class="line">	pthread_cond_wait(&amp;amp;cond, &amp;amp;mutex);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave mainn&amp;quot;);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> * thread1(<span class="keyword">void</span>* arg)<span class="comment">//线程1函数入口</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter thread1n&amp;quot;);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread1, g_Flag: %d, thread id is %un&amp;quot;, g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());<span class="comment">//得到当前线程id</span></span><br><span class="line">	pthread_mutex_lock(&amp;amp;mutex);</span><br><span class="line">	<span class="keyword">if</span> (g_Flag == <span class="number">2</span>)<span class="comment">//说明进程2已经执行了</span></span><br><span class="line">			pthread_cond_signal(&amp;amp;cond);</span><br><span class="line">	g_Flag = <span class="number">1</span>;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread1, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	pthread_mutex_unlock(&amp;amp;mutex);	</span><br><span class="line">	pthread_join(*(<span class="keyword">pthread_t</span>*)arg, NULL);<span class="comment">//第一个参数指定了返回的线程id</span></span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave thread1n&amp;quot;);</span><br><span class="line">	pthread_exit(<span class="number">0</span>);</span><br><span class="line">	<span class="comment">//return 0;</span></span><br><span class="line">	<span class="comment">//exit(0);</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> * thread2(<span class="keyword">void</span>* arg)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;enter thread2n&amp;quot;);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread2, g_Flag: %d, thread id is %un&amp;quot;, g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	pthread_mutex_lock(&amp;amp;mutex);</span><br><span class="line">	<span class="keyword">if</span>(g_Flag == <span class="number">1</span>)</span><br><span class="line">		pthread_cond_signal(&amp;amp;cond);</span><br><span class="line">	g_Flag = <span class="number">2</span>;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;<span class="keyword">this</span> is thread2, g_Flag: %d, thread id is %un&amp;quot;,g_Flag, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)pthread_self());</span><br><span class="line">	pthread_mutex_unlock(&amp;amp;mutex);</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;leave thread2n&amp;quot;);</span><br><span class="line">	pthread_exit(<span class="number">0</span>);</span><br><span class="line">	<span class="comment">//return 0;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>学习了上面这篇文章，自己还有几个不太明白的地方。</p>
+<ol>
+<li>typedef void_ (_fun)(void*);</li>
+</ol>
+<p>对于这个问题，参考了下下面这个链接</p>
+<p><a href="http://hi.baidu.com/guxue365/blog/item/dc93c52aff9b489c023bf612.html" target="_blank" rel="external">http://hi.baidu.com/guxue365/blog/item/dc93c52aff9b489c023bf612.html</a></p>
+<ol>
+<li><p>printf(&#8220;%s: %dn&#8221;, <strong>func</strong>, strerror(rc1));//不知道这里的<strong>func</strong>是什么意思</p>
+</li>
+<li><p>pthread_join(_(pthread_t_)arg, NULL);//第一个参数指定了返回的线程id</p>
+</li>
+</ol>
+<p>这里是如何通过参数获取线程的id？？</p>
+<ol>
+<li>进程——资源分配的最小单位，线程——程序执行的最小单位&#8221;</li>
+</ol>
+<p><span style="font-size: 13px; color: #c0504d;">从内核的观点看，进程的目的就是担当分配系统资源（CPU时间、内存等）的基本单位</span>。</p>
+<p>既然如此，在线程函数中为什么不能使用主函数的变量呢？？</p>
+<p><span style="color: #3366ff; background-color: #ffffff;"><span style="color: #cccccc;"><span class="line"><span class="line"><span class="line"><span class="line">在进程中共享的变量必须用关键字volatile来定义，这是为了防止编译器在优化时（如gcc中使用-OX参数）改变它们的使用方式。为了保护变量，我们必须使用信号量、互斥等方法来保证我们对变量的正确使用。下面，我们就逐步介绍处理线程数据时的有关知识。</span></span></span></span></span></span></p>
+<p>5.关于线程同步的问题还是没有深刻理解，希望自己能够进一步加强。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/02/15/linux-socket编程之TCP与UDP/" itemprop="url">
+                linux socket编程之TCP与UDP
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-15T21:41:00+08:00" content="2012-02-15">
+            2012-02-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><span style="color: #3366ff; font-size: x-small;"><strong>TCP/IP协议叫做传输控制/网际协议，又叫网络通信协议</strong></span></p>
+<p>TCP/IP虽然叫传输控制协议（TCP）和网际协议（IP），但是实际上是一组协议，包含ICMP， RIP， TELENET， FTP， SMTP， ARP， TFTP等。</p>
+<p>从协议分层模型方面来讲，TCP/IP由四个层次组成：网络接口层、网络层、传输层、应用层。</p>
+<p>其实自己并没有深入了解过协议，写这篇文章的目的也只是自己做下学习笔记初步了解socket。所以关于更多TCP/IP协议，请参考下面的百度链接。</p>
+<p><a href="http://baike.baidu.com/view/7649.htm" target="_blank" rel="external">http://baike.baidu.com/view/7649.htm</a></p>
+<p><span style="font-family: 宋体;"><span style="font-family: 宋体;"><span style="color: #3366ff;"><strong>TCP与UDP区别</strong></span></span></span></p>
+<p><span style="font-family: 宋体;">TCP&#8212;传输控制协议,提供的是面向连接、可靠的字节流服务。当客户和服务器彼此交换数据前，必须先在双方之间建立一个TCP连接，之后才能传输数据。TCP提供超时重发，丢弃重复数据，检验数据，流量控制等功能，保证数据能从一端传到另一端。</span></p>
+<p><span style="font-family: 宋体;">UDP&#8212; 用户数据报协议，是一个简单的面向数据报的运输层协议。UDP不提供可靠性，它只是把应用程序传给IP层的数据报发送出去，但是并不能保证它们能到达目的 地。由于UDP在传输数据报前不用在客户和服务器之间建立一个连接，且没有超时重发等机制，故而传输速度很快</span></p>
+<p><span style="font-family: 宋体;">TCP和UDP都是在传输层上的。简单来说，UDP发送 数据的时候是不管数据有没有真正达到目的地的，所以传输起来速度就比较快了。但是同时也容易造成数据丢失。而TCP我们知道有三次握手建立，四次握手释放，所以传输更准确，但是速度可能会相对慢一些。</span></p>
+<p><span style="font-family: 宋体;">为 确保正确地接收数据，TCP要求在目标计算机成功收到数据时发回一个确认（即ACK）。如果在某个时限内未收到相应的ACK，将重新传送数据包。如果网络 拥塞，这种重新传送将导致发送的数据包重复。但是，接收计算机可使用数据包的序号来确定它是否为重复数据包，并在必要时丢弃它（这里让我想起了linux IPC里可靠信号与不可靠信号的发送也是与之类似的）。</span></p>
+<p><strong><span style="color: #3366ff;">socket套接字</span></strong></p>
+<p>套接口可以说是网络编程中一个非常重要的概念，<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">linux</span></span>以文件的形式实现套接口，与套接口相应的文件属于<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">sockfs</span></span>特殊文件系统，创建一个套接口就是在<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">sockfs</span></span>中创建一个特殊文件，并建立起为实现套接口功能的相关数据结构。换句话说，对每一个新创建的<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">BSD</span></span>套接口，<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">linux</span></span>内核都将在<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">sockfs</span></span>特殊文件系统中创建一个新的<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">inode</span></span>。描述套接口的数据结构是<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">socket</span></span>，将在后面给出。</p>
+<p><span style="color: #000099;"><strong>(一)重要数据结构</strong></span></p>
+<p>下面是在网络编程中比较重要的几个数据结构，读者可以在后面介绍编程<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">API</span></span>部分再回过头来了解它们。</p>
+<p><a name="N10065"></a>（<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">1</span></span>）表示套接口的数据结构<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structsocket</span></span></p>
+<p>套接口是由<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">socket</span></span>数据结构代表的，形式如下：</p>
+<table width="554" cellspacing="0" cellpadding="0"><br><colgroup><br><col width="554"></colgroup><br><tbody><br><tr><br><td width="554"><br><br><span style="font-family: 宋体,SimSun;">structsocket</span><br><br><span style="font-family: 宋体,SimSun;">{</span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">socket_state state; /_</span></span>指明套接口的连接状态，一个套接口的连接状态可以有以下几种<br><br>套接口是空闲的，还没有进行相应的端口及地址的绑定；还没有连接；正在连接中；已经连接；正在解除连接。<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: 宋体,SimSun;">unsignedlong flags;</span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structproto_ops ops; /_</span></span>指明可对套接口进行的各种操作<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structinode inode; /_</span></span>指向<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">sockfs</span></span>文件系统中的相应<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">inode_/</span></span><br><br><span style="font-family: 宋体,SimSun;">structfasync_struct _fasync_list; /_ Asynchronous wake up list _/</span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structfile _file; /_</span></span>指向<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">sockfs</span></span>文件系统中的相应文件<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;"> _/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structsock sk; /_</span></span>任何协议族都有其特定的套接口特性，该域就指向特定协议族的套接口对<br><br>象。<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: 宋体,SimSun;">wait_queue_head_t wait;</span><br><br><span style="font-family: 宋体,SimSun;">short type;</span><br><br><span style="font-family: 宋体,SimSun;">unsignedchar passcred;</span><br><br><span style="font-family: 宋体,SimSun;">};</span><br><br></td><br></tr><br></tbody><br></table>
+
+<p><a name="N10074"></a>（<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">2</span></span>）描述套接口通用地址的数据结构<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structsockaddr</span></span></p>
+<p>由于历史的缘故，在<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">bind</span></span>、<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">connect</span></span>等系统调用中，特定于协议的套接口地址结构指针都要强制转换成该通用的套接口地址结构指针。结构形式如下：</p>
+<table width="554" cellspacing="0" cellpadding="0"><br><colgroup><br><col width="554"></colgroup><br><tbody><br><tr><br><td width="554"><br><br><span style="font-family: 宋体,SimSun;">structsockaddr {</span><br><br><span style="font-family: 宋体,SimSun;">sa_family_t sa_family; /_address family, AF_xxx _/</span><br><br><span style="font-family: 宋体,SimSun;">char sa_data[14]; /_14 bytes of protocol address _/</span><br><br><span style="font-family: 宋体,SimSun;">};</span><br><br></td><br></tr><br></tbody><br></table>
+
+<p><a name="N10083"></a>（<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">3</span></span>）描述因特网地址结构的数据结构<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structsockaddr_in</span></span>（这里局限于<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">IP4</span></span>）：</p>
+<table width="554" cellspacing="0" cellpadding="0"><br><colgroup><br><col width="554"></colgroup><br><tbody><br><tr><br><td width="554"><br><br><span style="font-family: 宋体,SimSun;">structsockaddr_in</span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">{</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">__SOCKADDR_COMMON(sin_); /_</span></span>描述协议族<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">in_port_tsin_port; /_</span></span>端口号<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">structin_addr sin_addr; /_</span></span>因特网地址<span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">_/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">/_Pad to size of `struct sockaddr&#8217;. _/</span></span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">unsignedchar sin_zero[sizeof (struct sockaddr) -</span></span><br><br><span style="font-family: 宋体,SimSun;">__SOCKADDR_COMMON_SIZE -</span><br><br><span style="font-family: 宋体,SimSun;">sizeof (in_port_t) -</span><br><br><span style="font-family: 宋体,SimSun;">sizeof (struct in_addr)];</span><br><br><span style="font-family: Liberation Serif,serif;"><span style="font-family: 宋体,SimSun;">};</span></span><br><br></td><br></tr><br></tbody><br></table>
+
+<p><span style="color: #3366ff;"><strong>（二）基本的socket接口函数。</strong></span></p>
+<h2 id="3-1、socket()函数"><span style="font-size: x-small;">3.1、socket()函数</span></h2><div><br><figure class="highlight"><figcaption><span><span style="color: #d16349; font-size: x-small;">**socket**</span>(<span style="color: #0000ff;">int</span> domain, <span style="color: #0000ff;">int</span> type, <span style="color: #0000ff;">int</span> protocol);```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;/div&#62;&#10;&#10;socket&#20989;&#25968;&#23545;&#24212;&#20110;&#26222;&#36890;&#25991;&#20214;&#30340;&#25171;&#24320;&#25805;&#20316;&#12290;&#26222;&#36890;&#25991;&#20214;&#30340;&#25171;&#24320;&#25805;&#20316;&#36820;&#22238;&#19968;&#20010;&#25991;&#20214;&#25551;&#36848;&#23383;&#65292;&#32780;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;**socket()**&#60;/span&#62;&#29992;&#20110;&#21019;&#24314;&#19968;&#20010;socket&#25551;&#36848;&#31526;&#65288;socket descriptor&#65289;&#65292;&#23427;&#21807;&#19968;&#26631;&#35782;&#19968;&#20010;socket&#12290;&#36825;&#20010;socket&#25551;&#36848;&#23383;&#36319;&#25991;&#20214;&#25551;&#36848;&#23383;&#19968;&#26679;&#65292;&#21518;&#32493;&#30340;&#25805;&#20316;&#37117;&#26377;&#29992;&#21040;&#23427;&#65292;&#25226;&#23427;&#20316;&#20026;&#21442;&#25968;&#65292;&#36890;&#36807;&#23427;&#26469;&#36827;&#34892;&#19968;&#20123;&#35835;&#20889;&#25805;&#20316;&#12290;&#10;&#10;&#27491;&#22914;&#21487;&#20197;&#32473;fopen&#30340;&#20256;&#20837;&#19981;&#21516;&#21442;&#25968;&#20540;&#65292;&#20197;&#25171;&#24320;&#19981;&#21516;&#30340;&#25991;&#20214;&#12290;&#21019;&#24314;socket&#30340;&#26102;&#20505;&#65292;&#20063;&#21487;&#20197;&#25351;&#23450;&#19981;&#21516;&#30340;&#21442;&#25968;&#21019;&#24314;&#19981;&#21516;&#30340;socket&#25551;&#36848;&#31526;&#65292;socket&#20989;&#25968;&#30340;&#19977;&#20010;&#21442;&#25968;&#20998;&#21035;&#20026;&#65306;&#10;&#10;*   domain&#65306;&#21363;&#21327;&#35758;&#22495;&#65292;&#21448;&#31216;&#20026;&#21327;&#35758;&#26063;&#65288;family&#65289;&#12290;&#24120;&#29992;&#30340;&#21327;&#35758;&#26063;&#26377;&#65292;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_INET&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_INET6&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_LOCAL&#60;/span&#62;&#65288;&#25110;&#31216;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_UNIX&#60;/span&#62;&#65292;Unix&#22495;socket&#65289;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_ROUTE&#60;/span&#62;&#31561;&#31561;&#12290;&#21327;&#35758;&#26063;&#20915;&#23450;&#20102;socket&#30340;&#22320;&#22336;&#31867;&#22411;&#65292;&#22312;&#36890;&#20449;&#20013;&#24517;&#39035;&#37319;&#29992;&#23545;&#24212;&#30340;&#22320;&#22336;&#65292;&#22914;AF_INET&#20915;&#23450;&#20102;&#35201;&#29992;ipv4&#22320;&#22336;&#65288;32&#20301;&#30340;&#65289;&#19982;&#31471;&#21475;&#21495;&#65288;16&#20301;&#30340;&#65289;&#30340;&#32452;&#21512;&#12289;AF_UNIX&#20915;&#23450;&#20102;&#35201;&#29992;&#19968;&#20010;&#32477;&#23545;&#36335;&#24452;&#21517;&#20316;&#20026;&#22320;&#22336;&#12290;&#10;*   type&#65306;&#25351;&#23450;socket&#31867;&#22411;&#12290;&#24120;&#29992;&#30340;socket&#31867;&#22411;&#26377;&#65292;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;SOCK_STREAM&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;SOCK_DGRAM&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;SOCK_RAW&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;SOCK_PACKET&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;SOCK_SEQPACKET&#60;/span&#62;&#31561;&#31561;&#65288;socket&#30340;&#31867;&#22411;&#26377;&#21738;&#20123;&#65311;&#65289;&#12290;&#10;*   protocol&#65306;&#25925;&#21517;&#24605;&#24847;&#65292;&#23601;&#26159;&#25351;&#23450;&#21327;&#35758;&#12290;&#24120;&#29992;&#30340;&#21327;&#35758;&#26377;&#65292;&#60;span style=&#34;color: #d16349;&#34;&#62;IPPROTO_TCP&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;IPPTOTO_UDP&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;IPPROTO_SCTP&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;IPPROTO_TIPC&#60;/span&#62;&#31561;&#65292;&#23427;&#20204;&#20998;&#21035;&#23545;&#24212;TCP&#20256;&#36755;&#21327;&#35758;&#12289;UDP&#20256;&#36755;&#21327;&#35758;&#12289;STCP&#20256;&#36755;&#21327;&#35758;&#12289;TIPC&#20256;&#36755;&#21327;&#35758;&#12290;&#10;&#10;&#27880;&#24847;&#65306;&#24182;&#19981;&#26159;&#19978;&#38754;&#30340;type&#21644;protocol&#21487;&#20197;&#38543;&#24847;&#32452;&#21512;&#30340;&#65292;&#22914;SOCK_STREAM&#19981;&#21487;&#20197;&#36319;IPPROTO_UDP&#32452;&#21512;&#12290;&#24403;protocol&#20026;0&#26102;&#65292;&#20250;&#33258;&#21160;&#36873;&#25321;type&#31867;&#22411;&#23545;&#24212;&#30340;&#40664;&#35748;&#21327;&#35758;&#12290;&#10;&#10;&#24403;&#25105;&#20204;&#35843;&#29992;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;**socket**&#60;/span&#62;&#21019;&#24314;&#19968;&#20010;socket&#26102;&#65292;&#36820;&#22238;&#30340;socket&#25551;&#36848;&#23383;&#23427;&#23384;&#22312;&#20110;&#21327;&#35758;&#26063;&#65288;address family&#65292;AF_XXX&#65289;&#31354;&#38388;&#20013;&#65292;&#20294;&#27809;&#26377;&#19968;&#20010;&#20855;&#20307;&#30340;&#22320;&#22336;&#12290;&#22914;&#26524;&#24819;&#35201;&#32473;&#23427;&#36171;&#20540;&#19968;&#20010;&#22320;&#22336;&#65292;&#23601;&#24517;&#39035;&#35843;&#29992;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;bind()&#60;/span&#62;&#20989;&#25968;&#65292;&#21542;&#21017;&#23601;&#24403;&#35843;&#29992;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;connect()&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;listen()&#60;/span&#62;&#26102;&#31995;&#32479;&#20250;&#33258;&#21160;&#38543;&#26426;&#20998;&#37197;&#19968;&#20010;&#31471;&#21475;&#12290;&#10;&#10;## 3.2&#12289;bind()&#20989;&#25968;&#10;&#10;&#27491;&#22914;&#19978;&#38754;&#25152;&#35828;bind()&#20989;&#25968;&#25226;&#19968;&#20010;&#22320;&#22336;&#26063;&#20013;&#30340;&#29305;&#23450;&#22320;&#22336;&#36171;&#32473;socket&#12290;&#20363;&#22914;&#23545;&#24212;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_INET&#60;/span&#62;&#12289;&#60;span style=&#34;color: #d16349;&#34;&#62;AF_INET6&#60;/span&#62;&#23601;&#26159;&#25226;&#19968;&#20010;ipv4&#25110;ipv6&#22320;&#22336;&#21644;&#31471;&#21475;&#21495;&#32452;&#21512;&#36171;&#32473;socket&#12290;&#10;&#10;&#60;div&#62;&#10;```&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; &#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;bind&#60;/span&#62;(&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; sockfd, &#60;span style=&#34;color: #0000ff;&#34;&#62;const&#60;/span&#62; &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; sockaddr *addr, socklen_t addrlen);</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>函数的三个参数分别为：</p>
+<ul>
+<li>sockfd：即socket描述字，它是通过socket()函数创建了，唯一标识一个socket。<span style="color: #d16349; font-size: xx-small;">bind</span>()函数就是将给这个描述字绑定一个名字。</li>
+<li>addr：一个<span style="color: #0000ff;">const</span> <span style="color: #0000ff;">struct</span>sockaddr *指针，指向要绑定给sockfd的协议地址。这个地址结构根据地址创建socket时的地址协议族的不同而不同，如ipv4对应的是：<br><div><figure class="highlight"><figcaption><span>style="color: #0000ff;">struct</span> sockaddr_in &#123;</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    sa_family_t    sin_family; &#60;span style=&#34;color: #008000;&#34;&#62;/* address family: AF_INET */&#60;/span&#62;&#10;    in_port_t      sin_port;   &#60;span style=&#34;color: #008000;&#34;&#62;/* port in network byte order */&#60;/span&#62;&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; in_addr sin_addr;   &#60;span style=&#34;color: #008000;&#34;&#62;/* internet address */&#60;/span&#62;&#10;&#125;;&#10;&#10;    &#60;span style=&#34;color: #008000;&#34;&#62;/* Internet address. */&#60;/span&#62;&#10;&#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; in_addr &#123;&#10;    uint32_t       s_addr;     &#60;span style=&#34;color: #008000;&#34;&#62;/* address in network byte order */&#60;/span&#62;&#10;&#125;;</span><br></pre></td></tr></table></figure>
+</div></li>
+</ul>
+<p></p>
+<p>ipv6对应的是：</p>
+<pre><code><span class="tag">&lt;div&gt;</span>
+</code></pre><figure class="highlight"><figcaption><span>style="color: #0000ff;">struct</span> sockaddr_in6 &#123;</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">    sa_family_t     &#60;span style=&#34;color: #0000ff;&#34;&#62;sin&#60;/span&#62;6_family;   &#60;span style=&#34;color: #008000;&#34;&#62;/* AF_INET6 */&#60;/span&#62;&#10;    in_port_t       &#60;span style=&#34;color: #0000ff;&#34;&#62;sin&#60;/span&#62;6_port;     &#60;span style=&#34;color: #008000;&#34;&#62;/* port number */&#60;/span&#62;&#10;    uint32_t        &#60;span style=&#34;color: #0000ff;&#34;&#62;sin&#60;/span&#62;6_flowinfo; &#60;span style=&#34;color: #008000;&#34;&#62;/* IPv6 flow information */&#60;/span&#62;&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; in6_addr &#60;span style=&#34;color: #0000ff;&#34;&#62;sin&#60;/span&#62;6_addr;     &#60;span style=&#34;color: #008000;&#34;&#62;/* IPv6 address */&#60;/span&#62;&#10;    uint32_t        &#60;span style=&#34;color: #0000ff;&#34;&#62;sin&#60;/span&#62;6_scope_id; &#60;span style=&#34;color: #008000;&#34;&#62;/* Scope ID (new in 2.4) */&#60;/span&#62;&#10;&#125;;&#10;&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; in6_addr &#123;&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;unsigned&#60;/span&#62; &#60;span style=&#34;color: #0000ff;&#34;&#62;char&#60;/span&#62;   s6_addr[16];   &#60;span style=&#34;color: #008000;&#34;&#62;/* IPv6 address */&#60;/span&#62;&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<p></p>
+<p>Unix域对应的是：</p>
+<pre><code><span class="tag">&lt;div&gt;</span>
+</code></pre><figure class="highlight"><figcaption><span>UNIX_PATH_MAX    108</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; sockaddr_un &#123;&#10;    sa_family_t sun_family;               &#60;span style=&#34;color: #008000;&#34;&#62;/* AF_UNIX */&#60;/span&#62;&#10;    &#60;span style=&#34;color: #0000ff;&#34;&#62;char&#60;/span&#62;        sun_path[UNIX_PATH_MAX];  &#60;span style=&#34;color: #008000;&#34;&#62;/* pathname */&#60;/span&#62;&#10;&#125;;</span><br></pre></td></tr></table></figure>
+<p></p>
+<ul>
+<li>addrlen：对应的是地址的长度。</li>
+</ul>
+<p>通常服务器在启动的时候都会绑定一个众所周知的地址（如ip地址+端口号），用于提供服务，客户就可以通过它来接连服务器；而客户端就不用指定，有系统自动分配一个端口号和自身的ip地址组合。这就是为什么通常服务器端在listen之前会调用<span style="color: #d16349; font-size: xx-small;">bind</span>()，而客户端就不会调用，而是在<span style="color: #d16349; font-size: xx-small;">connect</span>()时由系统随机生成一个。</p>
+<blockquote>
+<h3 id="网络字节序与主机字节序">网络字节序与主机字节序</h3><p><strong><span style="color: #d16349;">主机字节序</span></strong>就是我们平常说的大端和小端模式：不同的CPU有不同的字节序类型，这些字节序是指整数在内存中保存的顺序，这个叫做主机序。引用标准的Big-Endian和Little-Endian的定义如下：</p>
+<p>a) Little-Endian就是低位字节排放在内存的低地址端，高位字节排放在内存的高地址端。</p>
+<p>b) Big-Endian就是高位字节排放在内存的低地址端，低位字节排放在内存的高地址端。</p>
+<p><strong><span style="color: #d16349;">网络字节序</span></strong>：4个字节的32 bit值以下面的次序传输：首先是0～7bit，其次8～15bit，然后16～23bit，最后是24~31bit。这种传输次序称作大端字节序。<strong>由于TCP/IP首部中所有的二进制整数在网络中传输时都要求以这种次序，因此它又称作网络字节序。</strong>字节序，顾名思义字节的顺序，就是大于一个字节类型的数据在内存中的存放顺序，一个字节的数据没有顺序的问题了。</p>
+<p><span style="color: #ff0000; font-size: x-small;">所以</span>： 在将一个地址绑定到socket的时候，请先将主机字节序转换成为网络字节序，而不要假定主机字节序跟网络字节序一样使用的是Big-Endian。由于 这个问题曾引发过血案！公司项目代码中由于存在这个问题，导致了很多莫名其妙的问题，所以请谨记对主机字节序不要做任何假定，务必将其转化为网络字节序再 赋给socket。</p>
+</blockquote>
+<h2 id="3-3、listen()、connect()函数">3.3、listen()、connect()函数</h2><p>如果作为一个服务器，在调用<span style="color: #d16349; font-size: x-small;">socket()</span>、<span style="font-size: x-small;"><span style="color: #d16349;">bind</span><span style="color: #d16349;">()</span></span>之后就会调用<span style="color: #d16349; font-size: x-small;">listen()</span>来监听这个socket，如果客户端这时调用<span style="color: #d16349; font-size: x-small;">connect()</span>发出连接请求，服务器端就会接收到这个请求。</p>
+<div><br><figure class="highlight"><figcaption><span>style="color: #0000ff;">int</span> <span style="color: #f3a447; font-size: x-small;">listen</span>(<span style="color: #0000ff;">int</span> sockfd, <span style="color: #0000ff;">int</span> backlog);</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; &#60;span style=&#34;color: #f3a447; font-size: x-small;&#34;&#62;connect&#60;/span&#62;(&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; sockfd, &#60;span style=&#34;color: #0000ff;&#34;&#62;const&#60;/span&#62; &#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; sockaddr *addr, socklen_t addrlen);</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>listen函数的第一个参数即为要监听的socket描述字，第二个参数为相应socket可以排队的最大连接个数。socket()函数创建的socket默认是一个主动类型的，listen函数将socket变为被动类型的，等待客户的连接请求。</p>
+<p>connect函数的第一个参数即为客户端的socket描述字，第二参数为服务器的socket地址，第三个参数为socket地址的长度。客户端通过调用connect函数来建立与TCP服务器的连接。</p>
+<h2 id="3-4、accept()函数">3.4、accept()函数</h2><p>TCP服务器端依次调用<span style="color: #d16349; font-size: x-small;">socket()</span>、<span style="font-size: x-small;"><span style="color: #d16349;">bind</span><span style="color: #d16349;">()</span></span>、<span style="color: #d16349; font-size: x-small;">listen()</span>之后，就会监听指定的socket地址了。TCP客户端依次调用<span style="color: #d16349; font-size: x-small;">socket()</span>、<span style="color: #d16349;"><span style="font-size: x-small;">connect()</span></span>之后就想TCP服务器发送了一个连接请求。TCP服务器监听到这个请求之后，就会调用<span style="font-size: xx-small;"><span style="color: #d16349;">accept</span><span style="color: #d16349;">()</span></span>函数取接收请求，这样连接就建立好了。之后就可以开始网络I/O操作了，即类同于普通文件的读写I/O操作。</p>
+<div><br><figure class="highlight"><figcaption><span>style="color: #0000ff;">int</span> <span style="color: #d16349; font-size: x-small;">accept</span>(<span style="color: #0000ff;">int</span> sockfd, <span style="color: #0000ff;">struct</span> sockaddr *addr, socklen_t *addrlen);```</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;/div&#62;&#10;&#10;accept&#20989;&#25968;&#30340;&#31532;&#19968;&#20010;&#21442;&#25968;&#20026;&#26381;&#21153;&#22120;&#30340;socket&#25551;&#36848;&#23383;&#65292;&#31532;&#20108;&#20010;&#21442;&#25968;&#20026;&#25351;&#21521;&#60;span style=&#34;color: #0000ff;&#34;&#62;struct&#60;/span&#62; sockaddr *&#30340;&#25351;&#38024;&#65292;&#29992;&#20110;&#36820;&#22238;&#23458;&#25143;&#31471;&#30340;&#21327;&#35758;&#22320;&#22336;&#65292;&#31532;&#19977;&#20010;&#21442;&#25968;&#20026;&#21327;&#35758;&#22320;&#22336;&#30340;&#38271;&#24230;&#12290;&#22914;&#26524;accpet&#25104;&#21151;&#65292;&#37027;&#20040;&#20854;&#36820;&#22238;&#20540;&#26159;&#30001;&#20869;&#26680;&#33258;&#21160;&#29983;&#25104;&#30340;&#19968;&#20010;&#20840;&#26032;&#30340;&#25551;&#36848;&#23383;&#65292;&#20195;&#34920;&#19982;&#36820;&#22238;&#23458;&#25143;&#30340;TCP&#36830;&#25509;&#12290;&#10;&#10;&#60;span style=&#34;color: #ff0000; font-size: xx-small;&#34;&#62;&#27880;&#24847;&#60;/span&#62;&#65306;accept&#30340;&#31532;&#19968;&#20010;&#21442;&#25968;&#20026;&#26381;&#21153;&#22120;&#30340;socket&#25551;&#36848;&#23383;&#65292;&#26159;&#26381;&#21153;&#22120;&#24320;&#22987;&#35843;&#29992;socket()&#20989;&#25968;&#29983;&#25104;&#30340;&#65292;&#31216;&#20026;&#60;span style=&#34;color: #d16349; font-size: xx-small;&#34;&#62;&#30417;&#21548;socket&#25551;&#36848;&#23383;&#60;/span&#62;&#65307;&#32780;accept&#20989;&#25968;&#36820;&#22238;&#30340;&#26159;&#60;span style=&#34;color: #d16349; font-size: xx-small;&#34;&#62;&#24050;&#36830;&#25509;&#30340;socket&#25551;&#36848;&#23383;&#60;/span&#62;&#12290;&#19968;&#20010;&#26381;&#21153;&#22120;&#36890;&#24120;&#36890;&#24120;&#20165;&#20165;&#21482;&#21019;&#24314;&#19968;&#20010;&#30417;&#21548;socket&#25551;&#36848;&#23383;&#65292;&#23427;&#22312;&#35813;&#26381;&#21153;&#22120;&#30340;&#29983;&#21629;&#21608;&#26399;&#20869;&#19968;&#30452;&#23384;&#22312;&#12290;&#20869;&#26680;&#20026;&#27599;&#20010;&#30001;&#26381;&#21153;&#22120;&#36827;&#31243;&#25509;&#21463;&#30340;&#23458;&#25143;&#36830;&#25509;&#21019;&#24314;&#20102;&#19968;&#20010;&#24050;&#36830;&#25509;socket&#25551;&#36848;&#23383;&#65292;&#24403;&#26381;&#21153;&#22120;&#23436;&#25104;&#20102;&#23545;&#26576;&#20010;&#23458;&#25143;&#30340;&#26381;&#21153;&#65292;&#30456;&#24212;&#30340;&#24050;&#36830;&#25509;socket&#25551;&#36848;&#23383;&#23601;&#34987;&#20851;&#38381;&#12290;&#10;&#10;## 3.5&#12289;read()&#12289;write()&#31561;&#20989;&#25968;&#10;&#10;&#19975;&#20107;&#20855;&#22791;&#21482;&#27424;&#19996;&#39118;&#65292;&#33267;&#27492;&#26381;&#21153;&#22120;&#19982;&#23458;&#25143;&#24050;&#32463;&#24314;&#31435;&#22909;&#36830;&#25509;&#20102;&#12290;&#21487;&#20197;&#35843;&#29992;&#32593;&#32476;I/O&#36827;&#34892;&#35835;&#20889;&#25805;&#20316;&#20102;&#65292;&#21363;&#23454;&#29616;&#20102;&#32593;&#21679;&#20013;&#19981;&#21516;&#36827;&#31243;&#20043;&#38388;&#30340;&#36890;&#20449;&#65281;&#32593;&#32476;I/O&#25805;&#20316;&#26377;&#19979;&#38754;&#20960;&#32452;&#65306;&#10;&#10;*   read()/write()&#10;*   recv()/send()&#10;*   readv()/writev()&#10;*   &#60;span style=&#34;color: #ff0000; font-size: x-small;&#34;&#62;recvmsg()/sendmsg()&#60;/span&#62;&#10;*   recvfrom()/sendto()&#10;&#10;&#25105;&#25512;&#33616;&#20351;&#29992;&#60;span style=&#34;color: #ff0000; font-size: x-small;&#34;&#62;recvmsg()/sendmsg()&#60;/span&#62;&#20989;&#25968;&#65292;&#36825;&#20004;&#20010;&#20989;&#25968;&#26159;&#26368;&#36890;&#29992;&#30340;I/O&#20989;&#25968;&#65292;&#23454;&#38469;&#19978;&#21487;&#20197;&#25226;&#19978;&#38754;&#30340;&#20854;&#23427;&#20989;&#25968;&#37117;&#26367;&#25442;&#25104;&#36825;&#20004;&#20010;&#20989;&#25968;&#12290;&#23427;&#20204;&#30340;&#22768;&#26126;&#22914;&#19979;&#65306;&#10;&#10;```     #include &#38;lt;unistd.h&#38;gt;&#10;&#10;       ssize_t read(int fd, void *buf, size_t count);&#10;       ssize_t write(int fd, const void *buf, size_t count);&#10;&#10;       #include &#38;lt;sys/types.h&#38;gt;&#10;       #include &#38;lt;sys/socket.h&#38;gt;&#10;&#10;       ssize_t send(int sockfd, const void *buf, size_t len, int flags);&#10;       ssize_t recv(int sockfd, void *buf, size_t len, int flags);&#10;&#10;       ssize_t sendto(int sockfd, const void *buf, size_t len, int flags,&#10;                      const struct sockaddr *dest_addr, socklen_t addrlen);&#10;       ssize_t recvfrom(int sockfd, void *buf, size_t len, int flags,&#10;                        struct sockaddr *src_addr, socklen_t *addrlen);&#10;&#10;       ssize_t sendmsg(int sockfd, const struct msghdr *msg, int flags);&#10;       ssize_t recvmsg(int sockfd, struct msghdr *msg, int flags);</span><br></pre></td></tr></table></figure><br><br>&nbsp;<br><br>read函数是负责从fd中读取内容.当读成功时，read返回实际所读的字节数，如果返回的值是0表示已经读到文件的结束了，小于0表示出现了错误。如果错误为EINTR说明读是由中断引起的，如果是ECONNREST表示网络连接出了问题。<br><br>write 函数将buf中的nbytes字节内容写入文件描述符fd.成功时返回写的字节数。失败时返回-1，并设置errno变量。 在网络程序中，当我们向套接字文件描述符写时有俩种可能。1)write的返回值大于0，表示写了部分或者是全部的数据。2)返回的值小于0，此时出现了 错误。我们要根据错误类型来处理。如果错误为EINTR表示在写的时候出现了中断错误。如果为EPIPE表示网络连接出现了问题(对方已经关闭了连接)。<br><br>其它的我就不一一介绍这几对I/O函数了，具体参见man文档或者baidu、Google，下面的例子中将使用到send/recv。<br><br>## 3.6、close()函数<br><br>在服务器与客户端建立连接之后，会进行一些读写操作，完成了读写操作就要关闭相应的socket描述字，好比操作完打开的文件要调用fclose关闭打开的文件。<br><br><div><br><figure class="highlight"><figcaption><span>&lt;unistd.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; &#60;span style=&#34;color: #0000ff;&#34;&#62;&#60;span style=&#34;color: #d16349; font-size: x-small;&#34;&#62;close&#60;/span&#62;&#60;/span&#62;(&#60;span style=&#34;color: #0000ff;&#34;&#62;int&#60;/span&#62; fd);</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>close一个TCP socket的缺省行为时把该socket标记为以关闭，然后立即返回到调用进程。该描述字不能再由调用进程使用，也就是说不能再作为read或write的第一个参数。</p>
+<p>注意：close操作只是使相应socket描述字的引用计数-1，只有当引用计数为0的时候，才会触发TCP客户端向服务器发送终止连接请求。</p>
+<p>下面是TCP的一个例子，分别是服务器端（server.c）和客户端（client.c）</p>
+<p>server.c</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;errno.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;sys/types.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;sys/socket.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include&amp;lt;netinet/in.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define MAXLINE 4096</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, char** argv)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span>    listenfd, connfd;</span><br><span class="line">	struct sockaddr_in     servaddr;</span><br><span class="line">	char    buff[<span class="number">4096</span>];</span><br><span class="line">	<span class="keyword">int</span>     n;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( (listenfd = <span class="keyword">socket</span>(AF_INET, SOCK_STREAM, <span class="number">0</span>)) == -<span class="number">1</span> )&#123;</span><br><span class="line">		<span class="keyword">printf</span>(&amp;quot;create <span class="keyword">socket</span> error: <span class="variable">%s</span>(errno: <span class="variable">%d</span>)n&amp;quot;,strerror(errno),errno);</span><br><span class="line">		<span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	memset(&amp;amp;servaddr, <span class="number">0</span>, sizeof(servaddr));</span><br><span class="line">	<span class="regexp">//</span>协议地址</span><br><span class="line">	servaddr.sin_family = AF_INET;</span><br><span class="line">	servaddr.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">	servaddr.sin_port = htons(<span class="number">6666</span>);<span class="regexp">//</span></span><br><span class="line">	//<span class="keyword">bind</span>把一个地址族中的特定地址赋给<span class="keyword">socket</span></span><br><span class="line">	<span class="keyword">if</span>( <span class="keyword">bind</span>(listenfd, (struct sockaddr*)&amp;amp;servaddr, sizeof(servaddr)) == -<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">printf</span>(&amp;quot;<span class="keyword">bind</span> <span class="keyword">socket</span> error: <span class="variable">%s</span>(errno: <span class="variable">%d</span>)n&amp;quot;,strerror(errno),errno);</span><br><span class="line">		<span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( <span class="keyword">listen</span>(listenfd, <span class="number">10</span>) == -<span class="number">1</span>)&#123;</span><br><span class="line">	<span class="regexp">//listen</span> 监听</span><br><span class="line">		<span class="keyword">printf</span>(&amp;quot;<span class="keyword">listen</span> <span class="keyword">socket</span> error: <span class="variable">%s</span>(errno: <span class="variable">%d</span>)n&amp;quot;,strerror(errno),errno);</span><br><span class="line">		<span class="keyword">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">printf</span>(&amp;quot;======waiting <span class="keyword">for</span> client&amp;<span class="comment">#039;s request======n&amp;quot;);</span></span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)&#123;</span><br><span class="line">		<span class="keyword">if</span>( (connfd = <span class="keyword">accept</span>(listenfd, (struct sockaddr*)NULL, NULL)) == -<span class="number">1</span>)&#123;</span><br><span class="line">			<span class="keyword">printf</span>(&amp;quot;<span class="keyword">accept</span> <span class="keyword">socket</span> error: <span class="variable">%s</span>(errno: <span class="variable">%d</span>)&amp;quot;,strerror(errno),errno);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		n = <span class="keyword">recv</span>(connfd, buff, MAXLINE, <span class="number">0</span>);</span><br><span class="line">		buff[n] = &amp;<span class="comment">#039; &amp;#039;;</span></span><br><span class="line">		<span class="keyword">printf</span>(&amp;quot;<span class="keyword">recv</span> msg from client: <span class="variable">%sn</span>&amp;quot;, buff);</span><br><span class="line">		<span class="keyword">close</span>(connfd);</span><br><span class="line">	 &#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">close</span>(listenfd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client.c</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span>&amp;lt;stdio.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;stdlib.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;string.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;errno.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;sys/types.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;sys/socket.<span class="keyword">h</span>&amp;gt;</span><br><span class="line">#<span class="keyword">include</span>&amp;lt;netinet/<span class="keyword">in</span>.<span class="keyword">h</span>&amp;gt;</span><br><span class="line"></span><br><span class="line">#define MAXLINE 4096</span><br><span class="line"></span><br><span class="line">int main(int argc, <span class="keyword">char</span>** argv)</span><br><span class="line">&#123;</span><br><span class="line">	int    sockfd, <span class="keyword">n</span>;</span><br><span class="line">	<span class="keyword">char</span>    recvline[4096], sendline[4096];</span><br><span class="line">	struct sockaddr_in    servaddr;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( argc != 2)&#123;</span><br><span class="line">		printf(&amp;quot;usage: ./client &amp;lt;ipaddress&amp;gt;<span class="keyword">n</span>&amp;quot;);</span><br><span class="line">		<span class="keyword">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( (sockfd = socket(AF_INET, SOCK_STREAM, 0)) &amp;lt; 0)&#123;</span><br><span class="line">	<span class="comment">// 创建套接字描述符给sockfd</span></span><br><span class="line">		printf(&amp;quot;create socket <span class="keyword">error</span>: %<span class="literal">s</span>(errno: %<span class="keyword">d</span>)<span class="keyword">n</span>&amp;quot;, strerror(errno),errno);</span><br><span class="line">		<span class="keyword">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	memset(&amp;amp;servaddr, 0, sizeof(servaddr));</span><br><span class="line">	<span class="comment">//结构体清零</span></span><br><span class="line">	servaddr.sin_family = AF_INET;</span><br><span class="line">	servaddr.sin_port = htons(6666);<span class="comment">//端口号</span></span><br><span class="line">	<span class="keyword">if</span>( inet_pton(AF_INET, argv[1], &amp;amp;servaddr.sin_addr) &amp;lt;= 0)&#123;</span><br><span class="line">	<span class="comment">//Linux下IP地址转换函数，可以在将IP地址在&amp;ldquo;点分十进制&amp;rdquo;和&amp;ldquo;整数&amp;rdquo;之间转换 </span></span><br><span class="line">		printf(&amp;quot;inet_pton <span class="keyword">error</span> <span class="keyword">for</span> %sn&amp;quot;,argv[1]);</span><br><span class="line">		<span class="keyword">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>( connect(sockfd, (struct sockaddr*)&amp;amp;servaddr, sizeof(servaddr)) &amp;lt; 0)&#123;</span><br><span class="line">	<span class="comment">//连接请求</span></span><br><span class="line">		printf(&amp;quot;connect <span class="keyword">error</span>: %<span class="literal">s</span>(errno: %<span class="keyword">d</span>)<span class="keyword">n</span>&amp;quot;,strerror(errno),errno);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&amp;quot;send msg to server: <span class="keyword">n</span>&amp;quot;);</span><br><span class="line">	fgets(sendline, 4096, stdin);</span><br><span class="line">	<span class="keyword">if</span>( send(sockfd, sendline, <span class="literal">strlen</span>(sendline), 0) &amp;lt; 0)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&amp;quot;send msg <span class="keyword">error</span>: %<span class="literal">s</span>(errno: %<span class="keyword">d</span>)<span class="keyword">n</span>&amp;quot;, strerror(errno), errno);</span><br><span class="line">		<span class="keyword">exit</span>(0);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">close</span>(sockfd);</span><br><span class="line">	<span class="keyword">exit</span>(0);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以用ifconfig命令来查看我们本机的ip地址</p>
+<p>接下来看UDP的一个例子，分别是服务器端（server.c）和客户端（client.c）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;sys/socket.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;netinet/in.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;arpa/inet.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;netdb.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;errno.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;sys/types.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> port = <span class="number">8888</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> sockfd;</span><br><span class="line">	<span class="keyword">int</span> len;</span><br><span class="line">	<span class="keyword">int</span> z;</span><br><span class="line">	<span class="keyword">char</span> buf[<span class="number">255</span>];</span><br><span class="line">	<span class="keyword">struct</span> sockaddr_in adr_inet;</span><br><span class="line">	<span class="keyword">struct</span> sockaddr_in adr_clnt;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;等待客户端...n&amp;quot;);</span><br><span class="line">	<span class="comment">//建立IP地址</span></span><br><span class="line"></span><br><span class="line">	adr_inet.sin_family = AF_INET;</span><br><span class="line">	adr_inet.sin_port   = htons(port);</span><br><span class="line">	adr_inet.sin_addr.s_addr = htonl(INADDR_ANY);</span><br><span class="line">	bzero(&amp;amp;(adr_inet.sin_zero),<span class="number">8</span>);</span><br><span class="line">	len = <span class="keyword">sizeof</span>(adr_clnt);</span><br><span class="line">	<span class="comment">//建立socket</span></span><br><span class="line">	sockfd = socket(AF_INET, SOCK_DGRAM, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">if</span> (sockfd == -<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;quot;socket 出错&amp;quot;);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//bind socket</span></span><br><span class="line">	z = bind (sockfd, (<span class="keyword">struct</span> sockaddr *) &amp;amp;adr_inet, <span class="keyword">sizeof</span> (adr_inet));</span><br><span class="line">	<span class="keyword">if</span> (z == -<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;quot;bind出错&amp;quot;);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		z = recvfrom(sockfd, buf, <span class="keyword">sizeof</span>(buf), <span class="number">0</span>, (<span class="keyword">struct</span> sockaddr *)&amp;amp;adr_clnt, &amp;amp;len);</span><br><span class="line">		<span class="keyword">if</span> (z &amp;lt; <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			perror(&amp;quot;recvfrom 出错&amp;quot;);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		buf[z] = <span class="number">0</span>;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;接收:%s&amp;quot;,buf);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">strncmp</span>(buf, &amp;quot;stop&amp;quot;, <span class="number">4</span>) == <span class="number">0</span>)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(&amp;quot;结束..n&amp;quot;);</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	close(sockfd);</span><br><span class="line">	<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>client.c</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;stdio.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;stdlib.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;string.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;sys/socket.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;netinet/in.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;arpa/inet.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;netdb.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;errno.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;sys/types.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">int port = 8888<span class="comment">;</span></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	int sockfd<span class="comment">;</span></span><br><span class="line">	int i  = 0<span class="comment">;</span></span><br><span class="line">	int z<span class="comment">;</span></span><br><span class="line">	char buf[80], str1[80]<span class="comment">;</span></span><br><span class="line">	struct sockaddr_in adr_srvr<span class="comment">;</span></span><br><span class="line">	FILE *fp<span class="comment">;</span></span><br><span class="line">	printf(&amp;quot<span class="comment">;打开文件...n&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	fp = fopen (&amp;quot<span class="comment">;liu&amp;quot;, &amp;quot;r&amp;quot;);</span></span><br><span class="line">	if (fp == NULL)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;quot<span class="comment">;打开文件失败n&amp;quot;);</span></span><br><span class="line">		exit(1)<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;连接服务端...n&amp;quot;);</span></span><br><span class="line">	adr_srvr.sin_family = AF_INET<span class="comment">;</span></span><br><span class="line">	adr_srvr.sin_port   = htons(port)<span class="comment">;</span></span><br><span class="line">	adr_srvr.sin_addr.s_addr = htonl(INADDR_ANY)<span class="comment">;</span></span><br><span class="line">	bzero(&amp;amp<span class="comment">;(adr_srvr.sin_zero), 8);</span></span><br><span class="line">	sockfd = socket(AF_INET, SOCK_DGRAM, 0)<span class="comment">;</span></span><br><span class="line">	if (sockfd == -1)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;quot<span class="comment">;socket 出错&amp;quot;);</span></span><br><span class="line">		exit(1)<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;发送文件.....n&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	for (i=0<span class="comment">; i&amp;lt;3; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		fgets(str1,80,fp)<span class="comment">;</span></span><br><span class="line">		printf(&amp;quot<span class="comment">;%d:%s&amp;quot;,i, str1);</span></span><br><span class="line">		sprintf(buf, &amp;quot<span class="comment">;%d:%s&amp;quot;, i, str1);</span></span><br><span class="line">		z = sendto (sockfd, buf, sizeof(buf), 0, (struct sockaddr *)&amp;amp<span class="comment">;adr_srvr, sizeof(adr_srvr));</span></span><br><span class="line">		if (z &amp;lt<span class="comment">; 0)</span></span><br><span class="line">		&#123;</span><br><span class="line">			perror(&amp;quot<span class="comment">;recvfrom 出错&amp;quot;);</span></span><br><span class="line">			exit(1)<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;发送....n&amp;quot;);	</span></span><br><span class="line">	sprintf(buf, &amp;quot<span class="comment">;stopn&amp;quot;);</span></span><br><span class="line">	z = sendto (sockfd, buf, sizeof(buf), 0, (struct sockaddr *)&amp;amp<span class="comment">;adr_srvr, sizeof(adr_srvr));</span></span><br><span class="line"></span><br><span class="line">	if (z &amp;lt<span class="comment">; 0)</span></span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;quot<span class="comment">;sendto  出错&amp;quot;);</span></span><br><span class="line">		exit(1)<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	fclose(fp)<span class="comment">;</span></span><br><span class="line">	close(sockfd)<span class="comment">;</span></span><br><span class="line">	exit(0)<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span style="color: #3366ff; font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif; font-size: x-small;"><strong>这里简单比较一下TCP和UDP在编程实现上的一些区别：</strong></span></p>
+<p><span style="font-size: x-small;"><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">建立一个TCP连接需要三次握手，而断开一个TCP则需要四个分节。当某个应用进程调用close(主动端)后(可以是服务器端，也可以是客户 </span></span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">端)，这一端的TCP发送一个FIN，表示数据发送完毕；另一端(被动端)发送一个确认，当被动端待处理的应用进程都处理完毕后，发送一个FIN到主动 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">端，并关闭套接口，主动端接收到这个FIN后再发送一个确认，到此为止这个TCP连接被断开。 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">　　２、UDP套接口 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">　　UDP套接口是无 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">连接的、不可靠的数据报协议；既然他不可靠为什么还要用呢？其一：当应用程序使用广播或多播是只能使用UDP协议；其二：由于 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">他是无连接的，所以速度快。因为UDP套接口是无连接的，如果一方的数据报丢失，那另一方将无限等待，解决办法是设置一个超时。 </span></p>
+<p><span style="font-family: 宋体,'Lucida Grande','Lucida Sans',Verdana,Arial,sans-serif;">　　在编写UDP套接口程序时，有几点要注意：<span style="color: #ff0000;">建立套接口时socket函数的第二个参数应该是SOCK_DGRAM</span>，说明是建立一个UDP套接 口；<span style="color: #ff0000;">由于UDP是<strong>无连接</strong>的，所以服务器端并不需要listen或accept函数</span>；当UDP套接口调用connect函数时，内核只记录连接放的IP地址 和端口，并立即返回给调用进程，正因为这个特性，UDP服务器程序中并不使用fock函数，用单进程就能完成所有客户的请求。 </span></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>参考资料：</p>
+<p><a href="http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html（吴秦）" target="_blank" rel="external">http://www.cnblogs.com/skynet/archive/2010/12/12/1903949.html（吴秦）</a></p>
+<p>Linux软件工程师实用教程</p>
+<p><a href="http://blog.sina.com.cn/s/blog_493309600100clrw.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_493309600100clrw.html</a></p>
+<p><span style="font-size: x-small;">深刻理解<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">Linux</span></span>进程间通信（<span style="font-family: 'Liberation Serif',serif;"><span style="font-family: 宋体,SimSun;">IPC</span></span>）郑彦兴</span></p>
+<p><span style="font-size: x-small;">crocodile&#8217;s blog</span></p>
+</div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/17/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/19/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Kinect," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="用Kinect操控PPT有两种方式，一种是姿势识别，另外一种是手势识别。
+参考的文章依旧是下面这个链接,感谢原作者：
+http://www.cnblogs.com/yangecnu/archive/2012/06/21/Kinect_Powerpoint_Control.html
+在讲姿势识别之前，我们先来看看两张图片：
+
+这张图显示的是Kinect的原始数据源
+
+这张图显示的是在原始数据源的基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用Kinect操控PPT实现">
+<meta property="og:url" content="http://yoursite.com/2013/01/26/利用Kinect操控PPT实现/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="用Kinect操控PPT有两种方式，一种是姿势识别，另外一种是手势识别。
+参考的文章依旧是下面这个链接,感谢原作者：
+http://www.cnblogs.com/yangecnu/archive/2012/06/21/Kinect_Powerpoint_Control.html
+在讲姿势识别之前，我们先来看看两张图片：
+
+这张图显示的是Kinect的原始数据源
+
+这张图显示的是在原始数据源的基础">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/01/201211050043132124.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/01/2012110500431473.png">
+<meta property="og:updated_time" content="2015-07-25T04:57:44.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用Kinect操控PPT实现">
+<meta name="twitter:description" content="用Kinect操控PPT有两种方式，一种是姿势识别，另外一种是手势识别。
+参考的文章依旧是下面这个链接,感谢原作者：
+http://www.cnblogs.com/yangecnu/archive/2012/06/21/Kinect_Powerpoint_Control.html
+在讲姿势识别之前，我们先来看看两张图片：
+
+这张图显示的是Kinect的原始数据源
+
+这张图显示的是在原始数据源的基础">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 利用Kinect操控PPT实现 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              利用Kinect操控PPT实现
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-01-26T21:04:26+08:00" content="2013-01-26">
+            2013-01-26
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>用Kinect操控PPT有两种方式，一种是姿势识别，另外一种是手势识别。</p>
+<p>参考的文章依旧是下面这个链接,感谢原作者：</p>
+<p><a href="http://www.cnblogs.com/yangecnu/archive/2012/06/21/Kinect_Powerpoint_Control.html" target="_blank" rel="external">http://www.cnblogs.com/yangecnu/archive/2012/06/21/Kinect_Powerpoint_Control.html</a></p>
+<p>在讲姿势识别之前，我们先来看看两张图片：</p>
+<p><a href="http://miibotree.com/?attachment_id=591" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/01/201211050043132124.png" alt="201211050043132124"></a></p>
+<p>这张图显示的是Kinect的原始数据源</p>
+<p><a href="http://miibotree.com/?attachment_id=590" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/01/2012110500431473.png" alt="2012110500431473"></a></p>
+<p>这张图显示的是在原始数据源的基础上经过算法得出的第二类数据源。我们看到骼数据完全是根据深度数据源经过算法后得出的。并且这个算法应该是仅仅针对人的算法，阿猫阿狗应该是不行的。至于大猩猩猴子什么的&#8230;&#8230;这个自己倒也不清楚。</p>
+<p>可以去看看下面这个博客链接&#8212;-微软Build2012大会：Kinect for Windows上面的信息：</p>
+<p><a href="http://www.cnblogs.com/yangecnu/archive/2012/11/05/Build2012_Kinect_for_Windows_Programming_Deep_Dive.html" target="_blank" rel="external">http://www.cnblogs.com/yangecnu/archive/2012/11/05/Build2012_Kinect_for_Windows_Programming_Deep_Dive.html</a></p>
+<p>首先我们用姿势识别来实现。</p>
+<p>姿势其实就是利用的Kinect的骨骼信息。通过左右手与头之间的水平距离来判断产生向左或者向右的姿势，从而发送模拟键盘消息。</p>
+<p>在此之前，大家最好学习一下有关骨骼数据的一些基本知识：</p>
+<p><a href="http://www.cnblogs.com/yangecnu/archive/2012/04/06/KinectSDK_Skeleton_Tracking_Part1.html" target="_blank" rel="external">http://www.cnblogs.com/yangecnu/archive/2012/04/06/KinectSDK_Skeleton_Tracking_Part1.html</a></p>
+<p>博客园的这位作者翻译的很好，很细心，大家也可以去下载英文原版的pdf看看,这里给个下载链接（CSDN上面要一点点的积分）：</p>
+<p><a href="http://download.csdn.net/detail/gaoxin1076/5031790" target="_blank" rel="external">http://download.csdn.net/detail/gaoxin1076/5031790</a></p>
+<p>这个跟切水果的基本思路其实是差不多的。给个算法大家看看就很明白了。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">private void ProcessForwardBackGesture<span class="params">(Joint head, Joint rightHand, Joint leftHand)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span> <span class="params">(rightHand.Position.X &gt; head.Position.X + <span class="number">0.45</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!isBackGestureActive &amp;#<span class="number">038</span>;&amp;#<span class="number">038</span>; !isForwardGestureActive)</span></span><br><span class="line">        &#123;</span><br><span class="line">            isForwardGestureActive = <span class="literal">true</span>;</span><br><span class="line">            System.Windows.Forms.SendKeys.SendWait<span class="params">(<span class="string">"&#123;Right&#125;"</span>)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        isForwardGestureActive = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="params">(leftHand.Position.X &lt; head.Position.X - <span class="number">0.45</span>)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(!isBackGestureActive &amp;#<span class="number">038</span>;&amp;#<span class="number">038</span>; !isForwardGestureActive)</span></span><br><span class="line">        &#123;</span><br><span class="line">            isBackGestureActive = <span class="literal">true</span>;</span><br><span class="line">            System.Windows.Forms.SendKeys.SendWait<span class="params">(<span class="string">"&#123;Left&#125;"</span>)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        isBackGestureActive = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面的代码中，当判断到用户向右挥手动作是，执行System.Windows.Forms.SendKeys.SendWait(“{Right}”)语句从而发出点击键盘向右按键; 该方法执行时，要求PowerPoint程序处于当前活动的状态，这样里面的PPT才会向右键盘点击事件。需要注意的是方法中isBackGestureActive和isForwardGestureActive这两个布尔型的标志位，可以防止当用户一直处于某一个动作时会一直发送System.Windows.Forms.SendKeys.SendWait(“{xx}”)。</p>
+<p>上面的方法可以放在sensor_SkeletonFrameReady事件中，首先获取头部，左手右手关节点数据，然后调用该方法。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sensor_SkeletonFrameReady</span>(<span class="params"><span class="keyword">object</span> sender, SkeletonFrameReadyEventArgs e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> skeletonFrame = e.OpenSkeletonFrame())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (skeletonFrame == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (skeletons == <span class="keyword">null</span> ||</span><br><span class="line">            skeletons.Length != skeletonFrame.SkeletonArrayLength)</span><br><span class="line">        &#123;</span><br><span class="line">            skeletons = <span class="keyword">new</span> Skeleton[skeletonFrame.SkeletonArrayLength];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        skeletonFrame.CopySkeletonDataTo(skeletons);</span><br><span class="line"></span><br><span class="line">        Skeleton closestSkeleton = (<span class="keyword">from</span> s <span class="keyword">in</span> skeletons</span><br><span class="line">                                    <span class="keyword">where</span> s.TrackingState == SkeletonTrackingState.Tracked &amp;<span class="preprocessor">#038;&amp;#038;</span></span><br><span class="line">                                          s.Joints[JointType.Head].TrackingState == JointTrackingState.Tracked</span><br><span class="line">                                    <span class="keyword">select</span> s).OrderBy(s =&gt; s.Joints[JointType.Head].Position.Z)</span><br><span class="line">                                            .FirstOrDefault();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (closestSkeleton == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> head = closestSkeleton.Joints[JointType.Head];</span><br><span class="line">        <span class="keyword">var</span> rightHand = closestSkeleton.Joints[JointType.HandRight];</span><br><span class="line">        <span class="keyword">var</span> leftHand = closestSkeleton.Joints[JointType.HandLeft];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (head.TrackingState != JointTrackingState.Tracked ||</span><br><span class="line">            rightHand.TrackingState != JointTrackingState.Tracked ||</span><br><span class="line">            leftHand.TrackingState != JointTrackingState.Tracked)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//Don't have a good read on the joints so we cannot process gestures</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">       ProcessForwardBackGesture(head, rightHand, leftHand);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如此看来实现这样一个功能也不是很难。</p>
+<p>接下来讲讲手势识别来控制PPT。</p>
+<p>Kinect SDK1.6里面其实是有个例子的，有个叫做Slideshow Gesture-WPF的例子，实现了这个功能。大家可以去看看源代码。</p>
+<p>我们可以直接打开其源代码，其中的挥动手势识别代码被封装在了一个名为Microsoft.Samples.Kinect.SwipeGestureRecognizer的dll中，使用Reflector看看反编译出来源代码比较方便。</p>
+<p>这里直接用了该dll。</p>
+<p>要使用该dll提供的手势识别，必须先创建一个Recognizer对象。然后初始化改Recognizer。在初始化的时候注册左右挥动识别后进行的操作，该操作可以通过方法提供，由于方法体比较小，这里使用lambda表达式。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">readonly</span> Recognizer activeRecognizer;</span><br><span class="line"><span class="keyword">this</span>.activeRecognizer = <span class="keyword">this</span>.CreateRecognizer();</span><br><span class="line"><span class="function"><span class="keyword">private</span> Recognizer <span class="title">CreateRecognizer</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">// Instantiate a recognizer.</span></span><br><span class="line">    <span class="keyword">var</span> recognizer = <span class="keyword">new</span> Recognizer();</span><br><span class="line">    <span class="comment">// swipe right to  press right key .</span></span><br><span class="line">    recognizer.SwipeRightDetected += (s, e) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">            System.Windows.Forms.SendKeys.SendWait(<span class="string">"&#123;Right&#125;"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// swipe left to  press left key ..</span></span><br><span class="line">    recognizer.SwipeLeftDetected += (s, e) =&gt;</span><br><span class="line">    &#123;</span><br><span class="line">            System.Windows.Forms.SendKeys.SendWait(<span class="string">"&#123;Left&#125;"</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">return</span> recognizer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在sensor_SkeletonFrameReady事件中调用即可</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Skeleton[] skeletons = <span class="keyword">new</span> Skeleton[<span class="number">0</span>];</span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sensor_SkeletonFrameReady</span>(<span class="params"><span class="keyword">object</span> sender, SkeletonFrameReadyEventArgs e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">    <span class="comment">// Get the frame.</span></span><br><span class="line">    <span class="keyword">using</span> (<span class="keyword">var</span> frame = e.OpenSkeletonFrame())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// Ensure we have a frame.</span></span><br><span class="line">        <span class="keyword">if</span> (frame != <span class="keyword">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// Resize the skeletons array if a new size (normally only on first call).</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.skeletons.Length != frame.SkeletonArrayLength)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">this</span>.skeletons = <span class="keyword">new</span> Skeleton[frame.SkeletonArrayLength];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// Get the skeletons.</span></span><br><span class="line">            frame.CopySkeletonDataTo(<span class="keyword">this</span>.skeletons);</span><br><span class="line">            <span class="comment">// Pass skeletons to recognizer.</span></span><br><span class="line">            <span class="keyword">this</span>.activeRecognizer.Recognize(sender, frame, <span class="keyword">this</span>.skeletons);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>把上面的代码放到程序中，运行即可看到使用左手向左挥手，使用右手向右挥手即可控制幻灯片向左向右切换。如前面的文章所述，使用手势识别动作有一个时间阈值和一定的规则，如果该动作在某一时间内没有完成则识别失败。所以在本例中，如果挥手动作过慢，可能导致识别不出。而不像之前使用姿势识别例子中的那样，只需保持某个动作即可完成识别操作，这在一定程度上减少了第一种情况下出现误识别的概率。
+</code></pre></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kinect/" rel="tag">#Kinect</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/01/27/SML-Emacs/" rel="prev">SML & Emacs</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/23/Kinect骨骼追踪数据实现PC体感切水果/" rel="next">Kinect骨骼追踪数据实现PC体感切水果</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

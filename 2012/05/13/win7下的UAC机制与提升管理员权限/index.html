@@ -1,0 +1,664 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK,注册表,注册表，win7," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="自己本来想写这么个东西。在自己写的程序中能打开另一个程序，而这个打开的程序是直接以管理员身份运行的而不需要弹出什么“是否要以管理员身份运行的对话框”。
+&amp;nbsp;
+那么我们首先来看一下UAC机制。
+下面这些是摘引过来的：
+保 护Win7安全不得不说的UAC，众所周知，UAC是User Account Control的缩写，其中文翻译为用户帐户控制，是微软在Windows Vista和Win7中引">
+<meta property="og:type" content="article">
+<meta property="og:title" content="win7下的UAC机制与提升管理员权限">
+<meta property="og:url" content="http://yoursite.com/2012/05/13/win7下的UAC机制与提升管理员权限/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="自己本来想写这么个东西。在自己写的程序中能打开另一个程序，而这个打开的程序是直接以管理员身份运行的而不需要弹出什么“是否要以管理员身份运行的对话框”。
+&amp;nbsp;
+那么我们首先来看一下UAC机制。
+下面这些是摘引过来的：
+保 护Win7安全不得不说的UAC，众所周知，UAC是User Account Control的缩写，其中文翻译为用户帐户控制，是微软在Windows Vista和Win7中引">
+<meta property="og:image" content="http://my.csdn.net/uploads/201205/13/1336898174_2236.png">
+<meta property="og:image" content="http://my.csdn.net/uploads/201205/13/1336899549_5258.png">
+<meta property="og:updated_time" content="2015-07-25T05:04:28.742Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="win7下的UAC机制与提升管理员权限">
+<meta name="twitter:description" content="自己本来想写这么个东西。在自己写的程序中能打开另一个程序，而这个打开的程序是直接以管理员身份运行的而不需要弹出什么“是否要以管理员身份运行的对话框”。
+&amp;nbsp;
+那么我们首先来看一下UAC机制。
+下面这些是摘引过来的：
+保 护Win7安全不得不说的UAC，众所周知，UAC是User Account Control的缩写，其中文翻译为用户帐户控制，是微软在Windows Vista和Win7中引">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> win7下的UAC机制与提升管理员权限 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              win7下的UAC机制与提升管理员权限
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-13T17:07:35+08:00" content="2012-05-13">
+            2012-05-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>自己本来想写这么个东西。在自己写的程序中能打开另一个程序，而这个打开的程序是直接以管理员身份运行的而不需要弹出什么“是否要以管理员身份运行的对话框”。</p>
+<p>&nbsp;</p>
+<p>那么我们首先来看一下UAC机制。</p>
+<p>下面这些是摘引过来的：</p>
+<p><span style="color: #000066;">保 护Win7安全不得不说的UAC，众所周知，UAC是User Account Control的缩写，其中文翻译为用户帐户控制，是微软在Windows Vista和Win7中引用的新技术，主要功能是进行一些会影响系统安全的操作时，会自动触发UAC，用户确认后才能执行</span></p>
+<p><span style="color: #000066;">    大部分的恶意软件、木马病毒、广告插件在进入计算机时都会有如：将文件复制到Windows或Program Files等目录、安装驱动、安装ActiveX等操作，而这些操作都会触发UAC。面对这些不安全的因素，用户该如何解决UAC带来的问题？本文详细介 绍了UAC触动的详细功能，并可以在UAC提示时来禁止这些程序的运行。</span></p>
+<p><span style="color: #000066;">    能够触发UAC的操作包括：修改Windows Update配置； 增加或删除用户帐户； 改变用户的帐户类型； 改变UAC设置；安装ActiveX； 安装或卸载程序； 安装设备驱动程序； 修改和设置家长控制； 增加或修改注册表； 将文件移动或复制到Program Files或是Windows目录； 访问其他用户目录UAC很烦是的，微软自从Windows Vista开始加入了UAC，这也成了人们对VISTA不满的诟病之一，因为Vista不像Win7一样可以对 UAC进行级别设置（其实Windows7的UAC也很烦），当时的电脑的普遍配置也很低，所以人们对这个动不动就弹出来，同时还会锁定屏幕的家伙很厌 恶。</span></p>
+<p><span style="color: #000066;">    UAC在Win 7中的完善就是因为UAC太烦了，所以微软在Win 7中，加入了UAC的等级设置功能，分别对应4个级别：</span></p>
+<p><span style="color: #000066;">    默认级别（2级）：</span></p>
+<p><span style="color: #000066;">    在默认级别下，只有在应用程序试图改变计算机设置时才会提示用户，而用户主动对Windows进行更改设置则不会提示。同时，在该模式下将启用安全桌面， 以防绕过UAC更改系统设置。可以看出，默认级别可以既不干扰用户的正常操作，又可以有效防范恶意程序在用户不知情的情况下修改系统设置。一般的用户都可 以采用该级别设置。</span></p>
+<p><span style="color: #000066;">    比默认级别稍低的级别（1级）：</span></p>
+<p><span style="color: #000066;">    与默认级别稍有不同的是该级别将不启用安全桌面，也就是说有可能产生绕过UAC更改系统设置的情况。不过一般情况下，如果使用户启动某些程序而需要对系统 进行修改，可以直接运行，不会产生安全问题。但如果用户没有运行任何程序却弹出提示窗口，则有可能是恶意程序在试图修改系统设置，此时应果断选择阻止。该 级别适用于有一定系统经验的用户。</span></p>
+<p><span style="color: #000066;">    最低的级别（0级）：</span></p>
+<p><span style="color: #000066;">    最低的级别则是关闭UAC功能（必须重新启动后才能生效）。在该级别下，如果是以管理员登录，则所有操作都将直接运行而不会有任何通知，包括病毒或木马对 系统进行的修改。在此级别下，病毒或木马可以任意连接访问网络中的其他电脑、甚至与互联网上的电脑进行通信或数据传输。可见如果完全关闭UAC并以管理员 身份登录，将严重降低系统安全性。此外，如果是以标准用户登录，那么安装、升级软件或对系统进行修改和设置，将直接被拒绝而不弹出任何提示，用户只有获得 管理员权限才能进行。可见完全关闭UAC并以标准用户登录，各种操作和设置也非常不方便，因此建议不要选择该级别。</span></p>
+<p><span style="color: #000066;">    最高级别（3级）：</span></p>
+<p><span style="color: #000066;">    在高级级别下，“始终通知”（即完全开启），在该级别下，用户安装应用程序、对软件进行升级、应用程序在任何情况下对操作系统进行更改、更改 Windows设置等情况，都会弹出提示窗口（并启用安全桌面），请求用户确认。由此可见该级别是最安全的级别，但同时也是最“麻烦”的级别，适用于多人 共用一台电脑的情况下，限制其他标准用户，禁止其随意更改系统设置。</span></p>
+<p><span style="color: #000066;">    但是UAC很有用UAC虽然经常安装软件的人很烦，但UAC的作用却不容小觑。不得不承认微软对于操作系统的理念是很超前的，所以经常会搞出一些虽然很棒 却很尴尬的东西，就好像当年的VISTA，在人们开始接受Windows 7的今天，再回头去看Vista，才越来越意识到VISTA其实是一个很不错的操作系统，只 不过是生不逢时。</span></p>
+<p><span style="color: #000000;">我们在这里可以更改UAC设置：</span></p>
+<p><span style="color: #000066;"><img src="http://my.csdn.net/uploads/201205/13/1336898174_2236.png" alt=""></span></p>
+<p><span style="color: #000000;">如果是以管理员权限运行的，那么把它改成最低级别之后，所有的UAC都不会弹出来了。这样就达到了我们要的效果。</span></p>
+<p><span style="color: #000000;">其实是可以在注册表里面修改这个设置的。这里等下再说。</span></p>
+<p><span style="color: #000000;">首先来说说如何让自己的图标多出个盾牌。也就是说我们双击程序运行的时候启动UAC机制。</span></p>
+<p><span style="color: #000000;">其实是很简单的。。。。</span></p>
+<p><span style="color: #000000;">第一步：</span></p>
+<p><span style="color: #000000;">我们随手写个helloworld，生成了一个a.exe文件。</span></p>
+<p><span style="color: #000000;">然后在对应目录下面创建一个<strong>可执行文件名.exe.manifest  如果我这里既是a.exe.manifest</strong></span></p>
+<figure class="highlight"><figcaption><span>version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#38;lt;assembly xmlns=&#34;urn:schemas-microsoft-com:asm.v1&#34; manifestVersion=&#34;1.0&#34;&#38;gt;&#10;  &#38;lt;assemblyIdentity version=&#34;1.0.0.0&#34; processorArchitecture=&#34;X86&#34; name=&#34;VistaLogoDemo&#34; type=&#34;win32&#34;/&#38;gt;&#10;  &#38;lt;description&#38;gt;Description of your application&#38;lt;/description&#38;gt;&#10;  &#38;lt;!-- Identify the application security requirements. --&#38;gt;&#10;  &#38;lt;trustInfo xmlns=&#34;urn:schemas-microsoft-com:asm.v3&#34;&#38;gt;&#10;    &#38;lt;security&#38;gt;&#10;      &#38;lt;requestedPrivileges&#38;gt;&#10;        &#38;lt;requestedExecutionLevel level=&#34;requireAdministrator&#34; uiAccess=&#34;false&#34;/&#38;gt;&#10;      &#38;lt;/requestedPrivileges&#38;gt;&#10;    &#38;lt;/security&#38;gt;&#10;  &#38;lt;/trustInfo&#38;gt;&#10;&#38;lt;/assembly&#38;gt;</span><br></pre></td></tr></table></figure>
+<p>第二步：</p>
+<p><span style="color: #000000;">现在我们导入我们写好的资源文件：</span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">添加资源导入<strong>manifest</strong>文件命名为<strong>RT_MANIFEST</strong>，将其ID改为1</span></span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">第三步：</span></span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">编译运行一下，可能会出错，错误如下：</span></span></p>
+<p>&nbsp;</p>
+<figure class="highlight"><figcaption><span>c1010001: Values of attribute <span style="color: #800000;">"</span><span style="color: #800000;">level</span><span style="color: #800000;">"</span> not equal <span style="color: #0000ff;">in</span> different manifest snippets.    E:VC2010SP1SamplesC++MFCD2DMFCGdiInteropSampleDebugMFCGdiInteropSample.exe.intermediate.manifest```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#60;span style=&#34;color: #000066;&#34;&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#21452;&#20987;&#38169;&#35823;&#65292;&#36825;&#37324;&#20986;&#26469;&#19968;&#20010;vs&#33258;&#21160;&#29983;&#25104;&#30340;.manifest&#25991;&#20214;&#10;&#10;&#60;/span&#62;&#60;/span&#62;&#10;&#10;&#60;span style=&#34;color: #000066;&#34;&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#25226;&#23545;&#24212;&#30340;requestExecutionLevel &#26356;&#25913;&#12290;&#22312;&#36825;&#20010;&#20363;&#23376;&#37324;&#25105;&#20204;&#25913;&#25104;&#60;/span&#62;&#60;/span&#62;&#10;&#10;```requireAdministrator</span><br></pre></td></tr></table></figure>
+<p>,再次编译运行<span style="color: #000066;">。</span></p>
+<p><span style="color: #000066;"><span style="color: #000000;"><span style="color: #000066;">如果你不是以管理员权限打开的，可能vs会要求你重新启动来编译运行：如下图：</span></span></span></p>
+<p><span style="color: #000066;"><span style="color: #000000;"><span style="color: #000066;"><img src="http://my.csdn.net/uploads/201205/13/1336899549_5258.png" alt=""></span></span></span></p>
+<p></p>
+<p><span style="color: #000000;">假设我生成的是Release版本，现在查看下对应文件夹下面的图标，就多了一个盾牌了。双击运行，就会弹出UAC机制了。</span></p>
+<p><span style="color: #000000;">接下来说说用注册表更改UAC的等级：</span></p>
+<p><span style="color: #000000;">键值项：</span></p>
+<p></p>
+<p>&nbsp;</p>
+<p>HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System</p>
+<p>相关键值设置：</p>
+<p>UAC高</p>
+<p>ConsentPromptBehaviorAdmin = 2</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 1</p>
+<p>UAC中</p>
+<p>ConsentPromptBehaviorAdmin = 5</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 1</p>
+<p>UAC低</p>
+<p>ConsentPromptBehaviorAdmin = 5</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 0</p>
+<p>UAC关</p>
+<p>ConsentPromptBehaviorAdmin = 0</p>
+<p>EnableLUA = 0</p>
+<p>PromptOnSecureDesktop = 0</p>
+<p>注1：相关键说明</p>
+<p>ConsentPromptBehaviorAdmin    通知强度级别</p>
+<p>EnableLUA     是否开启UAC</p>
+<p>PromptOnSecureDesktop      桌面是否变黑</p>
+<p>注2：对UAC对级别设置说明</p>
+<p><span style="color: #000000;">注意必须重新启动才能生效。</span></p>
+<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+            <a href="/tags/注册表/" rel="tag">#注册表</a>
+          
+            <a href="/tags/注册表，win7/" rel="tag">#注册表，win7</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/05/16/DllMain详解/" rel="prev">DllMain详解</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/05/11/Win7文件关联-文件与程序“联姻”/" rel="next">Win7文件关联 文件与程序“联姻”</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,601 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="程序人生," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="下面的文章转自一个大二学生的问题和杨中科老师的回答，我看了以后还是蛮有收获的。
+先介绍我的情况 普通本科大二学生，，之前一直在练acm的题，也获得了一些大赛的奖项，有一天有个人问我，叫我做一个小软件，我发现我不会。。更惨的就是我好像什么软件都不会做（这里指的是基于c/c&amp;#43;&amp;#43;的开发），，除了console的一些算法题，，然后我和自己说练acm够了，应该开始学开发工具的运用和一些库类(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于技术型人才与研究型人才">
+<meta property="og:url" content="http://yoursite.com/2011/11/17/关于技术型人才与研究型人才/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="下面的文章转自一个大二学生的问题和杨中科老师的回答，我看了以后还是蛮有收获的。
+先介绍我的情况 普通本科大二学生，，之前一直在练acm的题，也获得了一些大赛的奖项，有一天有个人问我，叫我做一个小软件，我发现我不会。。更惨的就是我好像什么软件都不会做（这里指的是基于c/c&amp;#43;&amp;#43;的开发），，除了console的一些算法题，，然后我和自己说练acm够了，应该开始学开发工具的运用和一些库类(">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于技术型人才与研究型人才">
+<meta name="twitter:description" content="下面的文章转自一个大二学生的问题和杨中科老师的回答，我看了以后还是蛮有收获的。
+先介绍我的情况 普通本科大二学生，，之前一直在练acm的题，也获得了一些大赛的奖项，有一天有个人问我，叫我做一个小软件，我发现我不会。。更惨的就是我好像什么软件都不会做（这里指的是基于c/c&amp;#43;&amp;#43;的开发），，除了console的一些算法题，，然后我和自己说练acm够了，应该开始学开发工具的运用和一些库类(">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 关于技术型人才与研究型人才 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              关于技术型人才与研究型人才
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-11-17T17:46:00+08:00" content="2011-11-17">
+            2011-11-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>下面的文章转自一个大二学生的问题和杨中科老师的回答，我看了以后还是蛮有收获的。</p>
+<p>先介绍我的情况 普通本科大二学生，，之前一直在练acm的题，也获得了一些大赛的奖项，有一天有个人问我，叫我做一个小软件，我发现我不会。。更惨的就是我好像什么软件都不会做（这里指的是基于c/c&#43;&#43;的开发），，除了console的一些算法题，，然后我和自己说练acm够了，应该开始学开发工具的运用和一些库类(函数）的使用了，，这样2个星期下来，我翻了很多关于商业程序开发资料，我发现商业程序代码真的很少涉及到高效算法和一些特殊的数据结构，而且我也问了几个现在在公司上班的师兄，他们也说工作中真正用到acm的知识是很少很少的。现在一系列的ACM比赛又差不多开始了，我现在一直没准备。。</p>
+<p>&nbsp; &nbsp; 老师我想问的就是 以你多年的工作经验来看，具有ACM背景的人的优势在哪，，还有优势大吗？还有假如我如果现在（大二）拿ACM的获奖证书和带上之前开发一些小软件的实例 去找工作的话，，人家会很轻易的接受我吗？其实我大一的时候就获得了金山软件公司的实习邀请，，不过他说等到我大三暑假的时候才让我去，但是我家的经济深受这次金融风暴的打击，，所以我想大二读完的时候就出去找工作帮轻下家里负担，，我很期望您的回答。。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;还有我补充下我的个人简历，，我跟过一老师做基于.net的关于某公安局的项目，，英语四级，，是学生干部，，学习成绩80分以上，但是我看了看就业形势真的太差了，，我一直在担心公司为什么要我个大学都没毕业的。。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;最后我还想问下 我除了专业领域获过一些奖项，我在其他的专业课程上也获过奖的，例如 一个全国性的营销比赛 ，这对我找技术方面的工作有优势吗。。。还有我之前我看到您大学的时候投过稿，不知道这对你找工作的时候会有优势吗，因为我一直也想投稿到一些杂志和报纸。但因时间太紧。。一直未能如愿。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 谢谢。。。</p>
+<p>你说的“商业程序代码真的很少涉及到高效算法和一些特殊的数据结构”这是实际情况，因为并不是所有的公司的产品都是理论性很强的产品，就像<span style="color:red">造山寨手机的人不需要懂太多芯片设计等方面的知识</span>，只要会把大公司制造的手机芯片拼装起来，然后装一个外壳就可以了。“高效算法和一些特殊的数据结构”已经由IBM、微软等大公司解决了，制造成了一些类库、应用服务器、数据库服务器之类的“零件”，商业程序开发者只要把这些零件按照需要拼装起来就可以了。在大公司工作的人是少数的，所以你问的师兄估计也都不是在这些大公司工作的，所以他们说“工作中真正用到acm的知识是很少很少的”也是可以理解的。</p>
+<p>ACM被誉为计算机界奥林匹克，<span style="color:red">每年的获奖者都几乎被google、微软、IBM、百度等大公司哄抢一空</span>，很多大公司赞助ACM赛事的目的就是“近水楼台”，能够比其他竞争对手&#31548;络更多的人才。</p>
+<p>ACM可以看做是“聪明者的游戏”，在ACM题目研究深入的人通常有非常高的数学素养、计算机算法素养以及非常强的分析问题、解决问题以及动手的能力，能够处理各种高精尖的难题，这是各大公司哄抢ACM人才的主要原因。</p>
+<p>ACM的程序开发和开发商业软件的不同点就在于写ACM程序是研究（Research），而写商业程序是开发（Development），这就是研发（<span style="color:red">Research&amp;Development</span>）两个字的含义，“研发”就是“研究开发”，像微软、IBM等这样的公司都将研发人才分为两种：研究性人才和开发性人才。以微软为例，在中国，微软设立了微软亚洲研究院，同时微软亚洲研究院下设微软亚洲工程院，微软亚洲研究院中的人主要的工作就是出paper（论文），根据微软总部下达的研究方向进行核心技术的研究，然后将研究成果转换为可以实施的方案，由微软亚洲工程院的工程师进行实际的开发，简单的讲就是<span style="color:red">微软亚洲研究院的人负责研究课题，然后由微软亚洲工程院的工程师根据研究结果开发出实际可用的商业化产品</span>。因此微软亚洲研究院的人都是拥有很强科研实力的人，而微软亚洲工程院的人</p>
+<p> 则是有很强开发能力的人。像google、IBM等大公司也有类&#20284;的部门职位划分。对于一些次一级的大公司来说，比如百度、网易等，也在职位上进行着类&#20284;的划分。</p>
+<p>他们的区别就像研究动力学的人和设计汽车的人的差别一样，研究动力学的人只负责从研究一些理论，不负责实际的汽车设计，而是由专门的汽车设计工程师来负责根据研究成果进行实际的产品设计。比如对于做搜索引擎来说，研究性人才负责研究检索方面的理论，得出一些公式、算法、理论，然后由开发性人才负责根据这些研究成果写程序，然后变成可以实际使用的搜索引擎。</p>
+<p>研究性人才对智商要求比较高，处于人才金字塔的顶端，因此收入、待遇各方面都更高一些，职业发展就是“科学家”；而开发性人才的优势则在于理论转化为产品的能力，因此开发性人才中独立创业的比例更高。</p>
+<p>看了公司的职位划分你就能明白白商业化软件开发和写ACM题的区别在哪里了，你就知道做ACM题背景的人和掌握商业程序开发技能的人的不同定位了。如果ACM成绩非常好，那么进入这些国际性大公司的概率会非常高，哪怕去不了大公司，中小型公司也非常欢迎这种基础理论扎实的人才，因为他们可以解决别人解决不了的难题，但是这类人才通常要价比较高，很多中小型公司难以承受，同时中小型公司并没有独立的研究部门，所以这类人才进入公司以后通常都是兼有研究和开发两重责任，当然也是处于公司<span style="color:red">人才金字塔的顶端，享受特殊待遇</span>；开发性人才则是各个类型的公司都需要的，相对来说选择面广一些，但是初始阶段的收入会比研究性人才低一些。你需要根据你的情况来给自己定位，如果是做研究性人才，那么就继续把ACM弄好，多参加ACM大赛，特别是正式的国际性ACM大赛，争取拿奖，同时做好进行<span style="color:red">研究生学习的的准备</span>（ACM成绩好的话一般都会被科研院所免试录取），在研究生阶段进行进一步的理论研究和培养自己的科研能力，这种方向的话**不需要管什么java</p>
+<p> web开发、Windows程序开发这类的实现性技术**，只需要把算法、模式识别等理论课程学好即可；如果你的定位是开发性人才则把主要精力放到java web开发、Windows程序开发等上边来，如果从事这个方向，因为你已经有一定的ACM的基础了，所以<span style="color:red">应付面试笔试中的那些算法难题不在话下</span>，那么就在把一部分精力继续投入在ACM的学习上的同时，把更多的精力投入到这些商业程序开发的技术上去。</p>
+<p>至于你提到的“公司为什么要我个大学都没毕业的”，你可以看这几篇文章：</p>
+<p><a href="http://www.rupeng.com/index.php/viewthread-514" target="_blank" rel="external">http://www.rupeng.com/index.php/viewthread-514</a></p>
+<p><a href="http://www.rupeng.com/index.php/viewthread-431" target="_blank" rel="external">http://www.rupeng.com/index.php/viewthread-431</a></p>
+<p><a href="http://www.rupeng.com/forum/thread-1211-1-1.html" target="_blank" rel="external">http://www.rupeng.com/forum/thread-1211-1-1.html</a></p>
+<p>要多看如鹏首页的内容（<a href="http://www.rupeng.com/" target="_blank" rel="external">http://www.rupeng.com/</a>）</p>
+<p>“一个全国性的营销比赛 ，这对我找技术方面的工作有优势吗”，你可以参加这方面的比赛，但是不要牵扯太多的精力，这方面的比赛可以提升的软实力，但是同样削弱了你在主业方面的投入；“投过稿，不知道这对你找工作的时候会有优势吗”，这些优势都不是量化的，而是一种软实力，投过稿、写过书，那么你分析问题、表述问题的时候会更加条理化，对工作、个人发展都有好处，这都是软实力的提升，企业需要软实力非常强的人才。</p>
+<p>如鹏出几个开发性人才高手是我的期望，出几个研究性人才、ACM高手则是我的奢求，呵呵。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/程序人生/" rel="tag">#程序人生</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2011/12/01/linux使用yum命令产生的进程锁问题/" rel="prev">linux使用yum命令产生的进程锁问题</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/11/02/c语言数组变量在内存中的连续分配情况/" rel="next">c语言数组变量在内存中的连续分配情况</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

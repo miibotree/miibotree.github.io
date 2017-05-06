@@ -1,0 +1,1285 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/10/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2013/01/18/移位运算符和运算符重载/" itemprop="url">
+                移位运算符和运算符重载
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-01-18T11:14:03+08:00" content="2013-01-18">
+            2013-01-18
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>上几天考了C++，发现自己连最基本的左移右移的位移运算符都没有搞清楚。脑子一热就写错了。</p>
+<p>左移运算符 &lt;&lt; 从二进制来看，是向左移动位数， 然后覆盖左边的位数，后面不足的补0.</p>
+<p>右移运算符 &gt;&gt; 实现相反的功能，但是不同的是不足的可能是补1或者是补0，跟编译器有关系。</p>
+<p>其实跟数电里面的移位寄存器是一样的，当时自己思维局限了，给了个5， 是110，然后就以为总共只有三位，忘记了默认的unsigned int类型有32位，左边其实全部都是0&#8230;&#8230;然后自己就移着移着把1给移没了&#8230;&#8230;</p>
+<p>为了巩固一下，自己写了个程序利用运算符重载的方式把左移运算符给重载了，写运算符重载的时候又理解了一句话：运算符重载只能重载为友元函数或者成员函数的形式，而不能作为函数单独存在。也就是说运算符重载是跟类紧密相关的。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Change</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">	Change()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Default Con. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">		a = <span class="number">0</span>;</span><br><span class="line">		b = <span class="number">0</span>;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	Change(unsigned <span class="keyword">int</span> <span class="keyword">x</span>, unsigned <span class="keyword">int</span> <span class="keyword">y</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Con. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">		a = <span class="keyword">x</span>;</span><br><span class="line">		b = <span class="keyword">y</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Change()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Descon. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void <span class="keyword">print</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;a=&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;a&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;,&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;b=&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;b&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Change operator &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;(const <span class="keyword">int</span> n);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">	unsigned <span class="keyword">int</span> a;</span><br><span class="line">	unsigned <span class="keyword">int</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Change Change::operator &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;(const <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> Change(this-&amp;<span class="keyword">gt</span>;a&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;n, this-&amp;<span class="keyword">gt</span>;b&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	Change c(<span class="number">8</span>, <span class="number">8</span>);</span><br><span class="line">	c = c&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">3</span>;</span><br><span class="line">	c.<span class="keyword">print</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个小程序把 &lt;&lt; 给重载了 Change类里面的a成员是左移后的数据，b成员是右移后的数据。</p>
+<p>这样一来就看得很清楚了。</p>
+<p>写这个程序的时候，又想起了当时考试的另一个运算符重载的地方自己想不明白的：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> Change(this<span class="subst">-&amp;</span><span class="literal">gt</span>;a<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;n, this<span class="subst">-&amp;</span><span class="literal">gt</span>;b<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">gt</span>;n);</span><br></pre></td></tr></table></figure>
+<p>这里应该是调用了构造函数</p>
+<p>而下面的赋值语句</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c = c&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>是首先创建了一个匿名对象。从运行的结果我们可以看到。</p>
+<p>这段程序的运行结果如下：</p>
+<p>Con. called!</p>
+<p>Con. called!          //这里看出创建了匿名对象</p>
+<p>Descon. called!       //这里看出创建了匿名对象</p>
+<p>a=64,b=1</p>
+<p>Descon. called!</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/16/数据结构查找-2-–平衡的二叉查找树-AVL树/" itemprop="url">
+                数据结构查找(2)–平衡的二叉查找树(AVL树)
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-16T15:50:38+08:00" content="2012-12-16">
+            2012-12-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div><br><div><span style="font-size: x-small;">上篇博客介绍了二叉查找<span style="font-size: x-small;">树，来看下各项操作的时间复杂度。<p></p><br><br></span></span></div><br><div><span style="font-size: x-small;">查找                 插入                删除</span></div><br><div><span style="font-size: x-small;">o(log n )          o(1)                  o(1)</span></div><br><div><span style="font-size: x-small;">有序                链表                 链表<br><br><span style="font-size: x-small;">我们可以想象下，<span style="font-size: x-small;">在构造二叉查找<span style="font-size: x-small;">树的时候，如果按<span style="font-size: x-small;">以下递增序列构造如：2 4 5 6 7 8，那么构造出来的查找二叉树将会是接近链表的形式，这样就增加了<span style="font-size: x-small;">查找的时间复杂度。<br><br><span style="font-size: x-small;">也就是说，这<span style="font-size: x-small;">课树失去了平衡。我们看看下面这个图就明白了。<br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/1355624913_5301.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/1355624913_5301.png" alt="" title="1355624913_5301"></a><br><br><span style="font-size: x-small;">这样一来，<span style="font-size: x-small;">b虽然也是一颗二叉查找<span style="font-size: x-small;">树，但是查找效率大大下降。所以，我们引入了<span style="font-size: x-small;">平衡<span style="font-size: x-small;">的二叉查找树（AVL）树。<br><br><span style="color: #000099; font-size: small;">1.平衡</span><br><br><span style="font-size: x-small;">关键是<span style="font-size: x-small;">“平衡”这个概念的理解。<br><br><span style="font-size: x-small;">定义如下:<br><br><span style="color: #3333ff;">树中每个结点的</span><span style="color: blue;">左、右子树深度之差的绝对值不大于</span><span style="color: blue;"><span style="font-size: x-small;">1<br><br></span></span><br><br>节点的<strong>平衡因子</strong>是它的左子树的高度减去它的右子树的高度（有时相反）。带有平衡因子1、0或 -1的节点被认为是平衡的。带有平衡因子 -2或2的节点被认为是不平衡的，并需要重新平衡这个树。平衡因子可以直接存储在每个节点中，或从可能存储在节点中的子树高度计算出来。<br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">下面给个例子<span style="font-size: x-small;">，我们以<span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">左子树的高度减去它的右子树的高度作为平衡因子。<br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/1.png" alt="" title="1"></a><br><br><span style="color: #000099; font-size: small;">2.旋转<br><br><span style="font-size: small;"><span style="color: #000000; font-size: x-small;">平衡树的关键，就是如何达到平衡，这里的关键技术就是旋转了。<br><br><span style="font-size: x-small;"><br><br>下面引出的<span style="font-size: x-small;">是基本概念：<br><br></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>有四种种情况可能导致二叉查找树不平衡，分别为：<br><br>（1）LL：插入一个新节点到根节点的左子树（Left）的左子树（Left），导致根节点的平衡因子由1变为2<br><br>（2）RR：插入一个新节点到根节点的右子树（Right）的右子树（Right），导致根节点的平衡因子由-1变为-2<br><br>（3）LR：插入一个新节点到根节点的左子树（Left）的右子树（Right），导致根节点的平衡因子由1变为2<br><br>（4）RL：插入一个新节点到根节点的右子树（Right）的左子树（Left），导致根节点的平衡因子由-1变为-2<br><br>针对四种种情况可能导致的不平衡，可以通过旋转使之变平衡。有两种基本的旋转：<br><br>（1）左旋转：将根节点旋转到（根节点的）右孩子的左孩子位置<br><br>（2）右旋转：将根节点旋转到（根节点的）左孩子的右孩子位置<br><br>给大家看<span style="font-size: x-small;">张wiki上面的图，一目了然：<br><br><span id="more-548"></span><br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/Tree_Rebalancing1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/Tree_Rebalancing1.png" alt="" title="Tree_Rebalancing"></a><br><br><span style="font-size: x-small;"><span style="font-size: x-small;">2.1<span style="font-size: x-small;"> 左左<span style="font-size: x-small;">(LL)</span>情况<br><br><span style="font-size: x-small;">针对左左这种情况，我们需要右旋。看上面的图就应该很明白。<br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">我看人家的代码<span style="font-size: x-small;"><span style="font-size: x-small;">，这种情况的</span>函数名叫做</span>RightRo<span style="font-size: x-small;">t</span>ate，后来自己写着写着因为函数名把自己给搞晕了。所以我的函数是这样命名的：<span style="font-size: x-small;"><br><br>左左情况，函数名就叫LeftLeft，<span style="font-size: x-small;">这样就不用引入什么左旋右旋这样的概念<span style="font-size: x-small;">了。</span>免得把自己搞乱。如果大家不喜欢的话可以按照自己的理解来<span style="font-size: x-small;">~~</span></span></span><br><br></span></span></span>我们附上代码：</span><br><br></span></span></span></span><br><br><figure class="highlight"><figcaption><span>LeftLeft(AVLTree T)</span><a href="//LL">右旋</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;lchild;&#10;&#9;root-&#38;gt;lchild = pivot-&#38;gt;rchild;&#10;&#9;pivot-&#38;gt;rchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;//&#36825;&#37324;&#30340;&#39034;&#24207;&#19981;&#33021;&#25913;&#21464;&#65292;&#20174;&#19979;&#38754;&#21040;&#19978;&#38754;&#35745;&#31639;&#24179;&#34913;&#22240;&#23376;&#12290;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br>2.2右右(RR)情况<br><br><span style="font-size: x-small;">针对右右这种情况，我们需要左旋（其实我们可以根本不用记左旋，只要根据上面这张wiki 的图把代码写出来就好了）<br><br></span><br><br><figure class="highlight"><figcaption><span>RightRight(AVLTree T)//RR 左旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;rchild;&#10;&#9;root-&#38;gt;rchild = pivot-&#38;gt;lchild;&#10;&#9;pivot-&#38;gt;lchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br>2.3左右(LR)情况<br><br><span style="font-size: x-small;">这种情况其实是上面两种的综合，首先将pivot进行RR情况的操作（左旋），然后将root进行LL情况的操作（右旋）。<br><br><span style="font-size: x-small;">我<span style="font-size: x-small;">依然是根据图得出的结论，写的代码</span></span><br><br></span><br><br><figure class="highlight"><figcaption><span>LeftRight(AVLTree T)//LR pivot左旋 root右旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;T-&#38;gt;lchild = RightRight(T-&#38;gt;lchild);&#10;&#9;return LeftLeft(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">2.<span style="font-size: x-small;">4右左(RL)情况</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><br><figure class="highlight"><figcaption><span>RightLeft(AVLTree T)//RL pivot右旋 root左旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;T-&#38;gt;rchild = LeftLeft(T-&#38;gt;rchild);&#10;&#9;return RightRight(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;">从上面我们可以看出，RR跟LL是相互对应的，LR跟RL也是相互对应的。</span><br><br><span style="font-size: x-small;">把我写好的部分代码先贴出来。删除的操作还没有<span style="font-size: x-small;">完成。<span style="font-size: x-small;">在vs2010下测试通过.<br><br><span style="font-size: x-small;">AVLTree.h<br><br></span></span></span></span><br><br><figure class="highlight"><figcaption><span>&lt;stdio.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;malloc.h&#38;gt;&#10;#include &#38;lt;stdlib.h&#38;gt;&#10;&#10;#define OK 1&#10;&#10;typedef int TElemType ;&#10;typedef int Status ;&#10;typedef int KeyType ;&#10;&#10;typedef struct AVLTNode&#123;&#10;&#9;TElemType data;&#10;&#9;int bf;&#10;&#9;struct AVLTNode *lchild, *rchild, *parent;&#10;&#125;AVLTNode, *AVLTree;&#10;&#10;int Height(AVLTree T);&#10;int Max(int A, int B);&#10;AVLTree AVLInsert(AVLTree T);&#10;&#10;AVLTree LeftLeft(AVLTree T);&#9;&#9;//LL&#22411;&#65292;&#21491;&#26059;&#10;AVLTree RightRight(AVLTree T);&#9;&#9;//RR&#22411;&#65292;&#24038;&#26059;&#10;AVLTree LeftRight(AVLTree T);&#9;&#9;//LR&#22411;&#65292;&#26059;&#36716;&#10;AVLTree RightLeft(AVLTree T);&#9;&#9;//RL&#22411;&#65292;&#26059;&#36716;&#10;&#10;//global &#10;char chos;&#10;int input;&#10;AVLTree T = NULL;&#10;&#10;int Height(AVLTree T)&#10;&#123;&#10;&#9;if (T == NULL)&#10;&#9;&#9;return -1;&#10;&#9;else&#10;&#9;&#9;return T-&#38;gt;bf;&#10;&#125;&#10;&#10;int Max(int A, int B)&#10;&#123;&#10;&#9;return ((A &#38;gt; B) ? A : B);&#10;&#125;&#10;&#10;AVLTree AVLInsert(AVLTree T)&#10;&#123;&#10;&#9;if (NULL == T)&#10;&#9;&#123;&#10;&#9;&#9;T = (AVLTree)malloc(sizeof(AVLTNode));&#10;&#9;&#9;T-&#38;gt;data&#9;  = input;&#10;&#9;&#9;T-&#38;gt;lchild = NULL;&#10;&#9;&#9;T-&#38;gt;rchild = NULL;&#10;&#9;&#9;T-&#38;gt;bf&#9;  = 0;&#10;&#9;&#125;&#10;&#9;else if (input &#38;lt; T-&#38;gt;data)&#10;&#9;&#123;&#10;&#9;&#9;T-&#38;gt;lchild = AVLInsert(T-&#38;gt;lchild);&#10;&#9;&#9;if (Height(T-&#38;gt;lchild) - Height(T-&#38;gt;rchild) == 2)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;if (input &#38;lt; T-&#38;gt;lchild-&#38;gt;data)&#10;&#9;&#9;&#9;&#9;T = LeftLeft(T);//LL&#10;&#9;&#9;&#9;else&#10;&#9;&#9;&#9;&#9;T = LeftRight(T);//LR&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#10;&#9;else if (input &#38;gt; T-&#38;gt;data)&#10;&#9;&#123;&#10;&#9;&#9;T-&#38;gt;rchild = AVLInsert(T-&#38;gt;rchild);&#10;&#9;&#9;if (Height(T-&#38;gt;rchild) - Height(T-&#38;gt;lchild) == 2)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;if (input &#38;gt; T-&#38;gt;rchild-&#38;gt;data)&#10;&#9;&#9;&#9;&#9;T = RightRight(T);&#9;//RR&#10;&#9;&#9;&#9;else&#10;&#9;&#9;&#9;&#9;T = RightLeft(T);&#9;//RL&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#9;T-&#38;gt;bf = Max(Height(T-&#38;gt;lchild), Height(T-&#38;gt;rchild)) + 1;&#10;&#9;return T;&#10;&#125;&#10;&#10;AVLTree LeftLeft(AVLTree T)&#9;//LL &#21491;&#26059;&#10;&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;lchild;&#10;&#9;root-&#38;gt;lchild = pivot-&#38;gt;rchild;&#10;&#9;pivot-&#38;gt;rchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;//&#36825;&#37324;&#30340;&#39034;&#24207;&#19981;&#33021;&#25913;&#21464;&#65292;&#20174;&#19979;&#38754;&#21040;&#19978;&#38754;&#35745;&#31639;&#24179;&#34913;&#22240;&#23376;&#12290;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;&#10;&#10;AVLTree RightRight(AVLTree T)//RR &#24038;&#26059;&#10;&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;rchild;&#10;&#9;root-&#38;gt;rchild = pivot-&#38;gt;lchild;&#10;&#9;pivot-&#38;gt;lchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;&#10;&#10;AVLTree LeftRight(AVLTree T)//LR pivot&#24038;&#26059; root&#21491;&#26059;&#10;&#123;&#10;&#9;T-&#38;gt;lchild = RightRight(T-&#38;gt;lchild);&#10;&#9;return LeftLeft(T);&#10;&#125;&#10;&#10;AVLTree RightLeft(AVLTree T)//RL pivot&#21491;&#26059; root&#24038;&#26059;&#10;&#123;&#10;&#9;T-&#38;gt;rchild = LeftLeft(T-&#38;gt;rchild);&#10;&#9;return RightRight(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="color: #000099; font-size: small;"><span style="font-size: small;"><span style="color: #000000; font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">AVLTree.cpp</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><br><figure class="highlight"><figcaption><span>"AVLTree.h"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;//functions&#10;void Chose();&#10;void Insert();&#10;void Output(AVLTree T);&#10;void PrintTree(AVLTree T);&#10;void Delete();&#10;&#10;int main()&#10;&#123;&#10;&#10;&#9;while (1)&#10;&#9;&#123;&#10;&#9;&#9;Chose();&#10;&#9;&#9;switch(chos)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;case &#39;i&#39;:&#10;&#9;&#9;&#9;&#9;Insert();&#10;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;case &#39;d&#39;:&#10;&#9;&#9;&#9;&#9;Delete();&#10;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;case &#39;e&#39;:&#10;&#9;&#9;&#9;&#9;exit(0);&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#10;&#9;return 0;&#10;&#125;&#10;&#10;void Chose()&#10;&#123;&#10;&#9;printf(&#34;i) Insert a point n&#34;&#10;&#9;&#9;   &#34;d) Delete a point n&#34;&#10;&#9;&#9;   &#34;e) exit&#9;&#9;&#9;  n&#34;&#10;&#9;&#9;   &#34;Input your choise n&#34;);&#10;&#9;scanf(&#34;%c&#34;, &#38;amp;chos);&#10;&#9;getchar();&#10;&#125;&#10;&#10;void Insert()&#10;&#123;&#10;&#9;printf(&#34;nInput the point you want to Insert: &#34;);&#10;&#9;scanf(&#34;%d&#34;, &#38;amp;input);&#10;&#9;getchar();&#10;&#9;T = AVLInsert(T);&#10;&#9;Output(T);&#10;&#125;&#10;&#10;void Output(AVLTree T)&#10;&#123;&#10;&#9;if (T == NULL)&#10;&#9;&#9;printf(&#34;Nonen&#34;);&#10;&#9;else&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;%dtrootn&#34;, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T);&#10;&#9;&#125;&#10;&#125;&#10;//Tree print&#10;void PrintTree(AVLTree T)&#10;&#123;&#10;&#9;if (T-&#38;gt;lchild)&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;Lchildt%dt[parent:%d]n&#34;, T-&#38;gt;lchild-&#38;gt;data, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T-&#38;gt;lchild);&#9;&#9;&#9;&#10;&#9;&#125;&#10;&#10;&#9;if (T-&#38;gt;rchild)&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;Rchildt%dt[parent:%d]n&#34;, T-&#38;gt;rchild-&#38;gt;data, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T-&#38;gt;rchild);&#9;&#9;&#9;&#10;&#9;&#125;&#10;&#125;&#10;&#10;void Delete()&#10;&#123;&#10;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;">文献参考：<br><br><span style="font-size: x-small;">图片<span style="font-size: x-small;">参考：</span></span><br><br></span><a href="http://zh.wikipedia.org/wiki/AVL%E6%A0%91" target="_blank" rel="external">http://zh.wikipedia.org/wiki/AVL%E6%A0%91</a><br><br><span style="font-size: x-small;"><span style="font-size: x-small;">基本概念参考：</span></span><br><br><a href="http://dongxicheng.org/structure/avl/" target="_blank" rel="external">http://dongxicheng.org/structure/avl/</a><br><br>代码参考：<br><br><a href="http://www.asiteof.me/2010/06/avl/" target="_blank" rel="external">http://www.asiteof.me/2010/06/avl/</a><br><br></div><br></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/15/软件UI调研/" itemprop="url">
+                软件UI调研
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-15T22:42:19+08:00" content="2012-12-15">
+            2012-12-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>MFC的界面太难看了。美化界面好像很必要。</p>
+<p>上次我们做项目的时候，我们一开始说的skin++和skinsharp虽然用起来简单，但是效果不好。</p>
+<p>上次项目里面采用的CDHtmlDialog类用起来比较麻烦。</p>
+<p>于是就想着有没有更好的方法。</p>
+<p>迅雷7好像有自己的引擎</p>
+<p><a href="http://xldoc.xl7.xunlei.com/0000000018/0000000018.html" target="_blank" rel="external">http://xldoc.xl7.xunlei.com/0000000018/0000000018.html</a></p>
+<p>而像qq这样的界面都是DirectUI设计的</p>
+<p>看看下面这个博客介绍了DirectUI：</p>
+<p><a href="http://blog.csdn.net/a199228/article/details/7027717" target="_blank" rel="external">http://blog.csdn.net/a199228/article/details/7027717</a></p>
+<p>然后下面这个博客简单介绍了DirectUI的框架的实现：</p>
+<p><a href="http://blog.csdn.net/jptaozhantaozhan/article/details/7180736" target="_blank" rel="external">http://blog.csdn.net/jptaozhantaozhan/article/details/7180736</a></p>
+<p>这个过程非常繁琐。</p>
+<p>感觉比我们做项目时候写的 CDHtmlDialog类还要复杂。</p>
+<p>具体的实现感觉跟CDHtmlDialog类差不多，都要通过消息映射的方式来实现。</p>
+<p>DirectUI还要自己画空间，自己设计xml布局，感觉很繁琐。</p>
+<p>目前自己不打算学习。</p>
+<p>可以先看下这个，开源的directUI界面库</p>
+<p><a href="http://www.oschina.net/code/snippet_125020_4577" target="_blank" rel="external">http://www.oschina.net/code/snippet_125020_4577</a></p>
+<p>在google code上面可以下载的到</p>
+<p><a href="https://code.google.com/p/duilib/downloads/detail?name=duilib%20v1.1.zip&#038;can=2&#038;q=" target="_blank" rel="external">https://code.google.com/p/duilib/downloads/detail?name=duilib%20v1.1.zip&#038;can=2&#038;q=</a></p>
+<p>这个是作者的CSDN博客：</p>
+<p><a href="http://blog.csdn.net/wangchyz" target="_blank" rel="external">http://blog.csdn.net/wangchyz</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/15/数据结构查找-1-–二叉查找树/" itemprop="url">
+                数据结构查找(1)–二叉查找树
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-15T22:08:00+08:00" content="2012-12-15">
+            2012-12-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div><br><div>准备在期末之前解决掉红黑树。为了解决红黑树，首先学习二叉查找树，然后学习平衡的二叉查找树（这里的关键是树的旋转操作）。<br><br>最后在已经有上面知识的基础上，再来解决红黑树。至于B树家族，实在是太复杂，自己先了解下。等到自己实力增强的时候再去深入。首先我们来看看二叉查找树：下面是二叉查找树的定义：<br><br>二叉排序树或者是一棵空树；或者是具有如下特性的二叉树：（1）若它的左子树不空，则左子树上<br><br>所有结点的值均小于根结点的值</div>
+
+<p>（2）若它的右子树不空，则右子树上</p>
+<p>所有结点的值均大于根结点的值</p>
+<p>（3）它的左、右子树也都分别是二叉</p>
+<p>排序树</p>
+<p>给出一颗二叉查找树：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/12/94cad1c8a786c9179df9bed6c93d70cf3ac75763.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/94cad1c8a786c9179df9bed6c93d70cf3ac75763.jpg" alt="" title="94cad1c8a786c9179df9bed6c93d70cf3ac75763"></a></p>
+<p>我们可以看到，根节点为8。左子树的所有节点的数据都比8小，右子树的所有节点的数据都比8大。</p>
+<p>而且子树也满足下面的规律。</p>
+<p>二叉查找树的概念我们了解起来应该不难。</p>
+<p>我们用二叉链表的数据结构就可以来表示二叉查找树：</p>
+<figure class="highlight"><figcaption><span>struct BiTNode&#123;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TElemType data;&#10;struct BiTNode *lchild, *rchild, *parent;&#10;&#125;BiTNode, *BiTree;</span><br></pre></td></tr></table></figure>
+<p>下面是具体的基本算法实现。</p>
+<p>1.查找，这里使用了递归来实现</p>
+<figure class="highlight"><figcaption><span>SearchBST(BiTree T, KeyType key, BiTree f, BiTree &amp;p)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//&#26597;&#25214;&#25104;&#21151;&#65292; p&#25351;&#21521;&#35813;&#25968;&#25454;&#20803;&#32032;&#30340;&#32467;&#28857;&#10;//&#26597;&#25214;&#19981;&#25104;&#21151;&#65292;p&#25351;&#21521;&#26597;&#25214;&#36335;&#24452;&#19978;&#35775;&#38382;&#30340;&#26368;&#21518;&#19968;&#20010;&#33410;&#28857;&#65292;f&#25351;&#21521;&#24403;&#21069;&#35775;&#38382;&#30340;&#32467;&#28857;&#30340;&#21452;&#20146;&#65292;&#21021;&#22987;&#35843;&#29992;&#20026;NULL&#10;&#123;&#10;if (T == NULL)&#10;&#123;&#10;p = f;&#10;return false;&#10;&#125;&#10;&#10;else&#10;&#123;&#10;if (T-&#38;gt;data == key)&#10;&#123;&#10;p = T;&#10;return true;&#10;&#125;&#10;&#10;else if (key &#38;lt; T-&#38;gt;data)&#10;&#123;&#10;f = T;&#10;SearchBST(T-&#38;gt;lchild, key, f, p);&#10;&#125;&#10;else&#10;&#123;&#10;f = T;&#10;SearchBST(T-&#38;gt;rchild, key, f, p);&#10;&#125;&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>2.插入</p>
+<p>插入只有在查找失败的情况下面才进行。因为根据定义，二叉查找树不允许节点有相同的数据。</p>
+<p>下面是插入算法</p>
+<p><span id="more-535"></span></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Status InsertBST(BiTree &#38;amp;T, TElemType e)&#10;&#123;&#10;BiTree p;&#10;BiTree s;&#10;if (!SearchBST(T, e, NULL, p))&#10;//&#19981;&#23384;&#22312;&#23601;&#25554;&#20837;&#10;&#123;&#10;s = (BiTree) malloc (sizeof(BiTNode));&#10;s-&#38;gt;data = e;&#10;s-&#38;gt;lchild = s-&#38;gt;rchild = NULL;&#10;if (!p)&#10;T = s;&#10;else if (e &#38;lt; p-&#38;gt;data)&#10;p-&#38;gt;lchild = s;&#10;else&#10;p-&#38;gt;rchild = s;&#10;return true;&#10;&#125;&#10;else&#10;return false;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>3.中序遍历的前驱和后继</p>
+<p>根据算法导论来好了。</p>
+<p>为什么这里要强调中序遍历的前驱和后继？因为在下面的删除操作中我们会用到求前驱或者是求后继的操作。</p>
+<p>那么我们在中序遍历的前驱和后继之前，我们先写两个查找最大节点和最小节点的算法。因为我们在 进行中序遍历的前驱和后继的时候要用到。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BiTree BSTMaxmum(BiTree b)&#10;&#123;&#10;BiTree p = b;&#10;while (p-&#38;gt;rchild)&#10;p = p-&#38;gt;rchild;&#10;return p;&#10;&#125;&#10;&#10;//&#26368;&#23567;&#20851;&#38190;&#23383;&#20803;&#32032;&#10;BiTree BSTMinmum(BiTree b)&#10;&#123;&#10;BiTree p = b;&#10;while (p-&#38;gt;lchild)&#10;p = p-&#38;gt;lchild;&#10;return p;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>有了这两个作为基础。现在我们来介绍下中序遍历的前驱和后继</p>
+<p>我们以求后继作为例子：</p>
+<p>求后继分为两种情况</p>
+<p>1.如果结点的右子树非空，那么我们右子树的最左结点就是该节点的后继</p>
+<p>2.如果结点的右子树为空，那么从x向上查找，直到遇到某个是其父结点的左儿子的结点为止。</p>
+<p>下面以后继为例子，具体代码的实现。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BiTree SuccessorBST(BiTree b)&#10;&#123;&#10;BiTree p = b;&#10;//&#22914;&#26524;&#32467;&#28857;&#30340;&#21491;&#23376;&#26641;&#38750;&#31354;&#65292;&#37027;&#20040;&#21491;&#23376;&#26641;&#30340;&#26368;&#24038;&#32467;&#28857;&#23601;&#26159;&#35813;&#33410;&#28857;&#30340;&#21518;&#32487;&#10;if (p-&#38;gt;rchild)&#10;return BSTMinmum(p-&#38;gt;rchild);&#10;//&#22914;&#26524;&#32467;&#28857;&#30340;&#21491;&#23376;&#26641;&#20026;&#31354;&#65292;&#37027;&#20040;&#20174;x&#21521;&#19978;&#26597;&#25214;&#65292;&#30452;&#21040;&#36935;&#21040;&#26576;&#20010;&#26159;&#20854;&#29238;&#32467;&#28857;&#30340;&#24038;&#20799;&#23376;&#30340;&#32467;&#28857;&#20026;&#27490;&#10;BiTree y = p-&#38;gt;parent;&#10;while (y != NULL &#38;amp; p == y-&#38;gt;rchild)&#10;&#123;&#10;p = y;&#10;y = y-&#38;gt;parent;&#10;&#125;&#10;return y;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>前驱的方法与查找后继类似。具体代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BiTree PredecessorBST(BiTree b)&#10;&#123;&#10;BiTree p = b;&#10;if (p-&#38;gt;lchild)&#10;return BSTMaxmum(p-&#38;gt;lchild);&#10;&#10;BiTree y = p-&#38;gt;parent;&#10;while (y != NULL &#38;amp; p == y-&#38;gt;lchild)&#10;&#123;&#10;p = y;&#10;y = y-&#38;gt;parent;&#10;&#125;&#10;return y;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>4.结点的删除</p>
+<p>结点的删除时我们要保证删除后的结点仍然符合 二叉查找树的性质。</p>
+<p>大家可以参考下面这个博客：</p>
+<p><a href="http://blog.csdn.net/danielhf/article/details/81210" target="_blank" rel="external">http://blog.csdn.net/danielhf/article/details/81210</a></p>
+<p><a href="http://www.cnblogs.com/aiyelinglong/archive/2012/03/27/2419972.html" target="_blank" rel="external">http://www.cnblogs.com/aiyelinglong/archive/2012/03/27/2419972.html</a></p>
+<p>删除分为三种</p>
+<p>1. 要删除的节点没有子节点, 即它是叶节点</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/12/a.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/a.png" alt="" title="a"></a></p>
+<p>2. 要删除的节点有一个子节点</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/12/2012032717583358.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/2012032717583358.png" alt="" title="2012032717583358"></a></p>
+<p>3. 要删除的节点有两个子节点</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/12/c.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/c.png" alt="" title="c"></a></p>
+<p>这里有个比较巧妙地方法，我们把第1种情况和第2种情况合并起来处理</p>
+<p>如果左子树为空，就重接右子树；如果右子树为空，就重接左子树</p>
+<p>最难的就是第三种情况了。</p>
+<p>通过看图，我们来理解一下。</p>
+<p>我们要删除 z 这个节点</p>
+<p>1.我们通过中序遍历找到z的后继为y，我们已经知道y肯定没有左子树（如果这里不明白，再回上去看看吧）</p>
+<p>2.把y结点的值赋给z</p>
+<p>3.我们要删除y结点 ，让y的父亲结点成为y的右子树的结点 （自己唯一不明白的就是这个地方了）</p>
+<p>最后来看看删除代码：</p>
+<figure class="highlight"><figcaption><span>DeleteBST(BiTree &amp;T, KeyType key)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;//&#23547;&#25214;&#21024;&#38500;&#30340;&#32467;&#28857;&#30340;&#20301;&#32622;&#10;if (!T)&#10;return false;&#10;&#10;if (T-&#38;gt;data == key)&#10;&#123;&#10;Delete(T);&#10;return true;&#10;&#125;&#10;else if (key &#38;lt; T-&#38;gt;data)&#10;DeleteBST(T-&#38;gt;lchild, key);&#10;else&#10;DeleteBST(T-&#38;gt;rchild, key);&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>使用查找前驱的方法删除结点：</p>
+<figure class="highlight"><figcaption><span>Delete (BiTree &amp;p)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;BiTree q, s;&#10;q = p;&#10;//&#24038;&#23376;&#26641;&#20026;&#31354;,&#21017;&#37325;&#25509;&#21491;&#23376;&#26641;&#10;if(!p-&#38;gt;lchild)&#10;&#123;&#10;p = p-&#38;gt;rchild;&#10;free(q);&#10;&#125;&#10;&#10;//&#21491;&#23376;&#26641;&#20026;&#31354;&#65292;&#21017;&#37325;&#25509;&#24038;&#23376;&#26641;&#10;else if(!p-&#38;gt;rchild)&#10;&#123;&#10;p = p-&#38;gt;lchild;&#10;free(q);&#10;&#125;&#10;&#10;//&#24038;&#21491;&#23376;&#26641;&#37117;&#19981;&#20026;&#31354;&#10;//&#25214;&#21040;&#21069;&#39537; &#65288;&#21518;&#32487;&#65289;&#10;else&#10;&#123;&#10;//s = PredecessorBST(p-&#38;gt;lchild);&#10;s = p-&#38;gt;lchild;&#10;while(!s-&#38;gt;rchild)&#10;&#123;&#10;q = s;&#10;s = s-&#38;gt;rchild;&#10;&#125;&#10;//s&#20026;p&#30340;&#21069;&#39537;&#10;p-&#38;gt;data = s-&#38;gt;data;&#10;&#10;if (q != p)&#10;q-&#38;gt;rchild = s-&#38;gt;lchild;&#10;else&#10;q-&#38;gt;lchild = s-&#38;gt;lchild;&#10;free(s);&#10;&#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p></p></div><p></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/15/动态联编-和-静态联编/" itemprop="url">
+                动态联编 和 静态联编
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-15T11:25:23+08:00" content="2012-12-15">
+            2012-12-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>关于 动态联编 和 静态联编 这个概念，自己听了老师上课讲的课仍然没有明白原理。</p>
+<p>那么既然这样，只能自己去学习了。</p>
+<p>&nbsp;</p>
+<p>首先我们知道的是，动态联编 和 静态联编 都是<strong>多态性</strong>的一种体现。</p>
+<p>关于面向对象的三个基本要素：封装（类型抽象）， 继承 和 多态。</p>
+<p>首先我们从概念性上面了解了 动态联编 和 静态联编 的功能：实现了多态性。</p>
+<p>&nbsp;</p>
+<p>然后我们从最最基本的开始讲解。</p>
+<p>&nbsp;</p>
+<p><span style="font-size: medium;">1.什么是 联编？</span></p>
+<p>我参考了下面这个博客：</p>
+<p><a href="http://bdxnote.blog.163.com/blog/static/8444235200911311348529/" target="_blank" rel="external">http://bdxnote.blog.163.com/blog/static/8444235200911311348529/</a></p>
+<p>&nbsp;</p>
+<p><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">联编</span></strong>是指一个计算机程序自身彼此关联<span style="font-size: x-small;">的过程,</span>在这个联编过程中,需要确定程序中的<span style="color: #ff0000;">操作调用</span>(函数调用)与<span style="color: #ff0000;">执行该操作</span>(函数)的<span style="color: #ff0000;">代码段</span>之间的<span style="color: #ff0000;">映射关系</span>;按照联编所进行的阶段不同,可分为静态联编和动态联编;</span></p>
+<p>仔细读读红色字体的那部分句子。我们就能很清楚的明白什么是联编了。给大家举个最通俗易懂的例子好了：</p>
+<p>A类中有fun这个函数， B类中也有fun这个函数，现在我在类外的main函数里面调用fun 函数。</p>
+<p>那么main函数就是<span style="color: #ff0000;">函数调用</span>，调用fun函数，</p>
+<p>而A类中的fun函数和B类中的fun函数就是<span style="color: #ff0000;">执行该操作的代码段</span></p>
+<p>所以现在<span style="font-family: 宋体;"><strong><span style="color: #0000ff;">联编</span></strong></span>就是实现两者的映射关系。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span><br><span class="line"></span>&#123;	</span><br><span class="line">	void <span class="func"><span class="keyword">func</span><span class="params">()</span></span> &#123;cout&amp;lt;&amp;lt;&amp;quot;<span class="type">It</span>&amp;#<span class="number">039</span>;s <span class="type">A</span>&amp;quot;&amp;lt;&amp;lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span></span><br><span class="line"></span>&#123;	</span><br><span class="line">	void <span class="func"><span class="keyword">func</span><span class="params">()</span></span> &#123;cout&amp;lt;&amp;lt;&amp;quot;<span class="type">It</span>&amp;#<span class="number">039</span>;s <span class="type">B</span>&amp;quot;&amp;lt;&amp;lt;endl;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="func"><span class="keyword">func</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="more-530"></span></p>
+<p><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">联编就是决定将main函数中的func（）的函数调用映射到A中的func函数还是B中的func函数的过程。</span></strong></span></p>
+<p><span style="font-size: small;"></span></p>
+<p></p>
+<p><span style="font-size: small;">2.<span style="font-size: small;">静</span>态联编 和 <span style="font-size: small;">动</span>态联编 的定义</span></p>
+<p>知道了什么事联编，那么再来理解动态联编 和静态联编也就不难了</p>
+<p>&nbsp;</p>
+<p><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">静态联编</span></strong>:</span></p>
+<p>是指联编工作是在<span style="color: #0000ff;">程序编译连接阶段</span>进行的,这种联编又称为早期联编;因为这种联编是在程序开始运行之前完成的;</p>
+<p>在程序编译阶段进行的这种联编又称静态束定;在编译时就解决了程序中的操作调用与执行该操作代码间的关系,确定这种关系又被称为束定;编译时束定又称为静态束定;</p>
+<p><span style="font-size: x-small;">拿上面的例子来说，</span><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">静态联编</span></strong></span>就是在编译的时候就决定了main函数中<span style="font-size: x-small;">调用的是A中<span style="font-size: x-small;">的func还是B中<span style="font-size: x-small;">的func。一旦编译完成，那么他们的映射关系就唯一确定了。</span></span></span></p>
+<p><span style="font-family: 宋体;"></span></p>
+<p></p>
+<p><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">动态联编</span></strong>:</span></p>
+<p>编译程序在编译阶段并不能确切地知道将要调用的函数,只有在程序执行时才能确定将要调用的函数,为此要确切地知道将要调用的函数,要求联编工作在程序运行时进行,这种在<span style="color: #0000ff;">程序运行时进行的联编</span>工作被称为动态联编,或动态束定,又叫晚期联编;C++规定:动态联编是在虚函数的支持下实现的;</p>
+<p><span style="font-family: 宋体;"><strong><span style="color: #0000ff;">动态联编</span></strong></span><span style="font-size: x-small;">在<span style="font-size: x-small;">编译的时候还是<span style="font-size: x-small;">不知道到底应该选择哪个func函数，只有在真正执行的时候，它才确定。</span></span></span></p>
+<p><span style="font-family: 宋体;"></span></p>
+<p></p>
+<p><span style="font-family: 宋体;">静态联编和动态联编都是属于多态性的,它们是在不同的阶段进对不同的实现进行不同的选择;</span></p>
+<p><span style="font-family: 宋体;"><span style="font-size: x-small;">其实多态性的本质就是选择<span style="font-size: x-small;">。因为存在着很多选择，所以就有了多态。</span></span></span></p>
+<p><span style="font-family: 宋体;"><span style="font-size: x-small;"><span style="font-size: x-small;"></span></span></span></p>
+<p></p>
+<p><span style="font-family: 宋体; font-size: small;">3.</span><span style="font-size: small;">静态联编</span></p>
+<p>首先<span style="font-size: x-small;">还是<span style="font-size: x-small;">拿个</span>例子来说<span style="font-size: x-small;">事<span style="font-size: x-small;">吧。</span></span></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> shape&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&amp;lt;&amp;lt;&amp;quot;I am shape&amp;quot;&amp;lt;&amp;lt;endl;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;draw();&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> circle:<span class="keyword">public</span> shape&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&amp;lt;&amp;lt;&amp;quot;I am circle&amp;quot;&amp;lt;&amp;lt;endl;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    circle  oneshape;</span><br><span class="line">    oneshape.fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们详细具体定义了一开始的A类和B类以及func函数<span style="font-size: x-small;">。让我们来分析一下：</span></p>
+<p><span style="font-size: x-small;">调用</span>oneshape.<span style="font-size: x-small;">fun(<span style="font-size: x-small;">)</span></span>的时候，进入<span style="font-size: x-small;">类shape中的fun函数。</span></p>
+<p><span style="font-size: x-small;">现在我们的问题就是：fun函数调用的draw到底是shape<span style="font-size: x-small;">里面的draw还是circle中的draw<span style="font-size: x-small;">？？</span></span></span></p>
+<p><span style="font-size: x-small;">答案是：它调用了c<span style="font-size: x-small;">shape</span>这个<span style="font-size: x-small;">基<span style="font-size: x-small;">类</span></span>的draw函数。所以输出了 I am sha<span style="font-size: x-small;">pe</span></span></p>
+<p><span style="font-size: x-small;">那么一直困扰我的问题是：<span style="font-size: x-small;">为什么调用基类的draw而不是派生类中得draw呢？</span></span></p>
+<p>书上好像没有具体讲，上课的时候老师那也根本不会讲。</p>
+<p><span style="font-size: x-small;">自己想了一下，应该可以从汇编的角度理解：</span></p>
+<p><span style="font-size: x-small;"><span style="font-size: x-small;">1.</span></span><span style="font-size: x-small;">调用</span>oneshape.<span style="font-size: x-small;">fun(<span style="font-size: x-small;">)</span></span>，<span style="font-size: x-small;">这里是一个跳转指令，</span>进入<span style="font-size: x-small;">类shape中的fun函数<span style="font-size: x-small;">所在的代码段</span></span></p>
+<p>2.类shape的代码段<span style="font-size: x-small;">是<span style="font-size: x-small;">依次</span>顺序放置的<span style="font-size: x-small;">。进入fun函数后，现在我们要调用draw的<span style="font-size: x-small;">地址。</span></span></span></p>
+<p>由于没有<span style="font-size: x-small;">另外的数据结构来保存draw的地址，所以程序所知道的，必然<span style="font-size: x-small;">只有在shape类中的draw地址了，仅仅用一个<span style="font-size: x-small;">跳转指令</span></span></span></p>
+<p>在我的vs2010的反汇编调试窗口下是这样的一句代码：</p>
+<p>013B1546  call        shape::draw (13B10F5h)</p>
+<p><span style="font-size: x-small;">很<span style="font-size: x-small;">明确这里指出了</span></span>shape::draw，<span style="color: #ff0000;">也就确定了映射关系，完成了联编。</span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: 宋体; font-size: small;"><span style="font-size: small;">4</span>.</span><span style="font-size: small;"><span style="font-size: small;">动</span>态联编</span></p>
+<p>从第3节中我们看到了静态联编的不足（<span style="font-size: x-small;">大概教材中就是这样说的</span>）。</p>
+<p><span style="font-size: x-small;">刚才我讲了，</span></p>
+<p>由于没有<span style="font-size: x-small;">另外的数据结构来保存draw的地址，所以程序所知道的，必然之后<span style="font-size: x-small;">在shape类中的draw地址了，仅仅用一个<span style="font-size: x-small;">跳转指令</span></span></span></p>
+<p>所以我们想实现动态编联，其实就是想弄出个数据结构来，这个数据结构用来存放<span style="font-size: x-small;"> 映射关系，也就是联编。</span></p>
+<p>所以c++才搞了个虚函数。其实虚函数的本质就是<span style="font-size: x-small;">搞<span style="font-size: x-small;">了个数据结构。也就是虚函数<span style="font-size: x-small;">表</span></span></span></p>
+<p>关于虚函数<span style="font-size: x-small;">表，自己不想多扯了，扯出来<span style="font-size: x-small;">又是一大串，大家自己去下面的博客学习吧。</span></span></p>
+<p><a href="http://blog.csdn.net/haoel/article/details/1948051/" target="_blank" rel="external">http://blog.csdn.net/haoel/article/details/1948051/</a></p>
+<p><span style="font-size: small;">4.1虚函数</span></p>
+<p>大家都不喜欢理解概念。我也不喜欢。但是概念毕竟是要紧的。我已经跟大家说明了<span style="font-size: x-small;">为什么要引入虚函数。所以<span style="font-size: x-small;">接下来请大家耐心看看下面这段概念<span style="font-size: x-small;">吧：</span></span></span></p>
+<p><span style="font-family: 宋体;">虚函数是动态联编的基础;虚函数是成员函数,而且是非静态的成员函数;虚函数在派生类中可能有不同的实现,当使用这个成员函数操作指针或引用所标识的对象时,对该成员函数的调用采用动态联编方式,即:在程序运行时进行关联或束定调用关系;</span></p>
+<p>动态联编<span style="color: #0000ff;">只能通过指针或引用标识对象来操作虚函数</span>;如果采用一般的标识对象来操作虚函数,将采用静态联编的方式调用虚函数;</p>
+<p>如 果一个类具有虚函数,那么编译器就会为这个类的对象定义一个指针成员,并让这个指针成员指向一个表格,这个表格里面存放的是类的虚函数的入口地址;比如: 一个基类里面有一些虚函数,那么这个基类就拥有这样一个表,它里面存放了自己的虚函数的入口地址,其派生类继承了这个虚函数表,如果在派生类中重写/覆盖 /修改了基类中的虚函数,那么编译器就会把虚函数表中的函数入口地址修改成派生类中的对应虚函数的入口地址;这就为类的多态性的实现提供了基础;</p>
+<p><span style="font-family: 宋体;">虚函数按照其声明顺序存放于虚函数表中;</span></p>
+<p>父类的虚函数存放在子类虚函数的前面;</p>
+<p>多继承中,每个父类都有自己的虚函数表;</p>
+<p>子类的成员函数被存放于第一个父类的虚函数表中;</p>
+<p>&nbsp;</p>
+<p><span style="font-family: 宋体; font-size: small;"><span style="font-size: small;">4</span>.2</span><span style="font-size: small;"><span style="font-size: small;">动</span>态联编<span style="font-size: small;">举例</span></span></p>
+<p><span style="font-size: x-small;">最后给大家举个例子，</span><span style="font-size: small;"><span style="font-size: x-small;">在第三节的那个例子上，</span><span style="font-size: small;"><span style="font-size: x-small;">下面的代码仅仅是多了一个词：virtual</span></span></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> shape&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="keyword">virtual</span> <span class="title">draw</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&amp;lt;&amp;lt;&amp;quot;I am shape&amp;quot;&amp;lt;&amp;lt;endl;&#125;<span class="comment">//这里设定了draw是虚函数</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span></span>&#123;draw();&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">class</span> circle:<span class="keyword">public</span> shape&#123;</span><br><span class="line">  <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">draw</span><span class="params">()</span></span>&#123;<span class="built_in">cout</span>&amp;lt;&amp;lt;&amp;quot;I am circle&amp;quot;&amp;lt;&amp;lt;endl;&#125;<span class="comment">//虽然没有说明circle类中的draw是虚函数，但是circle其实继承了virtual性质</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    circle  oneshape;</span><br><span class="line">    oneshape.fun();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span style="font-size: x-small;">现在我们再来运行一下程序，输出就变成</span><span style="font-size: x-small;">了I am circle</span></p>
+<p><span style="font-size: small;"><span style="font-size: x-small;">这里的<span style="font-size: x-small;">反</span>汇编代码贴出来，自己有空看看：</span></span></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">00CC15A0  <span class="keyword">push</span>        <span class="literal">ebp</span>  </span><br><span class="line">00CC15A1  <span class="keyword">mov</span>         <span class="literal">ebp</span>,<span class="literal">esp</span>  </span><br><span class="line">00CC15A3  <span class="keyword">sub</span>         <span class="literal">esp</span>,<span class="number">0CCh</span>  </span><br><span class="line">00CC15A9  <span class="keyword">push</span>        <span class="number">ebx</span>  </span><br><span class="line">00CC15AA  <span class="keyword">push</span>        <span class="literal">esi</span>  </span><br><span class="line">00CC15AB  <span class="keyword">push</span>        <span class="literal">edi</span>  </span><br><span class="line">00CC15AC  <span class="keyword">push</span>        <span class="number">ecx</span>  </span><br><span class="line">00CC15AD  <span class="keyword">lea</span>         <span class="literal">edi</span>,[<span class="literal">ebp</span>-<span class="number">0CCh</span>]  </span><br><span class="line">00CC15B3  <span class="keyword">mov</span>         <span class="number">ecx</span>,<span class="number">33h</span>  </span><br><span class="line">00CC15B8  <span class="keyword">mov</span>         <span class="number">eax</span>,<span class="number">0CCCCCCCCh</span>  </span><br><span class="line">00CC15BD  <span class="keyword">rep</span> stos    <span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> <span class="literal">es</span>:[<span class="literal">edi</span>]  </span><br><span class="line">00CC15BF  <span class="keyword">pop</span>         <span class="number">ecx</span>  </span><br><span class="line">00CC15C0  <span class="keyword">mov</span>         <span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> [<span class="literal">ebp</span>-<span class="number">8</span>],<span class="number">ecx</span>  </span><br><span class="line">00CC15C3  <span class="keyword">mov</span>         <span class="number">eax</span>,<span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> [this]  </span><br><span class="line">00CC15C6  <span class="keyword">mov</span>         <span class="number">edx</span>,<span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> [<span class="number">eax</span>]  </span><br><span class="line">00CC15C8  <span class="keyword">mov</span>         <span class="literal">esi</span>,<span class="literal">esp</span>  </span><br><span class="line">00CC15CA  <span class="keyword">mov</span>         <span class="number">ecx</span>,<span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> [this]  </span><br><span class="line">00CC15CD  <span class="keyword">mov</span>         <span class="number">eax</span>,<span class="preprocessor">dword</span> <span class="preprocessor">ptr</span> [<span class="number">edx</span>]  </span><br><span class="line">00CC15CF  <span class="keyword">call</span>        <span class="number">eax</span>  </span><br><span class="line">00CC15D1  <span class="keyword">cmp</span>         <span class="literal">esi</span>,<span class="literal">esp</span>  </span><br><span class="line">00CC15D3  <span class="keyword">call</span>        @ILT+<span class="number">440</span>(__RTC_CheckEsp) (<span class="number">0CC11BDh</span>)  </span><br><span class="line">00CC15D8  <span class="keyword">pop</span>         <span class="literal">edi</span>  </span><br><span class="line">00CC15D9  <span class="keyword">pop</span>         <span class="literal">esi</span>  </span><br><span class="line">00CC15DA  <span class="keyword">pop</span>         <span class="number">ebx</span>  </span><br><span class="line">00CC15DB  <span class="keyword">add</span>         <span class="literal">esp</span>,<span class="number">0CCh</span>  </span><br><span class="line">00CC15E1  <span class="keyword">cmp</span>         <span class="literal">ebp</span>,<span class="literal">esp</span>  </span><br><span class="line">00CC15E3  <span class="keyword">call</span>        @ILT+<span class="number">440</span>(__RTC_CheckEsp) (<span class="number">0CC11BDh</span>)  </span><br><span class="line">00CC15E8  <span class="keyword">mov</span>         <span class="literal">esp</span>,<span class="literal">ebp</span>  </span><br><span class="line">00CC15EA  <span class="keyword">pop</span>         <span class="literal">ebp</span>  </span><br><span class="line">00CC15EB  <span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
+<p><span style="font-size: x-small;">等自己看了虚函数表</span><span style="font-size: x-small;">之后再来好好理解下。</span></p>
+<p>OK，关于动态联编和静态联编就<span style="font-size: x-small;">讲到这里了。<span style="font-size: x-small;">哪里有不<span style="font-size: x-small;">对的地方还请大家指正。</span></span></span></p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/04/c-继承和派生题目/" itemprop="url">
+                c++继承和派生题目
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-04T16:33:14+08:00" content="2012-12-04">
+            2012-12-04
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>c++的题目果然比较坑爹。类之间的关系错综复杂。好不容易自己才完成了题目要求.</p>
+<p>【实验内容】</p>
+<p>1. 设计一个Person类，它有两个派生类Student和Employee，Employee有两个派生类Faculty和Staff。</p>
+<p>•Person类有一个string类型的名字name，string型的身份号id，string型的电话号码phonenumber, Person类构造函数的对应name的参数不能有默认形参值。</p>
+<p>•Student类有一个年级grade属性（Freshman、Sophomore、Junior或Senior），将属性值定义为常量；</p>
+<p>•Employee类有一个string型的办公地点office，一个double型的月薪水salary和一个MyDate型的雇佣日期dateHired；</p>
+<p>•Faculty类有一个级别rank属性（Professor = 3、 AssociateProfessor = 2、AssistantProfessor = 1），属性值也定义成常量。教师的薪水的计算方式为“薪水=基本工资×级别”；</p>
+<p>•Staff类有一个职务position属性，为string类型，教工的薪水计算方式为“薪水=基本工资+津贴×工作年数”。工作年数算到2010年1月1日为止，基本工资BasicWages、津贴Allowance定义为常量。</p>
+<p>•上述5个类都有一个print成员函数来输出该类对象除薪水外的基本信息。</p>
+<p> •MyDate类有year、month、day三个数据成员，有一个计算两个MyDate对象间年差的成员函数diffYear(MyDate &#038;)，年差计算只精确到月；三个数据成员的获取器函数。</p>
+<p>3.  定义上述类，并合理地补充构造函数和其它需要的函数。</p>
+<pre><code>在main函数中，定义一个<span class="keyword">Person</span>类对象，一个Student类对象和一个Employee类对象一个Faculty类对象和一个Staff类对象。输出<span class="keyword">Person</span>类及其派生类对象的基本信息，并输出Faculty类对象和Staff类对象的薪水。
+</code></pre><p>上代码：</p>
+<p><span id="more-528"></span></p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;iostream<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">typedef int GRADE;</span><br><span class="line">typedef int RANK;</span><br><span class="line"></span><br><span class="line"><span class="variable">#define</span> Freshman	<span class="number">1</span></span><br><span class="line"><span class="variable">#define</span> Sophomore	<span class="number">2</span></span><br><span class="line"><span class="variable">#define</span> Junior		<span class="number">3</span></span><br><span class="line"><span class="variable">#define</span> Senior		<span class="number">4</span></span><br><span class="line"></span><br><span class="line"><span class="variable">#define</span> Professor			<span class="number">3</span></span><br><span class="line"><span class="variable">#define</span> AssociateProfessor	<span class="number">2</span></span><br><span class="line"><span class="variable">#define</span> AssistantProfessor  <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="variable">#define</span> BasicWages			<span class="number">8000</span></span><br><span class="line"><span class="variable">#define</span> Allowance			<span class="number">3000</span></span><br><span class="line"></span><br><span class="line">class MyDate&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	int diffYear(MyDate date1, MyDate date2)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (date1<span class="built_in">.</span>year <span class="subst">&amp;</span><span class="literal">gt</span>; date2<span class="built_in">.</span>year)</span><br><span class="line">			<span class="keyword">if</span> (date1<span class="built_in">.</span>month <span class="subst">&amp;</span><span class="literal">gt</span>; date2<span class="built_in">.</span>month)</span><br><span class="line">				<span class="keyword">return</span> ((date1<span class="built_in">.</span>year <span class="subst">-</span> date2<span class="built_in">.</span>year) <span class="subst">*</span> <span class="number">12</span> <span class="subst">+</span> date1<span class="built_in">.</span>month <span class="subst">-</span> date2<span class="built_in">.</span>month);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> ((date1<span class="built_in">.</span>year <span class="subst">-</span> <span class="number">1</span> <span class="subst">-</span> date2<span class="built_in">.</span>year) <span class="subst">*</span> <span class="number">12</span> <span class="subst">+</span> date1<span class="built_in">.</span>month <span class="subst">+</span> <span class="number">12</span> <span class="subst">-</span> date2<span class="built_in">.</span>month);</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="keyword">if</span> (date1<span class="built_in">.</span>month <span class="subst">&amp;</span><span class="literal">gt</span>; date2<span class="built_in">.</span>month)</span><br><span class="line">				<span class="keyword">return</span> (date2<span class="built_in">.</span>month <span class="subst">+</span> <span class="number">12</span> <span class="subst">-</span> date1<span class="built_in">.</span>month <span class="subst">+</span> (date2<span class="built_in">.</span>year <span class="subst">-</span> <span class="number">1</span> <span class="subst">-</span> date1<span class="built_in">.</span>year) <span class="subst">*</span> <span class="number">12</span>);</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="keyword">return</span> (date2<span class="built_in">.</span>month <span class="subst">-</span> date1<span class="built_in">.</span>month <span class="subst">+</span> (date2<span class="built_in">.</span>year <span class="subst">-</span> date1<span class="built_in">.</span>year) <span class="subst">*</span> <span class="number">12</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;year is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;year<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tmonth is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;month<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tday is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;day<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print(MyDate a)</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;year is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;a<span class="built_in">.</span>year<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tmonth is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;a<span class="built_in">.</span>month<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tday is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;a<span class="built_in">.</span>day<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	MyDate()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;this is class MyDate<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		year  <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">		month <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">		day   <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	MyDate(int x, int y, int z)</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;this is class MyDate<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		year  <span class="subst">=</span> x;</span><br><span class="line">		month <span class="subst">=</span> y;</span><br><span class="line">		day   <span class="subst">=</span> z;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> give(MyDate <span class="subst">&amp;</span>amp;a)</span><br><span class="line">	&#123;</span><br><span class="line">		year	 <span class="subst">=</span> a<span class="built_in">.</span>year;</span><br><span class="line">		month <span class="subst">=</span> a<span class="built_in">.</span>month;</span><br><span class="line">		day	 <span class="subst">=</span> a<span class="built_in">.</span>day;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	MyDate(MyDate <span class="subst">&amp;</span>amp;a)</span><br><span class="line">	&#123;</span><br><span class="line">		year	 <span class="subst">=</span> a<span class="built_in">.</span>year;</span><br><span class="line">		month <span class="subst">=</span> a<span class="built_in">.</span>month;</span><br><span class="line">		day	 <span class="subst">=</span> a<span class="built_in">.</span>day;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~MyDate()&#123;&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	int year;</span><br><span class="line">	int month;</span><br><span class="line">	int day;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Person&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">string</span> name;</span><br><span class="line">	<span class="built_in">string</span> id;</span><br><span class="line">	<span class="built_in">string</span> phonenumber;</span><br><span class="line"></span><br><span class="line">	Person(<span class="built_in">string</span> a)</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;this is class Person<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		name		<span class="subst">=</span> a;</span><br><span class="line">		id			<span class="subst">=</span> <span class="subst">&amp;</span>quot;<span class="number">0</span><span class="subst">&amp;</span>quot;;</span><br><span class="line">		phonenumber <span class="subst">=</span> <span class="subst">&amp;</span>quot;<span class="number">0</span><span class="subst">&amp;</span>quot;;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Person(<span class="built_in">string</span> a, <span class="built_in">string</span> b, <span class="built_in">string</span> c)</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;this is class Person<span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		name		<span class="subst">=</span> a;</span><br><span class="line">		id			<span class="subst">=</span> b;</span><br><span class="line">		phonenumber <span class="subst">=</span> c;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Person()&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;name is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;name<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tid is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;id<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tphonenumber is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;phonenumber<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;	</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Student : <span class="keyword">public</span> Person</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	GRADE grade;</span><br><span class="line"></span><br><span class="line">	Student(<span class="built_in">string</span> a, <span class="built_in">string</span> b, <span class="built_in">string</span> c, GRADE d) : Person(a, b, c)</span><br><span class="line">	&#123;</span><br><span class="line">		grade <span class="subst">=</span> d;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Student()&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;name is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;name<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tid is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;id<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tphonenumber is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;phonenumber<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tgrade is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;grade<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Employee : <span class="keyword">public</span> Person  </span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">string</span> office;</span><br><span class="line">	double salary;</span><br><span class="line">	MyDate dateHired;</span><br><span class="line"></span><br><span class="line">	Employee(<span class="built_in">string</span> a, <span class="built_in">string</span> b, <span class="built_in">string</span> c, <span class="built_in">string</span> d, double e, MyDate f) : Person(a, b, c)</span><br><span class="line">	&#123;</span><br><span class="line">		office <span class="subst">=</span> d;</span><br><span class="line">		salary <span class="subst">=</span> e;</span><br><span class="line">		dateHired<span class="built_in">.</span>give(f);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Employee()&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;name is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;name<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tid is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;id<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tphonenumber is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;phonenumber<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;</span><br><span class="line">			  <span class="subst">&amp;</span>quot;toffice is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;office<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tsalary is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;salary<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		dateHired<span class="built_in">.</span>print(dateHired);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Faculty : <span class="keyword">public</span> Employee</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	RANK rank;</span><br><span class="line"></span><br><span class="line">	Faculty(<span class="built_in">string</span> a, <span class="built_in">string</span> b, <span class="built_in">string</span> c, <span class="built_in">string</span> d, double e, MyDate f, RANK g) : Employee(a, b, c, d, e,f)</span><br><span class="line">	&#123;</span><br><span class="line">		rank <span class="subst">=</span> g;</span><br><span class="line">		salary <span class="subst">=</span> BasicWages <span class="subst">*</span> rank;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Faculty()&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;name is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;name<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tid is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;id<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tphonenumber is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;phonenumber<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;</span><br><span class="line">			  <span class="subst">&amp;</span>quot;toffice is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;office<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tsalary is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;salary<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		dateHired<span class="built_in">.</span>print(dateHired);</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;rank is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;rank<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Staff : <span class="keyword">public</span> Employee</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">string</span> position;</span><br><span class="line"></span><br><span class="line">	Staff(<span class="built_in">string</span> a, <span class="built_in">string</span> b, <span class="built_in">string</span> c, <span class="built_in">string</span> d, double e, MyDate f, <span class="built_in">string</span> g) : Employee(a, b, c, d, e,f)</span><br><span class="line">	&#123;</span><br><span class="line">		position <span class="subst">=</span> g;</span><br><span class="line">		salary <span class="subst">=</span> BasicWages <span class="subst">+</span> (<span class="number">2020</span> <span class="subst">-</span> f<span class="built_in">.</span>year) <span class="subst">*</span> Allowance;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Staff()&#123;&#125;</span><br><span class="line"></span><br><span class="line">	<span class="literal">void</span> print()</span><br><span class="line">	&#123;</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;name is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;name<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tid is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;id<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tphonenumber is  <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;phonenumber<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;</span><br><span class="line">			  <span class="subst">&amp;</span>quot;toffice is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;office<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;tsalary is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;salary<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">		dateHired<span class="built_in">.</span>print(dateHired);</span><br><span class="line">		cout<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span>quot;position is <span class="subst">&amp;</span>quot;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;position<span class="built_in">.</span>c_str()<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span><br><span class="line">类的继承关系</span><br><span class="line">				Person</span><br><span class="line">				/	 </span><br><span class="line">			Student  Employee</span><br><span class="line">					   /   </span><br><span class="line">				Faculty		Staff</span><br><span class="line"></span><br><span class="line">*/</span></span><br><span class="line">int main(int argc, char<span class="subst">**</span> argv)</span><br><span class="line">&#123;</span><br><span class="line">	MyDate M1(<span class="number">2012</span>, <span class="number">12</span>, <span class="number">4</span>);</span><br><span class="line">	MyDate M2(<span class="number">1992</span>, <span class="number">7</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line">	Person	 P  (<span class="subst">&amp;</span>quot;Miibotree<span class="subst">&amp;</span>quot;);</span><br><span class="line">	Student  Stu(<span class="subst">&amp;</span>quot;H<span class="built_in">.</span>Shao<span class="subst">&amp;</span>quot;,   <span class="subst">&amp;</span>quot;<span class="number">330382111111</span><span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;<span class="number">888888888</span><span class="subst">&amp;</span>quot;, Sophomore);</span><br><span class="line">	Employee E  (<span class="subst">&amp;</span>quot;Zhangsan<span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;<span class="number">330382222222</span><span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;<span class="number">188777221</span><span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;经理<span class="subst">&amp;</span>quot;, <span class="number">5000</span>, M2);</span><br><span class="line">	Faculty  F  (<span class="subst">&amp;</span>quot;Lisi<span class="subst">&amp;</span>quot;,	 <span class="subst">&amp;</span>quot;<span class="number">339287262666</span><span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;<span class="number">18872727</span><span class="subst">&amp;</span>quot;,  <span class="subst">&amp;</span>quot;教工<span class="subst">&amp;</span>quot;, <span class="number">4000</span>, M2, Professor);</span><br><span class="line">	Staff    Sta(<span class="subst">&amp;</span>quot;WangWu<span class="subst">&amp;</span>quot;,   <span class="subst">&amp;</span>quot;<span class="number">339823232323</span><span class="subst">&amp;</span>quot;, <span class="subst">&amp;</span>quot;<span class="number">23232132</span><span class="subst">&amp;</span>quot;,  <span class="subst">&amp;</span>quot;总统<span class="subst">&amp;</span>quot;, <span class="number">8000</span>, M2,<span class="subst">&amp;</span>quot;宇宙无敌产品经理<span class="subst">&amp;</span>quot;);</span><br><span class="line"></span><br><span class="line">	P<span class="built_in">.</span>print();</span><br><span class="line">	Stu<span class="built_in">.</span>print();</span><br><span class="line">	E<span class="built_in">.</span>print();</span><br><span class="line">	F<span class="built_in">.</span>print();</span><br><span class="line">	Sta<span class="built_in">.</span>print();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/12/02/数据结构树–哈夫曼树/" itemprop="url">
+                数据结构树–哈夫曼树
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-02T21:45:43+08:00" content="2012-12-02">
+            2012-12-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>决心写一个哈夫曼树，巩固自己学的数据结构</p>
+<p> 一、最优树的定义</p>
+<p> 结点的路径长度定义为：</p>
+<pre><code>从根结点到该结点的路径上
+
+分支的数目。
+</code></pre><p>树的路径长度定义为：</p>
+<pre><code>树中每个结点的路径长度之和。
+</code></pre><p>  树的带权路径长度定义为：</p>
+<pre><code>树中所有叶子结点的带权路径长度之和
+
+<span class="function"><span class="title">WPL</span><span class="params">(T)</span></span> = <span class="function"><span class="title">Swklk</span><span class="params">(对所有叶子结点)</span></span>。
+
+在所有含 n 个叶子结点、并带相同权
+</code></pre><p>值的 m 叉树中，必存在一棵其带权路径</p>
+<p>长度取最小值的树，称为“最优树”。</p>
+<p>二、如何构造最优树</p>
+<p>（1）根据给定的 n个权值 {w1, w2,…, wn}，构造 n 棵二叉树的集合</p>
+<pre><code><span class="attribute">   F </span>=<span class="string">{T1,   T2,  …, Tn}，
+
+其中每棵二叉树中均只含一个带权值</span>
+</code></pre><p>为 wi的根结点，其左、右子树为空树</p>
+<pre><code>（<span class="number">2</span>）在 <span class="literal">F</span>中选取其根结点的权值为最
+
+小的两棵二叉树，分别作为左、  
+
+右子树构造一棵新的二叉树，并
+
+置这棵新的二叉树根结点的权值
+
+为其左、右子树根结点的权值之
+
+和；
+
+ （<span class="number">3</span>）从<span class="literal">F</span>中删去这两棵树，同时加入
+
+ 刚生成的新树；
+
+重复(<span class="number">2</span>)和(<span class="number">3</span>)两步，直至<span class="literal">F</span>中只
+
+含一棵树为止。
+</code></pre><p>忙完攻防大赛之后自己终于可以敲敲代码了。</p>
+<p>把拖了两个礼拜的哈夫曼编码搞定了。哈哈。</p>
+<p>代码除了书上的6.12算法 HuffanCoding ，建立哈夫曼树和构造哈夫曼编码，其它全部都是自己写的。</p>
+<p>算法本身不难，就是多了对文件的操作。一些细节的地方自己还是调试了很长时间。</p>
+<p>如果大家对哈夫曼树不是很清楚，下面两篇博客讲的很清楚：</p>
+<p><a href="http://www.thecodeway.com/blog/?p=870" target="_blank" rel="external">http://www.thecodeway.com/blog/?p=870</a></p>
+<p><a href="http://www.cnblogs.com/syblogs/articles/2020145.html" target="_blank" rel="external">http://www.cnblogs.com/syblogs/articles/2020145.html</a></p>
+<p>简单描述下题目：</p>
+<p>一个完整的哈夫曼编码、译码系统：</p>
+<p>I  初始化，建立哈夫曼树，存于文件hfmTree中</p>
+<p>E 编码 将建好的哈夫曼树，对ToBeTran中的正文进行编码，将结果存入CodeFile中</p>
+<p>D 译码 利用建好的哈夫曼树将文件CodeFile中的代码进行译码，结果存入TextFile中</p>
+<p>P 印代码文件 将文件CodeFile以紧凑格式显示在终端上。同时将此字符形式的编码文件写入文件CodePrin中</p>
+<p>T 打印哈夫曼树，显示在终端上</p>
+<p>Q 退出</p>
+<p>最后，上代码：</p>
+<p><span id="more-524"></span></p>
+<p>huffman_define.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;malloc.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//define  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  OK 1  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  ERROR 0  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OVERFLOW -1  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAXWEIGHT 1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//typedef  </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;  </span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> TElemType;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> weight;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> parent, lchild, rchild;</span><br><span class="line">&#125;HTNode, *HuffmanTree;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> * *HuffmanCode;</span><br><span class="line"></span><br><span class="line"><span class="comment">//functions</span></span><br><span class="line"><span class="function">Status <span class="title">Select</span><span class="params">(HuffmanTree HT, <span class="keyword">int</span> i, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s1, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s2)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HuffmanCoding</span><span class="params">(HuffmanTree &amp;amp;HT, HuffmanCode &amp;amp;HC, <span class="keyword">int</span> * w, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>huffman_define.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;quot;huffman_define.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//选择最小的2个序列号</span></span><br><span class="line"><span class="function">Status <span class="title">Select</span><span class="params">(HuffmanTree HT, <span class="keyword">int</span> i, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s1, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s2)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//to know if is over</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent == <span class="number">0</span>)</span><br><span class="line">			count++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (count == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//to init s1, s2</span></span><br><span class="line">	*s1 = <span class="number">0</span>;</span><br><span class="line">	*s2 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent != <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (HT[j].weight &amp;lt; HT[*s1].weight)</span><br><span class="line">			*s1 = j;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent != <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (HT[j].weight &amp;lt; HT[*s2].weight  &amp;amp;&amp;amp; j != *s1)</span><br><span class="line">			*s2 = j;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HuffmanCoding</span><span class="params">(HuffmanTree &amp;amp;HT, HuffmanCode &amp;amp;HC, <span class="keyword">int</span> *w, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="comment">//w存放n个字符的权值，构造哈夫曼树HT， 并求n个字符的哈夫曼编码HC</span></span><br><span class="line">	<span class="keyword">int</span> m  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> i  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> s1 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> s2 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> c  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span> *cd = NULL;</span><br><span class="line">	HuffmanTree p = NULL;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (n &amp;lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	m = <span class="number">2</span> * n - <span class="number">1</span>;</span><br><span class="line">	HT = (HuffmanTree)<span class="built_in">malloc</span>((m + <span class="number">1</span>) * <span class="keyword">sizeof</span>(HTNode));<span class="comment">//0 not used?</span></span><br><span class="line"></span><br><span class="line">	HT[<span class="number">0</span>].weight = MAXWEIGHT;</span><br><span class="line">	<span class="keyword">for</span> (p = HT + <span class="number">1</span>, i = <span class="number">1</span>; i &amp;lt;= n; ++i, ++p, ++w)</span><br><span class="line">	&#123;</span><br><span class="line">		p-&amp;gt;weight = *w;</span><br><span class="line">		p-&amp;gt;lchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;rchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;parent = <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">for</span> (; i &amp;lt;= m; ++i, ++p)</span><br><span class="line">	&#123;</span><br><span class="line">		p-&amp;gt;weight = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;lchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;rchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;parent = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = n + <span class="number">1</span>; i &amp;lt;= m; ++i)&#123;<span class="comment">//create huffman tree</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="number">2</span> == Select(HT, i - <span class="number">1</span>, &amp;amp;s1, &amp;amp;s2))</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		HT[s1].parent = i;</span><br><span class="line">		HT[s2].parent = i;</span><br><span class="line">		HT[i].lchild = s1;</span><br><span class="line">		HT[i].rchild = s2;</span><br><span class="line">		HT[i].weight = HT[s1].weight + HT[s2].weight;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//--get char huffman coding from the leave node</span></span><br><span class="line">	HC = (HuffmanCode)<span class="built_in">malloc</span>((n + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>*));</span><br><span class="line">	cd = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	cd[n-<span class="number">1</span>] = &amp;<span class="preprocessor">#039; &amp;#039;;</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= n; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		start = n - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (c = i, f = HT[i].parent; f != <span class="number">0</span>; c = f, f = HT[f].parent)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (HT[f].lchild == c)</span><br><span class="line">				cd[--start] = &amp;<span class="preprocessor">#039;0&amp;#039;;</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				cd[--start] = &amp;<span class="preprocessor">#039;1&amp;#039;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		HC[i] = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n - start) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">		<span class="built_in">strcpy</span>(HC[i], &amp;amp;cd[start]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(cd);</span><br><span class="line">&#125;<span class="comment">//HuffmanCoding</span></span><br></pre></td></tr></table></figure>
+<p>huffman.cpp</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;quot<span class="comment">;huffman_define.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line">//functions</span><br><span class="line">int Init<span class="list">(<span class="keyword">HuffmanTree</span> <span class="keyword">&amp;amp</span><span class="comment">;HT, HuffmanCode &amp;amp;HC, char a[], int b[]);</span></span><br><span class="line">void Encoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span><span class="comment">;</span></span><br><span class="line">void Decoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span><span class="comment">;</span></span><br><span class="line">void Print<span class="list">()</span><span class="comment">;</span></span><br><span class="line">void TreePrint<span class="list">(<span class="keyword">HuffmanTree</span> HT, int n)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">//filepaths</span><br><span class="line">char TEST[<span class="number">20</span>]  = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TEST.txt&amp;quot;;</span></span><br><span class="line"></span><br><span class="line">char hfmTree[<span class="number">20</span>]  = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\hufmTree.txt&amp;quot;;</span></span><br><span class="line">char ToBeTran[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\ToBeTran.txt&amp;quot;;</span></span><br><span class="line">char CodeFile[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\CodeFile.txt&amp;quot;;</span></span><br><span class="line">char TextFile[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TextFile.txt&amp;quot;;</span></span><br><span class="line">char CodePrin[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\CodePrin.txt&amp;quot;;</span></span><br><span class="line">char TreePrin[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TreePrin.txt&amp;quot;;</span></span><br><span class="line"></span><br><span class="line">int main<span class="list">()</span></span><br><span class="line">&#123;</span><br><span class="line">	int n = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	char a[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	int  b[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	HuffmanTree HT<span class="comment">;</span></span><br><span class="line">	HuffmanCode HC<span class="comment">;</span></span><br><span class="line">	char choise<span class="comment">;</span></span><br><span class="line">	while<span class="list">(<span class="number">1</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;nn-------------------------------------------------------------------------n&amp;quot;);</span></span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;It&amp;#039;s huffman coding_encoding system. Please Input your chioisen&amp;quot;);</span></span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;I: InitializationnE:EncodingnD:DecodingnP:PrintnT:Tree printingnQ:Quitn&amp;quot;);</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;choise);</span></span><br><span class="line">		switch<span class="list">(<span class="keyword">choise</span>)</span></span><br><span class="line">		&#123;</span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;I&amp;#039;):</span></span><br><span class="line">			n = Init<span class="list">(<span class="keyword">HT</span>, HC, a, b)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;E&amp;#039;):</span></span><br><span class="line">			Encoding<span class="list">(<span class="keyword">HC</span>, n, a)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;D&amp;#039;):	</span></span><br><span class="line">			Decoding<span class="list">(<span class="keyword">HC</span>, n, a)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;P&amp;#039;):</span></span><br><span class="line">			Print<span class="list">()</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;T&amp;#039;):</span></span><br><span class="line">			TreePrint<span class="list">(<span class="keyword">HT</span>, n)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;Q&amp;#039;):</span></span><br><span class="line">			return <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		default:</span><br><span class="line">			printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;Input wrong, please inpint again!~~n&amp;quot;);</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">		getchar<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return <span class="number">0</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Init<span class="list">(<span class="keyword">HuffmanTree</span> <span class="keyword">&amp;amp</span><span class="comment">;HT, HuffmanCode &amp;amp;HC, char a[], int b[])</span></span><br><span class="line">&#123;</span><br><span class="line">	memset<span class="list">(<span class="keyword">a</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	int n = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	int i = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;please input n:n&amp;quot;);</span></span><br><span class="line">	scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%d&amp;quot;, &amp;amp;n);</span></span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;please input %d code and weight:n&amp;quot;, n);</span></span><br><span class="line">	for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		getchar<span class="list">()</span><span class="comment">;</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;a[i]);</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%d&amp;quot;, &amp;amp;b[i]);</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	HuffmanCoding<span class="list">(<span class="keyword">HT</span>, HC, b, n)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(hfmTree, &amp;quot;w+&amp;quot;);</span><br><span class="line">	for (int i = 1; i &amp;lt; 2 *</span> n - <span class="number">1</span><span class="comment">; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		fprintf<span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span></span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	return n<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Encoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span></span><br><span class="line">&#123;</span><br><span class="line">	FILE <span class="variable">*f1 = fopen(ToBeTran, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">CodeFile</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line">	char temp = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for <span class="list">(<span class="keyword">int</span> i = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			if <span class="list">(<span class="keyword">a</span>[i] == temp)</span></span><br><span class="line">			&#123;</span><br><span class="line">				fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%sn&amp;quot;, HC[i+1]);</span></span><br><span class="line">				break<span class="comment">;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Decoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span></span><br><span class="line">&#123;</span><br><span class="line">	char temp[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	memset<span class="list">(<span class="keyword">temp</span> , <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(CodeFile, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">TextFile</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for <span class="list">(<span class="keyword">int</span> i = <span class="number">1</span><span class="comment">; i &amp;lt;= n; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			if <span class="list">(!strcmp<span class="list">(<span class="keyword">temp</span>, HC[i])</span>)</span></span><br><span class="line">			&#123;</span><br><span class="line">				fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, a[i-1]);</span></span><br><span class="line">				break<span class="comment">;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Print<span class="list">()</span></span><br><span class="line">&#123;</span><br><span class="line">	int count = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	char temp[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(CodeFile, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">CodePrin</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp);</span></span><br><span class="line">		fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp);</span></span><br><span class="line">		memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">		count += strlen<span class="list">(<span class="keyword">temp</span>)</span><span class="comment">;</span></span><br><span class="line">		if <span class="list">(<span class="keyword">count</span> <span class="keyword">&amp;gt</span><span class="comment">;= 50)</span></span><br><span class="line">		&#123;</span><br><span class="line">			printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">			fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">			count = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">	fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void TreePrint<span class="list">(<span class="keyword">HuffmanTree</span> HT, int n)</span></span><br><span class="line">&#123;</span><br><span class="line">	FILE <span class="variable">*f1 = fopen(TreePrin, &amp;quot;w+&amp;quot;);</span><br><span class="line">	for (int i = 1; i &amp;lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&amp;quot;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span><br><span class="line">		fprintf(f1, &amp;quot;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(f1); </span><br><span class="line">&#125;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
+<p>自己做的主要工作是实现了Select 函数，就是从已经存在的节点中选取两个权重最小的节点。</p>
+<p>另外，书上的算法有点小问题。</p>
+<pre><code>HT = <span class="params">(HuffmanTree)</span>malloc<span class="params">(<span class="params">(m + <span class="number">1</span>)</span> * sizeof<span class="params">(HTNode)</span>)</span>;   <span class="comment">//0 not used?</span>
+</code></pre><p>这里它申请了 m +  1 个节点大小的空间。根据书上的算法，他是从第1个开始的。没有用第0个节点。</p>
+<p>所以我们要稍微改进下书上的代码：</p>
+<p>for (p = HT + 1, i = 1; i &lt;= n; ++i, ++p, ++w)</p>
+<p>对于第0个节点，我们可以这样用：</p>
+<h1 id="define_MAXWEIGHT_1000">define MAXWEIGHT 1000</h1><p>HT[0].weight = MAXWEIGHT;</p>
+<p>然后在Select函数里面每次赋初值的时候将</p>
+<p>s1 = s2 = 0；</p>
+<p>这样就比较方便了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/28/关于默认构造函数的本质/" itemprop="url">
+                关于默认构造函数的本质
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-28T22:08:29+08:00" content="2012-11-28">
+            2012-11-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天才发现默认构造函数的本质。</p>
+<p>就是当不存在构造函数的时候，才默认构造函数。</p>
+<p>下面这段代码是编译不通过的。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="title">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title">A</span>&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	A(<span class="keyword">int</span> i)</span><br><span class="line">	&#123;</span><br><span class="line">		x = i;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> x;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	A a;<span class="comment">//错误 A不存在默认构造函数</span></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最近在看书本，所以写博客的时间明显少了，打算这个礼拜一定要把哈夫曼编码写好，然后分析一下。。。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/21/OpenCV小试牛刀/" itemprop="url">
+                OpenCV小试牛刀
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-21T22:32:00+08:00" content="2012-11-21">
+            2012-11-21
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原来从网上下载过openCV的源码，在windows下面用vs2010编译生成lib 库。这个过程就不介绍了，下面这个网站里面有详细的例子。</p>
+<p><a href="http://www.opencv.org.cn/index.php" target="_blank" rel="external">http://www.opencv.org.cn/index.php</a></p>
+<p>lib库生成之后，我们为了要使用lib库和头文件库，我们必须做下面三件事情：</p>
+<p>可以参照下面这个教程</p>
+<p><a href="http://www.opencv.org.cn/index.php/VC_2008_Express%E4%B8%8B%E5%AE%89%E8%A3%85OpenCV2.3.1" target="_blank" rel="external">http://www.opencv.org.cn/index.php/VC_2008_Express%E4%B8%8B%E5%AE%89%E8%A3%85OpenCV2.3.1</a></p>
+<p>以我自己vs2010为例子，大家注意自己的安装路径!!!!!!</p>
+<p>关键点就是要修改三个地方：</p>
+<p>在菜单栏 的 项目，属性</p>
+<p>1 配置属性中 -&gt; VC++目录-&gt;包含目录 中增加</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include\opencv</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include\opencv2</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/1.png" alt="" title="1"></a></p>
+<p>2配置属性中 -&gt; VC++目录-&gt;库目录</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\lib</p>
+<p>昨天自己在写的时候没有增加这项，结果郁闷了好长时间- -|||</p>
+<p>&nbsp;</p>
+<p>3链接器-&gt;输入-&gt;附加依赖项</p>
+<p>opencv_contrib231d.lib</p>
+<p>opencv_calib3d231d.lib</p>
+<p>opencv_core231d.lib</p>
+<p>opencv_features2d231d.lib</p>
+<p>opencv_flann231d.lib</p>
+<p>opencv_gpu231d.lib</p>
+<p>opencv_highgui231d.lib</p>
+<p>opencv_imgproc231d.lib</p>
+<p>opencv_legacy231d.lib</p>
+<p>opencv_ml231d.lib</p>
+<p>opencv_objdetect231d.lib</p>
+<p>opencv_ts231d.lib</p>
+<p>opencv_video231d.lib</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/2.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/2.png" alt="" title="2"></a></p>
+<p>当然这一步我们可以用#pragma comment实现,效果应该是一样的。</p>
+<p>&nbsp;</p>
+<p>要添加这三步的原因是链接时候的问题。上次听了华哥在讲linux下面一个helloworld是怎么生成出来的，自己又复习一下之后又有了深入的了解。</p>
+<p>现在我们随便建立一个工程，写点代码测试一下：</p>
+<p>&nbsp;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "cv.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "highgui.h"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> g_slider_position = <span class="number">0</span>;</span><br><span class="line">CvCapture* g_capture = NULL;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onTrackbarSlide</span><span class="params">(<span class="keyword">int</span> pos)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">cvSetCaptureProperty(</span><br><span class="line">g_capture,</span><br><span class="line">CV_CAP_PROP_POS_FRAMES,</span><br><span class="line">pos</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">cvNamedWindow(<span class="string">"MyVedio"</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line">g_capture = cvCreateFileCapture(argv[<span class="number">1</span>]);</span><br><span class="line"><span class="keyword">int</span> frames = (<span class="keyword">int</span>) cvGetCaptureProperty(</span><br><span class="line">g_capture,</span><br><span class="line">CV_CAP_PROP_FRAME_COUNT</span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (frames != <span class="number">0</span>)&#123;</span><br><span class="line">cvCreateTrackbar(<span class="string">"Position"</span>, <span class="string">"MyVedio"</span>, &amp;amp;g_slider_position, frames, onTrackbarSlide);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">IplImage* frame;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">frame = cvQueryFrame(g_capture);</span><br><span class="line"><span class="keyword">if</span> (!frame)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">cvShowImage(<span class="string">"MyVedio"</span>, frame);</span><br><span class="line"><span class="keyword">char</span> c = cvWaitKey(<span class="number">33</span>);</span><br><span class="line"><span class="keyword">if</span> (c == <span class="number">27</span>)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">cvReleaseCapture(&amp;amp;g_capture);</span><br><span class="line">cvDestroyWindow(<span class="string">"MyVedio"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>cmd里面测试一下，成功~~~！！！</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/3.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/3.png" alt="" title="3"></a></p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/20/Kinect入门学习视频/" itemprop="url">
+                Kinect入门学习视频
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-20T14:51:32+08:00" content="2012-11-20">
+            2012-11-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div><br><div> Kinect入门学习视频</div><br><div></div>
+
+<p><a href="http://channel9.msdn.com/Series/KinectSDKQuickstarts?sort=recent#tab_sortBy_recent" target="_blank" rel="external">http://channel9.msdn.com/Series/KinectSDKQuickstarts?sort=recent#tab_sortBy_recent</a></p>
+<div></div><br><div></div><br><div>不多，就6集，就当是练习英语听力了</div><br><div></div><br><div><br><div> 例子里面都是C# WPF写的，由于是面向对象的软件开发，感觉跟android的开发有点相似。</div><br><div>自己也没有学习过C# 和WPF ，只能从宏观上理解，看看API提供的功能</div><br><div></div><br><div>视频给我印象比较深刻的是外国人写代码时候的清晰思路。</div><br><div></div><br><div>类的关系图，数据结构图的设计都是因为实际的需要才建立的。</div><br></div><br><div></div><br><div>这是一个非常好的理论和实际相互结合的例子。</div><br><div></div><br><div>1.Installing and Using the Kinect Sensor</div><br><div> 这个基本上没什么好说的，就是简单介绍了下Kinect的硬件模块</div><br><div></div><br><div>2.Setting up your Development Environment</div><br><div> 这个也比较简单，SDK和vs2010就可以了</div><br><div></div><br><div>3.Camera Fundamentals</div><br><div>演示了摄像头功能</div><br><div></div><br><div>4.Working with Depth Data</div><br><div> 深度数据，不同的深度可以有不同的颜色变化，还可以识别出轮廓</div><br><div></div><br><div>5.Skeletal Tracking Fundamentals</div><br><div>骨架追踪，可以自己调节比例，感觉这个功能跟我们做的项目的关系比较大</div><br><div></div><br><div>6.Audio Fundamentals</div><br><div>语音识别。</div><br><div>例子里面的这个功能很好用，不过好像只支持english</div><br><div></div><br><div>至于更加深入的学习，准备在买了Kinect之后再深入学习。</div><br><div>最近准备好好看看openCV</div><br><div></div><br></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/9/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/11/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

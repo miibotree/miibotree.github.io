@@ -1,0 +1,624 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++,heap,内核," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="还是紧接着昨天的问题，很想明白到底在内存中堆的数据结构到底是怎么样的？究竟是不是别人回答的红黑树的结构？
+在网上搜索了一番好像也鲜有答案。后来在《0day 安全 软件漏洞分析技术》一书里面找到了这个问题的部分答案。
+不同平台操作系统对内存的管理机制是不一样的。
+上面这本书里面主要讲了对windows2000 &amp;#8211; windows xp1 平台的堆管理策略。
+对于基本的操作系统中堆的一些特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows内存堆的数据结构">
+<meta property="og:url" content="http://yoursite.com/2012/10/16/windows内存堆的数据结构/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="还是紧接着昨天的问题，很想明白到底在内存中堆的数据结构到底是怎么样的？究竟是不是别人回答的红黑树的结构？
+在网上搜索了一番好像也鲜有答案。后来在《0day 安全 软件漏洞分析技术》一书里面找到了这个问题的部分答案。
+不同平台操作系统对内存的管理机制是不一样的。
+上面这本书里面主要讲了对windows2000 &amp;#8211; windows xp1 平台的堆管理策略。
+对于基本的操作系统中堆的一些特">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/10/1350385789_1481.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/10/1350386697_4208.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/10/1350386645_3143.jpg">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.908Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows内存堆的数据结构">
+<meta name="twitter:description" content="还是紧接着昨天的问题，很想明白到底在内存中堆的数据结构到底是怎么样的？究竟是不是别人回答的红黑树的结构？
+在网上搜索了一番好像也鲜有答案。后来在《0day 安全 软件漏洞分析技术》一书里面找到了这个问题的部分答案。
+不同平台操作系统对内存的管理机制是不一样的。
+上面这本书里面主要讲了对windows2000 &amp;#8211; windows xp1 平台的堆管理策略。
+对于基本的操作系统中堆的一些特">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windows内存堆的数据结构 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windows内存堆的数据结构
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-16T19:58:25+08:00" content="2012-10-16">
+            2012-10-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>还是紧接着昨天的问题，很想明白到底在内存中堆的数据结构到底是怎么样的？究竟是不是别人回答的红黑树的结构？</p>
+<p>在网上搜索了一番好像也鲜有答案。后来在《0day 安全 软件漏洞分析技术》一书里面找到了这个问题的部分答案。</p>
+<p>不同平台操作系统对内存的管理机制是不一样的。</p>
+<p>上面这本书里面主要讲了对windows2000 &#8211; windows xp1 平台的堆管理策略。</p>
+<p>对于基本的操作系统中堆的一些特征，这里就不再讲了。这里主要说说内存中堆的数据结构。</p>
+<p>自己画了张图给大家看看。。。</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350385789_1481.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350385789_1481.png" alt="" title="1350385789_1481"></a></p>
+<p>(堆的内存组织)</p>
+<p>现代操作系统的堆数据结构一般包括堆块和堆表两类。</p>
+<p>堆块：堆区的内存按照不同大小组织成块，以堆块为单位进行标识，而不是按照字节标识。一个堆块包括两个部分：块首和块身。</p>
+<p>块首是堆块头部的几个字节，用来标识这个堆块自身的信息，包括本块的大小、本块空闲还是占用等信息；</p>
+<p>块身紧跟在块首后面的部分，是最终分配给用户使用的数据区。</p>
+<p>我们在程序中很难感觉到块首的存在。但是正是由于这个块首的存在，解决了我上几天提出的为什么free的地址必须是malloc的地址 还有free的长度是确定的这两个问题。</p>
+<p>因为这些信息全部包含在块首里面，释放的时候必须进行比对，如果比对结果失败，那么自然是无法进行free操作了.(个人猜测，求验证)</p>
+<p>堆表：位于堆区的起始位置，用于索引堆区中堆块的重要信息。堆表的数据结构决定了整个堆区的组织方式。堆表在设计时可能会考虑采用平衡二叉树等高级数据结构用于优化查找效率。现代操作系统的堆表往往不止一种数据结构。</p>
+<p>在windows中，占用态的堆块被使用它的程序索引，而堆表只索引所有空闲态的堆块。</p>
+<p>重要的堆表有两种：空闲双向链表FreeList（空表） 和 快速单向链表Lookaside（快表）</p>
+<p>空闲双向链表FreeList（空表）：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350386697_4208.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350386697_4208.jpg" alt="" title="1350386697_4208"></a></p>
+<p>堆区一开始的堆表区中有一个128项的指针数组（看到有人说把它看成队列的），被称作空表索引。该数组的每一项包含两个指针，用于表示一条空表。</p>
+<p>free[1] 标识了所有堆中所有大小为8字节的空闲堆块，之后每个索引指示的空闲堆块递增8个字节。即：</p>
+<p>free[2]标识了16个字节的空闲堆块。</p>
+<p>free[k] 标识了 k * 8 个字节的空闲堆块。</p>
+<p>指示第1项空表索引比较特殊，从图中我们也可以看到：这条双向链表链入了所有大于等于1024字节的堆块（小于512KB），堆块按照升序排列。</p>
+<p>快速单向链表Lookaside（快表）</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350386645_3143.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350386645_3143.jpg" alt="" title="1350386645_3143"></a></p>
+<p>为什么叫做快表呢？因为速度快。。。为什么速度快呢？。。因为这类单向链表中从来不会发生堆块合并。</p>
+<p>结构组织和空表差不多，只是每条快表最多只有4个结点，故很快就会被填满。</p>
+<p>未完待续，下次讲讲 堆块的分配，释放和合并操作。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/heap/" rel="tag">#heap</a>
+          
+            <a href="/tags/内核/" rel="tag">#内核</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/10/27/DLL注入（一）编写动态链接库/" rel="prev">DLL注入（一）编写动态链接库</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/10/15/free函数在操作系统内存中的实现/" rel="next">free函数在操作系统内存中的实现</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

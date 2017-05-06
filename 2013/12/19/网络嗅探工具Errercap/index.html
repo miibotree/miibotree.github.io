@@ -1,0 +1,613 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Net," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="连续看了将近三个星期的网络，《Data and Computer Communications  English Edition》看的我有点脑子发昏。不过看了这本书之后感觉对网络的很多概念清晰了很多。对自己的帮助还是很大的。
+从物理介质开始，到OSI模型，到TCP/IP协议，广域网和局域网，电路交换分组交换，IEEE802.3以太网协议，IEEE802.11无线局域网，hub，bridge，swi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络嗅探工具Errercap">
+<meta property="og:url" content="http://yoursite.com/2013/12/19/网络嗅探工具Errercap/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="连续看了将近三个星期的网络，《Data and Computer Communications  English Edition》看的我有点脑子发昏。不过看了这本书之后感觉对网络的很多概念清晰了很多。对自己的帮助还是很大的。
+从物理介质开始，到OSI模型，到TCP/IP协议，广域网和局域网，电路交换分组交换，IEEE802.3以太网协议，IEEE802.11无线局域网，hub，bridge，swi">
+<meta property="og:updated_time" content="2015-07-25T04:54:39.900Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="网络嗅探工具Errercap">
+<meta name="twitter:description" content="连续看了将近三个星期的网络，《Data and Computer Communications  English Edition》看的我有点脑子发昏。不过看了这本书之后感觉对网络的很多概念清晰了很多。对自己的帮助还是很大的。
+从物理介质开始，到OSI模型，到TCP/IP协议，广域网和局域网，电路交换分组交换，IEEE802.3以太网协议，IEEE802.11无线局域网，hub，bridge，swi">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 网络嗅探工具Errercap // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              网络嗅探工具Errercap
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-12-19T22:22:59+08:00" content="2013-12-19">
+            2013-12-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>连续看了将近三个星期的网络，《Data and Computer Communications  English Edition》看的我有点脑子发昏。不过看了这本书之后感觉对网络的很多概念清晰了很多。对自己的帮助还是很大的。</p>
+<p>从物理介质开始，到OSI模型，到TCP/IP协议，广域网和局域网，电路交换分组交换，IEEE802.3以太网协议，IEEE802.11无线局域网，hub，bridge，switch，router之间的区别，路由选择，再到高层的协议。</p>
+<p>总之有了一个整体的框架。接下来的时间如果有空的话准备多写几篇博客来记录。</p>
+<p>下面这篇博客是我转载的，讲述了sniffer嗅探的原理</p>
+<p>&nbsp;</p>
+<p><span id="more-865"></span></p>
+<h1 id="转载自Seth&#8217;s_Blog_by_hekai">转载自<a href="http://www.blhekai.com/" target="_blank" rel="external">Seth&#8217;s Blog by hekai</a></h1><p>&nbsp;</p>
+<p>Sniffer的正当用处主要是分析网络的流量,以便找出所关心的网络中潜在的问题。例如,假设网络的某一段运行得不是很好,报文的发送比较慢,而 我们又不知道问题出在什么地方,此时就可以用嗅探器来作出精确的问题判断。在合理的网络中，Sniffer的存在对系统管理员是致关重要的，系统管理员通 过Sniffer可以诊断出大量的不可见模糊问题，这些问题涉及两台乃至多台计算机之间的异常通讯有些甚至牵涉到各种的协议，借助于Sniffer%2C 系统管理员可以方便的确定出多少的通讯量属于哪个网络协议、占主要通讯协议的主机是哪一台、大多数通讯目的地是哪台主机、报文发送占用多少时间、或者相互 主机的报文传送间隔时间等等，这些信息为管理员判断网络问题、管理网络区域提供了非常宝贵的信息。</p>
+<p>&nbsp;</p>
+<p>嗅探器与一般的键盘捕获程序不同。键盘捕获程序捕获在终端上输入的键值，而嗅探器则捕获真实的网络报文。</p>
+<p>为了对Sniffer的工作原理有一个深入的了解，我们先简单介绍一下HUB与网卡的原理。</p>
+<h2 id="预备知识">预备知识</h2><h3 id="HUB（集线器）与交换机工作原理">HUB（集线器）与交换机工作原理</h3><p>由于以太网等很多网络（常见HUB连接的内部网）是基于总线方式，物理上是广播的，就是当一个机器发给另一个机器的数据，HUB先收到然后把它接收到的数据再发给其他的（来的那个口不发了）每一个口，所以在HUB下面同一网段的所有机器的网卡都能接收到数据。</p>
+<p>交换机的内部单片程序能记住每个口的MAC地址，以后就该哪个机器接收就发往哪个口，而不是像共享HUB那样发给所有的口，所以交换机下只有该接收 数据的机器的网卡能接收到数据，当然广播包还是发往所有口。显然交换机的工作模式使得两个机器传输数据的时候其他机器别的口也占用了，所以交换机决定了同 一网段同一时间只能有两个机器进行数据通信，而交换机上连接的两个机器传输数据的时候别的口没有占用，所以别的口之间也可以同时传输。这就是交换机与 HUB不同的两个地方，HUB是同一时间只能一个机器发数据并且所有机器都可以接收，只要不是广播数据交换机同一时间可以有对机器进行数据传输并且数据是 私有的。</p>
+<h3 id="网卡工作原理">网卡工作原理</h3><p>再讲讲网卡的工作原理。网卡收到传输来的数据，网卡内的单片程序先接收数据头的目的MAC地址，根据计算机上的网卡驱动程序设置的接收模式判断该不 该接收，认为该接收就在接收后产生中断信号通知CPU，认为不该接收就丢弃不管，所以不该接收的数据网卡就截断了，计算机根本就不知道。CPU得到中断信 号产生中断，操作系统就根据网卡驱动程序中设置的网卡中断程序地址调用驱动程序接收数据，驱动程序接收数据后放入信号堆栈让操作系统处理。</p>
+<h3 id="局域网如何工作">局域网如何工作</h3><p>数据在网络上是以很小的称为帧(Frame)的单位传输的帧由好几部分组成，不同的部分执行不同的功能。（例如，以太网的前12个字节存放的是源和 目的的地址，这些会告诉网络：数据的来源和去处。以太网帧的其他部分存放实际的用户数据、TCP/IP的报文头或IPX报文头等）。</p>
+<p>帧通过特定的网络驱动程序进行成型，然后通过网卡发送到网线上。通过网线到达它们的目的机器，在目的机器的一端执行相反的过程。接收端机器的以太网卡捕获到这些帧，并告诉操作系统帧的到达，然后对其进行存储。就是在这个传输和接收的过程中，嗅探器会造成安全方面的问题。</p>
+<p>通常在局域网（LAN）中同一个网段的所有网络接口都有访问在物理媒体上传输的所有数据的能力，而每个网络接口都还应该有一个硬件地址，该硬件地址 不同于网络中存在的其他网络接口的硬件地址，同时，每个网络至少还要一个广播地址。（代表所有的接口地址），在正常情况下，一个合法的网络接口应该只响应 这样的两种数据帧：</p>
+<p>1、帧的目标区域具有和本地网络接口相匹配的硬件地址。</p>
+<p>2、帧的目标区域具有“广播地址”。</p>
+<p>在接受到上面两种情况的数据包时，网卡通过CPU产生一个硬件中断，该中断能引起操作系统注意，然后将帧中所包含的数据传送给系统进一步处理。</p>
+<p>当采用HUB，用户发送一个报文时，这些报文就会发送到LAN上所有可用的机器。在一般情况下，网络上所有的机器都可以“听”到通过的流量，但对不属于自己的报文则不予响应（换句话说，机器A不会捕获属于机器B的数据，而是简单的忽略这些数据）。</p>
+<p>如果局域网中某台机器的网络接口处于杂收（promiscuous）模式（即网卡可以接收其收到的所有数据包），那么它就可以捕获网络上所有的报文和帧，如果一台机器被配置成这样的方式，它（包括其软件）就是一个嗅探器。</p>
+<h2 id="Sniffer">Sniffer</h2><h3 id="Sniffer原理">Sniffer原理</h3><p>在介绍完前面的内容后就可以来说明Sniffer的原理了。首先，要知道SNIFFER要捕获的东西必须是要物理信号能收到的报文信息。显然只要通 知网卡接收其收到的所有包（一般叫做杂收promiscuous模式：指网络上的所有设备都对总线上传送的数据进行侦听，并不仅仅是它们自己的数据。）， 在HUB下就能接收到这个网段的所有包，但是交换机下就只能是自己的包加上广播包。</p>
+<p>要想在交换机下接收别人的包，那就要让其发往你的机器所在口。交换机记住一个口的MAC是通过接收来自这个口的数据后并记住其源MAC，就像一个机 器的IP与MAC对应的ARP列表，交换机维护一个物理口与MAC的表，所以可以欺骗交换机的。可以发一个包设置源MAC是你想接收的机器的MAC，那么 交换机就把你机器的网线插的物理口与那个MAC对应起来了，以后发给那个MAC的包就发往你的网线插口了，也就是你的网卡可以Sniffer到了。注意这 物理口与MAC的表与机器的ARP表一样是动态刷新的，那机器发包后交换HUB就又记住他的口了，所以实际上是两个在争，这只能应用在只要收听少量包就可 以的场合。</p>
+<p>内部网基于IP的通信可以用ARP欺骗别人机器让其发送给你的机器，如果要想不影响原来两方的通信，可以欺骗两方，让其都发给你的机器再由你的机器 转发，相当于做中间人，这用ARP加上编程很容易实现。并且现在很多设备支持远程管理，有很多交换机可以设置一个口监听别的口，不过这就要管理权限了。</p>
+<p>利用这一点，可以将一台计算机的网络连接设置为接受所有以太网总线上的数据，从而实现Sniffer。Sniffer就是一种能将本地网卡状态设成 ‘杂收’状态的软件，当网卡处于这种“杂收”方式时，该网卡具备“广播地址”，它对遇到的每一个帧都产生一个硬件中断以便提醒操作系统处理流经该物理媒体 上的每一个报文包。（绝大多数的网卡具备置成杂收方式的能力）</p>
+<p>可见，Sniffer工作在网络环境中的底层，它会拦截所有的正在网络上传送的数据，并且通过相应的软件处理，可以实时分析这些数据的内容，进而分析所处的网络状态和整体布局。值得注意的是：Sniffer是极其安静的，它是一种消极的安全攻击。</p>
+<p>嗅探器在功能和设计方面有很多不同。有些只能分析一种协议，而另一些可能能够分析几百种协议。一般情况下，大多数的嗅探器至少能够分析下面的协议：标准以太网、TCP/IP、IPX。</p>
+<h3 id="嗅探器造成的危害">嗅探器造成的危害</h3><p>sniffing是作用在网络基础结构的底层。通常情况下， 用户并不直接和该层打交道，有些甚至不知道有这一层存在。所以，应该说Sniffer的危害是相当之大的，通常，使用Sniffer是在网络中进行欺骗的开始。它可能造成的危害：</p>
+<p>嗅探器能够捕获口令。这大概是绝大多数非法使用Sniffer的理由，Sniffer可以记录到明文传送的用户名和口令。能够捕获专用的或者机密的 信息。比如金融帐号，许多用户很放心在网上使用自己的信用卡或现金帐号，然而Sniffer可以很轻松截获在网上传送的用户姓名、口令、信用卡号码、截止 日期、帐号和pin。比如偷窥机密或敏感的信息数据，通过拦截数据包，入侵者可以很方便记录别人之间敏感的信息传送，或者干脆拦截整个的email会话过 程。可以用来危害网络邻居的安全，或者用来获取更高级别的访问权限窥探低级的协议信息。</p>
+<p>这是很可怕的事，通过对底层的信息协议记录，比如记录两台主机之间的网络接口地址、远程网络接口IP地址、IP路由信息和TCP连接的字节顺序号码 等。这些信息由非法入侵的人掌握后将对网络安全构成极大的危害，通常有人用Sniffer收集这些信息只有一个原因：他正要进行一次欺骗（通常的ip地址 欺骗就要求你准确插入TCP连接的字节顺序号），如果某人很关心这个问题，那么Sniffer对他来说只是前奏，今后的问题要大得多。（对于高级的黑客而 言，这是使用Sniffer的唯一理由吧）</p>
+<p>事实上，如果在网络上存在非授权的嗅探器就意味着你的系统已经暴露在别人面前了。</p>
+<p>一般Sniffer只嗅探每个报文的前200到300个字节。用户名和口令都包含在这一部分中，这是我们关心的真正部分。</p>
+<p>简单的放置一个嗅探器并将其放到随便什么地方将不会起到什么作用。将嗅探器放置于被攻击机器或网络附近，这样将捕获到很多口令，还有一个比较好的方 法就是放在网关上。Sniffer通常运行在路由器，或有路由器功能的主机上。这样就能对大量的数据进行监控。Sniffer属第二层次的攻击。通常是攻 击者已经进入了目标系统，然后使用Sniffer这种攻击手段，以便得到更多的信息。如果这样的话就能捕获网络和其他网络进行身份鉴别的过程。</p>
+<div><br><br><a href="http://securityxploded.com/errata-guide-to-ettercap.php" target="_blank" rel="external">http://www.blhekai.com/network-sniffer-tool-principles-wireshark.html</a><br><br><a href="http://securityxploded.com/errata-guide-to-ettercap.php" target="_blank" rel="external">http://securityxploded.com/errata-guide-to-ettercap.php</a><br><br>&nbsp;<br><br></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Net/" rel="tag">#Net</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/01/16/FMD–A-DoubanFM-Server-1/" rel="prev">FMD–A DoubanFM Server(1)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/12/03/计算机体系结构的建立/" rel="next">计算机体系结构的建立</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#转载自Seth’s_Blog_by_hekai"><span class="nav-text">转载自Seth’s Blog by hekai</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#预备知识"><span class="nav-text">预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HUB（集线器）与交换机工作原理"><span class="nav-text">HUB（集线器）与交换机工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#网卡工作原理"><span class="nav-text">网卡工作原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#局域网如何工作"><span class="nav-text">局域网如何工作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sniffer"><span class="nav-text">Sniffer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Sniffer原理"><span class="nav-text">Sniffer原理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嗅探器造成的危害"><span class="nav-text">嗅探器造成的危害</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

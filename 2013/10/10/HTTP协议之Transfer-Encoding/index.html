@@ -1,0 +1,648 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="HTTP,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="之前在用socket收图片数据的时候，讲收到的所有数据保存在一个文件中，去掉http的文件头，本来以为剩下的数据就是完整的图片数据。
+但是通过测试发现接收的数据相比原来的图片数据会多出几个字节。
+通过传输全0字节的测试，发现每隔若干长度出现下列字节：
+0D0A323030300D0A
+0D0A6630630D0A
+在论坛上面提问也没有人回答。最后发现是由于HTTP文本传输本身的协议。
+&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP协议之Transfer-Encoding">
+<meta property="og:url" content="http://yoursite.com/2013/10/10/HTTP协议之Transfer-Encoding/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="之前在用socket收图片数据的时候，讲收到的所有数据保存在一个文件中，去掉http的文件头，本来以为剩下的数据就是完整的图片数据。
+但是通过测试发现接收的数据相比原来的图片数据会多出几个字节。
+通过传输全0字节的测试，发现每隔若干长度出现下列字节：
+0D0A323030300D0A
+0D0A6630630D0A
+在论坛上面提问也没有人回答。最后发现是由于HTTP文本传输本身的协议。
+&amp;nbsp;">
+<meta property="og:image" content="http://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="http://common.cnblogs.com/images/copycode.gif">
+<meta property="og:image" content="http://pic002.cnblogs.com/images/2012/322405/2012101912451656.png">
+<meta property="og:updated_time" content="2015-07-25T04:46:57.817Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP协议之Transfer-Encoding">
+<meta name="twitter:description" content="之前在用socket收图片数据的时候，讲收到的所有数据保存在一个文件中，去掉http的文件头，本来以为剩下的数据就是完整的图片数据。
+但是通过测试发现接收的数据相比原来的图片数据会多出几个字节。
+通过传输全0字节的测试，发现每隔若干长度出现下列字节：
+0D0A323030300D0A
+0D0A6630630D0A
+在论坛上面提问也没有人回答。最后发现是由于HTTP文本传输本身的协议。
+&amp;nbsp;">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> HTTP协议之Transfer-Encoding // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              HTTP协议之Transfer-Encoding
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-10T15:38:06+08:00" content="2013-10-10">
+            2013-10-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>之前在用socket收图片数据的时候，讲收到的所有数据保存在一个文件中，去掉http的文件头，本来以为剩下的数据就是完整的图片数据。</p>
+<p>但是通过测试发现接收的数据相比原来的图片数据会多出几个字节。</p>
+<p>通过传输全0字节的测试，发现每隔若干长度出现下列字节：</p>
+<p>0D0A323030300D0A</p>
+<p>0D0A6630630D0A</p>
+<p>在论坛上面提问也没有人回答。最后发现是由于HTTP文本传输本身的协议。</p>
+<p>&nbsp;</p>
+<p>&#8220;Transfer-Encoding: chunked&#8221;是这样编码的：</p>
+<p>HTTP头</p>
+<p>\r\n</p>
+<p>\r\n &#8211;连续的两个\r\n之后就是HTTP体了</p>
+<p>16进制值代表的数据长度</p>
+<p>\r\n</p>
+<p>上面所指的数据长度</p>
+<p>\r\n &#8211;每段数据结束后，以\r\n标识</p>
+<p>16进制代表的第二段数据</p>
+<p>\r\n</p>
+<p>XX长度的数据</p>
+<p>\r\n</p>
+<p>………… (反复通过这样的方式表示每次传输的数据长度)</p>
+<p>0 &#8211;数据结束部分用0表示，然后是连续的两个\r\n</p>
+<p>\r\n</p>
+<p>\r\n</p>
+<p>0D0A323030300D0A 0D0A是回车换行，32303030 是ASCII码的2000 表示后续有2000H个字符等待传输，0D0A和前一个对应组成一个括号；</p>
+<p>当2000字符传递完毕后，正好又出现一组这样的标签，开始下一组2000H个字符的传输，</p>
+<p>等传到最后一组不到2000H个字符了，于是变为 0D0A6630630D0A 个字符了。</p>
+<p>参考博客：</p>
+<p><a href="http://www.cnblogs.com/jcli/archive/2012/10/19/2730440.html" target="_blank" rel="external">http://www.cnblogs.com/jcli/archive/2012/10/19/2730440.html</a></p>
+<p><span id="more-747"></span></p>
+<h3 id="Transfer-Encoding简介">Transfer-Encoding简介</h3><p>transfer-eccoding所描述的是消息请求(request)和响应(response)所附带的实体对象(entity)的传输形式，规范定义格式如下：</p>
+<blockquote>
+<p>_Transfer-Encoding = &#8220;Transfer-Encoding&#8221; &#8220;:&#8221; 1#transfer-coding　_</p>
+</blockquote>
+<p>举个例子：Transfer-Encoding: chunked</p>
+<p>transfer-encoding的可选值有：<strong>chunked</strong>,<strong>identity ;**</strong></p>
+<p>**transfer-encoding的可选值有：chunked,identity，从字面意义可以理解，前者指把要发送传输的数据切割成一系列的块数据传输，后者指传输时不做任何处理，自身的本质数据形式传输。举个例子，如果我们要传输一本“红楼梦”小说到服务器，chunked方式就会先把这本小说分成一章一章的，然后逐个章节上传，而identity方式则是从小说的第一个字按顺序传输到最后一个字结束。</p>
+<h3 id="相关的头定义">相关的头定义</h3><p>Content-Encoding ： content-encoding和transfer-encoding所作用的对象不同，行为目标也不同，前者是对数据内容采用什么样的编码方式，后者是对数据传输采用什么样的编码。前者通常是对数据内容进行一些<strong>压缩编码</strong>操作，后者通常是对传传输采用<strong>分块策略</strong>之类的。</p>
+<p>Content-length : content-length头的作用是指定待传输的内容的字节长度。比如上面举的例子中，我们要上传一本红楼梦小说，则可以指定其长度大小，如：content-length:731017。细心的读者可能会有疑惑，它和transfer-encoding又有什么关系呢？如果想知道它们的关系，只要反过来问下自己，为什么transfer-encoding会有identity和chunked两种，各在什么上下文情景中要用到。比如chunked方式，把数据分块传输在很多地方就非常有用，如服务端在处理一个复杂的问题时，其返回结果是阶段性的产出，不能一次性知道最终的返回的总长度(content-lenght值)，所以这时候返回头中就不能有content-lenght头信息，有也要忽略处理。所以你可以这样理解，transfer-encoding在不能一次性确定消息实体(entity)内容时自定义一些传输协议，如果能确定的话，则可以在消息头中加入content-length头信息指示其长度，可以把transfer-encoding和content-length看成互斥性的两种头。</p>
+<h3 id="transfer-encoding详解">transfer-encoding详解</h3><p><strong>chunked格式(rfc2616 3.6.1):</strong></p>
+<div><br><div><a title="复制代码"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></div><br><figure class="highlight"><figcaption><span>= *chunk</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;last-chunk&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;trailer&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;CRLF&#10;chunk        = chunk-size [ chunk-extension ] CRLF&#10;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288;&#12288; chunk-data CRLF&#10;chunk-size   = 1*HEX&#10;last-chunk   = 1*(&#34;0&#34;) [ chunk-extension ] CRLF&#10;chunk-extension= *( &#34;;&#34; chunk-ext-name [ &#34;=&#34; chunk-ext-val ] )&#10;chunk-ext-name = token&#10;chunk-ext-val = token | quoted-string&#10;chunk-data = chunk-size(OCTET)&#10;trailer = *(entity-header CRLF)</span><br></pre></td></tr></table></figure><br><br><div><a title="复制代码"><img src="http://common.cnblogs.com/images/copycode.gif" alt="复制代码"></a></div><br></div>
+
+<p>还是以上传“红楼梦”这本书举例：<img src="http://pic002.cnblogs.com/images/2012/322405/2012101912451656.png" alt=""></p>
+<p><strong>24E5</strong>是指第一个块数据长度为24E5(16进制格式字符串表示)，<strong>CRLF</strong>为换行控制符。紧接着是第一个块数据内容，其长度就是上面定义的24E5，以CRLF标志结束。<strong>3485</strong>是指第二块数据长度为3485，<strong>CRLF</strong>结束，然后后面是第二块的数据内容&#8230;&#8230;，以这样的格式直到所有的块数据结束。最后以<strong>“0”CRLF</strong>结束，表示数据传输完成(这里对比rfc规范内容，省略了<strong>chunk-extension</strong>和<strong>trailer</strong>的东西,因为这并不重要)。</p>
+<p>有了这些知识之后，终于可以修改代码了：</p>
+<p>获得单行数据流（以\r\n结束）</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">GetHeaderLine</span><span class="params">(SOCKET LinkSocket, <span class="keyword">char</span> * HeaderLineBuffer, <span class="keyword">int</span> *HeaderLineLength, <span class="keyword">bool</span> *EndFlag)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">while</span>( (*(HeaderLineBuffer + *HeaderLineLength - <span class="number">1</span>) != SI) &amp;<span class="preprocessor">#038;&amp;#038; (*(HeaderLineBuffer + *HeaderLineLength - 2) != ER) )</span></span><br><span class="line">	&#123;	</span><br><span class="line">		recv(LinkSocket, (<span class="keyword">char</span> *)HeaderLineBuffer + *HeaderLineLength, <span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">		(*HeaderLineLength)++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先解析http包头：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">memset<span class="list">(<span class="keyword">HeaderLineBuffer</span>, <span class="number">0</span>, sizeof<span class="list">(<span class="keyword">HeaderLineBuffer</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">			int HeaderLineLength = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">			GetHeaderLine<span class="list">(<span class="keyword">LinkSocket</span>, HeaderLineBuffer, <span class="keyword">&amp;#038</span><span class="comment">;HeaderLineLength, &amp;#038;EndFlag);</span></span><br><span class="line">			WriteFile<span class="list">(<span class="keyword">hFile</span>, HeaderLineBuffer, HeaderLineLength, <span class="keyword">&amp;#038</span><span class="comment">;dwWritten, NULL);</span></span></span></span><br></pre></td></tr></table></figure>
+<p>然后根据chunked格式来拼接数据：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//由于传输的是Transfer-Encoding: chunked 来粘包</span></span><br><span class="line">while <span class="params">(<span class="number">1</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	ChuBufLength = <span class="number">0</span>;</span><br><span class="line">	ChuBufLen_CharLen = <span class="number">0</span>;</span><br><span class="line">	ResponseLen = <span class="number">0</span>;</span><br><span class="line">	memset<span class="params">(Chunckedbuffer, <span class="number">0</span>, sizeof<span class="params">(Chunckedbuffer)</span>)</span>;</span><br><span class="line">	memset<span class="params">(ChuBufLen_Char, <span class="number">0</span>, sizeof<span class="params">(ChuBufLen_Char)</span>)</span>;</span><br><span class="line"></span><br><span class="line">	GetHeaderLine<span class="params">(LinkSocket, ChuBufLen_Char, &amp;#<span class="number">038</span>;ChuBufLen_CharLen, &amp;#<span class="number">038</span>;EndFlag)</span>;<span class="comment">//获得数据长度（以\r\n结尾）</span></span><br><span class="line">	ChuBufLen_Char[ChuBufLen_CharLen - <span class="number">2</span>] = <span class="number">0</span>;</span><br><span class="line">	ChuBufLength = strtol<span class="params">(ChuBufLen_Char, NULL, <span class="number">16</span>)</span>;<span class="comment">//转换为10进制的int类型</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="params">(ChuBufLength == <span class="number">0</span>)</span><span class="comment">//表示数据传输结束</span></span><br><span class="line">	&#123;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while<span class="params">(ResponseLen &lt; ChuBufLength)</span><span class="comment">//循环的条件是ChuBufLength 的长度</span></span><br><span class="line">	&#123;	</span><br><span class="line">		RecvNum = recv<span class="params">(LinkSocket, <span class="params">(char *)</span>Chunckedbuffer+ResponseLen, <span class="number">1</span>, <span class="number">0</span>)</span>;</span><br><span class="line">		<span class="keyword">if</span> <span class="params">(RecvNum == <span class="number">0</span>)</span></span><br><span class="line">			break;</span><br><span class="line">		ResponseLen += RecvNum;</span><br><span class="line">	&#125;</span><br><span class="line">	WriteFile<span class="params">(hFile, Chunckedbuffer, ChuBufLength, &amp;#<span class="number">038</span>;dwWritten, NULL)</span>;</span><br><span class="line">	<span class="comment">//接收数据尾部的\r\n</span></span><br><span class="line">	RecvNum = recv<span class="params">(LinkSocket, <span class="params">(char *)</span>HeaderLineBuffer, <span class="number">2</span>, <span class="number">0</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/10/16/UDP-Holing-Tech-UDP穿透技术/" rel="prev">UDP Holing Tech(UDP穿透技术)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/10/10/操作系统–自己写CreateThread线程函数-1/" rel="next">操作系统–自己写CreateThread线程函数(1)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Transfer-Encoding简介"><span class="nav-text">Transfer-Encoding简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#相关的头定义"><span class="nav-text">相关的头定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#transfer-encoding详解"><span class="nav-text">transfer-encoding详解</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

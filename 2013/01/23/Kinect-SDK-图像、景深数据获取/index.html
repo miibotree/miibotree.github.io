@@ -1,0 +1,600 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Kinect," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="看人家都是用wpf写项目的，于是自己也惭愧的用wpf写了。对于一个连C#都没学过的人直接去搞wpf&amp;#8230;&amp;#8230;一开始也不知道难度怎么样。
+于是首先参照下面这个博客用用最简单的SDK练练手
+http://blog.csdn.net/supertyro/article/details/7249432
+创建个C#的wpf工程，感觉wpf比mfc好了不知道多少倍，整个界面也很清爽很好用。加">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kinect SDK 图像、景深数据获取">
+<meta property="og:url" content="http://yoursite.com/2013/01/23/Kinect-SDK-图像、景深数据获取/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="看人家都是用wpf写项目的，于是自己也惭愧的用wpf写了。对于一个连C#都没学过的人直接去搞wpf&amp;#8230;&amp;#8230;一开始也不知道难度怎么样。
+于是首先参照下面这个博客用用最简单的SDK练练手
+http://blog.csdn.net/supertyro/article/details/7249432
+创建个C#的wpf工程，感觉wpf比mfc好了不知道多少倍，整个界面也很清爽很好用。加">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/01/kinect.png">
+<meta property="og:updated_time" content="2015-07-25T04:48:12.444Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kinect SDK 图像、景深数据获取">
+<meta name="twitter:description" content="看人家都是用wpf写项目的，于是自己也惭愧的用wpf写了。对于一个连C#都没学过的人直接去搞wpf&amp;#8230;&amp;#8230;一开始也不知道难度怎么样。
+于是首先参照下面这个博客用用最简单的SDK练练手
+http://blog.csdn.net/supertyro/article/details/7249432
+创建个C#的wpf工程，感觉wpf比mfc好了不知道多少倍，整个界面也很清爽很好用。加">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Kinect SDK 图像、景深数据获取 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Kinect SDK 图像、景深数据获取
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-01-23T16:40:43+08:00" content="2013-01-23">
+            2013-01-23
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>看人家都是用wpf写项目的，于是自己也惭愧的用wpf写了。对于一个连C#都没学过的人直接去搞wpf&#8230;&#8230;一开始也不知道难度怎么样。</p>
+<p>于是首先参照下面这个博客用用最简单的SDK练练手</p>
+<p><a href="http://blog.csdn.net/supertyro/article/details/7249432" target="_blank" rel="external">http://blog.csdn.net/supertyro/article/details/7249432</a></p>
+<p>创建个C#的wpf工程，感觉wpf比mfc好了不知道多少倍，整个界面也很清爽很好用。加上原来搞过一段时间的android开发，学过一点java和C++的皮毛，代码基本上都看得懂&#8230;.</p>
+<p>在引用地方加入Microsoft.Kinect库</p>
+<p>在xaml上画界面，在xaml.cs上写功能实现代码，跟android和网页开发差不多&#8230;&#8230;</p>
+<p>界面代码如下：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&amp;lt;Window x:<span class="variable">Class=</span>&amp;quot;Kinect_Camera.MainWindow&amp;quot;</span><br><span class="line">        <span class="variable">xmlns=</span>&amp;quot;http://schemas.microsoft.com/winfx/<span class="number">2006</span>/xaml/presentation&amp;quot;</span><br><span class="line">        xmlns:<span class="variable">x=</span>&amp;quot;http://schemas.microsoft.com/winfx/<span class="number">2006</span>/xaml&amp;quot;</span><br><span class="line">        <span class="variable">Title=</span>&amp;quot;MainWindow&amp;quot; <span class="variable">Height=</span>&amp;quot;<span class="number">418</span>&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">595</span>&amp;quot;&amp;gt;</span><br><span class="line">    &amp;lt;Grid&amp;gt;</span><br><span class="line">        &amp;lt;Button <span class="variable">Content=</span>&amp;quot; 获取Kinect&amp;quot; <span class="variable">Height=</span>&amp;quot;<span class="number">29</span>&amp;quot; <span class="variable">HorizontalAlignment=</span>&amp;quot;Right&amp;quot; <span class="variable">Margin=</span>&amp;quot;<span class="number">0</span>,<span class="number">38</span>,<span class="number">426</span>,<span class="number">0</span>&amp;quot; <span class="variable">Name=</span>&amp;quot;button1&amp;quot; <span class="variable">VerticalAlignment=</span>&amp;quot;Top&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">109</span>&amp;quot; <span class="variable">Click=</span>&amp;quot;button1_Click&amp;quot;/&amp;gt;</span><br><span class="line">        &amp;lt;Button <span class="variable">Content=</span>&amp;quot;启动&amp;quot; <span class="variable">Height=</span>&amp;quot;<span class="number">30</span>&amp;quot; <span class="variable">HorizontalAlignment=</span>&amp;quot;Left&amp;quot; <span class="variable">Margin=</span>&amp;quot;<span class="number">421</span>,<span class="number">44</span>,<span class="number">0</span>,<span class="number">0</span>&amp;quot; <span class="variable">Name=</span>&amp;quot;button2&amp;quot; <span class="variable">VerticalAlignment=</span>&amp;quot;Top&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">94</span>&amp;quot; <span class="variable">Click=</span>&amp;quot;button2_Click&amp;quot;/&amp;gt;</span><br><span class="line">        &amp;lt;ComboBox <span class="variable">Height=</span>&amp;quot;<span class="number">23</span>&amp;quot; <span class="variable">HorizontalAlignment=</span>&amp;quot;Left&amp;quot; <span class="variable">Margin=</span>&amp;quot;<span class="number">183</span>,<span class="number">44</span>,<span class="number">0</span>,<span class="number">0</span>&amp;quot; <span class="variable">Name=</span>&amp;quot;comboBox1&amp;quot; <span class="variable">VerticalAlignment=</span>&amp;quot;Top&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">120</span>&amp;quot; /&amp;gt;</span><br><span class="line">        &amp;lt;Image <span class="variable">Height=</span>&amp;quot;<span class="number">150</span>&amp;quot; <span class="variable">HorizontalAlignment=</span>&amp;quot;Left&amp;quot; <span class="variable">Margin=</span>&amp;quot;<span class="number">38</span>,<span class="number">162</span>,<span class="number">0</span>,<span class="number">0</span>&amp;quot; <span class="variable">Name=</span>&amp;quot;image1&amp;quot; <span class="variable">Stretch=</span>&amp;quot;Fill&amp;quot; <span class="variable">VerticalAlignment=</span>&amp;quot;Top&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">200</span>&amp;quot; /&amp;gt;</span><br><span class="line">        &amp;lt;Image <span class="variable">Height=</span>&amp;quot;<span class="number">150</span>&amp;quot; <span class="variable">HorizontalAlignment=</span>&amp;quot;Left&amp;quot; <span class="variable">Margin=</span>&amp;quot;<span class="number">331</span>,<span class="number">162</span>,<span class="number">0</span>,<span class="number">0</span>&amp;quot; <span class="variable">Name=</span>&amp;quot;image2&amp;quot; <span class="variable">Stretch=</span>&amp;quot;Fill&amp;quot; <span class="variable">VerticalAlignment=</span>&amp;quot;Top&amp;quot; <span class="variable">Width=</span>&amp;quot;<span class="number">200</span>&amp;quot; /&amp;gt;</span><br><span class="line"></span><br><span class="line">    &amp;lt;/Grid&amp;gt;</span><br><span class="line">&amp;lt;/Window&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>就是弄了两个按钮，一个下拉列表，两个image图像</p>
+<p>然后是功能代码。一开始的时候自己多写点注释好了：</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Windows;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Controls;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Data;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Documents;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Input;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Media;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Media.Imaging;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Navigation;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Shapes;</span><br><span class="line"><span class="keyword">using</span> Microsoft.Kinect;</span><br><span class="line"><span class="keyword">using</span> System.Runtime;</span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">Kinect_Camera</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"><span class="xmlDocTag">///</span> &amp;lt;summary&amp;gt;</span></span><br><span class="line">    <span class="comment"><span class="xmlDocTag">///</span> MainWindow.xaml 的交互逻辑</span></span><br><span class="line">    <span class="comment"><span class="xmlDocTag">///</span> &amp;lt;/summary&amp;gt;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">partial</span> <span class="keyword">class</span> <span class="title">MainWindow</span> : <span class="title">Window</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">MainWindow</span>(<span class="params"></span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            InitializeComponent();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button1_Click</span>(<span class="params"><span class="keyword">object</span> sender, RoutedEventArgs e</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="comment">//搜寻kinect设备</span></span><br><span class="line">	        KinectSensorCollection ksc = KinectSensor.KinectSensors;    </span><br><span class="line">	        <span class="keyword">foreach</span> (<span class="keyword">var</span> item <span class="keyword">in</span> ksc)</span><br><span class="line">	        &#123;</span><br><span class="line">                <span class="comment">//将搜寻到的设备名称添加到下拉列表中</span></span><br><span class="line">		        <span class="keyword">this</span>.comboBox1.Items.Add(item.UniqueKinectId);</span><br><span class="line">	        &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//启动按钮按下后触发的事件</span></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">button2_Click</span>(<span class="params"><span class="keyword">object</span> sender, RoutedEventArgs e</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            <span class="comment">//获取KinectSensor</span></span><br><span class="line">	        KinectSensor ks = KinectSensor.KinectSensors[<span class="keyword">this</span>.comboBox1.SelectedIndex];</span><br><span class="line">	        <span class="comment">//添加颜色图像获取事件</span></span><br><span class="line">            ks.ColorFrameReady += <span class="keyword">new</span> EventHandler&amp;lt;ColorImageFrameReadyEventArgs&amp;gt;</span><br><span class="line">            (ks_ColorFrameReady);</span><br><span class="line">            <span class="comment">//设置启动模式，ColorImageFormat枚举中包含5个值</span></span><br><span class="line">            ks.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);</span><br><span class="line">            <span class="comment">//添加景深图像获取事件</span></span><br><span class="line">            ks.DepthFrameReady += <span class="keyword">new</span> EventHandler&amp;lt;DepthImageFrameReadyEventArgs&amp;gt;</span><br><span class="line">            (ks_DepthFrameReady);</span><br><span class="line">            <span class="comment">//设置启动模式,DepthImageFormat枚举中包含4个值</span></span><br><span class="line">            ks.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);</span><br><span class="line">            ks.Start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//颜色图像获取事件</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">ks_ColorFrameReady</span>(<span class="params"><span class="keyword">object</span> sender, ColorImageFrameReadyEventArgs e</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            ColorImageFrame cif = e.OpenColorImageFrame();</span><br><span class="line">            <span class="keyword">if</span> (cif != <span class="keyword">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//准备装图像数据的数组</span></span><br><span class="line">                <span class="keyword">byte</span>[] imagesource = <span class="keyword">new</span> <span class="keyword">byte</span>[cif.PixelDataLength];</span><br><span class="line">                <span class="comment">//获取图像数据</span></span><br><span class="line">                cif.CopyPixelDataTo(imagesource);</span><br><span class="line">                <span class="comment">//转换后放到控件上</span></span><br><span class="line">                 image1.Source = BitmapSource.Create(cif.Width, cif.Height, <span class="number">96</span>, <span class="number">96</span>, </span><br><span class="line">                     PixelFormats.Bgr32, <span class="keyword">null</span>, imagesource, cif.Width * cif.BytesPerPixel);  </span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//景深图像获取事件</span></span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">ks_DepthFrameReady</span>(<span class="params"><span class="keyword">object</span> sender, DepthImageFrameReadyEventArgs e</span>)</span><br><span class="line">        </span>&#123;</span><br><span class="line">            DepthImageFrame dif = e.OpenDepthImageFrame();</span><br><span class="line">            <span class="keyword">if</span> (dif != <span class="keyword">null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment">//准备装图像数据的数组  </span></span><br><span class="line">                <span class="keyword">short</span>[] imagesourceS = <span class="keyword">new</span> <span class="keyword">short</span>[dif.PixelDataLength];</span><br><span class="line">                dif.CopyPixelDataTo(imagesourceS);</span><br><span class="line">                <span class="keyword">int</span> length = dif.Width * dif.Height * ((PixelFormats.Bgr32.BitsPerPixel + <span class="number">7</span>) / <span class="number">8</span>);</span><br><span class="line">                <span class="keyword">byte</span>[] imagesourceB = <span class="keyword">new</span> <span class="keyword">byte</span>[length];</span><br><span class="line">                <span class="comment">//景深数据转换成byte  </span></span><br><span class="line">                imagesourceB = <span class="keyword">this</span>.ConvertDepthFrame(imagesourceS, ((KinectSensor)sender).DepthStream, imagesourceB, length);</span><br><span class="line"></span><br><span class="line">                <span class="comment">//生成图片放到控件上  </span></span><br><span class="line">                WriteableBitmap outputBitmap = <span class="keyword">new</span> WriteableBitmap(dif.Width, dif.Height, <span class="number">96</span>, <span class="number">96</span>, PixelFormats.Bgr32, <span class="keyword">null</span>);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">this</span>.image2.Source = outputBitmap;</span><br><span class="line"></span><br><span class="line">                outputBitmap.WritePixels(<span class="keyword">new</span> Int32Rect(<span class="number">0</span>, <span class="number">0</span>, dif.Width, dif.Height), imagesourceB, dif.Width * ((PixelFormats.Bgr32.BitsPerPixel + <span class="number">7</span>) / <span class="number">8</span>), <span class="number">0</span>);</span><br><span class="line">            &#125;  </span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//深度图像转换方法</span></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">byte</span>[] ConvertDepthFrame(<span class="keyword">short</span>[] depthFrame, DepthImageStream depthStream, <span class="keyword">byte</span>[] depthFrame32, <span class="keyword">int</span> length)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">int</span> RedIndex = <span class="number">2</span>;</span><br><span class="line">            <span class="keyword">int</span> GreenIndex = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> BlueIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span>[] IntensityShiftByPlayerR = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span> &#125;;</span><br><span class="line">            <span class="keyword">int</span>[] IntensityShiftByPlayerG = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span> &#125;;</span><br><span class="line">            <span class="keyword">int</span>[] IntensityShiftByPlayerB = &#123; <span class="number">1</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">2</span> &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> tooNearDepth = depthStream.TooNearDepth;</span><br><span class="line">            <span class="keyword">int</span> tooFarDepth = depthStream.TooFarDepth;</span><br><span class="line">            <span class="keyword">int</span> unknownDepth = depthStream.UnknownDepth;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i16 = <span class="number">0</span>, i32 = <span class="number">0</span>; i16 &amp;lt; depthFrame.Length &amp;amp;&amp;amp; i32 &amp;lt; length; i16++, i32 += <span class="number">4</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> player = depthFrame[i16] &amp;amp; DepthImageFrame.PlayerIndexBitmask;</span><br><span class="line">                <span class="keyword">int</span> realDepth = depthFrame[i16] &amp;gt;&amp;gt; DepthImageFrame.PlayerIndexBitmaskWidth;</span><br><span class="line">                <span class="keyword">byte</span> intensity = (<span class="keyword">byte</span>)(~(realDepth &amp;gt;&amp;gt; <span class="number">4</span>));</span><br><span class="line"></span><br><span class="line">                <span class="keyword">if</span> (player == <span class="number">0</span> &amp;amp;&amp;amp; realDepth == <span class="number">0</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    depthFrame32[i32 + RedIndex] = <span class="number">255</span>;</span><br><span class="line">                    depthFrame32[i32 + GreenIndex] = <span class="number">255</span>;</span><br><span class="line">                    depthFrame32[i32 + BlueIndex] = <span class="number">255</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">player == <span class="number">0</span> &amp;amp;&amp;amp; realDepth == tooFarDepth</span>)</span><br><span class="line">                </span>&#123;</span><br><span class="line">                    depthFrame32[i32 + RedIndex] = <span class="number">66</span>;</span><br><span class="line">                    depthFrame32[i32 + GreenIndex] = <span class="number">0</span>;</span><br><span class="line">                    depthFrame32[i32 + BlueIndex] = <span class="number">66</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="function"><span class="keyword">else</span> <span class="title">if</span> (<span class="params">player == <span class="number">0</span> &amp;amp;&amp;amp; realDepth == unknownDepth</span>)</span><br><span class="line">                </span>&#123;</span><br><span class="line">                    depthFrame32[i32 + RedIndex] = <span class="number">66</span>;</span><br><span class="line">                    depthFrame32[i32 + GreenIndex] = <span class="number">66</span>;</span><br><span class="line">                    depthFrame32[i32 + BlueIndex] = <span class="number">33</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    depthFrame32[i32 + RedIndex] = (<span class="keyword">byte</span>)(intensity &amp;gt;&amp;gt; IntensityShiftByPlayerR[player]);</span><br><span class="line">                    depthFrame32[i32 + GreenIndex] = (<span class="keyword">byte</span>)(intensity &amp;gt;&amp;gt; IntensityShiftByPlayerG[player]);</span><br><span class="line">                    depthFrame32[i32 + BlueIndex] = (<span class="keyword">byte</span>)(intensity &amp;gt;&amp;gt; IntensityShiftByPlayerB[player]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> depthFrame32;</span><br><span class="line">        &#125;  </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码就不解释了，自己也是按照人家的教程来的。只是熟练一下SDK而已。</p>
+<p>最后发张效果图:</p>
+<p><a href="http://miibotree.com/?attachment_id=576" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/01/kinect.png" alt="kinect"></a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kinect/" rel="tag">#Kinect</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/01/23/Kinect骨骼追踪数据实现PC体感切水果/" rel="prev">Kinect骨骼追踪数据实现PC体感切水果</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/22/Kinect环境配置/" rel="next">Kinect环境配置</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

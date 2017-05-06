@@ -1,0 +1,670 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="汇编," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="非常感谢醒哥。让我有机会能跟着他参加信息安全的全国邀请赛。所以自己肯定是要好好学习汇编和PE了。
+这里由于自己的电脑是64位的win7，无法使用debug，搜索了一把发现下面这个CSDN的网站提供了一个dos模拟器来运行32位的debug。
+这里给出个链接
+http://blog.csdn.net/ropin_os/article/details/6578794
+&amp;nbsp;
+接下来准备把自己电脑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="开始学习汇编+PE">
+<meta property="og:url" content="http://yoursite.com/2012/03/31/开始学习汇编-PE/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="非常感谢醒哥。让我有机会能跟着他参加信息安全的全国邀请赛。所以自己肯定是要好好学习汇编和PE了。
+这里由于自己的电脑是64位的win7，无法使用debug，搜索了一把发现下面这个CSDN的网站提供了一个dos模拟器来运行32位的debug。
+这里给出个链接
+http://blog.csdn.net/ropin_os/article/details/6578794
+&amp;nbsp;
+接下来准备把自己电脑">
+<meta property="og:image" content="http://imgsrc.baidu.com/baike/abpic/item/6648d73d946dfdf89e3d6247.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/03/1.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/03/2.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/03/3.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/03/4.jpg">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/03/6.jpg">
+<meta property="og:updated_time" content="2015-07-25T04:58:18.106Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="开始学习汇编+PE">
+<meta name="twitter:description" content="非常感谢醒哥。让我有机会能跟着他参加信息安全的全国邀请赛。所以自己肯定是要好好学习汇编和PE了。
+这里由于自己的电脑是64位的win7，无法使用debug，搜索了一把发现下面这个CSDN的网站提供了一个dos模拟器来运行32位的debug。
+这里给出个链接
+http://blog.csdn.net/ropin_os/article/details/6578794
+&amp;nbsp;
+接下来准备把自己电脑">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 开始学习汇编+PE // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              开始学习汇编+PE
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-31T16:48:28+08:00" content="2012-03-31">
+            2012-03-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>非常感谢醒哥。让我有机会能跟着他参加信息安全的全国邀请赛。所以自己肯定是要好好学习汇编和PE了。</p>
+<p>这里由于自己的电脑是64位的win7，无法使用debug，搜索了一把发现下面这个CSDN的网站提供了一个dos模拟器来运行32位的debug。</p>
+<p>这里给出个链接</p>
+<p><a href="http://blog.csdn.net/ropin_os/article/details/6578794" target="_blank" rel="external">http://blog.csdn.net/ropin_os/article/details/6578794</a></p>
+<p>&nbsp;</p>
+<p>接下来准备把自己电脑的win764位重装成win7 32位，顺便把opensuse给格了，最后等5月份的fedora17出来。</p>
+<p>好了，废话不多说了，下面是自己学习汇编的一些笔记和问题。</p>
+<p>一开始看PE文件格式，真的是看不懂，所以自己决定还是先看下汇编，然后再一边看PE可能会好点。</p>
+<p>对于我这个连CPU跟内存都分不清楚的人。。。哎，首先还是先了解下CPU和内存吧。</p>
+<p>CPU由下面这三个部分组成：运算器，控制器，寄存器</p>
+<h3 id="运算器">运算器</h3><p>运算逻辑部件，可以执行定点或浮点的算术运算操作、移位操作以及逻辑操作，也可执行地址的运算和转换。</p>
+<h3 id="寄存器">寄存器</h3><p>寄存器部件，包括通用寄存器、专用寄存器和控制寄存器。</p>
+<div data-layout="right"><a href="http://baike.baidu.com/albums/14045/14045.html#0$6648d73d946dfdf89e3d6247" title="查看图片" target="_blank" rel="external">  </a><a href="http://baike.baidu.com/albums/14045/14045.html#0$6648d73d946dfdf89e3d6247" target="_blank" rel="external"><img src="http://imgsrc.baidu.com/baike/abpic/item/6648d73d946dfdf89e3d6247.jpg" alt="" title="32位CPU的寄存器"></a>32位CPU的寄存器</div>
+
+<p>&nbsp;</p>
+<p><strong>控制器</strong></p>
+<p>控制部件，主要负责对指令译码，并且发出为完成每条指令所要执行的各个操作的控制信号。</p>
+<p>与这三类对应的，分别有地址总线（对应运算器），数据总线（对应寄存器），控制总线（对应控制器）</p>
+<p>地址总线：用来寻址。寻到内存的范围。</p>
+<p>数据总线：进行数据的传送。自然是双向的。</p>
+<p>控制总线：CPU对外部器件的控制</p>
+<p>&nbsp;</p>
+<p>接下来了解下内存：</p>
+<p>存是计算机中重要的部件之一，它是与CPU进行沟通的桥梁。计算机中所有程序的运行都是在内存中进行的，因此内存的性能对计算机的影响非常大。 内存（Memory）也被称为内存储器，其作用是用于暂时存放CPU中的运算数据，以及与硬盘等外部存储器交换的数据。只要计算机在运行中，CPU就会把需要运算的数据调到内存中进行运算，当运算完成后CPU再将结果传送出来，内存的运行也决定了计算机的稳定运行。</p>
+<p>简单的来说，其实内存就是计算机内部的一个高速的存储空间。</p>
+<p>下面是自己摘的一些汇编的笔记。摘自王爽的《汇编语言》</p>
+<p>1.关于段地址*16+偏移地址的形式</p>
+<p>为什么我们要使用段地址*16+偏移地址的形式？为了增大cpu的寻址长度。</p>
+<p>本质含义：cpu在访问内存时，用一个基础地址和一个相对基础地址的偏移地址相加，给出内存单元的物理地址</p>
+<p>&nbsp;</p>
+<p>2.CS代码 段寄存器  IP指令指针寄存器</p>
+<p>使用CS：IP指向将要执行的指令在内存中的地址</p>
+<p>偏移地址在什么时候自动增加？</p>
+<p>当指令缓冲器读入一条指令后，IP自动增加读入指令的字节数。如果后面有（执行指令）修改IP的值，那么IP将会被覆盖掉。</p>
+<p>&nbsp;</p>
+<p>3.mov指令 传送指令</p>
+<p>jmp指令  转移指令 可以修改 IP</p>
+<p>格式  jmp  某一合法寄存器</p>
+<p>作用  修改IP为寄存器中的值</p>
+<p>4.关于debug的使用</p>
+<p>R 查看，改变寄存器的内容</p>
+<p>D查看内存中的内容</p>
+<p>E改写内存中的内容</p>
+<p>U将内存中的机器指令翻译成汇编指令</p>
+<p>T执行一条机器指令</p>
+<p>A以汇编的格式在内存中写入一条机器指令</p>
+<p>具体方式这里就不讲解了。</p>
+<p>5.内存中的数据和代码没有任何区别。</p>
+<p>那么如何判断呢？</p>
+<p>指令执行的一定是代码段！</p>
+<p>下面是自己遇到的一些问题：</p>
+<p>1.关于IP自动增加溢出的问题</p>
+<p>上面讲了，经过指令缓冲器以后IP会自动增加，那么有没有IP溢出的状况呢？这个时候CPU是如何处理的呢？</p>
+<p>这个问题暂时先放一下，希望看到后面的时候能解答这个问题。</p>
+<p>2.关于debug里的u指令查看汇编代码的问题</p>
+<p>首先用-e命令修改内存中的内容</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/03/1.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/03/1.jpg" alt="" title="1"></a></p>
+<p>然后用-d查看一下</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/03/2.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/03/2.jpg" alt="" title="2"></a></p>
+<p>再用-u查看一下</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/03/3.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/03/3.jpg" alt="" title="3"></a></p>
+<p>原来1000 0  到1000 2存的是B8 23 01 对应的指令是mov ax,0123</p>
+<p>这里自己产生了一个问题：如果-u的查看指针从1000:1开始呢？那么cpu默认的汇编代码是如何改变的呢？</p>
+<p>下面这张截图就是从IP = 1开始的了。</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/03/4.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/03/4.jpg" alt="" title="4"></a></p>
+<p>可以看到 cpu对于23 01 对应的汇编代码改变了，而下面的指令由于没有改变，任然和原来的是一样的</p>
+<p>下面在更改一下，使得IP从2开始指向内存</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/03/6.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/03/6.jpg" alt="" title="6"> </a></p>
+<p>这里也是差不多的，只是将01 b8 00 00 的汇编改成了add [bx+si+0000], di</p>
+<p>自己还不知道这条指令是什么意思。</p>
+<p>但这里可以发现一点，由于没有01 这条指令对应的汇编代码，所以cpu自动寻找下面的指令，直到能够翻译成一条汇编代码为止。</p>
+<p>&nbsp;</p>
+<p>不知道这样的推断是不是正确的，还请大家指教。。。。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/汇编/" rel="tag">#汇编</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/01/CPU的大端与小端/" rel="prev">CPU的大端与小端</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/03/30/2012年3月月末总结/" rel="next">2012年3月月末总结</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#运算器"><span class="nav-text">运算器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#寄存器"><span class="nav-text">寄存器</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

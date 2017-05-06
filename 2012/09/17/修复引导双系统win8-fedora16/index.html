@@ -1,0 +1,654 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Fedora16,win8," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="原来我的电脑系统是win7+fedora16，由于很久没有使用fedora16了，所以也没有更新fedora16成17，一直用grub2引导的。
+最近做完项目空虚寂寞冷，就装了个win8玩玩，把原来的grub2给覆盖掉了。
+这样一来fedota16就进不去了。所以就想尝试着把fedora16的引导给搞回来。
+本来以为win8跟win7差不多，用fedora的liveCD修复grub2的引导。具体参">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修复引导双系统win8 + fedora16">
+<meta property="og:url" content="http://yoursite.com/2012/09/17/修复引导双系统win8-fedora16/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="原来我的电脑系统是win7+fedora16，由于很久没有使用fedora16了，所以也没有更新fedora16成17，一直用grub2引导的。
+最近做完项目空虚寂寞冷，就装了个win8玩玩，把原来的grub2给覆盖掉了。
+这样一来fedota16就进不去了。所以就想尝试着把fedora16的引导给搞回来。
+本来以为win8跟win7差不多，用fedora的liveCD修复grub2的引导。具体参">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201208/31/1346405331_7761.png">
+<meta property="og:updated_time" content="2015-07-25T04:53:56.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="修复引导双系统win8 + fedora16">
+<meta name="twitter:description" content="原来我的电脑系统是win7+fedora16，由于很久没有使用fedora16了，所以也没有更新fedora16成17，一直用grub2引导的。
+最近做完项目空虚寂寞冷，就装了个win8玩玩，把原来的grub2给覆盖掉了。
+这样一来fedota16就进不去了。所以就想尝试着把fedora16的引导给搞回来。
+本来以为win8跟win7差不多，用fedora的liveCD修复grub2的引导。具体参">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 修复引导双系统win8 + fedora16 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              修复引导双系统win8 + fedora16
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:33:13+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>原来我的电脑系统是win7+fedora16，由于很久没有使用fedora16了，所以也没有更新fedora16成17，一直用grub2引导的。</p>
+<p>最近做完项目空虚寂寞冷，就装了个win8玩玩，把原来的grub2给覆盖掉了。</p>
+<p>这样一来fedota16就进不去了。所以就想尝试着把fedora16的引导给搞回来。</p>
+<p>本来以为win8跟win7差不多，用fedora的liveCD修复grub2的引导。具体参考下面这篇文章：</p>
+<p><a href="http://blog.csdn.net/gaoxin1076/article/details/7208041" target="_blank" rel="external">http://blog.csdn.net/gaoxin1076/article/details/7208041</a></p>
+<p>但是grub2竟然没有识别win8，它竟然把win8错认成了win7！！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>这个时候我点这个win7选项，出来下面的错误：</p>
+<p><span style="color: #ff0000;">windowssystem32winload.exe</span></p>
+<p><span style="color: #ff0000;">0xc0000428</span></p>
+<p><span style="color: #ff0000;">windows can&#8217;t verify the digital signature for this file.</span></p>
+<div id="trans-result-content"><br><br><span style="color: #ff0000;">无法验证这个文件的数字签名。</span><br><br></div>
+
+<p>于是自己开始百度。。。结果听说win8采用了UEFI机制代替了BIOS，启动了安全机制。</p>
+<p><span id="more-403"></span></p>
+<p>下面是对于UEFI的简单介绍：</p>
+<p><span style="color: #993399;"><span style="color: #000000;"><a href="http://bbs.bios.net.cn/thread-264822-1-1.html" target="_blank" rel="external">http://bbs.bios.net.cn/thread-264822-1-1.html</a></span></span></p>
+<p></p>
+<p><span style="color: #993399;">所有的Windows 8硬件设备都将默认采用UEFI(统一可扩展固件接口)的安全启动(Secure Boot)，防止未经授权的引导装载程序(OS Loader)在BIOS中启动，UEFI只启动通过认证的引导装载程序，而恶意软件则无法再利用这种方法攻击用户。</span></p>
+<p>所以个人认为fedora16的grub2无法识别win8，但是在高版本的grub2中说不定已经可以识别win8了。我没有尝试fedora17，不知道17的grub2能不能识别win8，但是听说ubuntu已经可以识别win8了。</p>
+<p><span style="color: #330099; font-size: small;">尝试方案一：win8自动修复</span></p>
+<p><span style="color: #330099; font-size: small;"><span style="color: #000000; font-size: x-small;">用win8的安装镜像的U盘来自动修复win8。在安装界面里面有个 修复计算机的选项，在里面选择自动修复。可是不管用，grub2仍然没有被覆盖。而且win8仍然不能被识别。</span></span></p>
+<p></p>
+<p>&nbsp;</p>
+<p><span style="color: #330099; font-size: small;">尝试方案二：重新安装grub2</span></p>
+<p>一开始想着grub2能不能识别win8，于是就进到fedora16里面重新安装了grub2.具体参考了下面这个链接：</p>
+<p><a href="http://blog.sina.com.cn/s/blog_6b59d3df01018l7x.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_6b59d3df01018l7x.html</a></p>
+<p>在fedora16的终端里面输入下面两条命令：</p>
+<p>&nbsp;</p>
+<div>sudo grub2-mkconfig -o /boot/grub2/grub.cfg</div><br><div></div><br><div>sudo grub2-install /dev/sda<p></p><br></div>
+
+<p>然后尝试着重启进入grub2</p>
+<p>重启之后进入grub2看到了有三个win7选项，分别是</p>
+<p>一  win7 /dev/sda1</p>
+<p>二 win7的recovery模式   在/dev/sda2里面。</p>
+<p>三 win7的recovery模式   在/dev/bda4里面。</p>
+<p>这里先说下我的硬盘情况。从windows的磁盘工具里面可以看到我的硬盘是这样的:</p>
+<p><img src="http://img.my.csdn.net/uploads/201208/31/1346405331_7761.png" alt=""></p>
+<p>刚才说的win7三个选项中，sda1对应的是我的H盘，也就是200MB的保留分区。 sda2是C盘，也就是我安装win8的盘。 bda4不知道是什么盘符，这里先暂时不去管它。</p>
+<p>我选择sda1对应选项，出现的错误跟一开始的时候是一样的：</p>
+<p><span style="color: #ff0000;">windowssystem32winload.exe</span></p>
+<p><span style="color: #ff0000;">0xc0000428</span></p>
+<p><span style="color: #ff0000;">windows can&#8217;t verify the digital signature for this file.</span></p>
+<div id="trans-result-content"><br><br><span style="color: #ff0000;">无法验证这个文件的数字签名。</span><br><br></div>
+
+<p>接着我选择  /dev/sda2对应的win7 recovery模式，<span style="color: #330099;"><strong>这下子可以进入win8了</strong></span>，但是里面的东西因为我第一次尝试的win8自动修复而被初始化了。而且最要命的是win store商店里面的所有应用都不能下载了。显示的错误是这样的：</p>
+<p><span style="color: #ff0000;">0x80073cf9</span></p>
+<p>搜索了一下网上似乎还没有解决方案。这样一来win8无法安装Metro应用了。</p>
+<p><span style="color: #330099; font-size: small;"></span></p>
+<p></p>
+<p><span style="color: #330099; font-size: small;">方案三（最终方案）：NTBOOTautofix 修复windows8引导   easyBCD引导grub2。</span></p>
+<p>在进入win8之后，下载NTBOOTautofix，成功恢复了windows8的引导。win8的引导重新覆盖了grub2.</p>
+<p><a href="http://www.win8mi.com/ntbootautofix.html" target="_blank" rel="external">http://www.win8mi.com/ntbootautofix.html</a></p>
+<p>&nbsp;</p>
+<p>再进入win8镜像的U盘重新修复 初始化win8。应用商店应用可以正常下载。</p>
+<p>&nbsp;</p>
+<p>然后下载easyBCD，最新版本的easyBCD支持fedora16的grub2的引导。正好可以引导我的fedora16.</p>
+<p>具体easyBCD的操作,请看下面这个链接。</p>
+<p><a href="http://benyouhui.it168.com/thread-2368303-1-1.html" target="_blank" rel="external">http://benyouhui.it168.com/thread-2368303-1-1.html</a></p>
+<p>好~现在我重新启动之后，首先出现的是windows的引导选项，如果我们选择win8，那么会直接进入win8.</p>
+<p>如果我们选择的是fedora16，就会进入grub2，然后选择fedora16就好了。</p>
+<p>至此，我的双系统问题就解决了。</p>
+<p><span style="color: #330099; font-size: small;">最后，来总结一下。</span></p>
+<p>如果是先安装的linux再安装win8，那么我们直接使用easyBC就可以了。</p>
+<p>如果是先安装win8再安装linux，那么我们必须先用NTBOOTautofix覆盖grub2的引导回到win8的引导，然后使用easyBCD可以选择进入grub2的引导。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fedora16/" rel="tag">#Fedora16</a>
+          
+            <a href="/tags/win8/" rel="tag">#win8</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/09/17/windows自带计算器模式切换的实现研究/" rel="prev">windows自带计算器模式切换的实现研究</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/08/06/GitHub使用/" rel="next">GitHub使用</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

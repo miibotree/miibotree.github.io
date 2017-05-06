@@ -1,0 +1,689 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++,算法," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="最近帮同学做一个数据库搜索比较统计功能的项目。项目流程大概如下：
+（一）抓取信息源，生成数据库。
+（二）提取数据库中的中文信息。
+（三）将中文信息进行分词操作。
+（四）利用tf-idf算法统计对文本中得词进行加权统计。
+（五）利用加权统计结果 获得相似度高的文件组。
+（六）将相似度相关的文件组利用图形方式描述并且关联出来，看到直观的统计效果。
+这里顺便说一句。在做第二步的时候，本来想写个c语言的程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ICTCLAS2012分词库在C环境下的使用">
+<meta property="og:url" content="http://yoursite.com/2012/09/17/ICTCLAS2012分词库在C环境下的使用/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="最近帮同学做一个数据库搜索比较统计功能的项目。项目流程大概如下：
+（一）抓取信息源，生成数据库。
+（二）提取数据库中的中文信息。
+（三）将中文信息进行分词操作。
+（四）利用tf-idf算法统计对文本中得词进行加权统计。
+（五）利用加权统计结果 获得相似度高的文件组。
+（六）将相似度相关的文件组利用图形方式描述并且关联出来，看到直观的统计效果。
+这里顺便说一句。在做第二步的时候，本来想写个c语言的程">
+<meta property="og:updated_time" content="2015-07-25T04:48:47.427Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ICTCLAS2012分词库在C环境下的使用">
+<meta name="twitter:description" content="最近帮同学做一个数据库搜索比较统计功能的项目。项目流程大概如下：
+（一）抓取信息源，生成数据库。
+（二）提取数据库中的中文信息。
+（三）将中文信息进行分词操作。
+（四）利用tf-idf算法统计对文本中得词进行加权统计。
+（五）利用加权统计结果 获得相似度高的文件组。
+（六）将相似度相关的文件组利用图形方式描述并且关联出来，看到直观的统计效果。
+这里顺便说一句。在做第二步的时候，本来想写个c语言的程">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> ICTCLAS2012分词库在C环境下的使用 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              ICTCLAS2012分词库在C环境下的使用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:37:27+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>最近帮同学做一个数据库搜索比较统计功能的项目。项目流程大概如下：</p>
+<p>（一）抓取信息源，生成数据库。</p>
+<p>（二）提取数据库中的中文信息。</p>
+<p>（三）将中文信息进行分词操作。</p>
+<p>（四）利用tf-idf算法统计对文本中得词进行加权统计。</p>
+<p>（五）利用加权统计结果 获得相似度高的文件组。</p>
+<p>（六）将相似度相关的文件组利用图形方式描述并且关联出来，看到直观的统计效果。</p>
+<p>这里顺便说一句。在做第二步的时候，本来想写个c语言的程序提取xml文件中特定标签中的信息。</p>
+<p>然后就一直苦恼要考虑字符分析和各种特殊情况。</p>
+<p>后来经大家点拨，明白了解决问题的方法不止一种。对于类似这样的操作，可以利用正则表达式轻松提取。</p>
+<p>除了c语言之外，利用php， python， shell脚本编写可能会更加效率的解决问题。</p>
+<p>后来在同学的帮助之下利用php解决了问题。</p>
+<p>这件事情让我明白了：有时候不要在一棵树上吊死。有时候换种方法，换种工具，换种思维，可能会更快的解决问题。</p>
+<p><span id="more-411"></span></p>
+<p>这篇文章主要说说第三步的操作。这里使用了ICTCLAS分词系统提供的API接口。</p>
+<p>直接下载ICTCLAS2012的链接：</p>
+<p><a href="http://www.nlpir.org/download/ICTCLAS2012-SDK-u0106.rar" target="_blank" rel="external">http://www.nlpir.org/download/ICTCLAS2012-SDK-u0106.rar</a></p>
+<p>ICTCLAS官网：</p>
+<p><a href="http://ictclas.org/" target="_blank" rel="external">http://ictclas.org/</a></p>
+<p>下面以2012版本为例子，简单说明一下。</p>
+<p>该版本提供了License.dll，貌似有效期只有1个月。一个月后证书会失效。大家如果有能力可以自己尝试破解。</p>
+<p>下载下来之后其实使用的头文件，dll还有lib文件都还是2011版本的。</p>
+<p>简单看了一下头文件中的API接口，发现提供了多种中文编码的API。GBK， UTF8， Big5等。</p>
+<p>然后有个example的例子，再简单看一下，发现使用还是很方便的。有什么问题可以看接口文档。</p>
+<p><a href="http://ictclas.org/ictclas_files.html" target="_blank" rel="external">http://ictclas.org/ictclas_files.html</a></p>
+<p>这里我们首先做下准备工作。下面文件放在运行目录下面</p>
+<p>ICTCLAS2011.h</p>
+<p>ICTCLAS2011.dll</p>
+<p>ICTCLAS2011.lib</p>
+<p>Configure.xml 这个是配置文件，也是必要的。</p>
+<p>License.dll证书文件，必要的。</p>
+<p>ICTCLAS2012.user 同样也是必要的。</p>
+<p>Data词典文件。</p>
+<p>下面以UTF8为例子。说下面三个函数（摘自2011版接口文档）：</p>
+<p>ICTCLAS_Init</p>
+<p>依据指定的路径初始化系统词典和配置信息。</p>
+<p>声明</p>
+<p>bool ICTCLAS_Init(const char* pszInitDir=NULL);</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_Init</p>
+<p>&nbsp;</p>
+<p>返回值</p>
+<p>如果初始化成功返回true, 否则返回false. 如初始化不成功,请查看ictclas.log文件了解详细错误原因.</p>
+<p>参数</p>
+<p>pszInitDir：初始化路径，应包含配置文件（Configure.xml）和词典目录(Data目录)以及授权文件(user.lic). 如果这些文件及目录在系统运行当前目录下，此参数可以为null。</p>
+<p>说明</p>
+<p>ICTCLAS_Init必须在调用系统其它任何操作前进行调用,以初始化系统的基本配置信息及加载词典文件。当停止使用ICTCLAS后，应调用ICTCLAS_Exit方法清理内存缓冲区。</p>
+<p>ICTCLAS_Init加载失败有可能是以下原因造成：</p>
+<p>1） 缺少系统加载所需的词典文件</p>
+<p>系统的词典都保存在Data目录下，请确保初始化路径下有Data目录，且词典文件完整。</p>
+<p>2） 缺少配置文件</p>
+<p>系统配置文件名为Configure.xml，用于保存系统所需的配置信息，请确保初始化路径下包含正确的Configure.xml文件。</p>
+<p>3） 缺少授权文件user.lic</p>
+<p>试用授权文件名为user.lic,缺少合法的授权文件将无法正常加载。</p>
+<p>4） 其他未知的加载错误，请查看ICTCLAS.log日志文件。</p>
+<p>当时自己老是初始化错误，后来发现没有包含以上文件。如果初始化失败，会自动生成以时间命名的txt文档日志，里面记录了错误信息。自己后来查看错误信息发现了错误。初始化以后支持遍历目录。</p>
+<p>CTCLAS_Exit</p>
+<p>退出ICTCLAS分词系统，释放词典占用的系统内存空间。</p>
+<p>声明</p>
+<p>bool ICTCLAS_Exit( );</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_Exit</p>
+<p>&nbsp;</p>
+<p>返回值</p>
+<p>成功返回true；否则返回false。</p>
+<p>说明</p>
+<p>ICTLCAS_Exit此方法应该在您的应用程序退出前调用，以便释放词典所占用的内存空间。此方法会清空ICTCLAS占用的词典内存空间，清除临时缓冲区及其他系统资源。</p>
+<p>如果您需要再次调用ICTCLAS进行分词，请重新调用ICTLCAS_Init()加载基本信息。</p>
+<p>ICTCLAS_FileProcess</p>
+<p>Process a text file</p>
+<p>bool ICTCLAS_FileProcess(const char _sSrcFilename,eCodeType eCt,const char _sDsnFilename,int bPOStagged);</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_FileProcess</p>
+<p>&nbsp;</p>
+<p>Return Value</p>
+<p>Return true if processing succeed. Otherwise return false.</p>
+<p>Parameters</p>
+<p>sSourceFilename: The source file path to be analysized;</p>
+<p>eCodeType: The character code type of the source file</p>
+<p>sDsnFilename: The result file name to store the results.</p>
+<p>bPOStagged: Judge whether need POS tagging, 0 for no tag; 1 for tagging; default:1.</p>
+<p>Remarks</p>
+<p>The ICTCLAS_FileProcess function works properly only if ICTCLAS_Init succeeds.</p>
+<p>The output format is customized in ICTCLAS configure.</p>
+<p>Example</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> &amp;lt;<span class="built_in">string</span>.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;lt;stdlib.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;lt;<span class="built_in">string</span>.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;quot;<span class="type">ICTCLAS50</span>.h&amp;quot;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main(<span class="built_in">int</span> argc, <span class="built_in">char</span>* argv<span class="literal">[]</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(!<span class="type">ICTCLAS_Init</span><span class="literal">()</span>) </span><br><span class="line">&#123;</span><br><span class="line">printf(&amp;quot;<span class="type">Init</span> failsn&amp;quot;);</span><br><span class="line">return -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">ICTCLAS_FileProcess</span>(&amp;quot;<span class="type">Test</span>.txt&amp;quot;, <span class="type">CODE_TYPE_GB</span>,&amp;quot;<span class="type">Test_result</span>.txt&amp;quot;,<span class="number">1</span>);</span><br><span class="line"><span class="type">ICTCLAS_Exit</span><span class="literal">()</span>;</span><br><span class="line">return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Output: Please check the “Test_result.txt”</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/09/17/tf-idf算法/" rel="prev">tf-idf算法</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/09/17/算法与编程–信号初步处理/" rel="next">算法与编程–信号初步处理</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

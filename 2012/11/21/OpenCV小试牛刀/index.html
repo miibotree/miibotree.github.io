@@ -1,0 +1,632 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OpenCV," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="原来从网上下载过openCV的源码，在windows下面用vs2010编译生成lib 库。这个过程就不介绍了，下面这个网站里面有详细的例子。
+http://www.opencv.org.cn/index.php
+lib库生成之后，我们为了要使用lib库和头文件库，我们必须做下面三件事情：
+可以参照下面这个教程
+http://www.opencv.org.cn/index.php/VC_2008_E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV小试牛刀">
+<meta property="og:url" content="http://yoursite.com/2012/11/21/OpenCV小试牛刀/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="原来从网上下载过openCV的源码，在windows下面用vs2010编译生成lib 库。这个过程就不介绍了，下面这个网站里面有详细的例子。
+http://www.opencv.org.cn/index.php
+lib库生成之后，我们为了要使用lib库和头文件库，我们必须做下面三件事情：
+可以参照下面这个教程
+http://www.opencv.org.cn/index.php/VC_2008_E">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/11/1.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/11/2.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/11/3.png">
+<meta property="og:updated_time" content="2015-07-25T05:08:45.699Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV小试牛刀">
+<meta name="twitter:description" content="原来从网上下载过openCV的源码，在windows下面用vs2010编译生成lib 库。这个过程就不介绍了，下面这个网站里面有详细的例子。
+http://www.opencv.org.cn/index.php
+lib库生成之后，我们为了要使用lib库和头文件库，我们必须做下面三件事情：
+可以参照下面这个教程
+http://www.opencv.org.cn/index.php/VC_2008_E">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> OpenCV小试牛刀 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              OpenCV小试牛刀
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-21T22:32:00+08:00" content="2012-11-21">
+            2012-11-21
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>原来从网上下载过openCV的源码，在windows下面用vs2010编译生成lib 库。这个过程就不介绍了，下面这个网站里面有详细的例子。</p>
+<p><a href="http://www.opencv.org.cn/index.php" target="_blank" rel="external">http://www.opencv.org.cn/index.php</a></p>
+<p>lib库生成之后，我们为了要使用lib库和头文件库，我们必须做下面三件事情：</p>
+<p>可以参照下面这个教程</p>
+<p><a href="http://www.opencv.org.cn/index.php/VC_2008_Express%E4%B8%8B%E5%AE%89%E8%A3%85OpenCV2.3.1" target="_blank" rel="external">http://www.opencv.org.cn/index.php/VC_2008_Express%E4%B8%8B%E5%AE%89%E8%A3%85OpenCV2.3.1</a></p>
+<p>以我自己vs2010为例子，大家注意自己的安装路径!!!!!!</p>
+<p>关键点就是要修改三个地方：</p>
+<p>在菜单栏 的 项目，属性</p>
+<p>1 配置属性中 -&gt; VC++目录-&gt;包含目录 中增加</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include\opencv</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\include\opencv2</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/1.png" alt="" title="1"></a></p>
+<p>2配置属性中 -&gt; VC++目录-&gt;库目录</p>
+<p>D:opencv\opencv\Latestbuild\Miibotree\install\lib</p>
+<p>昨天自己在写的时候没有增加这项，结果郁闷了好长时间- -|||</p>
+<p>&nbsp;</p>
+<p>3链接器-&gt;输入-&gt;附加依赖项</p>
+<p>opencv_contrib231d.lib</p>
+<p>opencv_calib3d231d.lib</p>
+<p>opencv_core231d.lib</p>
+<p>opencv_features2d231d.lib</p>
+<p>opencv_flann231d.lib</p>
+<p>opencv_gpu231d.lib</p>
+<p>opencv_highgui231d.lib</p>
+<p>opencv_imgproc231d.lib</p>
+<p>opencv_legacy231d.lib</p>
+<p>opencv_ml231d.lib</p>
+<p>opencv_objdetect231d.lib</p>
+<p>opencv_ts231d.lib</p>
+<p>opencv_video231d.lib</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/2.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/2.png" alt="" title="2"></a></p>
+<p>当然这一步我们可以用#pragma comment实现,效果应该是一样的。</p>
+<p>&nbsp;</p>
+<p>要添加这三步的原因是链接时候的问题。上次听了华哥在讲linux下面一个helloworld是怎么生成出来的，自己又复习一下之后又有了深入的了解。</p>
+<p>现在我们随便建立一个工程，写点代码测试一下：</p>
+<p>&nbsp;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "cv.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "highgui.h"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> g_slider_position = <span class="number">0</span>;</span><br><span class="line">CvCapture* g_capture = NULL;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">onTrackbarSlide</span><span class="params">(<span class="keyword">int</span> pos)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">cvSetCaptureProperty(</span><br><span class="line">g_capture,</span><br><span class="line">CV_CAP_PROP_POS_FRAMES,</span><br><span class="line">pos</span><br><span class="line">);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">cvNamedWindow(<span class="string">"MyVedio"</span>, CV_WINDOW_AUTOSIZE);</span><br><span class="line">g_capture = cvCreateFileCapture(argv[<span class="number">1</span>]);</span><br><span class="line"><span class="keyword">int</span> frames = (<span class="keyword">int</span>) cvGetCaptureProperty(</span><br><span class="line">g_capture,</span><br><span class="line">CV_CAP_PROP_FRAME_COUNT</span><br><span class="line">);</span><br><span class="line"><span class="keyword">if</span> (frames != <span class="number">0</span>)&#123;</span><br><span class="line">cvCreateTrackbar(<span class="string">"Position"</span>, <span class="string">"MyVedio"</span>, &amp;amp;g_slider_position, frames, onTrackbarSlide);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">IplImage* frame;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">frame = cvQueryFrame(g_capture);</span><br><span class="line"><span class="keyword">if</span> (!frame)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">cvShowImage(<span class="string">"MyVedio"</span>, frame);</span><br><span class="line"><span class="keyword">char</span> c = cvWaitKey(<span class="number">33</span>);</span><br><span class="line"><span class="keyword">if</span> (c == <span class="number">27</span>)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">cvReleaseCapture(&amp;amp;g_capture);</span><br><span class="line">cvDestroyWindow(<span class="string">"MyVedio"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>cmd里面测试一下，成功~~~！！！</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/11/3.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/11/3.png" alt="" title="3"></a></p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag">#OpenCV</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/11/28/关于默认构造函数的本质/" rel="prev">关于默认构造函数的本质</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/11/20/Kinect入门学习视频/" rel="next">Kinect入门学习视频</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="socket,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="以前在linux上面写过socket的通信，今天想在windows下面再用SDK重新写一遍
+下面先附张图片来看看整个框架：
+然后自己先在控制台下实现：
+服务器端：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用socket做的帮室友找对象小软件">
+<meta property="og:url" content="http://yoursite.com/2012/05/01/利用socket做的帮室友找对象小软件/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="以前在linux上面写过socket的通信，今天想在windows下面再用SDK重新写一遍
+下面先附张图片来看看整个框架：
+然后自己先在控制台下实现：
+服务器端：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636">
+<meta property="og:image" content="http://my.csdn.net/uploads/201205/01/1335846964_9907.png">
+<meta property="og:image" content="http://my.csdn.net/uploads/201205/01/1335847037_2610.png">
+<meta property="og:updated_time" content="2015-07-25T04:57:35.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用socket做的帮室友找对象小软件">
+<meta name="twitter:description" content="以前在linux上面写过socket的通信，今天想在windows下面再用SDK重新写一遍
+下面先附张图片来看看整个框架：
+然后自己先在控制台下实现：
+服务器端：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 利用socket做的帮室友找对象小软件 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              利用socket做的帮室友找对象小软件
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-01T16:00:01+08:00" content="2012-05-01">
+            2012-05-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>以前在linux上面写过socket的通信，今天想在windows下面再用SDK重新写一遍</p>
+<p>下面先附张图片来看看整个框架：</p>
+<p>然后自己先在控制台下实现：</p>
+<p>服务器端：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;WinSock2.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> comment (lib, "ws2_32.lib")</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAXLINE 4096</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">WSADATA wsaData;</span><br><span class="line">SOCKET ListeningSocket;</span><br><span class="line">SOCKET NewConnection;</span><br><span class="line">SOCKADDR_IN ServerAddr;</span><br><span class="line">SOCKADDR_IN ClientAddr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Port = <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">int</span> ClientAddrLen;</span><br><span class="line"><span class="keyword">int</span> iResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span> buff[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> sendline[MAXLINE];</span><br><span class="line"><span class="keyword">int</span> send_bytes;</span><br><span class="line"><span class="comment">//初始化Windows Socket 2.2</span></span><br><span class="line">WSAStartup(MAKEWORD(<span class="number">2</span>, <span class="number">2</span>), &amp;amp;wsaData );</span><br><span class="line"><span class="comment">//创建socket</span></span><br><span class="line">ListeningSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="comment">//填写服务端地址信息</span></span><br><span class="line"><span class="comment">//端口为10000</span></span><br><span class="line"><span class="comment">//IP地址</span></span><br><span class="line">ServerAddr.sin_family = AF_INET;</span><br><span class="line">ServerAddr.sin_port = htons(Port);</span><br><span class="line">ServerAddr.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line"><span class="comment">//绑定监听端口</span></span><br><span class="line">iResult = bind(ListeningSocket, (SOCKADDR*) &amp;amp;ServerAddr, <span class="keyword">sizeof</span>(ServerAddr));</span><br><span class="line"><span class="keyword">if</span> (iResult == SOCKET_ERROR)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"bind faied: %dn"</span>, WSAGetLastError());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"bind succeed!n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//监听</span></span><br><span class="line">iResult = listen(ListeningSocket, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">if</span> (iResult == SOCKET_ERROR)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"listen failed %dn"</span>, WSAGetLastError());</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"listen succeed!n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接受建立连接</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"wait for linking........n"</span>);</span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//NewConnection = accept(ListeningSocket, (SOCKADDR*)&amp;amp;ClientAddr, &amp;amp;ClientAddrLen);</span></span><br><span class="line">NewConnection = accept(ListeningSocket, NULL, NULL);</span><br><span class="line"><span class="built_in">memset</span>(buff, <span class="number">0</span>, MAXLINE);</span><br><span class="line"><span class="keyword">if</span> (NewConnection == INVALID_SOCKET)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//printf("accept socket error!n");</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"accept failed %dn"</span>, WSAGetLastError());</span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//服务器端接受消息</span></span><br><span class="line">n = recv(NewConnection, buff, MAXLINE, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (n == -<span class="number">1</span>)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">buff[n] = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"从客户端来的消息:%sn"</span>, buff);</span><br><span class="line"><span class="comment">//closesocket(NewConnection);</span></span><br><span class="line"><span class="comment">//continue;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//服务器端发送消息</span></span><br><span class="line"><span class="built_in">memset</span>(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"请输入发送消息n"</span>);</span><br><span class="line">gets(sendline);</span><br><span class="line"></span><br><span class="line">send_bytes = send(NewConnection, sendline, <span class="built_in">strlen</span>(sendline), <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (send_bytes &amp;gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"发送消息成功,发送消息字节数为%dn"</span>, send_bytes);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"发送消息失败,发送消息字节数为%dn"</span>, send_bytes);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关闭监听Socket</span></span><br><span class="line">closesocket(NewConnection);</span><br><span class="line">closesocket(ListeningSocket);</span><br><span class="line"><span class="comment">//释放windows socket DLL的相关资源</span></span><br><span class="line">WSACleanup();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>客户端：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;WinSock2.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">pragma</span> comment (lib, "ws2_32.lib")</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAXLINE 4096</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">WSADATA wsaData;<span class="comment">//库文件</span></span><br><span class="line">SOCKET s;<span class="comment">//socket</span></span><br><span class="line">SOCKADDR_IN ServerAddr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Port = <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">int</span> send_bytes;</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span> buff[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> sendline[MAXLINE];</span><br><span class="line"><span class="comment">//初始化Windows Socket 2.2</span></span><br><span class="line">WSAStartup(MAKEWORD(<span class="number">2</span>, <span class="number">2</span>), &amp;amp;wsaData );</span><br><span class="line"><span class="comment">//创建socket</span></span><br><span class="line">s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="comment">//填写服务端地址信息</span></span><br><span class="line"><span class="comment">//端口为10000</span></span><br><span class="line"><span class="comment">//IP地址</span></span><br><span class="line">ServerAddr.sin_family = AF_INET;</span><br><span class="line">ServerAddr.sin_port = htons(Port);</span><br><span class="line">ServerAddr.sin_addr.s_addr = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line"><span class="comment">//绑定监听端口 因为是客户端，这里我们就不需要绑定了</span></span><br><span class="line"><span class="comment">//bind(ListeningSocket, (SOCKADDR*) &amp;amp;ServerAddr, sizeof(ServerAddr));</span></span><br><span class="line"><span class="comment">//接受新的连接 服务器端才接受连接</span></span><br><span class="line"><span class="comment">//NewConnection = accept(ListeningSocket, (SOCKADDR*)&amp;amp;ClientAddr, &amp;amp;ClientAddrLen);</span></span><br><span class="line"><span class="comment">//这里是客户端， 所以应该请求连接</span></span><br><span class="line"><span class="keyword">if</span> (connect(s, (SOCKADDR*) &amp;amp;ServerAddr, <span class="keyword">sizeof</span>(ServerAddr)) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"连接错误！n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"连接成功！n"</span>);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//客户端发送消息</span></span><br><span class="line"><span class="built_in">memset</span>(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"请输入发送消息n"</span>);</span><br><span class="line">gets(sendline);</span><br><span class="line"></span><br><span class="line">send_bytes = send(s, sendline, <span class="built_in">strlen</span>(sendline), <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (send_bytes &amp;gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"发送消息成功,发送消息字节数为%dn"</span>, send_bytes);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"发送消息失败,发送消息字节数为%dn"</span>, send_bytes);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//客户端接受消息</span></span><br><span class="line">n = recv(s, buff, MAXLINE, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (n == -<span class="number">1</span>)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">buff[n] = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"从客户端来的消息:%sn"</span>, buff);</span><br><span class="line"><span class="comment">//closesocket(NewConnection);</span></span><br><span class="line"><span class="comment">//continue;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关闭监听Socket</span></span><br><span class="line">closesocket(s);</span><br><span class="line"><span class="comment">//释放windows socket DLL的相关资源</span></span><br><span class="line">WSACleanup();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在控制台实现的基础上，尝试用SDK写一下，加上了点自己的创意，做个帮室友找对象的小软件。</p>
+<p>客户端用到了对话框和菜单资源，服务器端没有用资源，直接用的窗口子类化写的。</p>
+<p>client</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include <span class="title">"resource.h"</span></span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma comment (lib, <span class="title">"ws2_32.lib"</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define MAXLINE 4096</span></span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM) ;</span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> AboutDlgProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM) ;</span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> ServerDlgProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WINAPI WinMain (HI<span class="built_in">NSTANCE</span> hInstance, HI<span class="built_in">NSTANCE</span> hPrevInstance,</span><br><span class="line">PSTR szCmdLine, <span class="keyword">int</span> iCmdShow)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">static</span> TCHAR szAppName[] = TEXT (<span class="string">"ModeDia"</span>) ;</span><br><span class="line">HWND hwnd ;</span><br><span class="line">MSG msg ;</span><br><span class="line">WNDCLASS wndclass ;</span><br><span class="line"></span><br><span class="line">wndclass<span class="variable">.style</span> = CS_HREDRAW | CS_VREDRAW ;</span><br><span class="line">wndclass<span class="variable">.lpfnWndProc</span> = WndProc ;</span><br><span class="line">wndclass<span class="variable">.cbClsExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.cbWndExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.hInstance</span> = hInstance ;</span><br><span class="line">wndclass<span class="variable">.hIcon</span> = LoadIcon (<span class="literal">NULL</span>, IDI_APPLI<span class="built_in">CATION</span>) ;</span><br><span class="line">wndclass<span class="variable">.hCursor</span> = LoadCursor (<span class="literal">NULL</span>, IDC_ARROW) ;</span><br><span class="line">wndclass<span class="variable">.hbrBackground</span> = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</span><br><span class="line">wndclass<span class="variable">.lpszMenuName</span> = szAppName ;</span><br><span class="line">wndclass<span class="variable">.lpszClassName</span> = szAppName ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!RegisterClass (&amp;amp;wndclass))</span><br><span class="line">&#123;</span><br><span class="line">MessageBox (<span class="literal">NULL</span>, TEXT (<span class="string">"This program requires Windows NT!"</span>),</span><br><span class="line">szAppName, MB_ICONERROR) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hwnd = CreateWindow (szAppName,</span><br><span class="line">TEXT (<span class="string">"帮室友找对象"</span>),</span><br><span class="line">WS_OVERLAPPEDWINDOW,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line">hInstance,</span><br><span class="line"><span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">ShowWindow (hwnd, iCmdShow) ;</span><br><span class="line">UpdateWindow (hwnd) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (GetMessage (&amp;amp;msg, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">TranslateMessage (&amp;amp;msg) ;</span><br><span class="line">DispatchMessage (&amp;amp;msg) ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> msg<span class="variable">.wParam</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND hwnd, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">HDC hdc ;</span><br><span class="line">PAINTSTRUCT ps ;</span><br><span class="line">RECT rect ;</span><br><span class="line"><span class="keyword">static</span> HI<span class="built_in">NSTANCE</span> hInstance;</span><br><span class="line"><span class="keyword">switch</span> (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_CREATE:</span><br><span class="line">hInstance = ((LPCREATESTRUCT) lParam) -&amp;gt; hInstance;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span> (LOWORD (wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> IDM_APP_ABOUT :</span><br><span class="line">DialogBox (hInstance, TEXT(<span class="string">"AboutBox"</span>), hwnd, AboutDlgProc);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> IDM_APP_SERVER :</span><br><span class="line">DialogBox(hInstance, TEXT(<span class="string">"ServerInfo"</span>),hwnd,ServerDlgProc);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">case</span> WM_PAINT:</span><br><span class="line">hdc = BeginPaint (hwnd, &amp;amp;ps) ;</span><br><span class="line"></span><br><span class="line">GetClientRect (hwnd, &amp;amp;rect) ;</span><br><span class="line"></span><br><span class="line">DrawText (hdc, TEXT (<span class="string">"还在搞基？你OUT了!帮室友找对象，去寻找你心中的她把!!"</span>), -<span class="number">1</span>, &amp;amp;rect,</span><br><span class="line">DT_SINGLELINE | DT_CENTER | DT_VCENTER) ;</span><br><span class="line"></span><br><span class="line">EndPaint (hwnd, &amp;amp;ps) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_DESTROY:</span><br><span class="line">PostQuitMessage (<span class="number">0</span>) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> DefWindowProc (hwnd, message, wParam, lParam) ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> AboutDlgProc(HWND hDlg, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">switch</span> (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_INITDIALOG:</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span> (LOWORD(wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> IDOK:</span><br><span class="line"><span class="comment">//这里我们来处理socket</span></span><br><span class="line">&#123;</span><br><span class="line">WSADATA wsaData;<span class="comment">//库文件</span></span><br><span class="line">SOCKET s;<span class="comment">//socket</span></span><br><span class="line">SOCKADDR_IN ServerAddr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> buff1[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> buff2[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> buff3[MAXLINE];</span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Port = <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">int</span> send_bytes;</span><br><span class="line">TCHAR sendline[MAXLINE];</span><br><span class="line"><span class="comment">//初始化Windows Socket 2.2</span></span><br><span class="line">WSAStartup(MAKEWORD(<span class="number">2</span>, <span class="number">2</span>), &amp;amp;wsaData );</span><br><span class="line"><span class="comment">//创建socket</span></span><br><span class="line">s = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="comment">//填写服务端地址信息</span></span><br><span class="line"><span class="comment">//端口为10000</span></span><br><span class="line"><span class="comment">//IP地址</span></span><br><span class="line">ServerAddr<span class="variable">.sin_family</span> = AF_INET;</span><br><span class="line">ServerAddr<span class="variable">.sin_port</span> = htons(Port);</span><br><span class="line">ServerAddr<span class="variable">.sin_addr</span><span class="variable">.s_addr</span> = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (connect(s, (SOCKADDR*) &amp;amp;ServerAddr, <span class="keyword">sizeof</span>(ServerAddr)) != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hDlg, TEXT(<span class="string">"连接错误"</span>), TEXT(<span class="string">"错误啦"</span>), MB_OK);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hDlg, TEXT(<span class="string">"连接成功"</span>), TEXT(<span class="string">"成功啦"</span>), MB_OK);</span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="comment">//客户端发送消息</span></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hDlg, IDC_NAME, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(s, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hDlg, IDC_AGE, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(s, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hDlg, IDC_INFO, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(s, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"><span class="comment">//客户端接收消息</span></span><br><span class="line">memset(buff1, <span class="number">0</span>, MAXLINE);</span><br><span class="line">memset(buff2, <span class="number">0</span>, MAXLINE);</span><br><span class="line">memset(buff3, <span class="number">0</span>, MAXLINE);</span><br><span class="line"></span><br><span class="line">n = recv(s, buff1, MAXLINE, <span class="number">0</span>);</span><br><span class="line">n = recv(s, buff2, MAXLINE, <span class="number">0</span>);</span><br><span class="line">n = recv(s, buff3, MAXLINE, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">SetDlgItemText(hDlg, IDC_NAME1, (LPCWSTR)buff1);</span><br><span class="line">SetDlgItemText(hDlg, IDC_AGE1, (LPCWSTR)buff2);</span><br><span class="line">SetDlgItemText(hDlg, IDC_INFO1, (LPCWSTR)buff3);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (send_bytes &amp;gt; <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hDlg, TEXT(<span class="string">"发送消息成功"</span>), TEXT(<span class="string">"成功啦"</span>), MB_OK);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hDlg, TEXT(<span class="string">"发送消息失败"</span>), TEXT(<span class="string">"失败啦"</span>), MB_OK);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关闭监听Socket</span></span><br><span class="line">closesocket(s);</span><br><span class="line"><span class="comment">//释放windows socket DLL的相关资源</span></span><br><span class="line">WSACleanup();</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">case</span> ID<span class="built_in">CANCEL</span>:</span><br><span class="line">EndDialog(hDlg, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> ServerDlgProc(HWND hDlg, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">switch</span> (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_INITDIALOG:</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span> (LOWORD(wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> IDOK:</span><br><span class="line">EndDialog(hDlg, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>server</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*------------------------------------------------------------</span><br><span class="line">TCP 通信之帮室友找对象 服务器端</span><br><span class="line"></span><br><span class="line">Powered by Miibotree</span><br><span class="line">------------------------------------------------------------*/</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#pragma comment (lib, <span class="title">"ws2_32.lib"</span>)</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define MAXLINE 4096</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#define IDC_BUTTON1 1001</span></span><br><span class="line"><span class="preprocessor">#define IDC_BUTTON2 1002</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT1 1003</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT2 1004</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT3 1005</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT4 1006</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT5 1007</span></span><br><span class="line"><span class="preprocessor">#define IDC_EDIT6 1008</span></span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM);</span><br><span class="line"></span><br><span class="line"><span class="comment">//int Listen_socket(HWND hwnd, int choose);</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WINAPI WinMain (HI<span class="built_in">NSTANCE</span> hInstance, HI<span class="built_in">NSTANCE</span> hPrevInstance,</span><br><span class="line">PSTR szCmdLine, <span class="keyword">int</span> iCmdShow)</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">static</span> TCHAR szAppName[] = TEXT(<span class="string">"server"</span>);</span><br><span class="line">HWND hwnd;</span><br><span class="line">MSG msg;</span><br><span class="line">WNDCLASS wndclass;</span><br><span class="line"></span><br><span class="line">wndclass<span class="variable">.style</span> = CS_HREDRAW | CS_VREDRAW ;</span><br><span class="line">wndclass<span class="variable">.lpfnWndProc</span> = WndProc ;</span><br><span class="line">wndclass<span class="variable">.cbClsExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.cbWndExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.hInstance</span> = hInstance ;</span><br><span class="line">wndclass<span class="variable">.hIcon</span> = LoadIcon (<span class="literal">NULL</span>, IDI_APPLI<span class="built_in">CATION</span>) ;</span><br><span class="line">wndclass<span class="variable">.hCursor</span> = LoadCursor (<span class="literal">NULL</span>, IDC_ARROW) ;</span><br><span class="line">wndclass<span class="variable">.hbrBackground</span> = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</span><br><span class="line">wndclass<span class="variable">.lpszMenuName</span> = <span class="literal">NULL</span> ;</span><br><span class="line">wndclass<span class="variable">.lpszClassName</span> = szAppName ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!RegisterClass (&amp;amp;wndclass))</span><br><span class="line">&#123;</span><br><span class="line">MessageBox (<span class="literal">NULL</span>, TEXT (<span class="string">"This program requires Windows NT!"</span>),</span><br><span class="line">szAppName, MB_ICONERROR) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hwnd = CreateWindow (szAppName,</span><br><span class="line">TEXT (<span class="string">"这里是天堂社区，负责牵红线射丘比特之箭"</span>),</span><br><span class="line">WS_OVERLAPPEDWINDOW,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line">hInstance,</span><br><span class="line"><span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">ShowWindow (hwnd, iCmdShow);</span><br><span class="line">UpdateWindow (hwnd) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (GetMessage (&amp;amp;msg, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">TranslateMessage (&amp;amp;msg) ;</span><br><span class="line">DispatchMessage (&amp;amp;msg) ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> msg<span class="variable">.wParam</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND hwnd, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">HDC hdc;</span><br><span class="line">PAINTSTRUCT ps;</span><br><span class="line">RECT rect;</span><br><span class="line">HWND hwndButton;</span><br><span class="line">HWND hwndEdit;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> cxChar, cyChar;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_CREATE:</span><br><span class="line">cxChar = LOWORD (GetDialogBaseUnits ()) ;</span><br><span class="line">cyChar = HIWORD (GetDialogBaseUnits ()) ;</span><br><span class="line">hwndButton = CreateWindow ( TEXT(<span class="string">"button"</span>),</span><br><span class="line">TEXT(<span class="string">"月老/丘比特开始连线"</span>),</span><br><span class="line">WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,</span><br><span class="line">cxChar + <span class="number">420</span>, cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">350</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, <span class="number">7</span> * cyChar / <span class="number">4</span>,</span><br><span class="line">hwnd, (HMENU) IDC_BUTTON1,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">200</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">40</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT1,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">200</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">140</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT2,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">200</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">240</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT3,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">700</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">40</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT4,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">700</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">140</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT5,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">hwndEdit = CreateWindow (TEXT(<span class="string">"edit"</span>),<span class="literal">NULL</span>,</span><br><span class="line">WS_CHILD | WS_VISIBLE |</span><br><span class="line">WS_BORDER|ES_LEFT | ES_MULTILINE |</span><br><span class="line">ES_AUTOVSCROLL,</span><br><span class="line">cxChar+<span class="number">700</span> , cyChar * (<span class="number">1</span> + <span class="number">2</span> * <span class="number">1</span>)+<span class="number">240</span>,</span><br><span class="line"><span class="number">20</span> * cxChar, (<span class="number">7</span> * cyChar / <span class="number">4</span>)*<span class="number">2</span>,</span><br><span class="line">hwnd, (HMENU)IDC_EDIT6,</span><br><span class="line">((LPCREATESTRUCT) lParam)-&amp;gt;hInstance, <span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">case</span> WM_PAINT:</span><br><span class="line"><span class="comment">//GetClientRect(hwnd, &amp;amp;rect);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//DrawText(hdc, TEXT("我是万能的牵红线的死老头，我是万能的乱射箭的丘比特"), -1, &amp;amp;rect,</span></span><br><span class="line"><span class="comment">// DT_SINGLELINE | DT_CENTER | DT_VCENTER);</span></span><br><span class="line">LOGFONT a;</span><br><span class="line">a<span class="variable">.lfHeight</span>=<span class="number">25</span>;</span><br><span class="line">a<span class="variable">.lfWidth</span>=<span class="number">10</span>;</span><br><span class="line">a<span class="variable">.lfEscapement</span>=<span class="number">0</span>;</span><br><span class="line">a<span class="variable">.lfWeight</span>=<span class="number">700</span>;</span><br><span class="line">a<span class="variable">.lfItalic</span>=<span class="literal">FALSE</span>;</span><br><span class="line">a<span class="variable">.lfUnderline</span>=<span class="literal">FALSE</span>;</span><br><span class="line">a<span class="variable">.lfStrikeOut</span>=<span class="literal">FALSE</span>;</span><br><span class="line">a<span class="variable">.lfCharSet</span> =GB2312_CHARSET;</span><br><span class="line"></span><br><span class="line">hdc = BeginPaint (hwnd, &amp;amp;ps);</span><br><span class="line">GetClientRect (hwnd, &amp;amp;rect);</span><br><span class="line">SelectObject(hdc,CreateFontIndirect(&amp;amp;a));</span><br><span class="line">SetTextColor(hdc,(<span class="number">100</span>,<span class="number">200</span>,<span class="number">50</span>));</span><br><span class="line">TextOut(hdc, <span class="number">100</span>, <span class="number">30</span>, L<span class="string">"征婚启事"</span>, wcslen(L<span class="string">"征婚启事"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">100</span>, <span class="number">100</span>, L<span class="string">"姓名"</span>, wcslen(L<span class="string">"姓名"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">100</span>, <span class="number">200</span>, L<span class="string">"年龄"</span>, wcslen(L<span class="string">"年龄"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">100</span>, <span class="number">300</span>, L<span class="string">"信息"</span>, wcslen(L<span class="string">"信息"</span>) );</span><br><span class="line"></span><br><span class="line">TextOut(hdc, <span class="number">600</span>, <span class="number">30</span>, L<span class="string">"应婚启事"</span>, wcslen(L<span class="string">"应婚启事"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">600</span>, <span class="number">100</span>, L<span class="string">"姓名"</span>, wcslen(L<span class="string">"姓名"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">600</span>, <span class="number">200</span>, L<span class="string">"年龄"</span>, wcslen(L<span class="string">"年龄"</span>));</span><br><span class="line">TextOut(hdc, <span class="number">600</span>, <span class="number">300</span>, L<span class="string">"信息"</span>, wcslen(L<span class="string">"信息"</span>) );</span><br><span class="line"></span><br><span class="line">TextOut(hdc, <span class="number">800</span>, <span class="number">450</span>, L<span class="string">"MiiBotree制作"</span>, wcslen(L<span class="string">"MiiBotree制作"</span>) );</span><br><span class="line">EndPaint(hwnd, &amp;amp;ps);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span>(LOWORD(wParam))</span><br><span class="line"><span class="keyword">case</span> IDC_BUTTON1:</span><br><span class="line">&#123;</span><br><span class="line">WSADATA wsaData;</span><br><span class="line">SOCKET ListeningSocket;</span><br><span class="line">SOCKET NewConnection;</span><br><span class="line">SOCKADDR_IN ServerAddr;</span><br><span class="line">SOCKADDR_IN ClientAddr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Port = <span class="number">10000</span>;</span><br><span class="line"><span class="keyword">int</span> ClientAddrLen;</span><br><span class="line"><span class="keyword">int</span> iResult;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="keyword">char</span> buff1[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> buff2[MAXLINE];</span><br><span class="line"><span class="keyword">char</span> buff3[MAXLINE];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> send_bytes;</span><br><span class="line">TCHAR sendline[MAXLINE];</span><br><span class="line"><span class="comment">//初始化Windows Socket 2.2</span></span><br><span class="line">WSAStartup(MAKEWORD(<span class="number">2</span>, <span class="number">2</span>), &amp;amp;wsaData );</span><br><span class="line"><span class="comment">//创建socket</span></span><br><span class="line">ListeningSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);</span><br><span class="line"><span class="comment">//填写服务端地址信息</span></span><br><span class="line"><span class="comment">//端口为10000</span></span><br><span class="line"><span class="comment">//IP地址</span></span><br><span class="line">ServerAddr<span class="variable">.sin_family</span> = AF_INET;</span><br><span class="line">ServerAddr<span class="variable">.sin_port</span> = htons(Port);</span><br><span class="line">ServerAddr<span class="variable">.sin_addr</span><span class="variable">.s_addr</span> = inet_addr(<span class="string">"127.0.0.1"</span>);</span><br><span class="line"><span class="comment">//绑定监听端口</span></span><br><span class="line">iResult = bind(ListeningSocket, (SOCKADDR*) &amp;amp;ServerAddr, <span class="keyword">sizeof</span>(ServerAddr));</span><br><span class="line"><span class="keyword">if</span> (iResult == SOCKET_ERROR)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hwnd, TEXT(<span class="string">"bind faild"</span>), TEXT(<span class="string">"wrong"</span>), MB_OK);</span><br><span class="line"><span class="comment">//printf("bind faied: %dn", WSAGetLastError());</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hwnd, TEXT(<span class="string">"bind success"</span>), TEXT(<span class="string">"success"</span>), MB_OK);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//监听</span></span><br><span class="line">iResult = listen(ListeningSocket, <span class="number">10</span>);</span><br><span class="line"><span class="keyword">if</span> (iResult == SOCKET_ERROR)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hwnd, TEXT(<span class="string">"listen faild"</span>), TEXT(<span class="string">"wrong"</span>), MB_OK);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hwnd, TEXT(<span class="string">"listen success"</span>), TEXT(<span class="string">"success"</span>), MB_OK);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//接受建立连接</span></span><br><span class="line"><span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">NewConnection = accept(ListeningSocket, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span> (NewConnection == INVALID_SOCKET)</span><br><span class="line">&#123;</span><br><span class="line">MessageBox(hwnd, TEXT(<span class="string">"accept faild"</span>), TEXT(<span class="string">"wrong"</span>), MB_OK);</span><br><span class="line"><span class="keyword">continue</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">memset(buff1, <span class="number">0</span>, MAXLINE);</span><br><span class="line">memset(buff2, <span class="number">0</span>, MAXLINE);</span><br><span class="line">memset(buff3, <span class="number">0</span>, MAXLINE);</span><br><span class="line"></span><br><span class="line">n = recv(NewConnection, buff1, MAXLINE, <span class="number">0</span>);</span><br><span class="line">n = recv(NewConnection, buff2, MAXLINE, <span class="number">0</span>);</span><br><span class="line">n = recv(NewConnection, buff3, MAXLINE, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">if</span> (n == -<span class="number">1</span>)</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line">SetDlgItemText(hwnd, IDC_EDIT1, (LPCWSTR)buff1);</span><br><span class="line">SetDlgItemText(hwnd, IDC_EDIT2, (LPCWSTR)buff2);</span><br><span class="line">SetDlgItemText(hwnd, IDC_EDIT3, (LPCWSTR)buff3);</span><br><span class="line"><span class="comment">//closesocket(NewConnection);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hwnd, IDC_EDIT4, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(NewConnection, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hwnd, IDC_EDIT5, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(NewConnection, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">memset(sendline, <span class="number">0</span>, MAXLINE);</span><br><span class="line">GetDlgItemText(hwnd, IDC_EDIT6, sendline, <span class="keyword">sizeof</span>(sendline));</span><br><span class="line">send_bytes = send(NewConnection, (<span class="keyword">const</span> <span class="keyword">char</span>*)sendline, <span class="keyword">sizeof</span>(sendline)/<span class="keyword">sizeof</span>(TCHAR), <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//关闭监听Socket</span></span><br><span class="line">closesocket(NewConnection);</span><br><span class="line">closesocket(ListeningSocket);</span><br><span class="line"><span class="comment">//释放windows socket DLL的相关资源</span></span><br><span class="line">WSACleanup();</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">case</span> WM_DESTROY:</span><br><span class="line">PostQuitMessage(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> DefWindowProc(hwnd, message, wParam, lParam);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最后发个效果图：</p>
+<p><img src="http://my.csdn.net/uploads/201205/01/1335846964_9907.png" alt=""></p>
+<p><img src="http://my.csdn.net/uploads/201205/01/1335847037_2610.png" alt=""></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/socket/" rel="tag">#socket</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/05/01/注册表修改IE默认主页/" rel="prev">注册表修改IE默认主页</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/28/关于socket的阻塞/" rel="next">关于socket的阻塞</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

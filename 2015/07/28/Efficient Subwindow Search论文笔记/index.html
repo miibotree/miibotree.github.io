@@ -1,0 +1,599 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="CV," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="1. Introduction文章介绍了一种称为Efficient Subwindow Search(ESS)的方法,用来定位物体在图像中的位置。该方法比滑动窗(Sliding Window)方法更加高效，具有线性的时间复杂度。而滑动窗方法的时间复杂度为$o(n^4)$。该方法是在图像中找到目标的位置，画出边界框(bounding box)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Efficient Subwindow Search论文笔记">
+<meta property="og:url" content="http://yoursite.com/2015/07/28/Efficient Subwindow Search论文笔记/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="1. Introduction文章介绍了一种称为Efficient Subwindow Search(ESS)的方法,用来定位物体在图像中的位置。该方法比滑动窗(Sliding Window)方法更加高效，具有线性的时间复杂度。而滑动窗方法的时间复杂度为$o(n^4)$。该方法是在图像中找到目标的位置，画出边界框(bounding box)。">
+<meta property="og:image" content="http://yoursite.com/images/1438061784148.png">
+<meta property="og:image" content="http://yoursite.com/images/1438064877164.png">
+<meta property="og:image" content="http://yoursite.com/images/1438065645247.png">
+<meta property="og:updated_time" content="2015-07-28T10:43:00.671Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Efficient Subwindow Search论文笔记">
+<meta name="twitter:description" content="1. Introduction文章介绍了一种称为Efficient Subwindow Search(ESS)的方法,用来定位物体在图像中的位置。该方法比滑动窗(Sliding Window)方法更加高效，具有线性的时间复杂度。而滑动窗方法的时间复杂度为$o(n^4)$。该方法是在图像中找到目标的位置，画出边界框(bounding box)。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Efficient Subwindow Search论文笔记 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Efficient Subwindow Search论文笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-28T16:29:00+08:00" content="2015-07-28">
+            2015-07-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="1-_Introduction">1. Introduction</h2><p>文章介绍了一种称为<strong>Efficient Subwindow Search(ESS)</strong>的方法,用来定位物体在图像中的位置。该方法比<strong>滑动窗(Sliding Window)</strong>方法更加高效，具有线性的时间复杂度。而滑动窗方法的时间复杂度为$o(n^4)$。<br>该方法是在图像中找到目标的位置，画出边界框(bounding box)。<br><a id="more"></a></p>
+<h3 id="1-1_Sliding_Window">1.1 Sliding Window</h3><p>我们首先来看看Sliding Wondow是如何操作的。简单的说，就是对每一个候选区域$R$，通过quality function $f$，计算出一个分类的分数。然后选取所有候选区域中分数最高的那个区域。用公式来表示就是：<br>$$R_{obj} = argmax_{R\subseteq I} f(R)$$<br>但是刚才提到了， 滑动窗方法的时间复杂度为$o(n^4)$，实在太耗时，就提出了很多减小时间复杂度的方法来加快搜索，比如粗略地只搜索合理的区域，或者只把特定大小的区域作为候选窗口。这些方法虽然缩短了时间，但都牺牲了鲁棒性，也就是准确率肯定下降了。那么下面就来看看作者的ESS算法好在哪里</p>
+<h2 id="2-_Efficient_Subwindow_Search_(ESS)">2. Efficient Subwindow Search (ESS)</h2><p>ESS是基于branch-and-bound search分支定界搜索的，但是又跟以往的分支定界搜索不太一样。因为它在quality function的选择上更加灵活。</p>
+<h3 id="2-1_Branch-and-Bound_Search">2.1 Branch-and-Bound Search</h3><p>ESS直观理解的思想是这样的：</p>
+<blockquote>
+<p>虽然存在着大量的候选区域，但是在这些候选区域中却只有几个包含目标物体的区域。所以说，对于每一个候选区域都计算quality function是完全没有必要的。我们应该直接定位到包含最高分的那个区域，而忽略其他搜索空间。</p>
+</blockquote>
+<p>一个矩形可以用四元坐标表示$(t, b, l, r)$，也就是top， bottom， left和right<br>在此基础上我们增加一些改动，用$T$来替换$t$，这里$T = [t_{low}, t_{high}]$,表示一个范围。其它三个元素b、l、r也是如此。<br>如此一来，原来仅仅能表示一个矩形的四元坐标就变成了能够表示一个矩形范围的集合的四元坐标$T=[T, B, L, R]$，如下图所示：<br><img src="/images/1438061784148.png" alt="Alt text"></p>
+<p>有了这种矩形集合的表示方法之后，我们对每一个集合，在集合中计算出最高的quality score。当ESS算法识别出一个矩阵的quality score能够作为所有剩下候选区域的上界的时候，算法就终止了。</p>
+<p>ESS使用<strong>最佳优先原则(best-first manner)</strong>来对候选区域进行搜索。这可以使用<strong>优先队列(priority queue)</strong>来实现。伪代码如下：<br><img src="/images/1438064877164.png" alt="Alt text"></p>
+<h3 id="2-2_Bounding_the_Quality_Function">2.2 Bounding the Quality Function</h3><p>对于一个指定的quality function $f$, 我们还需要另一个函数$\widehat{f}$来规定$f$的上界。这里$\widehat{f}$的选择需要满足两个条件：<br><img src="/images/1438065645247.png" alt="Alt text"></p>
+<p>为了满足$i)$式，一方面我们可以通过穷举法来选取$\widehat{f}$，另一方面我们可以直接设定一个很大的$\widehat{f}$。下文就举了三个例子来说明对于不同的quality function，我们如何来选取合适的$\widehat{f}$。</p>
+<h2 id="3-Application_I:_Localization_of_non-rigid_objects_using_a_bag_of_visual_words_kernel">3.Application I: Localization of non-rigid objects using a bag of visual words kernel</h2><p>首先我们从训练图像中提取出特征，如SIFT特征，用codebook可以量化为矢量。<br>然后我们用<strong>直方图集群(cluster histgorams)</strong>来表示图片或者某个区域,每个直方图表示每个集群出现的特征点数。然后这些直方图被拿来去训练SVM。</p>
+<h3 id="3-1-_Construction_of_a_Quality_Bound">3.1. Construction of a Quality Bound</h3><p>一个典型的线性SVM的decision function如下：</p>
+<p>$$f(I) = \beta + \sum_i \alpha_i &lt; h, h^i &gt;$$</p>
+<p>设$w_{j} = \sum_i \alpha_{i} h_j^i$,然后我们可以重写这个公式:</p>
+<p>$$f(I) = \beta + \sum_{j=1}^n w_{c_j}$$</p>
+<p>要获得$\widehat{f}$，由于$ f= f^+ + f^-$,而$ f^+$均为正，$f^-$均为负。故我们可以得到：</p>
+<p>$\widehat{f}(\Re) := f^+(R_{max}) + f^-(R_{min})$</p>
+<p>用积分图像的方法可以使得时间复杂度变成 $o(1)$</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CV/" rel="tag">#CV</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/16/2015-summer-seminar/" rel="prev">2015 summer seminar</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/27/Real-time-Mobile-Food-Recognition-System论文笔记/" rel="next">Real-time Mobile Food Recognition System论文笔记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_Introduction"><span class="nav-text">1. Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1_Sliding_Window"><span class="nav-text">1.1 Sliding Window</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_Efficient_Subwindow_Search_(ESS)"><span class="nav-text">2. Efficient Subwindow Search (ESS)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_Branch-and-Bound_Search"><span class="nav-text">2.1 Branch-and-Bound Search</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_Bounding_the_Quality_Function"><span class="nav-text">2.2 Bounding the Quality Function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Application_I:_Localization_of_non-rigid_objects_using_a_bag_of_visual_words_kernel"><span class="nav-text">3.Application I: Localization of non-rigid objects using a bag of visual words kernel</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-_Construction_of_a_Quality_Bound"><span class="nav-text">3.1. Construction of a Quality Bound</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Scintilla,c/c++,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="原本想要学习一下语法高亮功能，做一个像Notepad++一样的编辑器。
+然后就兴冲冲的下载了Notepad++的开源代码准备开始看。
+但是整个框架比较复杂，看了一会之后突然发现Notepad++使用的是Scintilla这个很强大的控件，而且也是开源的。所以最后决定在分析Notepad++源代码之前先使用一下Scintilla，然后研究一下Scintilla的源码。
+下面是Scintilla 的官">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scintilla控件在Win32环境下的使用（一）">
+<meta property="og:url" content="http://yoursite.com/2012/09/17/Scintilla控件在Win32环境下的使用（一）/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="原本想要学习一下语法高亮功能，做一个像Notepad++一样的编辑器。
+然后就兴冲冲的下载了Notepad++的开源代码准备开始看。
+但是整个框架比较复杂，看了一会之后突然发现Notepad++使用的是Scintilla这个很强大的控件，而且也是开源的。所以最后决定在分析Notepad++源代码之前先使用一下Scintilla，然后研究一下Scintilla的源码。
+下面是Scintilla 的官">
+<meta property="og:updated_time" content="2015-07-25T05:07:18.982Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scintilla控件在Win32环境下的使用（一）">
+<meta name="twitter:description" content="原本想要学习一下语法高亮功能，做一个像Notepad++一样的编辑器。
+然后就兴冲冲的下载了Notepad++的开源代码准备开始看。
+但是整个框架比较复杂，看了一会之后突然发现Notepad++使用的是Scintilla这个很强大的控件，而且也是开源的。所以最后决定在分析Notepad++源代码之前先使用一下Scintilla，然后研究一下Scintilla的源码。
+下面是Scintilla 的官">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Scintilla控件在Win32环境下的使用（一） // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Scintilla控件在Win32环境下的使用（一）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:40:37+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>原本想要学习一下语法高亮功能，做一个像Notepad++一样的编辑器。</p>
+<p>然后就兴冲冲的下载了Notepad++的开源代码准备开始看。</p>
+<p>但是整个框架比较复杂，看了一会之后突然发现Notepad++使用的是Scintilla这个很强大的控件，而且也是开源的。所以最后决定在分析Notepad++源代码之前先使用一下Scintilla，然后研究一下Scintilla的源码。</p>
+<p>下面是Scintilla 的官方网站：</p>
+<p><a href="http://www.scintilla.org/index.html" target="_blank" rel="external">http://www.scintilla.org/index.html</a></p>
+<p>我们下载源代码。</p>
+<p>然后准备编译。参考了下面这个博客：</p>
+<p><a href="http://blog.csdn.net/gnorth/article/details/7231513" target="_blank" rel="external">http://blog.csdn.net/gnorth/article/details/7231513</a></p>
+<p>我自己是win8 64位系统 vs2010</p>
+<p><span id="more-415"></span></p>
+<p>这里自己在编译makefile文件的时候出了一个错误：我使用了Visual Studio 命令提示（64位）下编译文件，结果编译出来之后的文件无法被vs识别。</p>
+<p>一开始一直找不到错误，LoadLibrary 的返回值一直为0，后来用GetLastError（）查看错误信息，才发现了原来是dll文件本身编译成了64位。</p>
+<p>而我的程序是32位的，所以dll无法识别64位的dll。</p>
+<p>后来用32位的 Visual Studio 命令提示重新编译出了32位的dll就对了。32位编译出来的dll是600多K， 而64位编译出来的是900多K。</p>
+<p>具体编译的步骤：</p>
+<p>打开Visual Studio 命令提示</p>
+<p>进到下载好的scintilla文件目录下面的win32目录下面，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">nmake -f scintilla<span class="class">.mak</span> clean  <span class="comment">//清理工程</span></span><br><span class="line"></span><br><span class="line">nmake -f scintilla<span class="class">.mak</span>             <span class="comment">//编译</span></span><br></pre></td></tr></table></figure>
+<p>接下来主要学习下面两篇文章，一篇是参考官方的文档，另外一篇是国人写的一个翻译文档。</p>
+<p><a href="http://www.scintilla.org/ScintillaDoc.html" target="_blank" rel="external">http://www.scintilla.org/ScintillaDoc.html</a></p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html</a></p>
+<p>自己学习的时候是用Win32 SDK  C编写。</p>
+<p>首先随便拉个Win32下面的应用程序，用windows程序设计里面的第一个对话框程序就好了。</p>
+<p>我的目标是做出语法高亮，当然也不是限于这些，因为Scintilla是一个非常强大的库。</p>
+<p>首先我们将编译好的SciLexer.dll放入当前目录中， 引入动态链接库:这里特别注意别犯像我这样的新手错误。</p>
+<p>这个dll最大的功能就是进行语法解析 Lexer。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hmod = LoadLibrary<span class="params">(<span class="string">"SciLexer.DLL"</span>)</span>;</span><br><span class="line">	<span class="keyword">if</span> <span class="params">(hmod==NULL)</span></span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox<span class="params">(hwndParent,</span><br><span class="line">		<span class="string">"The Scintilla DLL could not be loaded."</span>,</span><br><span class="line">		<span class="string">"Error loading Scintilla"</span>,</span><br><span class="line">		MB_OK | MB_ICONERROR)</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>如果hmod不为0，那么说明我们成功引入了动态链接库。</p>
+<p>下载的源码文件里面有Include文件，包含了一些头文件。这里我们将下面两个头文件放到当前目录下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "SciLexer.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Scintilla.h"</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们可以开始使用这个库里面的Scintilla类。我们可以创建一个窗口子类。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HWND hwndScintilla<span class="comment">;</span></span><br><span class="line">       hwndScintilla = CreateWindowEx<span class="list">(<span class="number">0</span>,</span><br><span class="line">	<span class="string">"Scintilla"</span>,<span class="string">""</span>, WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_CLIPCHILDREN,</span><br><span class="line">	<span class="number">10</span>,<span class="number">10</span>,<span class="number">500</span>,<span class="number">400</span>,hwndParent,<span class="list">(<span class="keyword">HMENU</span>)</span>GuiID, hInstance,NULL)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>学过子窗口控件的同学对于创建上面的代码肯定都非常熟悉了。</p>
+<p>接下来就是发送消息了。这里发送消息有两种方式。第一个方式就是SendMessage的方式，这种方式通俗易懂。第二种方式有点复杂。下面一一来介绍下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendMessage<span class="list">(<span class="keyword">hwndScintilla</span>,sci_command,wparam,lparam)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>like:</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendMessage<span class="list">(<span class="keyword">hwndScintilla</span>,SCI_CREATEDOCUMENT, <span class="number">0</span>, <span class="number">0</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这样就发送了窗口消息。我们可以在父窗口的窗口回调函数里面对消息进行处理：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">NMHDR *lpnmhdr;</span><br><span class="line"></span><br><span class="line">	[...]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> WM_NOTIFY:</span><br><span class="line">		lpnmhdr = (LPNMHDR) lParam;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(lpnmhdr-&gt;hwndFrom==hwndScintilla)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span>(lpnmhdr-&gt;code)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">case</span> SCN_CHARADDED:</span><br><span class="line">					<span class="comment">/* Hey, Scintilla just told me that a new */</span></span><br><span class="line">					<span class="comment">/* character was added to the Edit Control.*/</span></span><br><span class="line">					<span class="comment">/* Now i do something cool with that char. */</span></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<p>第二种方式有点复杂。我们首先看下官方文档给出的函数：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> (*fn)(<span class="type">void</span>*,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>);</span><br><span class="line"><span class="type">void</span> * <span class="keyword">ptr</span>;</span><br><span class="line"><span class="type">int</span> canundo;</span><br><span class="line"></span><br><span class="line">fn = (<span class="type">int</span> (__cdecl *)(<span class="type">void</span> *,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>))<span class="type">SendMessage</span>(</span><br><span class="line">	hwndScintilla,<span class="type">SCI_GETDIRECTFUNCTION</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line"><span class="keyword">ptr</span> = (<span class="type">void</span> *)<span class="type">SendMessage</span>(hwndScintilla,<span class="type">SCI_GETDIRECTPOINTER</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">canundo = fn(<span class="keyword">ptr</span>,<span class="type">SCI_CANUNDO</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>自己也是新手，纯粹是为了觉得语法高亮好玩才玩的。自己的C语言功底不是很好，上面这段函数有点不太好理解。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*<span class="function"><span class="keyword">fn</span>)</span>(void*,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
+<p>这里应该是定义了一个函数地址，这个函数有4个参数，返回值是int类型</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fn = <span class="list">(<span class="keyword">int</span> <span class="list">(<span class="keyword">__cdecl</span> <span class="variable">*)(void *</span>,int,int,int)</span>)</span>SendMessage<span class="list">(</span><br><span class="line">		<span class="keyword">hwndScintilla</span>,SCI_GETDIRECTFUNCTION,<span class="number">0</span>,<span class="number">0</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这里定义了函数入口地址，相当于我们使用fn函数就是使用SendMessage函数。不知道这样讲对不对，还请大家指教。</p>
+<p>其实这里自己感觉也解释不太清楚，想请大家帮忙指正理解。</p>
+<p>比如我自己是这样定义的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*SendEditor)(<span class="keyword">void</span>*,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//快速发送消息</span></span><br><span class="line">SendEditor = (<span class="keyword">int</span> (__cdecl *)(<span class="keyword">void</span> *,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>))SendMessage(</span><br><span class="line">    hwndScintilla,S<span class="built_in">CI_GETDIRECTFUNCTION</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">ptr = (<span class="keyword">void</span> *)SendMessage(hwndScintilla,S<span class="built_in">CI_GETDIRECTPOINTER</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">canundo = SendEditor(ptr,S<span class="built_in">CI_CANUNDO</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>以后自己就使用SendEditor，没有使用SendMessage了。</p>
+<p>但是自己不理解的是：c应该没有重载 多态这些概念，我在使用SendEditor的时候里面必须写4个参数。感觉用起来也没方便多少。</p>
+<p>自己C++没学多少。想请问下大家如何在C++下面实现该SendEditor的简洁方法？在此感谢大家。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scintilla/" rel="tag">#Scintilla</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/09/17/Scintilla控件在Win32环境下的使用（二）/" rel="prev">Scintilla控件在Win32环境下的使用（二）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/09/17/tf-idf算法/" rel="next">tf-idf算法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

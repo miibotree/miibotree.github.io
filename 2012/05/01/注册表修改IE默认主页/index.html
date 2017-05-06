@@ -1,0 +1,642 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK,注册表," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="自己的IE9被hao123 和搜狗浏览器给篡改了，而且每次打开都是两个一起出来。。。
+由于以前自己都用的是火狐和crome，对这个也没太在意。
+这几天想玩一下注册表编程，就想先从篡改IE默认首页开始。
+那么首先应该把自己的IE首页恢复过来吧。
+查看了下网上的资料，IE首页的键值好像存放在下面这个目录里：
+
+HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet Ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注册表修改IE默认主页">
+<meta property="og:url" content="http://yoursite.com/2012/05/01/注册表修改IE默认主页/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="自己的IE9被hao123 和搜狗浏览器给篡改了，而且每次打开都是两个一起出来。。。
+由于以前自己都用的是火狐和crome，对这个也没太在意。
+这几天想玩一下注册表编程，就想先从篡改IE默认首页开始。
+那么首先应该把自己的IE首页恢复过来吧。
+查看了下网上的资料，IE首页的键值好像存放在下面这个目录里：
+
+HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet Ex">
+<meta property="og:updated_time" content="2015-07-25T05:11:38.408Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="注册表修改IE默认主页">
+<meta name="twitter:description" content="自己的IE9被hao123 和搜狗浏览器给篡改了，而且每次打开都是两个一起出来。。。
+由于以前自己都用的是火狐和crome，对这个也没太在意。
+这几天想玩一下注册表编程，就想先从篡改IE默认首页开始。
+那么首先应该把自己的IE首页恢复过来吧。
+查看了下网上的资料，IE首页的键值好像存放在下面这个目录里：
+
+HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet Ex">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 注册表修改IE默认主页 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              注册表修改IE默认主页
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-01T22:04:25+08:00" content="2012-05-01">
+            2012-05-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>自己的IE9被hao123 和搜狗浏览器给篡改了，而且每次打开都是两个一起出来。。。</p>
+<p>由于以前自己都用的是火狐和crome，对这个也没太在意。</p>
+<p>这几天想玩一下注册表编程，就想先从篡改IE默认首页开始。</p>
+<p>那么首先应该把自己的IE首页恢复过来吧。</p>
+<p>查看了下网上的资料，IE首页的键值好像存放在下面这个目录里：</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet ExplorerMainStart Page HKEY_CURRENT_USERSoftwareMicrosoftInternet ExplorerMainStart Page</p>
+<p>但是进入目录之后发现里面好像根本就没有www.hao123.com这样的字符串信息嘛。</p>
+<p>看来元凶不在这个路径下面。</p>
+<p>既然如此，自己就来搜索一下好了。</p>
+<p>在注册表编辑器里面<span style="color: #3366ff;">ctrl+F</span>搜索一下www.hao123.com，发现这个网址的字符串竟然在这个目录下面：</p>
+<p><span style="color: #3366ff;">计算机KHEY-USERSS-1-5-21-455092624-2783291490-1266880768-1000SoftwareMicrosoftInternet ExplorerMain 下面</span></p>
+<p>发现了<span style="color: #ff0000;">Start Page 和Secondary Start Page</span></p>
+<p>里面存放的就是万恶的元凶hao123和搜狗两个默认主页了。</p>
+<p>把他们全部改成百度首页，重新打开，就OK了。</p>
+<p>这里自己产生的疑问就是，搜索出来的这个路径是什么东东呢？</p>
+<p>这个就涉及到注册表的结构了嘛，简单百度之,得到如下解释：</p>
+<p>S-1-5-21-1658001358-1336221227-1912232085-500 (SID)</p>
+<p>HKEY_USERSS-1-5-21-1658001358-1336221227-1912232085-500</p>
+<p>这个是目前登陆用户的sid，每一个网络上的用户都被域用户管理器分配了一个sid，每一个sid都是唯一的，所以它依赖与登陆用户，这个信息改变。它是从用户配置文件的ntuser.dat文件调出的。一般来说，它的子键很多，是基与安装的软件的，选择的和最终设置。</p>
+<p><span style="color: #ff0000;">所以前面那个就是我自己电脑的SID了。</span></p>
+<p>如此一来，又有个疑问产生了，如果像hao123这样只是改变了不同登录用户里面的默认首页的话，那么我重新创建个windows账号，新创建的账号里面的iE默认首页应该是没有被篡改的吧。。。。。。</p>
+<p>还有听说有些流氓软件还有重启时候自动修改注册表的。自己先重启一下，看看情况。。。</p>
+</blockquote>
+<p>&nbsp;</p>
+<p>好吧，我又回来了。自己重启了一下，然后又新建了一个用户账号，发现这里的IE默认网页没有被篡改。而且自己重新进了注册表浏览器，发现windows给我分配的SID变化了。不是原来那一长串东东了。看来hao123和搜狗还是比较“友善”的，修改的只是不用用户下面的默认首页。</p>
+<p>那么自己在注册表编程的时候，能不能也像hao123那样只是修改登录用户下面的默认首页呢？</p>
+<p>这样的话首先必须获得windows分配给我们的SID，也就是那一长串东东</p>
+<p>找一下有没有这样的API函数。。。</p>
+<p>肯定是有的嘛。。。</p>
+<p>首先参考一下下面两篇文章：</p>
+<p>这篇文章详细讲解了SID</p>
+<p><a href="http://www.51cto.com/art/200512/13623.htm" target="_blank" rel="external">http://www.51cto.com/art/200512/13623.htm</a></p>
+<p>&nbsp;</p>
+<blockquote>
+<p>还有一种方法可以获得SID和用户名称的对应关系：</p>
+<p>1. Regedt32:</p>
+<p>HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows NTCurrentVersion ProfileList</p>
+<p>2. 这个时候可以在左侧的窗口看到SID的值，可以在右侧的窗口中ProfileImagePath看到不同的SID关联的用户名，</p>
+</blockquote>
+<p>然后这篇文章列出了关于SID的API</p>
+<p><a href="http://blogs.msdn.com/b/gaihu/archive/2011/07/06/windows-4-sid.aspx" target="_blank" rel="external">http://blogs.msdn.com/b/gaihu/archive/2011/07/06/windows-4-sid.aspx</a></p>
+<p>查找一下CSDN，应该就可以了。。。。</p>
+<p>明天可以实践一下。。。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+            <a href="/tags/注册表/" rel="tag">#注册表</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/05/02/烫烫烫烫烫烫烫烫烫烫烫烫/" rel="prev">烫烫烫烫烫烫烫烫烫烫烫烫</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/05/01/利用socket做的帮室友找对象小软件/" rel="next">利用socket做的帮室友找对象小软件</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

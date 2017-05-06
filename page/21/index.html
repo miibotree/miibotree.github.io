@@ -1,0 +1,1493 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/21/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/31/SDK编写简单的随机数生成器/" itemprop="url">
+                SDK编写简单的随机数生成器
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-31T15:50:00+08:00" content="2011-12-31">
+            2011-12-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>上几天帮同学搞了一个随机数生成器，首先在网上搜索了一下，发现网上有的做的也比较的简单，但是功能还是比较全的。</p>
+<p>而且发现自己学的东西刚好可以写一个随机数生成器。当然还有些预备知识没有学，所以现学现用了。</p>
+<p>计时器的有关知识我已经了解了，首先要用到创建字体，然后是创建父窗口控件，然后就是利用RGB的颜色的变化了。</p>
+<p>看了几天的书，终于写出来了。下面是代码：</p>
+<h1 id="include_&lt;windows-h&gt;">include &lt;windows.h&gt;</h1><h1 id="include_&lt;stdio-h&gt;">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;">include &lt;stdlib.h&gt;</h1><h1 id="include_&lt;time-h&gt;">include &lt;time.h&gt;</h1><h1 id="include_&lt;string-h&gt;">include &lt;string.h&gt;</h1><h1 id="define_ID_TIMER&nbsp;&nbsp;&nbsp;_1">define ID_TIMER&nbsp;&nbsp;&nbsp; 1</h1><p>LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;</p>
+<p>int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PSTR szCmdLine, int iCmdShow)</p>
+<p>{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; static TCHAR szAppName[] = TEXT (&quot;Beeper1&quot;) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; MSG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; WNDCLASS&nbsp;&nbsp;&nbsp;&nbsp; wndclass ;</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = CS_HREDRAW | CS_VREDRAW ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpfnWndProc&nbsp;&nbsp; = WndProc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.cbClsExtra&nbsp;&nbsp;&nbsp; = 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.cbWndExtra&nbsp;&nbsp;&nbsp; = 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hInstance&nbsp;&nbsp;&nbsp;&nbsp; = hInstance ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hIcon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = LoadIcon (NULL, IDI_APPLICATION) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hCursor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = LoadCursor (NULL, IDC_ARROW) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpszMenuName&nbsp; = NULL ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpszClassName = szAppName ;</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; if (!RegisterClass (&amp;wndclass))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox (NULL, TEXT (&quot;Program requires Windows NT!&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; szAppName, MB_ICONERROR) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; hwnd = CreateWindow (szAppName, TEXT (&quot;随机数生成器1.00版本&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_OVERLAPPEDWINDOW,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CW_USEDEFAULT, CW_USEDEFAULT,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CW_USEDEFAULT, CW_USEDEFAULT,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL, NULL, hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; ShowWindow (hwnd, iCmdShow) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; UpdateWindow (hwnd) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; while (GetMessage (&amp;msg, NULL, 0, 0))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TranslateMessage (&amp;msg) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DispatchMessage (&amp;msg) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; return msg.wParam ;</p>
+<p>}</p>
+<p>LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</p>
+<p>{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; static BOOL fFlipFlop = FALSE ;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_green = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_blue = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_red = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; LOGFONT lf;</p>
+<p>&nbsp;&nbsp; &nbsp; HFONT&nbsp;&nbsp; hFont ;</p>
+<p>&nbsp;&nbsp; &nbsp; TEXTMETRIC tm ;</p>
+<p>&nbsp;&nbsp; &nbsp; TCHAR szBuffer [40];</p>
+<p>&nbsp;&nbsp; &nbsp; static int cxChar, cyChar, sum;</p>
+<p>&nbsp;&nbsp; &nbsp; DWORD a, iLength;</p>
+<p>&nbsp;&nbsp; &nbsp; DWORD ownrand[40] = {31,24,17,11,5,22,4,7,1,32,15,39,29,3,27,21,38,25,12,33,9,23,36,2,13,18,30,16,26,34,37,10,8,28,19,6,14,20,35};</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; TCHAR str[256], type_height[10], type_width[10];</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HBRUSH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hBrush ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HDC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hdc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; PAINTSTRUCT ps ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; RECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HWND hwndButton;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; switch (message)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_CREATE:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetTimer (hwnd, ID_TIMER, 50, NULL) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; cxChar = LOWORD (GetDialogBaseUnits ()) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cyChar = HIWORD (GetDialogBaseUnits ()) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwndButton = CreateWindow ( TEXT(&quot;button&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT(&quot;开始&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cxChar &#43; 420, cyChar _ (1 &#43; 2 _ 1)&#43;300,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 _ cxChar, 7 _ cyChar / 4,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd, (HMENU) 1,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ((LPCREATESTRUCT) lParam)-&gt;hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwndButton = CreateWindow ( TEXT(&quot;button&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT(&quot;暂停&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cxChar &#43; 420 , cyChar _ (1 &#43; 2 _ 1)&#43;350,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 _ cxChar, 7 _ cyChar / 4,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd, (HMENU) 2,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ((LPCREATESTRUCT) lParam)-&gt;hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_TIMER :</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; sum&#43;&#43;; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InvalidateRect (hwnd, NULL, FALSE) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp; &nbsp; case WM_PAINT:</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hdc = BeginPaint (hwnd, &amp;ps) ; </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetClientRect (hwnd, &amp;rc) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hBrush = CreateSolidBrush (RGB(color_red,color_green,color_blue));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; if (sum&lt;=39)</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; _itow(ownrand[sum],str,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; else{</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;sum=0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;_itow(ownrand[sum],str,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_red -= 10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //颜色变化的实现</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_green -= 5;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_blue -= 1;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum&#43;&#43;;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FillRect (hdc, &amp;rc, hBrush) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; hdc = GetDC(hwnd);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; GetTextMetrics(hdc,&amp;tm);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; cxChar = tm.tmAveCharWidth;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; cyChar = tm.tmHeight &#43; tm.tmExternalLeading;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; iLength = wcslen(str);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SetTextColor(hdc,RGB(255-color_red,255-color_green,255-color_blue));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //SetTextColor(hdc,RGB(250,0,0));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //设置字体</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfHeight = 200;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfWeight = 170;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfWeight = 700;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfUnderline = 0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfStrikeOut = 0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; hFont = CreateFontIndirect(&amp;lf);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SelectObject(hdc, hFont);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //GetTextMetrics (hdc, &amp;tm);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //_itow(tm.tmHeight,type_height,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //_itow(tm.tmAscent,type_width,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //TextOut(hdc, 0, 0, type_height, wcslen(type_height));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //TextOut(hdc, 50, 0, type_width, wcslen(type_width));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; DeleteObject (hFont);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SetBkColor (hdc, GetSysColor(COLOR_WINDOW));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; TextOut(hdc, cxChar&#43;400, cyChar&#43;100, str, iLength);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; ReleaseDC(hwnd, hdc);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EndPaint (hwnd, &amp;ps) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DeleteObject (hBrush) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp; &nbsp; case WM_COMMAND:</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; if (2 == wParam){</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; KillTimer (hwnd, ID_TIMER) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; //MessageBox(hwnd, TEXT(&quot;恭喜您&quot;),TEXT(&quot;congratulations&quot;),MB_OK);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; if (1 == wParam){</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;SetTimer (hwnd, ID_TIMER, 50, NULL) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; break;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_DESTROY :</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KillTimer (hwnd, ID_TIMER) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PostQuitMessage (0) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; return DefWindowProc (hwnd, message, wParam, lParam) ;</p>
+<p>}</p>
+<p>关于随机数产生的问题，本来想用rand(time(0))来实现的，但是通过测试发现精度不够高，当timer调用每100毫秒更新一次的时候就已经显现出伪随机特性了。</p>
+<p>本来想自己写一个随机数生成算法的，但是由于滚动的总数量不是很多，所以请教了华哥，自己开了一个数组，在里面随机写了30个数字。</p>
+<p>关于颜色的变化的实现，关键代码其实也比较简单的，每次调用计时器的时候改变RGB的&#20540;，但是改变的&#20540;不一样，这样就加长了循环周期。</p>
+<p>整个代码只是基本实现了效果，没有过多的功能，自己如果以后学了·鼠标键盘等一些其他东西的话还能把这些东西也加进去，做一个改进版本。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/09/置顶-fedora-16-gnome更换主题/" itemprop="url">
+                [置顶]        fedora 16   gnome更换主题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-09T23:14:00+08:00" content="2011-12-09">
+            2011-12-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><span style="font-size:16px">最近闲来无事，想在fedora下面换个主题玩玩。下面说一下具体步骤</span></p>
+<p><span style="font-size:16px">首先安装&nbsp;&nbsp; gnome tweak tool </span></p>
+<p></p>
+<p><span style="font-size:16px">在终端输入&nbsp; yum search gnome tweak tool&nbsp;</span></p>
+<p><span style="font-size:16px">搜索一下看到 gnome-tweak-tool.noarch : A tool to customize advanced GNOME 3 options</span></p>
+<p>然后我们安装一下 sudo yum install gnome-tweak-tool.noarch</p>
+<p>安装成功后 ，如果是中文字体，在应用程序里搜索一下可以看到&nbsp;&nbsp; “高级设置”&nbsp; (如下图所示)</p>
+<p><img src="http://hi.csdn.net/attachment/201112/9/0_13234435113pj0.gif" alt=""></p>
+<p>这里面还有很多gnome功能，大家有兴趣可以去玩玩 。这里我先添加主题。</p>
+<p></p><p></p>
+<p>以下主题可通过sudo &nbsp;yum &nbsp;install 主题名 安装，安装您喜欢的即可。</p>
+<p>gnome-shell-theme-atolm.noarch</p>
+<p>gnome-shell-theme-dark-glass.noarch</p>
+<p>gnome-shell-theme-gaia.noarch</p>
+<p>gnome-shell-theme-orta.noarch</p>
+<p>gnome-shell-theme-smooth-inset.noarch</p>
+<p>再添加一个链接，这里有一些非官方的主题。</p>
+<p><a href="http://blog.51osos.com/linux/five-gnome-shell-themes/" target="_blank" rel="external">http://blog.51osos.com/linux/five-gnome-shell-themes/</a></p>
+<p><span style="font-family:宋体,Arial; color:#333333; line-height:19px; background-color:rgb(239,239,239)"></span></p>
+<p>解压的文件夹复制粘贴到/home/USERNAME/.themes目录。(<span style="color:#FF0000">这里特别注意：文件夹是&nbsp; .theme,千万别忘了前面那个点，如果找不到这个文件夹的话可以在编辑&#8211;&gt;视图中将显示隐藏和备份文件这个选项打勾就可以显示了</span>)</p>
+<p>您刚才复制的主题要以THEME_NAME/gnome-shell目录形式，这是非常重要的的，因为，GNOME Shell扩展User-Theme默认从~/.themes/THEME_NAME/gnome-shell目录中加载主题。</p>
+<p>最后，启动GNOME Tweak Tool，浏览到“主题”菜单。</p>
+<p><span style="font-family:宋体,Arial; color:#333333; line-height:19px; background-color:rgb(239,239,239)">现在你就可以轻松的管理和设置你的主题了</span></p>
+<p>注意一下，在最新内核版本的ferora16中，<span style="font-size:16px">tweak tool</span>里面的shell theme不能正常显示，我还没有找到解决方法，不过主题还是能正常显示的。</p>
+<div class="bct fc05 fc11 nbw-blog ztag js-fs2"><wbr></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/09/使用windows文件系统和字符I-O记录/" itemprop="url">
+                使用windows文件系统和字符I/O记录
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-09T19:32:00+08:00" content="2011-12-09">
+            2011-12-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天开始认认真真仔仔细细地看windows编程的书本了，所以做下笔记。</p>
+<p>全局根的定义&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; </p>
+<p>路径名的限制（MAX_PATH 个字符）260，但是通过转义序列指定非常长的名称</p>
+<p>LPCTSTR = Long Point Constant T_（宏） STRing&nbsp;&nbsp;&nbsp; (以后理解了每个字母缩写的意思得话，记忆会方便很多)</p>
+<p>lpsz = long point string sero (指向以零结尾的字符串的长指针)</p>
+<p>关于长指针&nbsp; 近指针 空指针的概念&nbsp; </p>
+<p><a href="http://hi.baidu.com/fcwyz/blog/item/af764044c204b687b2b7dc86.html&nbsp;&amp;nbsp" target="_blank" rel="external">http://hi.baidu.com/fcwyz/blog/item/af764044c204b687b2b7dc86.html&nbsp;&amp;nbsp</a>; （参考文献&nbsp;&nbsp; 空指针的用法）</p>
+<p>随机访问和顺序访问&nbsp; </p>
+<p><a href="http://bbs.chinaunix.net/thread-585605-1-1.html&nbsp;&nbsp;&amp;nbsp" target="_blank" rel="external">http://bbs.chinaunix.net/thread-585605-1-1.html&nbsp;&nbsp;&amp;nbsp</a>; （参考文献 储存中提到的随机访问和顺序访问）</p>
+<p>内核句柄&nbsp;&nbsp;&nbsp; （什么是 内核句柄）</p>
+<p><a href="http://hi.baidu.com/%B7%B3%B2%BB%B7%B3/blog/item/fde05e17170c134120a4e932.html" target="_blank" rel="external">http://hi.baidu.com/%B7%B3%B2%BB%B7%B3/blog/item/fde05e17170c134120a4e932.html</a></p>
+<p>stdafx.h&nbsp; (stand Application Framework Extensions)&nbsp; .pch 预编译头文件</p>
+<p><a href="http://baike.baidu.com/view/1344257.htm" target="_blank" rel="external">http://baike.baidu.com/view/1344257.htm</a></p>
+<p>TCHAR WCHAR (wchar_c)</p>
+<p>TCHAR 的预编译机制</p>
+<p><a href="http://baike.baidu.com/view/2901835.htm" target="_blank" rel="external">http://baike.baidu.com/view/2901835.htm</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/05/“最小化所有窗口”和“显示桌面”之间的区别/" itemprop="url">
+                “最小化所有窗口”和“显示桌面”之间的区别
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-05T20:33:00+08:00" content="2011-12-05">
+            2011-12-05
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><span style="white-space:pre"></span>最近在看《wndows编程启示录》，这里面写到了很多windows用户界面设置时候的很多解决矛盾的艺术。其中看到几个比较好玩的东西给大家分享一下。</p>
+<p><span style="white-space:pre"></span>最小化所有窗口”的快捷键是”windows&#43;d“, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;显示桌面&quot;的快捷键是“windows&#43; m”</p>
+<p><span style="white-space:pre"></span>取消所有最小化窗口的快捷键是”windows&#43;shift&#43;d“</p>
+<p><span style="white-space:pre"></span>那么这两者之间的区别是什么呢？</p>
+<p><span style="white-space:pre"></span>首先最小化所有窗口的原理就是相当于 每个窗口都点了一下最小化那个按钮,而显示桌面则是将最小化窗口以后更进了一步。在进行了最小化所有窗口以后，将桌面窗口上升到<span style="white-space:pre"></span>窗口堆栈的顶部，（topmost窗口还是会覆盖在桌面窗口的上面）。</p>
+<p><span style="white-space:pre"></span>但是当你恢复到正常状态以后<span style="white-space:pre"></span>或者取消最小化所有窗口或显示桌面命令以后，窗口堆栈的顺序与原来是不一样的，那为什么会这样呢？</p>
+<p><span style="white-space:pre"></span>这是因为如果某个窗口响应得非常慢（你肯定遇到过这种状况），那个如果windows还要按照原来的堆栈方式排列的话，资源管理器也会被挂起，</p>
+<p><span style="white-space:pre"></span>但是现在windows将这个响应得很慢的窗口暂时放下不管，这样资源管理器也就不会挂起了，虽然顺序打乱了，但是保证了操作能够快速地执行了</p>
+<p><span style="white-space:pre"></span>其实这本书里面还有很多有趣的东西，比如说同时打印很多文件的话并不是你期望的按照顺序来的，很有可能是按照文本的大小来的，因为所有的文件同事竞争一个打印机的话，文本小的文件竞争能力肯定是最强的。呵呵，先写到这里吧，还有很多东西自己慢慢看好了</p>
+<p><span style="white-space:pre"></span></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/02/linux-命令行（给自己看的）/" itemprop="url">
+                linux 命令行（给自己看的）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-02T16:42:00+08:00" content="2011-12-02">
+            2011-12-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><html>
+
+<head><br><br><style type="text/css"><br><!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+--><br></style><br><br></head>
+
+<body>
+
+<p><span style="font-family:Liberation Serif,serif">LINUX</span>命令行小结</p>
+<p>安装<span style="font-family:Liberation Serif,serif">fedora16</span>大概也有一个月了，虽然说安装了双系统以后还是经常会在<span style="font-family:Liberation Serif,serif">windows</span>上跑，但是毕竟还是快速地浏览了一下<span style="font-family:Liberation Serif,serif">linux</span>命令行一本比较基础的书。虽然没有深入，但是覆盖了几乎所有的命令行。</p>
+<p>所以现在是时候总结一下学到的东西了。</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>安装命令</p>
+<p><span style="font-family:Liberation Serif,serif">rpm</span>和<span style="font-family:Liberation Serif,serif">yum</span>命令<span style="font-family:Liberation Serif,serif">(yum</span>业已经取代<span style="font-family:Liberation Serif,serif">rpm</span>成为从在线仓库安装<span style="font-family:Liberation Serif,serif">rpm</span>包的不二选择<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumlist</span></p>
+<p></p>
+<p><span style="font-family:Liberation Serif,serif">yumsearch</span></p>
+<p></p>
+<p><span style="font-family:Liberation Serif,serif">yuminstall (</span>注意提权<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumupdate</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumremove</span></p>
+<p><span style="font-family:Liberation Serif,serif">yumclean</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-ivh(</span>安装软件包<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-Uhv</span>（升级软件包）</p>
+<p><span style="font-family:Liberation Serif,serif">rpm-e (</span>删除软件包<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">rpm-q rsunc(</span>查询版本号<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">2.</span>使用<span style="font-family:Liberation Serif,serif">shell</span></p>
+<p><span style="font-family:Liberation Serif,serif">history5 (</span>列出历史<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">!!(</span>运行上一个命令<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">!997</span>（运行第<span style="font-family:Liberation Serif,serif">997</span>个历史命令）</p>
+<p><span style="font-family:Liberation Serif,serif">!ls</span>（运行上一个历史命令）</p>
+<p><span style="font-family:Liberation Serif,serif">&lt;tab&gt;</span>命令行补全</p>
+<p><span style="font-family:Liberation Serif,serif">&lt;tab&gt;&lt;tab&gt;</span>自动列出所有有关命令</p>
+<p>输出重定向</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt; output.txt</span></p>
+<p>标准错误流</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt;2 errors.txt</span></p>
+<p>追加至某个文件而不是覆盖</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp /tmpp &gt;&gt; output.txt</span></p>
+<p>位元桶文件</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp 2&gt; /dev/null</span></p>
+<p>管道的使用</p>
+<p>输出重定向到进程</p>
+<p><span style="font-family:Liberation Serif,serif">ls/tmp | sort</span></p>
+<p><span style="font-family:Liberation Serif,serif">aliascp=&#8217;cp -i&#8217;</span></p>
+<p>监视命令<span style="font-family:Liberation Serif,serif">watch&#8217;cat /proc/loadavg&#8217; (</span>监视系统平均负载<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>获得超级用户权限 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>su</p>
+<p>使用<span style="font-family:Liberation Serif,serif">sudo</span>授权<span style="font-family:Liberation Serif,serif">sudo</span></p>
+<p><span style="font-family:Liberation Serif,serif">shell</span>设定环境变量</p>
+<p><span style="font-family:Liberation Serif,serif">set |less</span></p>
+<p>简单的 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>bash编程</p>
+<p>硬链接和符号链接的概念</p>
+<p>命名管道和套接字</p>
+<p>创建空白文件 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>touch/tmp/newfile.txt</p>
+<p><span style="font-family:Liberation Serif,serif">&gt; /tmp/newfile.txt</span></p>
+<p>创建目录<span style="font-family:Liberation Serif,serif">mkdir</span></p>
+<p><span style="font-family:Liberation Serif,serif">mkdir-p /tmp/a/b/c/new</span></p>
+<p><span style="font-family:Liberation Serif,serif">mkdir-m 700 /tmp/new2</span></p>
+<p><span style="font-family:Liberation Serif,serif">-</span>表示文件（硬链接也是如此）</p>
+<p><span style="font-family:Liberation Serif,serif">l</span>表示链接（符号链接）</p>
+<p><span style="font-family:Liberation Serif,serif">p</span>表示管道<span style="font-family:Liberation Serif,serif">(pipe)</span></p>
+<p><span style="font-family:Liberation Serif,serif">s</span>表示套接字（<span style="font-family:Liberation Serif,serif">socket</span>）</p>
+<p><span style="font-family:Liberation Serif,serif">c</span>字符设备</p>
+<p><span style="font-family:Liberation Serif,serif">b</span>块设备</p>
+<p><span style="font-family:Liberation Serif,serif">drwxrwxrwx</span></p>
+<p>文件类型指示符 用户 用户组其他用户</p>
+<p>可读 可写 可执行 </p>
+<p><span style="font-family:Liberation Serif,serif">4 2 1</span></p>
+<p>使用<span style="font-family:Liberation Serif,serif">chmod</span>更改权限</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>使用八进制数字</p>
+<p><span style="font-family:Liberation Serif,serif">chmod0700</span></p>
+<p>如果原来是任意的话将变成 <span style="font-family:Liberation Serif,serif">drwx&#8212;&#8212;</span></p>
+<p><span style="font-family:Liberation Serif,serif">2.</span>使用字母更改权限</p>
+<p><span style="font-family:Liberation Serif,serif">a</span>表示所有组</p>
+<p><span style="font-family:Liberation Serif,serif">u</span>表示用户</p>
+<p><span style="font-family:Liberation Serif,serif">g</span>表示用户组</p>
+<p><span style="font-family:Liberation Serif,serif">o</span>表示其他组</p>
+<p><span style="font-family:Liberation Serif,serif">&#43;</span>增加</p>
+<p><span style="font-family:Liberation Serif,serif">-</span>除去</p>
+<p>例如</p>
+<p><span style="font-family:Liberation Serif,serif">chmod g&#43;w (</span>增加用户组的可写权限<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">-R</span>能递归执行</p>
+<p>粘滞位的目录</p>
+<p><span style="font-family:Liberation Serif,serif">umask0066</span></p>
+<p>设定文件何目录创建时的权限</p>
+<p><span style="font-family:Liberation Serif,serif">chown</span></p>
+<p><span style="font-family:Liberation Serif,serif">chgrp</span></p>
+<p>切换目录<span style="font-family:Liberation Serif,serif">cd</span></p>
+<p><span style="font-family:Liberation Serif,serif">cd</span>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd$HOME</span></p>
+<p>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd~</span></p>
+<p>切换至用户主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd~francois</span></p>
+<p>切换至<span style="font-family:Liberation Serif,serif">francois</span>的主目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd-</span></p>
+<p>切换至前一个工作目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd..</span></p>
+<p>当前目录的上一层目录</p>
+<p><span style="font-family:Liberation Serif,serif">cd/usr/bin</span></p>
+<p>根目录下的<span style="font-family:Liberation Serif,serif">bin</span></p>
+<p><span style="font-family:Liberation Serif,serif">cdusr/bin</span></p>
+<p>当前目录下的<span style="font-family:Liberation Serif,serif">bin</span></p>
+<p><span style="font-family:Liberation Serif,serif">pwd</span>显示当前目录</p>
+<p>复制文件</p>
+<p><span style="font-family:Liberation Serif,serif">cp-i index.html /var/www/html/</span></p>
+<p><span style="font-family:Liberation Serif,serif">-il</span>硬链接</p>
+<p><span style="font-family:Liberation Serif,serif">-a</span>保留所有权限设定</p>
+<p><span style="font-family:Liberation Serif,serif">-R</span>递归分配当前时间戳</p>
+<p><span style="font-family:Liberation Serif,serif">ddif=/dev/zero of=/tmp/mynullfile count=1</span></p>
+<p>搜索文件</p>
+<p><span style="font-family:Liberation Serif,serif">locate-i(</span>不区分大小写<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>可以使用正则表达式来查找</p>
+<p><span style="font-family:Liberation Serif,serif">find</span></p>
+<p>列出文件信息</p>
+<p><span style="font-family:Liberation Serif,serif">ls</span></p>
+<p>处理文本</p>
+<p><span style="font-family:Liberation Serif,serif">1.</span>使用正则表达式</p>
+<p><span style="font-family:Liberation Serif,serif">2.catmyfile.txt(</span>查看文本文件<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">3.grep</span>搜索文本</p>
+<p><span style="font-family:Liberation Serif,serif">sed</span>替换文本</p>
+<p><span style="font-family:Liberation Serif,serif">diff</span>检查文件差异</p>
+<p>文本文件的&#26684;式转换</p>
+<p><span style="font-family:Liberation Serif,serif">unix2dos&lt; myunixfile.txt &gt; mydocfile.txt</span></p>
+<p>多媒体的处理</p>
+<p><span style="font-family:Liberation Serif,serif">ogg123</span>播放器</p>
+<p><span style="font-family:Liberation Serif,serif">mpg123mpg321</span></p>
+<p>转换音频文件<span style="font-family:Liberation Serif,serif">sox</span></p>
+<p><span style="font-family:Liberation Serif,serif">soxhead.wav tail.wav output.wav</span></p>
+<p>图像处理</p>
+<p><span style="font-family:Liberation Serif,serif">identifyp1.jpg</span></p>
+<p><span style="font-family:Liberation Serif,serif">converttree.jpg tree.qng</span></p>
+<p>利用创建缩略图（这个很有效啊，可以自己<span style="font-family:Liberation Serif,serif">diy</span>头像，不用什么复杂的<span style="font-family:Liberation Serif,serif">ps</span>，一个命令行搞定）</p>
+<p><span style="font-family:Liberation Serif,serif">convert-rotate 270</span></p>
+<p>翻转</p>
+<p><span style="font-family:Liberation Serif,serif">convert-sepia-tone 75% house.jpg oldhouse.png (</span>棕褐色调<span style="font-family:Liberation Serif,serif">)</span></p>
+<p><span style="font-family:Liberation Serif,serif">-charcoal</span></p>
+<p>（炭笔画）</p>
+<p><span style="font-family:Liberation Serif,serif">-colorize175</span></p>
+<p>（指定颜色&#20540;）</p>
+<p>其实我对这个还是比较感兴趣的，有兴趣的大家可以上网搜一下，如果能稍微记住几个的话那就无敌了，完胜<span style="font-family:Liberation Serif,serif">ps</span>有木有啊</p>
+<p>批量转换图像</p>
+<p>管理文件系统</p>
+<p><span style="font-family:Liberation Serif,serif">ext3</span>增加了日志功能</p>
+<p>使用<span style="font-family:Liberation Serif,serif">fdisk</span>进行分区</p>
+<p>这个在我安装<span style="font-family:Liberation Serif,serif">gentoo</span>的时候纠结了好长时间，所以对于这个命令印象十分深刻啊。</p>
+<p>复制分区表 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>sfdisk-d /dev/sda &gt; sda-table</p>
+<p>使用<span style="font-family:Liberation Serif,serif">parted(</span></p>
+<p>使用后会立即生效，所以慎用<span style="font-family:Liberation Serif,serif">)</span></p>
+<p>&#26684;式化文件系统</p>
+<p><span style="font-family:Liberation Serif,serif">mkfs-t ext3 /dev/sdb1</span></p>
+<p>挂载<span style="font-family:Liberation Serif,serif">tune2fs-c 31 /dev/sda1</span></p>
+<p><span style="font-family:Liberation Serif,serif">mount</span>手工挂载</p>
+<p><span style="font-family:Liberation Serif,serif">umount</span>命令卸载文件系统</p>
+<p>检查文件系统<span style="font-family:Liberation Serif,serif">badblocks</span></p>
+<p>检查<span style="font-family:Liberation Serif,serif">raid</span>磁盘</p>
+<p>查看文件系统使用情况 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>df-h</p>
+<p>显示<span style="font-family:Liberation Serif,serif">/home</span>目录的磁盘空间使用情况</p>
+<p><span style="font-family:Liberation Serif,serif">du-h /home/ </span></p>
+<p><span style="font-family:Liberation Serif,serif">du -sch /home /var</span></p>
+<p><span style="font-family:Liberation Serif,serif">LVM</span>卷</p>
+<p>备份何可移动存储介质</p>
+<p><span style="font-family:Liberation Serif,serif">tar</span>表示归档，归档以后文件后缀名为<span style="font-family:Liberation Serif,serif">.tar</span></p>
+<p>压缩的话有好几种方式 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>bz2(使用<span style="font-family:Liberation Serif,serif">bzip2</span>压缩<span style="font-family:Liberation Serif,serif">) gz</span>（<span style="font-family:Liberation Serif,serif">gzip</span>压缩）</p>
+<p><span style="font-family:Liberation Serif,serif">lzo</span>（<span style="font-family:Liberation Serif,serif">lzop</span></p>
+<p>压缩）</p>
+<p><span style="font-family:Liberation Serif,serif">bzip2</span>压缩用时多压缩比相对<span style="font-family:Liberation Serif,serif">lzop</span>提高一倍</p>
+<p>速度从快到慢，压缩率从低到高依次为 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>lzop gzip bzip2</p>
+<p>由于<span style="font-family:Liberation Serif,serif">tar</span>命令的话比较古老，故不用连字符</p>
+<p><span style="font-family:Liberation Serif,serif">-</span></p>
+<p><span style="font-family:Liberation Serif,serif">tarc *.txt | grip -c &gt; myfiles.tar.gz</span></p>
+<p>解压缩解包</p>
+<p><span style="font-family:Liberation Serif,serif">gunzip-c myfiles.tar.gz |tar x</span></p>
+<p></p><p style="margin-bottom:0cm">使用压缩工具</p>
+<p><span style="font-family:Liberation Serif,serif">tarcjvf myfiles.tar.bz2 *.txt</span></p>
+<p></p>
+<p>关于链接 <span style="font-family:Liberation Serif,serif"></span></p>
+<p>ftp的步骤</p>
+<p><span style="font-family:Liberation Serif,serif">lftp-u ftp</span>网址</p>
+</body></html></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/12/01/linux使用yum命令产生的进程锁问题/" itemprop="url">
+                linux使用yum命令产生的进程锁问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-01T16:18:00+08:00" content="2011-12-01">
+            2011-12-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>我是一个linux新手，最近安装了fedora16以后一直在玩命令行。</p>
+<p>刚刚安装好以后自然是有很多东西要下载的。所以我经常会用到yum命令。</p>
+<p>但是我在使用yum命令的时候，经常会遇到这样的情况：</p>
+<p>首先我先搜索一下是否存在我需要寻找的软件(这里比如说搜索一个IRC聊天室)，使用如下命令：</p>
+<p>yum search irssi</p>
+<p>已加载插件：langpacks, presto, refresh-packagekit</p>
+<p>============================== N/S Matched: irssi ==============================</p>
+<p>irssi-devel.i686 : Development package for irssi</p>
+<p>irssi-otr.i686 : Off-The-Record messaging plugin for irssi</p>
+<p>irssi-xmpp.i686 : XMPP plugin into irssi</p>
+<p>irssi.i686 : Modular text mode IRC client with Perl scripting</p>
+<p>&nbsp; Name and summary matches only, use &quot;search all&quot; for everything.</p>
+<p>然后当我选择第一个irssi-devel.i686，并且输入命令安装的时候会出现如下的问题：</p>
+<p>sudo yum install irssi-devel.i686</p>
+<p>这个时候会出现下面这样的情况：</p>
+<p>另外一个程序锁定了 yum；等待它退出……</p>
+<p>&nbsp; 另一个应用程序是：PackageKit</p>
+<p>&nbsp;&nbsp;&nbsp; 内存： 38 M RSS （ 64 MB VSZ）</p>
+<p>&nbsp;&nbsp;&nbsp; 已启动： Thu Dec&nbsp; 1 15:24:30 2011 &#8211; 05:37之前</p>
+<p>&nbsp;&nbsp;&nbsp; 状态&nbsp; ：睡眠中，进程ID：2857</p>
+<p>那么这么进程ID是什么呢？肯定是和yum有关的进程嘛，我们通过列出进程列表找到这个进程的有关信息：</p>
+<p>F S&nbsp;&nbsp; UID&nbsp;&nbsp; PID&nbsp; PPID&nbsp; C PRI&nbsp; NI ADDR SZ WCHAN&nbsp; TTY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TIME CMD</p>
+<p>4 S&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp; 2857&nbsp; 2854&nbsp; 0&nbsp; 90&nbsp; 10 &#8211; 16315 poll_s ?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 00:00:01 yumBackend.py</p>
+<p>由于yum命令一次只能下载一个软件，所以当你需要下载第二个软件包的时候，系统会用进程锁锁定yum，（关于进程锁的概念我还不是很了解，大家不要见笑）。</p>
+<p>所以我使用</p>
+<p>kill -9 2857</p>
+<p>来杀死这个进程（虽然说强杀容易产生很多问题，但是作为新手我目前就先这样做吧。注意这个操作必须进行提权，否则会不能执行）</p>
+<p>现在直接使用上面的&nbsp; install 就可以安装了</p>
+<p>这里我还有一个问题不是很明白，我只是用yum搜索了一下，搜索以后为什么yum 的进程还存在呢？那我使用yum&nbsp; 下载的时候应该说是第一次下载啊，为什么会出现程序锁呢？请知道的朋友多加指点，谢谢大家了～～～～</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/11/17/关于技术型人才与研究型人才/" itemprop="url">
+                关于技术型人才与研究型人才
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-11-17T17:46:00+08:00" content="2011-11-17">
+            2011-11-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>下面的文章转自一个大二学生的问题和杨中科老师的回答，我看了以后还是蛮有收获的。</p>
+<p>先介绍我的情况 普通本科大二学生，，之前一直在练acm的题，也获得了一些大赛的奖项，有一天有个人问我，叫我做一个小软件，我发现我不会。。更惨的就是我好像什么软件都不会做（这里指的是基于c/c&#43;&#43;的开发），，除了console的一些算法题，，然后我和自己说练acm够了，应该开始学开发工具的运用和一些库类(函数）的使用了，，这样2个星期下来，我翻了很多关于商业程序开发资料，我发现商业程序代码真的很少涉及到高效算法和一些特殊的数据结构，而且我也问了几个现在在公司上班的师兄，他们也说工作中真正用到acm的知识是很少很少的。现在一系列的ACM比赛又差不多开始了，我现在一直没准备。。</p>
+<p>&nbsp; &nbsp; 老师我想问的就是 以你多年的工作经验来看，具有ACM背景的人的优势在哪，，还有优势大吗？还有假如我如果现在（大二）拿ACM的获奖证书和带上之前开发一些小软件的实例 去找工作的话，，人家会很轻易的接受我吗？其实我大一的时候就获得了金山软件公司的实习邀请，，不过他说等到我大三暑假的时候才让我去，但是我家的经济深受这次金融风暴的打击，，所以我想大二读完的时候就出去找工作帮轻下家里负担，，我很期望您的回答。。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;还有我补充下我的个人简历，，我跟过一老师做基于.net的关于某公安局的项目，，英语四级，，是学生干部，，学习成绩80分以上，但是我看了看就业形势真的太差了，，我一直在担心公司为什么要我个大学都没毕业的。。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;最后我还想问下 我除了专业领域获过一些奖项，我在其他的专业课程上也获过奖的，例如 一个全国性的营销比赛 ，这对我找技术方面的工作有优势吗。。。还有我之前我看到您大学的时候投过稿，不知道这对你找工作的时候会有优势吗，因为我一直也想投稿到一些杂志和报纸。但因时间太紧。。一直未能如愿。</p>
+<p>&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp; 谢谢。。。</p>
+<p>你说的“商业程序代码真的很少涉及到高效算法和一些特殊的数据结构”这是实际情况，因为并不是所有的公司的产品都是理论性很强的产品，就像<span style="color:red">造山寨手机的人不需要懂太多芯片设计等方面的知识</span>，只要会把大公司制造的手机芯片拼装起来，然后装一个外壳就可以了。“高效算法和一些特殊的数据结构”已经由IBM、微软等大公司解决了，制造成了一些类库、应用服务器、数据库服务器之类的“零件”，商业程序开发者只要把这些零件按照需要拼装起来就可以了。在大公司工作的人是少数的，所以你问的师兄估计也都不是在这些大公司工作的，所以他们说“工作中真正用到acm的知识是很少很少的”也是可以理解的。</p>
+<p>ACM被誉为计算机界奥林匹克，<span style="color:red">每年的获奖者都几乎被google、微软、IBM、百度等大公司哄抢一空</span>，很多大公司赞助ACM赛事的目的就是“近水楼台”，能够比其他竞争对手&#31548;络更多的人才。</p>
+<p>ACM可以看做是“聪明者的游戏”，在ACM题目研究深入的人通常有非常高的数学素养、计算机算法素养以及非常强的分析问题、解决问题以及动手的能力，能够处理各种高精尖的难题，这是各大公司哄抢ACM人才的主要原因。</p>
+<p>ACM的程序开发和开发商业软件的不同点就在于写ACM程序是研究（Research），而写商业程序是开发（Development），这就是研发（<span style="color:red">Research&amp;Development</span>）两个字的含义，“研发”就是“研究开发”，像微软、IBM等这样的公司都将研发人才分为两种：研究性人才和开发性人才。以微软为例，在中国，微软设立了微软亚洲研究院，同时微软亚洲研究院下设微软亚洲工程院，微软亚洲研究院中的人主要的工作就是出paper（论文），根据微软总部下达的研究方向进行核心技术的研究，然后将研究成果转换为可以实施的方案，由微软亚洲工程院的工程师进行实际的开发，简单的讲就是<span style="color:red">微软亚洲研究院的人负责研究课题，然后由微软亚洲工程院的工程师根据研究结果开发出实际可用的商业化产品</span>。因此微软亚洲研究院的人都是拥有很强科研实力的人，而微软亚洲工程院的人</p>
+<p> 则是有很强开发能力的人。像google、IBM等大公司也有类&#20284;的部门职位划分。对于一些次一级的大公司来说，比如百度、网易等，也在职位上进行着类&#20284;的划分。</p>
+<p>他们的区别就像研究动力学的人和设计汽车的人的差别一样，研究动力学的人只负责从研究一些理论，不负责实际的汽车设计，而是由专门的汽车设计工程师来负责根据研究成果进行实际的产品设计。比如对于做搜索引擎来说，研究性人才负责研究检索方面的理论，得出一些公式、算法、理论，然后由开发性人才负责根据这些研究成果写程序，然后变成可以实际使用的搜索引擎。</p>
+<p>研究性人才对智商要求比较高，处于人才金字塔的顶端，因此收入、待遇各方面都更高一些，职业发展就是“科学家”；而开发性人才的优势则在于理论转化为产品的能力，因此开发性人才中独立创业的比例更高。</p>
+<p>看了公司的职位划分你就能明白白商业化软件开发和写ACM题的区别在哪里了，你就知道做ACM题背景的人和掌握商业程序开发技能的人的不同定位了。如果ACM成绩非常好，那么进入这些国际性大公司的概率会非常高，哪怕去不了大公司，中小型公司也非常欢迎这种基础理论扎实的人才，因为他们可以解决别人解决不了的难题，但是这类人才通常要价比较高，很多中小型公司难以承受，同时中小型公司并没有独立的研究部门，所以这类人才进入公司以后通常都是兼有研究和开发两重责任，当然也是处于公司<span style="color:red">人才金字塔的顶端，享受特殊待遇</span>；开发性人才则是各个类型的公司都需要的，相对来说选择面广一些，但是初始阶段的收入会比研究性人才低一些。你需要根据你的情况来给自己定位，如果是做研究性人才，那么就继续把ACM弄好，多参加ACM大赛，特别是正式的国际性ACM大赛，争取拿奖，同时做好进行<span style="color:red">研究生学习的的准备</span>（ACM成绩好的话一般都会被科研院所免试录取），在研究生阶段进行进一步的理论研究和培养自己的科研能力，这种方向的话**不需要管什么java</p>
+<p> web开发、Windows程序开发这类的实现性技术**，只需要把算法、模式识别等理论课程学好即可；如果你的定位是开发性人才则把主要精力放到java web开发、Windows程序开发等上边来，如果从事这个方向，因为你已经有一定的ACM的基础了，所以<span style="color:red">应付面试笔试中的那些算法难题不在话下</span>，那么就在把一部分精力继续投入在ACM的学习上的同时，把更多的精力投入到这些商业程序开发的技术上去。</p>
+<p>至于你提到的“公司为什么要我个大学都没毕业的”，你可以看这几篇文章：</p>
+<p><a href="http://www.rupeng.com/index.php/viewthread-514" target="_blank" rel="external">http://www.rupeng.com/index.php/viewthread-514</a></p>
+<p><a href="http://www.rupeng.com/index.php/viewthread-431" target="_blank" rel="external">http://www.rupeng.com/index.php/viewthread-431</a></p>
+<p><a href="http://www.rupeng.com/forum/thread-1211-1-1.html" target="_blank" rel="external">http://www.rupeng.com/forum/thread-1211-1-1.html</a></p>
+<p>要多看如鹏首页的内容（<a href="http://www.rupeng.com/" target="_blank" rel="external">http://www.rupeng.com/</a>）</p>
+<p>“一个全国性的营销比赛 ，这对我找技术方面的工作有优势吗”，你可以参加这方面的比赛，但是不要牵扯太多的精力，这方面的比赛可以提升的软实力，但是同样削弱了你在主业方面的投入；“投过稿，不知道这对你找工作的时候会有优势吗”，这些优势都不是量化的，而是一种软实力，投过稿、写过书，那么你分析问题、表述问题的时候会更加条理化，对工作、个人发展都有好处，这都是软实力的提升，企业需要软实力非常强的人才。</p>
+<p>如鹏出几个开发性人才高手是我的期望，出几个研究性人才、ACM高手则是我的奢求，呵呵。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/11/02/c语言数组变量在内存中的连续分配情况/" itemprop="url">
+                c语言数组变量在内存中的连续分配情况
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-11-02T21:32:00+08:00" content="2011-11-02">
+            2011-11-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><span style="font-size:16px">今天在做题目的时候碰到一个很奇怪的现象。先看代码：</span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include&amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include&amp;lt;string.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">char</span> a[<span class="number">100</span>];</span><br><span class="line"> <span class="keyword">int</span> i,len;</span><br><span class="line"></span><br><span class="line"> <span class="built_in">scanf</span>(&amp;amp;quot;%s&amp;amp;quot;,a);</span><br><span class="line"> len = <span class="built_in">strlen</span>(a);</span><br><span class="line"> <span class="built_in">printf</span>(&amp;amp;quot;%dn&amp;amp;quot;,len);</span><br><span class="line"></span><br><span class="line">  a[<span class="number">100</span>] = &amp;<span class="preprocessor">#039;0&amp;#039;;                 <span class="comment">//请注意a[100]</span></span></span><br><span class="line"></span><br><span class="line"> <span class="built_in">printf</span>(&amp;amp;quot;%d&amp;amp;quot;,len);</span><br><span class="line"></span><br><span class="line"> <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p></p>
+<p><span style="font-size:16px">我在定义的时候定义的是a[100],其实是从a[0]到a[99]。运行这个程序的结果是</span></p>
+<p><span style="font-size:16px">输入123</span></p>
+<p><span style="font-size:16px">输出3</span></p>
+<p><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 48</span></p>
+<p><span style="font-size:16px">这个48正是0的ASCII&#20540;，这个时候问题就暴露出来了。那么为什么len的&#20540;会发生改变呢？</span></p>
+<p><span style="font-size:16px"></span></p>
+<p></p>
+<p><span style="font-size:16px">其实想要回答这个问题，必须先搞清楚变量在内存中的分配方式。在main函数里面定义的变量是存放在栈中的（其实这种说法也不是很准确，还跟类型有关，比如常量的话就不是这种情况了）。所以未初始化定义的变量是按照先后顺序依次存入堆里，这里可以用指针查看具体变量的地址，这样可以更加清楚的看到内存的连续分配情况。（注意一个整形占4个字节，而一个字符占1个字节）。</span></p>
+<p><span style="font-size:16px"></span></p>
+<p></p>
+<p><span style="font-size:16px">&#20540;得说明的是，如果定义的是全局变量，这个时候内存使用的是堆的存储方式，这个时候内存分配的空间不再连续，而是类&#20284;于链表的形式。</span></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/10/31/关于main函数的三个参数/" itemprop="url">
+                关于main函数的三个参数
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-10-31T21:39:00+08:00" content="2011-10-31">
+            2011-10-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p><span style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:13px; line-height:19px">每一C 程序都必须有一main()函数, 可以根据自己的爱好把它放在程序的某</span></p>
+<p>个地方。有些程序员把它放在最前面, 而另一些程序员把它放在最后面, 无论放</p>
+<p>在哪个地方, 以下几点说明都是适合的。</p>
+<p>1. main() 参数</p>
+<p>在Turbo C2.0启动过程中, 传递main()函数三个参数: argc, argv和env。</p>
+<ul>
+<li><p>argc: 整数, 为传给main()的命令行参数个数。</p>
+</li>
+<li><p>argv: 字符串数组。</p>
+</li>
+</ul>
+<p>在DOS 3.X 版本中, argv[0] 为程序运行的全路径名; 对DOS 3.0</p>
+<p>以下的版本, argv[0]为空串(&quot;&quot;) 。</p>
+<p>argv[1] 为在DOS命令行中执行程序名后的第一个字符串;</p>
+<p>argv[2] 为执行程序名后的第二个字符串;</p>
+<p>&#8230;</p>
+<p>argv[argc]为NULL。</p>
+<p>*env: 安符串数组。env[] 的每一个元素都包含ENVVAR=value形式的字符</p>
+<p>串。其中ENVVAR为环境变量如PATH或87。value 为ENVVAR的对应&#20540;如C:DOS, C:</p>
+<p>TURBOC(对于PATH) 或YES(对于87)。</p>
+<p>Turbo C2.0启动时总是把这三个参数传递给main()函数, 可以在用户程序中</p>
+<p>说明(或不说明)它们, 如果说明了部分(或全部)参数, 它们就成为main()子程序</p>
+<p>的局部变量。</p>
+<p>请注意: 一旦想说明这些参数, 则必须按argc, argv, env 的顺序, 如以下</p>
+<p>的例子:</p>
+<p>main()</p>
+<p>main(int argc)</p>
+<p>main(int argc, char *argv[])</p>
+<p>main(int argc, char _argv[], char _env[])</p>
+<p>其中第二种情况是合法的, 但不常见, 因为在程序中很少有只用argc, 而不</p>
+<p>用argv[]的情况。</p>
+<p>以下提供一样例程序EXAMPLE.EXE, 演示如何在main()函数中使用三个参数:</p>
+<p>/_program name EXAMPLE.EXE_/</p>
+<h1 id="include&lt;stdio-h&gt;">include&lt;stdio.h&gt;</h1><h1 id="include&lt;stdlib-h&gt;">include&lt;stdlib.h&gt;</h1><p>main(int argc, char _argv[], char _env[])</p>
+<p>{</p>
+<p>int i;</p>
+<p>printf(&quot;These are %d command- line arguments passed to main:nn&quot;, argc);</p>
+<p>for(i=0; i&lt;=argc; i&#43;&#43;)</p>
+<p>printf(&quot;argv[%d]:%sn&quot;, i, argv[i]);</p>
+<p>printf(&quot;nThe environment string(s) on this system are:nn&quot;);</p>
+<p>for(i=0; env[i]!=NULL; i&#43;&#43;)</p>
+<p>printf(&quot; env[%d]:%sn&quot;, i, env[i]);</p>
+<p>}</p>
+<p>运行EXAMPLE.EXE:</p>
+<p>C:example first_argument &quot;argument with blanks&quot; 3 4 &quot;last but</p>
+<p>one&quot; stop!</p>
+<p>注意: 可以用双引号括起内含空&#26684;的参数, 如本例中的: &quot; argument</p>
+<p>with blanks&quot;和&quot;Last but one&quot;)。</p>
+<p>结果是这样的:</p>
+<p>The value of argc is 7</p>
+<p>These are the 7 command-linearguments passed to main:</p>
+<p>argv[0]:C:TURBOEXAMPLE.EXE</p>
+<p>argv[1]:first_argument</p>
+<p>argv[2]:argument with blanks</p>
+<p>argv[3]:3</p>
+<p>argv[4]:4</p>
+<p>argv[5]:last but one</p>
+<p>argv[6]:stop!</p>
+<p>argv[7]:(NULL)</p>
+<p>The environment string(s) on this system are:</p>
+<p>env[0]: COMSPEC=C:COMMAND.COM</p>
+<p>env[1]: PROMPT=$P$G /_视具体设置而定_/</p>
+<p>env[2]: PATH=C:DOS;C:TC /_视具体设置而定_/</p>
+<p></p>
+<p><span style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:13px; line-height:19px">env[] 获得的信息等同于Linux下env命令的结果</span></p>
+<p><span style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:13px; line-height:19px"></span></p>
+<p></p>
+<p><span style="font-family:Verdana,Geneva,Arial,Helvetica,sans-serif; font-size:13px"><span style="line-height:19px">其实这几个参数在 linux上用得比较广泛，比如说像-m -s等等的参数，利用这几个参数可以直观的看出来。然后最后一个*env好像是c里面所特有的，是用来显示指向各种path&#20540;的指针。</span></span></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2011/10/31/在c语言中使用转义字符和格式字符/" itemprop="url">
+                在c语言中使用转义字符和格式字符
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-10-31T10:23:00+08:00" content="2011-10-31">
+            2011-10-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>学习过转义字符以后，大家都明白 例如 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;t (横向跳&#26684;) &nbsp; &nbsp;n（换行） &nbsp; &nbsp; （输出一个） &nbsp; &nbsp; &nbsp;&#8216; （输出一个 &#8216;） &nbsp; &nbsp; &quot; (输出 &quot;) &nbsp; &nbsp;ddd (ASCIi为八进制所代表的字符) &nbsp;</p>
+<p><span style="white-space:pre"></span>xhh &nbsp;(ASCII为十六进制所代表的字符)</p>
+<p>说到这里，我碰到了一个问题，如何输出%呢？</p>
+<p>如果直接 printf(&quot;%&quot;);在执行的时候是没有任何输出的，即使printf(&quot;%&quot;);也是一样的。</p>
+<p>这是因为%所代表的是&#26684;式字符，比如printf(&quot;%d&quot;,n);&nbsp;</p>
+<p>所以这里要特别注意如果想输出%,必须用%%,即&nbsp;printf(&quot;%%&quot;); &nbsp; 才能达到效果</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/20/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/22/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

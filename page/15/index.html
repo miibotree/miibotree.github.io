@@ -1,0 +1,1320 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/15/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/16/DllMain详解/" itemprop="url">
+                DllMain详解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-16T15:28:18+08:00" content="2012-05-16">
+            2012-05-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div id="article_content"><br><div align="center"><span style="font-size: large;">_DllMain详解_</span></div><br><div><a href="http://download.csdn.net/sort/tag/DllMain" target="_blank" rel="external"><span style="color: #339966;"><strong>源码下载：</strong></span></a></div><br><div>       DLL – 动态链接库</div><br><div>       DllMainTest – 测试DLL的DllMain</div><br><div>1  DLL的进入/退出函数</div><br><div><span style="color: #0000ff; font-size: medium;"><strong>1.1  DllMain简介</strong></span></div><br><div>跟exe有个main或者WinMain入口函数一样，DLL也有一个入口函数，就是DllMain。以“DllMain”为关键字，来看看MSDN帮助文档怎么介绍这个函数的。</div><br><div>The <strong>DllMain</strong> function is an optional method of entry into a dynamic-link library (DLL)。（简要翻译：对于一个Dll模块，DllMain函数是可选的。）这句话很重要，很多初学者可能都认为一个动态链接库肯定要有DllMain函数。其实不然，像很多仅仅包含资源信息的DLL是没有DllMain函数的。</div><br><div><span style="color: #0000ff; font-size: medium;"><strong>1.2 何时调用DllMain</strong></span></div><br><div>       系统是在什么时候调用DllMain 函数的呢？静态链接时，或动态链接时调用LoadLibrary和FreeLibrary都会调用DllMain函数。DllMain的第三个参数 fdwReason指明了系统调用Dll的原因，它可能是DLL_PROCESS_ATTACH、DLL_PROCESS_DETACH、 DLL_THREAD_ATTACH和DLL_THREAD_DETACH。以下从这四种情况来分析系统何时调用了DllMain。</div><br><div>1.2.1 DLL_PROCESS_ATTACH</div><br><div>       大家都知道，一个程序要调用Dll里的函数，首先要先把DLL文件映射到进程的地址空间。要把一个DLL文件映射到进程的地址空间，有两种方法：静态链接和动态链接的LoadLibrary或者LoadLibraryEx。</div><br><div>       当一个DLL文件被映射到进程的地址空间时，系统调用该DLL的DllMain函数，传递的fdwReason参数为DLL_PROCESS_ATTACH。这种调用只会发生在第一次映射时。如果同一个进程后来为已经映射进来的DLL 再次调用LoadLibrary或者LoadLibraryEx，操作系统只会增加DLL的使用次数，它不会再用DLL_PROCESS_ATTACH调 用DLL的DllMain函数。不同进程用LoadLibrary同一个DLL时，每个进程的第一次映射都会用DLL_PROCESS_ATTACH调用 DLL的DllMain函数。</div><br><div>       可参考DllMainTest的DLL_PROCESS_ATTACH_Test函数。</div><br><div>1.2.2 DLL_PROCESS_DETACH</div><br><div>       当DLL被从进程的地址空间解除映射时，系统调用了它的DllMain，传递的fdwReason值是DLL_PROCESS_DETACH。当DLL处理该值时，它应该执行进程相关的清理工作。</div><br><div>       那么什么时候DLL被从进程的地址空间解除映射呢？两种情况：</div><br><div>       ◆FreeLibrary解除DLL映射（有几个LoadLibrary，就要有几个FreeLibrary）</div><br><div>       ◆进程结束而解除DLL映射，在进程结束前还没有解除DLL的映射，进程结束后会解除DLL映射。（如果进程的终结 是因为调用了TerminateProcess，系统就不会用DLL_PROCESS_DETACH来调用DLL的DllMain函数。这就意味着DLL 在进程结束前没有机会执行任何清理工作。）</div><br><div>       注意：当用DLL_PROCESS_ATTACH调用DLL的DllMain函数时，如果返回FALSE，说明没有初始化成功，系统仍会用DLL_PROCESS_DETACH调用DLL的DllMain函数。因此，必须确保没有清理那些没有成功初始化的东西。</div><br><div>       可参考DllMainTest的DLL_PROCESS_DETACH_Test函数。</div><br><div>1.2.3 DLL_THREAD_ATTACH</div><br><div>       当进程创建一线程时，系统查看当前映射到进程地址空间中的所有DLL文件映像，并用值DLL_THREAD_ATTACH调用DLL的DllMain函数。</div><br><div>新创建的线程负责执行这次的DLL的DllMain函数，只有当所有的DLL都处理完这一通知后，系统才允许进程开始执行它的线程函数。</div><br><div>注意跟 DLL_PROCESS_ATTACH的区别，我们在前面说过，第n(n&gt;=2)次以后地把DLL映像文件映射到进程的地址空间时，是不再用 DLL_PROCESS_ATTACH调用DllMain的。而DLL_THREAD_ATTACH不同，进程中的每次建立线程，都会用值 DLL_THREAD_ATTACH调用DllMain函数，哪怕是线程中建立线程也一样。</div><br><div>1.2.4 DLL_THREAD_DETACH</div><br><div>       如果线程调用了ExitThread来结束线程（线程函数返回时，系统也会自动调用ExitThread），系统查看当前映射到进程空间中的所有DLL文件映像，并用DLL_THREAD_DETACH来调用DllMain函数，通知所有的DLL去执行线程级的清理工作。</div><br><div>       注意：如果线程的结束是因为系统中的一个线程调用了TerminateThread，系统就不会用值DLL_THREAD_DETACH来调用所有DLL的DllMain函数。</div><br><div><span style="color: #0000ff; font-size: medium;"><strong>1.3  为DllMain换名</strong></span></div><br><div>在早期的SDK版本中，DllMain是叫做DllEntryPoint。其实有一件鲜 为人知的事：一个Dll的入口函数名是可以自己定义的。下面我将以VC++6.0为例来演示如何更改。首先要说明一点，虽然DllMain可以换成其他函 数名，但函数的参数和返回值必须和DllMain一样。而且这个函数要为<strong>stdcall类型（DllMain本身也是</strong>stdcall类型）。</div><br><div>打开VC++菜单<strong>Project/Settings/Link tab/ Output in the Category box**</strong>，<strong>如 下图，在Entry-point symbol中输入要替换DllMain的函数名（当然这个函数名是你程序中已经实现的函数）。Entry-point symbol是干么的呢？可以以关键字“Entry-point symbol”搜索MSDN帮助文档查看，搜索时，打钩“仅搜索标题”会更快定位。</strong></div><br><div><img src="http://p.blog.csdn.net/images/p_blog_csdn_net/benkaoya/1.jpg" alt=""></div><br><div>         按OK后，如果马上编译的话会出现如下错误：</div><br><div>LIBCMTD.lib(crt0.obj) : error LNK2001: unresolved external symbol _main<strong></strong></div><br><div>Debug/Dll.dll : fatal error LNK1120: 1 unresolved externals<strong></strong></div><br><div>打开VC++菜单Project/Settings/C/C++**选项卡，如下图，在Project Options：末尾的地方添加”/D”（图中蓝色高亮的地方），要注意位置，我试了，要把/D放到/GZ后面也会链接错误，我也不懂为什么，^_^。按OK，再次编译，成功。大家可以自己测试下到底有没有更改成功，什么，如果测试？打出调式信息啊。</div><br><div><img src="http://p.blog.csdn.net/images/p_blog_csdn_net/benkaoya/2.jpg" alt=""></div><br><div><span style="color: #0000ff; font-size: medium;"><strong>1.4 DisableThreadLibraryCalls</strong></span></div><br><div>看帮助就知道它是干么用的：</div><br><div>The <strong>DisableThreadLibraryCalls</strong> function disables the DLL_THREAD_ATTACH and DLL_THREAD_DETACH notifications for the dynamic-link library (DLL) specified by _hLibModule_. This can reduce the size of the working code set for some applications.</div><br></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/13/win7下的UAC机制与提升管理员权限/" itemprop="url">
+                win7下的UAC机制与提升管理员权限
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-13T17:07:35+08:00" content="2012-05-13">
+            2012-05-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>自己本来想写这么个东西。在自己写的程序中能打开另一个程序，而这个打开的程序是直接以管理员身份运行的而不需要弹出什么“是否要以管理员身份运行的对话框”。</p>
+<p>&nbsp;</p>
+<p>那么我们首先来看一下UAC机制。</p>
+<p>下面这些是摘引过来的：</p>
+<p><span style="color: #000066;">保 护Win7安全不得不说的UAC，众所周知，UAC是User Account Control的缩写，其中文翻译为用户帐户控制，是微软在Windows Vista和Win7中引用的新技术，主要功能是进行一些会影响系统安全的操作时，会自动触发UAC，用户确认后才能执行</span></p>
+<p><span style="color: #000066;">    大部分的恶意软件、木马病毒、广告插件在进入计算机时都会有如：将文件复制到Windows或Program Files等目录、安装驱动、安装ActiveX等操作，而这些操作都会触发UAC。面对这些不安全的因素，用户该如何解决UAC带来的问题？本文详细介 绍了UAC触动的详细功能，并可以在UAC提示时来禁止这些程序的运行。</span></p>
+<p><span style="color: #000066;">    能够触发UAC的操作包括：修改Windows Update配置； 增加或删除用户帐户； 改变用户的帐户类型； 改变UAC设置；安装ActiveX； 安装或卸载程序； 安装设备驱动程序； 修改和设置家长控制； 增加或修改注册表； 将文件移动或复制到Program Files或是Windows目录； 访问其他用户目录UAC很烦是的，微软自从Windows Vista开始加入了UAC，这也成了人们对VISTA不满的诟病之一，因为Vista不像Win7一样可以对 UAC进行级别设置（其实Windows7的UAC也很烦），当时的电脑的普遍配置也很低，所以人们对这个动不动就弹出来，同时还会锁定屏幕的家伙很厌 恶。</span></p>
+<p><span style="color: #000066;">    UAC在Win 7中的完善就是因为UAC太烦了，所以微软在Win 7中，加入了UAC的等级设置功能，分别对应4个级别：</span></p>
+<p><span style="color: #000066;">    默认级别（2级）：</span></p>
+<p><span style="color: #000066;">    在默认级别下，只有在应用程序试图改变计算机设置时才会提示用户，而用户主动对Windows进行更改设置则不会提示。同时，在该模式下将启用安全桌面， 以防绕过UAC更改系统设置。可以看出，默认级别可以既不干扰用户的正常操作，又可以有效防范恶意程序在用户不知情的情况下修改系统设置。一般的用户都可 以采用该级别设置。</span></p>
+<p><span style="color: #000066;">    比默认级别稍低的级别（1级）：</span></p>
+<p><span style="color: #000066;">    与默认级别稍有不同的是该级别将不启用安全桌面，也就是说有可能产生绕过UAC更改系统设置的情况。不过一般情况下，如果使用户启动某些程序而需要对系统 进行修改，可以直接运行，不会产生安全问题。但如果用户没有运行任何程序却弹出提示窗口，则有可能是恶意程序在试图修改系统设置，此时应果断选择阻止。该 级别适用于有一定系统经验的用户。</span></p>
+<p><span style="color: #000066;">    最低的级别（0级）：</span></p>
+<p><span style="color: #000066;">    最低的级别则是关闭UAC功能（必须重新启动后才能生效）。在该级别下，如果是以管理员登录，则所有操作都将直接运行而不会有任何通知，包括病毒或木马对 系统进行的修改。在此级别下，病毒或木马可以任意连接访问网络中的其他电脑、甚至与互联网上的电脑进行通信或数据传输。可见如果完全关闭UAC并以管理员 身份登录，将严重降低系统安全性。此外，如果是以标准用户登录，那么安装、升级软件或对系统进行修改和设置，将直接被拒绝而不弹出任何提示，用户只有获得 管理员权限才能进行。可见完全关闭UAC并以标准用户登录，各种操作和设置也非常不方便，因此建议不要选择该级别。</span></p>
+<p><span style="color: #000066;">    最高级别（3级）：</span></p>
+<p><span style="color: #000066;">    在高级级别下，“始终通知”（即完全开启），在该级别下，用户安装应用程序、对软件进行升级、应用程序在任何情况下对操作系统进行更改、更改 Windows设置等情况，都会弹出提示窗口（并启用安全桌面），请求用户确认。由此可见该级别是最安全的级别，但同时也是最“麻烦”的级别，适用于多人 共用一台电脑的情况下，限制其他标准用户，禁止其随意更改系统设置。</span></p>
+<p><span style="color: #000066;">    但是UAC很有用UAC虽然经常安装软件的人很烦，但UAC的作用却不容小觑。不得不承认微软对于操作系统的理念是很超前的，所以经常会搞出一些虽然很棒 却很尴尬的东西，就好像当年的VISTA，在人们开始接受Windows 7的今天，再回头去看Vista，才越来越意识到VISTA其实是一个很不错的操作系统，只 不过是生不逢时。</span></p>
+<p><span style="color: #000000;">我们在这里可以更改UAC设置：</span></p>
+<p><span style="color: #000066;"><img src="http://my.csdn.net/uploads/201205/13/1336898174_2236.png" alt=""></span></p>
+<p><span style="color: #000000;">如果是以管理员权限运行的，那么把它改成最低级别之后，所有的UAC都不会弹出来了。这样就达到了我们要的效果。</span></p>
+<p><span style="color: #000000;">其实是可以在注册表里面修改这个设置的。这里等下再说。</span></p>
+<p><span style="color: #000000;">首先来说说如何让自己的图标多出个盾牌。也就是说我们双击程序运行的时候启动UAC机制。</span></p>
+<p><span style="color: #000000;">其实是很简单的。。。。</span></p>
+<p><span style="color: #000000;">第一步：</span></p>
+<p><span style="color: #000000;">我们随手写个helloworld，生成了一个a.exe文件。</span></p>
+<p><span style="color: #000000;">然后在对应目录下面创建一个<strong>可执行文件名.exe.manifest  如果我这里既是a.exe.manifest</strong></span></p>
+<figure class="highlight"><figcaption><span>version="1.0" encoding="UTF-8" standalone="yes"?&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#38;lt;assembly xmlns=&#34;urn:schemas-microsoft-com:asm.v1&#34; manifestVersion=&#34;1.0&#34;&#38;gt;&#10;  &#38;lt;assemblyIdentity version=&#34;1.0.0.0&#34; processorArchitecture=&#34;X86&#34; name=&#34;VistaLogoDemo&#34; type=&#34;win32&#34;/&#38;gt;&#10;  &#38;lt;description&#38;gt;Description of your application&#38;lt;/description&#38;gt;&#10;  &#38;lt;!-- Identify the application security requirements. --&#38;gt;&#10;  &#38;lt;trustInfo xmlns=&#34;urn:schemas-microsoft-com:asm.v3&#34;&#38;gt;&#10;    &#38;lt;security&#38;gt;&#10;      &#38;lt;requestedPrivileges&#38;gt;&#10;        &#38;lt;requestedExecutionLevel level=&#34;requireAdministrator&#34; uiAccess=&#34;false&#34;/&#38;gt;&#10;      &#38;lt;/requestedPrivileges&#38;gt;&#10;    &#38;lt;/security&#38;gt;&#10;  &#38;lt;/trustInfo&#38;gt;&#10;&#38;lt;/assembly&#38;gt;</span><br></pre></td></tr></table></figure>
+<p>第二步：</p>
+<p><span style="color: #000000;">现在我们导入我们写好的资源文件：</span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">添加资源导入<strong>manifest</strong>文件命名为<strong>RT_MANIFEST</strong>，将其ID改为1</span></span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">第三步：</span></span></p>
+<p><span style="color: #0000ff;"><span style="color: #000000;">编译运行一下，可能会出错，错误如下：</span></span></p>
+<p>&nbsp;</p>
+<figure class="highlight"><figcaption><span>c1010001: Values of attribute <span style="color: #800000;">"</span><span style="color: #800000;">level</span><span style="color: #800000;">"</span> not equal <span style="color: #0000ff;">in</span> different manifest snippets.    E:VC2010SP1SamplesC++MFCD2DMFCGdiInteropSampleDebugMFCGdiInteropSample.exe.intermediate.manifest```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#60;span style=&#34;color: #000066;&#34;&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#21452;&#20987;&#38169;&#35823;&#65292;&#36825;&#37324;&#20986;&#26469;&#19968;&#20010;vs&#33258;&#21160;&#29983;&#25104;&#30340;.manifest&#25991;&#20214;&#10;&#10;&#60;/span&#62;&#60;/span&#62;&#10;&#10;&#60;span style=&#34;color: #000066;&#34;&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#25226;&#23545;&#24212;&#30340;requestExecutionLevel &#26356;&#25913;&#12290;&#22312;&#36825;&#20010;&#20363;&#23376;&#37324;&#25105;&#20204;&#25913;&#25104;&#60;/span&#62;&#60;/span&#62;&#10;&#10;```requireAdministrator</span><br></pre></td></tr></table></figure>
+<p>,再次编译运行<span style="color: #000066;">。</span></p>
+<p><span style="color: #000066;"><span style="color: #000000;"><span style="color: #000066;">如果你不是以管理员权限打开的，可能vs会要求你重新启动来编译运行：如下图：</span></span></span></p>
+<p><span style="color: #000066;"><span style="color: #000000;"><span style="color: #000066;"><img src="http://my.csdn.net/uploads/201205/13/1336899549_5258.png" alt=""></span></span></span></p>
+<p></p>
+<p><span style="color: #000000;">假设我生成的是Release版本，现在查看下对应文件夹下面的图标，就多了一个盾牌了。双击运行，就会弹出UAC机制了。</span></p>
+<p><span style="color: #000000;">接下来说说用注册表更改UAC的等级：</span></p>
+<p><span style="color: #000000;">键值项：</span></p>
+<p></p>
+<p>&nbsp;</p>
+<p>HKEY_LOCAL_MACHINE/SOFTWARE/Microsoft/Windows/CurrentVersion/Policies/System</p>
+<p>相关键值设置：</p>
+<p>UAC高</p>
+<p>ConsentPromptBehaviorAdmin = 2</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 1</p>
+<p>UAC中</p>
+<p>ConsentPromptBehaviorAdmin = 5</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 1</p>
+<p>UAC低</p>
+<p>ConsentPromptBehaviorAdmin = 5</p>
+<p>EnableLUA = 1</p>
+<p>PromptOnSecureDesktop = 0</p>
+<p>UAC关</p>
+<p>ConsentPromptBehaviorAdmin = 0</p>
+<p>EnableLUA = 0</p>
+<p>PromptOnSecureDesktop = 0</p>
+<p>注1：相关键说明</p>
+<p>ConsentPromptBehaviorAdmin    通知强度级别</p>
+<p>EnableLUA     是否开启UAC</p>
+<p>PromptOnSecureDesktop      桌面是否变黑</p>
+<p>注2：对UAC对级别设置说明</p>
+<p><span style="color: #000000;">注意必须重新启动才能生效。</span></p>
+<p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/11/Win7文件关联-文件与程序“联姻”/" itemprop="url">
+                Win7文件关联 文件与程序“联姻”
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-11T21:05:34+08:00" content="2012-05-11">
+            2012-05-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>遇到一位朋友紧急求助：系统是windows7，这位朋友因为桌面没有OFFICE图标，又急着要用WORD，就把一个桌面图标右击，选择打开方式 中选择了Word，而且没有把“始终使用这种程序打开同类型文件”前的勾去掉。这一改之后，结果所有的快捷方式全变成了word文档了。可以再改成别的， 比如再改为记事本方式打开，但就是没有办法恢复原状。</p>
+<p>这是一个文件关联的问题。这样的问题在xp下根本就不可能发生，看来这个具体问题是Win7下的新问题。网上大致搜了一下，发现出现这样问题的决不只是这位朋友，看来有解决的必要。</p>
+<p>为了解决这个问题，我们需要先谈一下文件关联的一些基本的知识，这样才能使朋友们做到知其然而知其所以然。</p>
+<p>文件关联，主要的是把文件类型与开放式命令关联起来。而windows是通过文件的扩展名来识别文件类型的，这就首先需要把扩展名与文件类型关联起来。</p>
+<p>assoc命令</p>
+<p>要修改扩展名与文件类型的关联，我们需要用到一个命令：assoc</p>
+<p>点开始，搜索，输入cmd，打开cmd,在cmd中输入：assoc /? 回车。我们可以得到关于这个命令的帮助。</p>
+<p>assoc命令的作用有两个，一是显示扩展名与文件类型的关联，一是改写扩展名与文件类型的关联。</p>
+<p>让我们以快捷方式的关联为例来讲述这个问题。</p>
+<p>快捷方式的扩展名是.lnk，在windows下，这个扩展名一般是不会显现出来的，如果出现了，必是它的文件关联出问题了。</p>
+<p>我们在cmd中输入：assoc .lnk ，回车后我们可以得到的命令结果是： .lnk=lnkfile 。这个命令结果显示了：扩展名.lnk与文件类型lnkfile是相关联的。凡是扩展名为.lnk的文件，都属于lnkfile这个文件类型。</p>
+<p>现在让我们输入命令： assoc .lnk=lnk ，按下回车键，lnk这个扩展名与文件类型的关联就被改写了。然后我们再输入命令： assoc .lnk ，按下回车键，我们得到的命令结果将是: .lnk=lnk ，这个结果显示了，扩展名.lnk已经是与文件类型lnk相关联，而不再是与lnkfile相关联。</p>
+<p>这个时候你去桌面上去看一下吧，你桌面上所有的快捷方式的后缀名.lnk全部显示出来了，所有的快捷方式都不再可用。双击时会提示：windows无法打开此文件。</p>
+<p>现在再让我们输入： assoc .lnk=lnkfile ，按下回车键，我们将会发现，一切又恢复了原状。</p>
+<p>总之，如果是快捷方式的扩展名与文件类型之间的关联出现了问题，我们只需要输入： assoc .lnk=lnkfile，回车后即可以解决问题。</p>
+<p>这样，如果我们知道一种扩展名所属的正确的文件类型，当这种扩展名与文件类型之间的关联出现问题的时候，我们只需要输入： assoc .ext=filetype ，按下回车键即可。 这个.ext代表的是文件扩展名，比如.lnk，这个filetype代表的是文件类型，比如lnkfile。如果我们不知道一种扩展名所关联的文件类型 是什么，我们只需要在cmd中输入：assoc .ext回车。我们就能得到它所关联的文件类型是什么。</p>
+<p>每一个注册了的扩展名都会在注册表中存在着一个对应的注册表项： HKEY_CLASSES_ROOT.ext ，</p>
+<p>这里的.ext代表的是扩展名，比如快捷方式对应的项就是： HKEY_CLASSES_ROOT.lnk ，这个项有一个默认的值，这个默认的值的数据，就是这个快捷方式所关联的文件类型。因而assoc命令，主要的就是修改这个项的默认值的数据。但需要注意 的是，assoc命令所修改的内容，并不仅仅是这个项的默认值的数据，它还会要修改其它的一些方面。所以我们直接在注册表中改这个值的数据，并不能完全代 替assoc命令。</p>
+<p>ftype命令</p>
+<p>我们现在知道了如何把扩展名与文件类型关联起来了，进一步地需要知道的是如何把文件类型与开放式命令关联起来。比如.txt扩展名所关联的文件 类型是txtfile,而txtfile正常的情形下，总是用notepad.exe（记事本）来打开的，这个notepad.exe就是打开 txtfile文件类型的开放式命令。</p>
+<p>如何来修改这种文件类型与开放式命令之间的关联呢？这需要用到另外的一个重要的命令：ftype</p>
+<p>让我们在cmd中输入： ftype /? 回车。我们可以得到这个命令的帮助。</p>
+<p>ftype命令有两个作用，一是显示文件类型与开放式命令之间的关联，一是改写文件类型与开放式命令之间的关联。</p>
+<p>如果我们想知道一种文件类型与什么样的开放式命令相关联，我们只需要在cmd中输入： ftype fileType ，按下回车键，我们就能够得到我们想要得到的结果。</p>
+<p>这个fileType代表的是指定的文件类型，比如lnkfile，我们输入：ftype lnkfile ，按下回车键，正常情形下我们得到的命令结果是： 没有找到文件类型“lnkfile”或者与其相关的开放式命令，这个结果表明正常的情形下，lnkfile是没有与任何开放式命令相关联的。</p>
+<p>让我们输入：ftype lnkfile=notepad.exe ，按下回车键，再输入：ftype lnkfile ，按下回车键，我们将得到的命令结果是： lnkfile=notepad.exe 这个结果表明了：文件类型lnkfile就与开放式命令notepad.exe关联上了。</p>
+<p>这种情形下，仍然并不会影响快捷方式的打开。 那么，如何来清除这个关联，并且不与其它的开放式命令关联呢？我们只要输入： ftype lnkfile= ，然后回车即可。</p>
+<p>在xp下，这个命令无效，但是，我们可以在xp下输入：ftype lnkfile= ，按下回车键，这个命令与前一个命令在外表上几乎看不出区别，区别就在于，前一个命令在＝后面没有空格，而后一个命令在＝后有一个空格。</p>
+<p>让我们输入：ftype txtfile ，按下回车键，正常情形下，我们可以得到的命令结果是： txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1 ，这个结果表明了：文件类型txtfile与开放式命令txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1相关联。</p>
+<p>如果一种文件类型与开放式命令之间的关联出现了问题，而我们知道正确的开放式命令是什么，这时我们只需要在cmd中输入如下命令并回车即可修 复： ftype fileType=openCommandString ，这里fileType代表的是指定的文件类型，比如txtfile,这里openCommandString代表的是开放式命令，比如 notepad.exe</p>
+<p>如果我们的txtfile与开放式命令之间的关联出了问题，我们只需要在cmd中输入： ftype txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1 ，按下回车键，这样我们也就修复了txtfile文件类型与它的开放式命令之间的关联。</p>
+<p>所谓开放式命令，其实就是对这种文件类型的打开方式。每一种注册了的文件类型，在注册表中都会存在着它的一个对应的注册表项，这个注册表项就 是： HKEY_CLASSES_ROOTfiletype ，这个filetype代表的是文件类型，比如batfile文件类型所对应的注册表项就是： HKEY_CLASSES_ROOTbatfile ，ftype命令所修改的注册表项主要就是&#8212;HKEY_CLASSES_ROOTfiletypeshellopencommand&#8212;这 个项的默认值的数据。</p>
+<p>但需要注意的是，ftype命令所修改的并不仅仅是这个默认值的数据。因而直接在注册表中修改这个数据，并不能代替ftype命令的修改。</p>
+<p>当然，ftype命令所修改的全部的东西都可以在注册表中找到，但是，我们那样一一地去找，远不如用ftype命令简单修改来得爽。</p>
+<p>右键打开方式</p>
+<p>前面我们谈到了扩展名与文件类型的关联，文件类型与开放式命令的关联（也就是文件的打开方式），看起来好象我们关于文件关联的问题就谈完了，实 则不然，还有另外的一个重要的方面我们没有谈到。这就是我们右击一个文件，选择打开方式（并不是所有文件右键都有打开方式这个选项的），然后我们选择一个 程序，并把“始终使用这种程序打开同类型文件”前的勾选上，点确认。比如本文开头的那位朋友，把所有快捷方式都选择以word程序打开一样。这样之后，这 个文件类型也就与这个开放式命令关联起来了。</p>
+<p>ftype命令是修改文件类型与开放式命令的关联的，而右键打开方式也可以修改文件类型与开放式命令的关联，这二者的关系是什么呢？</p>
+<p>我们发现，ftype命令和右键打开方式，这二者所修改的注册表项是不同的。Ftype命令所修改的注册表项是： HKEY_CLASSES_ROOTfiletype ，这个filetype代表的是文件类型，比如HKEY_CLASSES_ROOTlnkfile ，而右键打开方式所修改的主要注册表项是： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.ext ，这个.ext代表的是文件扩展名，比如： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.lnk ，按照我的理解，ftype命令所修改的内容属于系统设置，而右键打开方式所修改的内容则属于用户设置，这二者所设置的实际对象是一样的，当二者不一致的 时候，用户设置优先于系统设置。</p>
+<p>三个注册表项</p>
+<p>总之，文件关联所涉及到的注册表项主要是三个：</p>
+<p>HKEY_CLASSES_ROOT.ext</p>
+<p>HKEY_CLASSES_ROOTfiletype</p>
+<p>HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.ext</p>
+<p>问题解决</p>
+<p>现在要回到我们在开头所说到的问题了。我教那位朋友首先输入：assoc .lnk ，返回的命令结果是： .lnk=lnkfile 中，这表明，扩展名.lnk与文件类型lnkfile之间的关联没有问题。 我再要他输入：ftype lnkfile ，返回的命令结果是：没有找到文件类型“lnkfile”或者与其相关的开放式命令，而这个结果是正常的，这表明，系统设置中的lnkfile与开放式命 令之间的关联也没有问题。</p>
+<p>那么，问题只能出在用户设置中的lnkfile与开放式命令之间的关联出现了问题。 一般的情形下，右键打开方式的设置优先于ftype命令对文件关联的设置，这在xp和win7下都是一样的，但对于扩展名为.lnk的快捷方式，二者却具 有不同。在win7下，即便是对于.lnk快捷方式，也是右键打开方式的设置优先于ftype命令的设置。</p>
+<p>找到了问题所在，我们就可以知道，对于这种快捷方式的文件关联错误，我们用assoc和ftype命令都是无法解决的。解决的办法就是：</p>
+<p>在注册表中右键删除下面这个注册表项： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.lnkUserChoice 这个注册表项下的值和数据（具体就是名为progid的值和它的数据），是对应右键打开方式所设置的默认打开程序的。</p>
+<p>在删除后，重启电脑，或者重启explorer，问题完美得到解决。 除了这种解决办法，其它的解决办法暂时没有找到。</p>
+<p>顺便说一下，在XP下，UserChoice这个注册表项是没有的。</p>
+<p>由于一些文件右键没有打开方式选项，在xp下，我们可以在我的电脑里面点工具&#8212;-查看&#8212;-文件夹选项&#8212;文件类型，这里我们可以进行 同样的设置，而在Win7下，我们可以在&#8212;-控制面板&#8212;程序&#8212;默认程序&#8212;-始终使用指定的程序打开此文类型&#8212;里面进行设置，xp下设 置的可选项要多得多，而Win7下则的设置则极为简明。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/11/修改office关联—–批量修改注册表关联assoc与ftype命令/" itemprop="url">
+                修改office关联—–批量修改注册表关联assoc与ftype命令
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-11T21:02:53+08:00" content="2012-05-11">
+            2012-05-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>继续修改关联。。。</p>
+<p>这次轮到office了</p>
+<p>由于自己电脑上面没有安装Microsoft   Office，就先拿WPSoffice开刀吧</p>
+<p>首先尝试着修改.doc文件好了。</p>
+<p>我自己的wps.exe的文件目录是在这里</p>
+<p>&#8220;C:Program FilesKingsoftWPS Office Personaloffice6wps.exe&#8221;</p>
+<p>然后自己挨个搜索一下，发现一个改一个，最后重点放在下面这个子键里：</p>
+<p>HKEY_CLASSES_ROOTWPS.Dos.6shellopencommand</p>
+<p>在这里更改，毫无压力就可以修改.doc的关联了。</p>
+<p>那么.ppt  什么的其它的应该也是一样的了。</p>
+<p>&nbsp;</p>
+<p>接下来自己把电脑上面的WPS2012给删除了，下载MicrosoftOffice2010</p>
+<p>再来尝试修改MicrosoftOffice的关联。</p>
+<p>发现当我尝试修改注册表的时候，微软每次在打开文件的时候都有个验证机制，发现注册表被修改了，那么就会启动修复功能来安装被修改的注册表中的键值。关于修改.doc首先参考下面这几个子键：</p>
+<div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.doc</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.docx</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.ppt</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.pptx</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.xls</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOT.xlsx</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTExcel.Sheet.8</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTExcel.Sheet.12</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTPowerPoint.Show.8</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTPowerPoint.Show.12</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTWord.Document.12</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CLASSES_ROOTWord.Document.8</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftOffice</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.doc</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.docx</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.xls</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.xlsx</span></div><br><div><span style="font-family: 宋体; font-size: small;"> </span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.ppt</span></div><br><div><span style="font-family: 宋体; font-size: small;">HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.pptx</span></div><br><div></div><br><div>但是如果把他们都删除了的话，那么系统会找不到打开方式。</div><br><div>这可纠结了。。。有没有什么更好的办法呢？自己一项项地修改注册表那肯定是很麻烦的。有没有什么更好的办法呢？</div><br><div>google之，发现了一篇很好的文章。能够在命令行下面更改&#8230;&#8230;</div><br><div></div><br><div><a href="http://www.cnblogs.com/Leon5/archive/2012/05/10/2493759.html" target="_blank" rel="external">http://www.cnblogs.com/Leon5/archive/2012/05/10/2493759.html</a></div><br><div></div><br><div>这里主要介绍了下面两个命令 :</div><br><div>assoc命令</div><br><div>ftype命令</div><br><div>于是心里想着，能不能使用这两个命令来尝试修改.doc呢？</div><br><div>我们首先在cmd里面下面使用assoc命令：</div><br><div>assoc   .doc</div><br><div>.doc = Word.document.8</div><br><div></div><br><div>assoc   .docx</div><br><div>.docx = Word.Document.12</div><br><div>说明了扩展名为 .doc的文件是和Word.Document.8关联了</div><br><div>这里的8和12应该是类似于版本号一样的东西吧。这样一看WPS的WPS.Dos.6明显就是模仿微软的。。。连注册表都模仿的这么彻底。。。。。。</div><br><div></div><br><div>好。现在我们尝试着修改关联：</div><br><div>assoc .doc=txtfile</div><br><div>注意这里要在管理员权限下运行。这样一来当我们打开.doc的时候就会用txtfile里面的默认键值打开了。默认键值如果是NOTEPAD.EXE 那么就会用记事本打开了。</div><br><div></div><br><div>现在可以解决我们项目上的一个问题了：假设把一个.doc(MicrosoftOffice2010)的文档加密了，我们要在双击打开的时候进行验证，如果验证成功。那么打开出来的文件就是解密的文件。</div><br><div></div><br><div>我的方法是：首先修改.doc文件的关联，把.doc文件关联到exefile 然后把exefile里面默认键值的打开方式修改成自己要执行的程序（这部分已经可以实现了），这个时候就可以进行验证了（验证部分暂时先不考虑&#8230;&#8230;.）。</div><br><div></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/09/WIN7将文件的打开方式还原成未知应用程序/" itemprop="url">
+                WIN7将文件的打开方式还原成未知应用程序
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-09T19:52:59+08:00" content="2012-05-09">
+            2012-05-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>几天晚上继续折腾注册表。。。。</p>
+<p>修改txt关联的第三天，首先解决上篇博客里面留下来的第一个问题。。。</p>
+<p>千百度以后终于找到了下面几篇博客：</p>
+<p><a href="http://blog.csdn.net/gqqnb/article/details/6856538" target="_blank" rel="external">http://blog.csdn.net/gqqnb/article/details/6856538</a></p>
+<p><a href="http://www.piaoyun.org/windows7-default-Program.html" target="_blank" rel="external">http://www.piaoyun.org/windows7-default-Program.html</a></p>
+<p>关键是下面四个注册表项：</p>
+<p>HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts[.文件后缀]</p>
+<p>HKEY_CURRENT_USERSoftwareClasses[文件后缀]_auto_file</p>
+<p>HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerRecentDocs[.文件后缀]</p>
+<p>HKEY_USERS[SID]SoftwareMicrosoftWindowsCurrentVersionExplorerFileExts[.文件后缀]</p>
+<p>HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts[.文件后缀]</p>
+<p>具体是哪个，自己也说不清楚。总之在</p>
+<p>控制面板程序默认程序设置关联</p>
+<p>设置了以后，系统会自动类似下面这样的键值：</p>
+<p><code>[![](http://miibotree.com/wp-content/uploads/2012/05/第三方9.png &quot;第三方9&quot;)](http://miibotree.com/wp-content/uploads/2012/05/第三方9.png)</code></p>
+<p>&nbsp;</p>
+<p>如果在控制面板里设置的.txt 关联里面设置了用写字板打开，键值自动增加如下：</p>
+<p>b REG_SZ 写字板.exe</p>
+<p>MRUList REG_SZ ba</p>
+<p>这里的MRUList 后面的ba 应该是前面的键优先顺序来的吧。</p>
+<p>而且这里是系统自动追加的。。。。</p>
+<p>所以这里我们不管怎么更改都是没有用的，最好的方法就是把整个子键彻底删除掉。。</p>
+<p>为了安全起见，先把注册表导出一下。。。</p>
+<p>然后把上面5条路径的.txt全部给删除。。。</p>
+<p>最后发现，竟然好了！！<del>~</del>~</p>
+<p>问题终于解决了。。。感谢下上面的两篇博客作者。再次感谢~</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/08/注册表编程/" itemprop="url">
+                注册表编程
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-08T22:20:39+08:00" content="2012-05-08">
+            2012-05-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>接着昨天的折腾。</p>
+<p>首先介绍一下 扩展名子键 和 类定义子键</p>
+<p>扩展名子键由 &#8220;.&#8221; + 相应扩展名构成 ，该子键的键值项的作用是指向一个“类定义子键”，起入口作用。 多个扩展名子键可以指向同一个类定义子键。</p>
+<p>这样做其实就是面向对象的思维了。</p>
+<p>举个例子来说，扩展名子键是.MP1    .MP2     .MP3</p>
+<p>他们都指向类定义子键MP3FILE,那么只要定义MP3FILE里面的键值就可以对所有的扩展名子键应用了。</p>
+<p>&nbsp;</p>
+<p>知道了这个概念以后我们可以实现用第二种方法更改关联了：</p>
+<p><strong><span style="color: #ff0000;">通过 修改扩展名子键对应的类定义子键来修改关联</span></strong></p>
+<p>举个例子，原来.exe 默认的键值是 EXEFILE 说明它关联的是EXEFILE， 如果我们将它改成TXTFILE， 自然就修改了它的关联方式。</p>
+<p>&nbsp;</p>
+<p>然后说一下今天在修改txt关联的时候遇到的一个问题：</p>
+<p>本来是已经成功地更改了txt关联了，但是在恢复的时候可能把键值的路径写错了，没有用\来转义,这个时候我打开任意一个txt文件，系统让我选择默认的打开方式。我一不小心选择了 <span style="color: #ff0000;">始终用这种方式打开</span> 接下来就出问题了。</p>
+<p><span style="color: #ff0000;">不管我怎么修改关联，txt文件仍然能正常打开。</span></p>
+<p>于是心里猜测：在注册表里面肯定存在着优先于上述路径关联文件的打开方式，由于默认打开的关联优先于上述路径的关联，所以上述路径下（见我的上一篇文章）设置的关联不起作用了。</p>
+<p>自己的电脑是32的win7.在控制面板里面可以看到默认打开方式的设置：</p>
+<p><span style="color: #ff0000;">控制面板程序默认程序设置关联</span></p>
+<p>修改这里可以修改关联，但是自己推测这里在修改的时候肯定是修改了注册表某项的关联。自己百度了一下暂时没有查到这个路径的资料。明天再看看。。。。</p>
+<p><span style="color: #0000ff;">今天自己又看了一下，发现在这个目录下是设置关联的：</span></p>
+<p><span style="color: #0000ff;">HKEY_LOCAL_MACHINESOFTWAREClassesApplicationsnotepad.exeshellopencommand</span></p>
+<p>更改这里的主键会出现下面的错误：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/05/QQ截图20120509185632.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/05/QQ截图20120509185632.png" alt="" title="QQ截图20120509185632"></a></p>
+<p>是在这个路径下吗？自己再次尝试一下：其实还是不是。。。。</p>
+<p>哎，网上查不到资料，书本里面的资料都是xp，2000的，自己手动找也找不到。。灰心了。。。。。。</p>
+<p>&nbsp;</p>
+<p>自己本来还想修改文件夹图标所在的注册表键值，百度了一下还是没有找到。。明天继续看一看。。。。。。。</p>
+<p>最后把自己写的半成品发个上来，记录一下。</p>
+<p>用的是SDK的对话框模版，所以只发主要代码：</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br></pre></td><td class="code"><pre><span class="line">// <span class="type">MachineDialog</span>.cpp : 定义应用程序的入口点。</span><br><span class="line">//</span><br><span class="line"></span><br><span class="line"><span class="comment">#include &amp;quot;stdafx.h&amp;quot;</span></span><br><span class="line"><span class="comment">#include &amp;quot;MachineDialog.h&amp;quot;</span></span><br><span class="line"><span class="comment">#include &amp;quot;resource.h&amp;quot;</span></span><br><span class="line"><span class="comment">#include</span></span><br><span class="line"><span class="comment">#include</span></span><br><span class="line">//增加开机自启动项</span><br><span class="line"><span class="type">int</span> <span class="type">Add_Key</span>(<span class="type">HWND</span> hDlg, <span class="type">LPCTSTR</span> filename);</span><br><span class="line">// 删除开机自启动项 没有完成</span><br><span class="line"><span class="type">int</span> <span class="type">Del_Key</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//更改<span class="type">IE</span>默认主页</span><br><span class="line"><span class="type">int</span> <span class="type">Change_IE_Mainpage</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//更改exe关联</span><br><span class="line"><span class="type">int</span> <span class="type">Change_Exe_Rela</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//恢复exe关联</span><br><span class="line"><span class="type">int</span> <span class="type">Change_Exe_Reco</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//更改txt关联</span><br><span class="line"><span class="type">int</span> <span class="type">Change_Txt_Rela</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//恢复txt关联</span><br><span class="line"><span class="type">int</span> <span class="type">Change_Txt_Reco</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//禁用注册表</span><br><span class="line"><span class="type">int</span> <span class="type">Reg_Forbidden</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line">//恢复注册表</span><br><span class="line"><span class="type">int</span> <span class="type">Reg_Reco</span>(<span class="type">HWND</span> hDlg);</span><br><span class="line"></span><br><span class="line"><span class="type">BOOL</span> <span class="type">CALLBACK</span> <span class="type">DlgProc</span>(<span class="type">HWND</span> hDlg, <span class="type">UINT</span> message, <span class="type">WPARAM</span> wParam, <span class="type">LPARAM</span> lParam);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">APIENTRY</span> _tWinMain(<span class="type">HINSTANCE</span> hInstance,</span><br><span class="line"><span class="type">HINSTANCE</span> hPrevInstance,</span><br><span class="line"><span class="type">LPTSTR</span> lpCmdLine,</span><br><span class="line"><span class="type">int</span> nCmdShow)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">DialogBox</span>(hInstance, <span class="type">MAKEINTRESOURCE</span>(<span class="type">IDD_MAIN</span>), <span class="type">NULL</span>, <span class="type">DlgProc</span> );</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">BOOL</span> <span class="type">CALLBACK</span> <span class="type">DlgProc</span>(<span class="type">HWND</span> hDlg, <span class="type">UINT</span> message, <span class="type">WPARAM</span> wParam, <span class="type">LPARAM</span> lParam)</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">switch (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="type">WM_INITDIALOG</span>:</span><br><span class="line"><span class="keyword">return</span> <span class="type">TRUE</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">WM_COMMAND</span>:</span><br><span class="line">switch (<span class="type">LOWORD</span>(wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_ADD_SECTION</span>:</span><br><span class="line">// 设置过滤器</span><br><span class="line"><span class="type">OPENFILENAME</span> ofn;</span><br><span class="line"><span class="type">char</span> szFile[<span class="number">100</span>];</span><br><span class="line"><span class="type">TCHAR</span> szLength[<span class="number">50</span>];</span><br><span class="line"><span class="type">ZeroMemory</span>(&amp;amp;amp;ofn,sizeof(ofn)); //memset给结构体清零</span><br><span class="line">ofn.lStructSize = sizeof(ofn);</span><br><span class="line">ofn.lpstrFile = (<span class="type">LPWSTR</span>)szFile;</span><br><span class="line">ofn.lpstrFile[<span class="number">0</span>] = <span class="type">TEXT</span>(&amp;<span class="comment">#039; &amp;#039;);</span></span><br><span class="line">ofn.nMaxFile = sizeof(szFile);</span><br><span class="line">ofn.lpstrFilter = <span class="type">TEXT</span>(&amp;quot;<span class="type">ALL</span> *.* exe *.exe txt *.txt &amp;quot;); //过滤器设置</span><br><span class="line">ofn.nFilterIndex = <span class="number">1</span>; //默认选择过滤器的序号</span><br><span class="line">ofn.lpstrFileTitle = <span class="type">NULL</span>;</span><br><span class="line">ofn.nMaxFileTitle = <span class="number">0</span>;</span><br><span class="line">ofn.lpstrInitialDir = <span class="type">NULL</span>;</span><br><span class="line">ofn.hwndOwner = hDlg; //对话框的副窗口</span><br><span class="line">ofn.<span class="type">Flags</span> = <span class="type">OFN_EXPLORER</span> |<span class="type">OFN_PATHMUSTEXIST</span> | <span class="type">OFN_FILEMUSTEXIST</span> ;</span><br><span class="line"><span class="keyword">if</span> (<span class="type">GetOpenFileName</span>(&amp;amp;amp;ofn))</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">TCHAR</span> shortPath[<span class="number">100</span>];</span><br><span class="line">memset(shortPath, <span class="number">0</span>, sizeof(shortPath));</span><br><span class="line"><span class="type">GetShortPathName</span>((<span class="type">LPWSTR</span>)szFile, (<span class="type">LPWSTR</span>)shortPath, sizeof(shortPath));</span><br><span class="line"><span class="type">SetDlgItemText</span>(hDlg, <span class="type">IDC_EDIT1</span>, (<span class="type">LPWSTR</span>)shortPath);</span><br><span class="line"><span class="type">Add_Key</span>(hDlg, (<span class="type">LPCTSTR</span>)shortPath);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_DEL_SECTION</span>:</span><br><span class="line">//<span class="type">Del_Key</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_IE</span>:</span><br><span class="line"><span class="type">Change_IE_Mainpage</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_EXE_RELA</span>:</span><br><span class="line"><span class="type">Change_Exe_Rela</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_EXE_RECO</span>:</span><br><span class="line"><span class="type">Change_Exe_Reco</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_TXT_RELA</span>:</span><br><span class="line"><span class="type">Change_Txt_Rela</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_TXT_RECO</span>:</span><br><span class="line"><span class="type">Change_Txt_Reco</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_REG_FORBIDDEN</span>:</span><br><span class="line"><span class="type">Reg_Forbidden</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_REG_RECO</span>:</span><br><span class="line"><span class="type">Reg_Reco</span>(hDlg);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> <span class="type">IDC_EXIT</span>:</span><br><span class="line"><span class="type">EndDialog</span>(hDlg, <span class="type">NULL</span>);</span><br><span class="line"></span><br><span class="line">default:</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="type">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Add_Key</span>(<span class="type">HWND</span> hDlg, <span class="type">LPCTSTR</span> filename)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;software\<span class="type">Microsoft</span>\<span class="type">Windows</span>\<span class="type">CurrentVersion</span>\<span class="type">Run</span>&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_LOCAL_MACHINE</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, L&amp;quot;greedy snake&amp;quot;, <span class="number">0</span>, <span class="type">REG_SZ</span>, (<span class="type">BYTE</span> *)filename, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功添加注册表键值&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;添加注册表键值失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//printf(&amp;quot;%dn&amp;quot;, <span class="literal">result</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Change_IE_Mainpage</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">TCHAR</span> mainpage[<span class="number">100</span>];</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;S-<span class="number">1</span>-<span class="number">5</span>-<span class="number">21</span>-<span class="number">455092624</span>-<span class="number">2783291490</span>-<span class="number">1266880768</span>-<span class="number">1000</span>\<span class="type">Software</span>\<span class="type">Microsoft</span>\<span class="type">Internet</span> <span class="type">Explorer</span>\<span class="type">Main</span>&amp;quot;;</span><br><span class="line"><span class="type">GetDlgItemText</span>(hDlg, <span class="type">IDC_EDIT2</span>, mainpage, <span class="number">100</span>);</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_USERS</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, L&amp;quot;<span class="type">Start</span> <span class="type">Page</span>&amp;quot;, <span class="number">0</span>, <span class="type">REG_SZ</span>, (<span class="type">BYTE</span> *)mainpage, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;更改<span class="type">IE</span>默认主页成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;更改<span class="type">IE</span>默认主页失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//printf(&amp;quot;%dn&amp;quot;, <span class="literal">result</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Change_Exe_Rela</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">TCHAR</span> mainpage[<span class="number">100</span>] = L&amp;quot;F:\成品小软件\贪吃蛇.exe&amp;quot;;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;exefile\shell\open\command&amp;quot;;</span><br><span class="line">//<span class="type">GetDlgItemText</span>(hDlg, <span class="type">IDC_EDIT2</span>, mainpage, <span class="number">100</span>);</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CLASSES_ROOT</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, <span class="type">NULL</span>, <span class="number">0</span>, <span class="type">REG_SZ</span>, (<span class="type">BYTE</span> *)mainpage, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;更改exe关联成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;更改exe关联失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//printf(&amp;quot;%dn&amp;quot;, <span class="literal">result</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Change_Exe_Reco</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">TCHAR</span> mainpage[<span class="number">100</span>] = L&amp;quot;&amp;quot;%<span class="number">1</span>&amp;quot; %*&amp;quot;;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;exefile\shell\open\command&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CLASSES_ROOT</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, <span class="type">NULL</span>, <span class="number">0</span>, <span class="type">REG_SZ</span>, (<span class="type">BYTE</span> *)mainpage, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复exe关联成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复exe关联失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//printf(&amp;quot;%dn&amp;quot;, <span class="literal">result</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Change_Txt_Rela</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">TCHAR</span> mainpage[<span class="number">100</span>] = L&amp;quot;C:\<span class="type">Windows</span>\<span class="type">System32</span>\cmd.exe&amp;quot;;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;txtfile\shell\open\command&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CLASSES_ROOT</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, <span class="type">NULL</span>, <span class="number">0</span>, <span class="type">REG_EXPAND_SZ</span>, (<span class="type">BYTE</span> *)mainpage, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;修改txt关联成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;修改txt关联失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//printf(&amp;quot;%dn&amp;quot;, <span class="literal">result</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Change_Txt_Reco</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">TCHAR</span> mainpage[<span class="number">100</span>] = L&amp;quot;%<span class="type">SystemRoot</span>%\system32\<span class="type">NOTEPAD</span>.<span class="type">EXE</span> %<span class="number">1</span>&amp;quot;;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;txtfile\shell\open\command&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CLASSES_ROOT</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, <span class="type">NULL</span>, <span class="number">0</span>, <span class="type">REG_EXPAND_SZ</span>, (<span class="type">BYTE</span> *)mainpage, <span class="number">100</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复txt关联成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复txt关联失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Reg_Forbidden</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">DWORD</span> <span class="type">DisReg</span> = <span class="number">0x00000001</span>;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;<span class="type">Software</span>\<span class="type">Microsoft</span>\<span class="type">Windows</span>\<span class="type">CurrentVersion</span>\<span class="type">Policies</span>\<span class="type">System</span>&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CURRENT_USER</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, L&amp;quot;<span class="type">DisableRegistryTools</span>&amp;quot;, <span class="number">0</span>, <span class="type">REG_DWORD</span>, (<span class="keyword">const</span> <span class="type">BYTE</span> *)&amp;amp;amp;<span class="type">DisReg</span>, sizeof(<span class="type">DisReg</span>));</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;禁用注册表成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;禁用注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="type">Reg_Reco</span>(<span class="type">HWND</span> hDlg)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">HKEY</span> hKey;</span><br><span class="line"><span class="type">DWORD</span> <span class="type">DisReg</span> = <span class="number">0x00000000</span>;</span><br><span class="line"><span class="type">LPCTSTR</span> lpRun = L&amp;quot;<span class="type">Software</span>\<span class="type">Microsoft</span>\<span class="type">Windows</span>\<span class="type">CurrentVersion</span>\<span class="type">Policies</span>\<span class="type">System</span>&amp;quot;;</span><br><span class="line">//打开注册表</span><br><span class="line">long <span class="literal">result</span>=<span class="type">RegOpenKeyEx</span>(<span class="type">HKEY_CURRENT_USER</span>, lpRun, <span class="number">0</span>, <span class="type">KEY_WRITE</span>, &amp;amp;amp;hKey);</span><br><span class="line"><span class="keyword">if</span>(<span class="literal">result</span>==<span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;成功打开注册表项&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">//添加注册表键值</span><br><span class="line"><span class="literal">result</span>=<span class="type">RegSetValueEx</span>(hKey, L&amp;quot;<span class="type">DisableRegistryTools</span>&amp;quot;, <span class="number">0</span>, <span class="type">REG_DWORD</span>, (<span class="keyword">const</span> <span class="type">BYTE</span> *)&amp;amp;amp;<span class="type">DisReg</span>, sizeof(<span class="type">DisReg</span>));</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">result</span> == <span class="type">ERROR_SUCCESS</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复禁用注册表成功&amp;quot;), <span class="type">TEXT</span>(&amp;quot;成功&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;恢复禁用注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="type">MessageBox</span>(hDlg, <span class="type">TEXT</span>(&amp;quot;打开注册表失败&amp;quot;), <span class="type">TEXT</span>(&amp;quot;失败&amp;quot;), <span class="type">MB_OK</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">RegCloseKey</span>(hKey);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/07/利用注册表修改文件关联/" itemprop="url">
+                利用注册表修改文件关联
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-07T22:36:00+08:00" content="2012-05-07">
+            2012-05-07
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>最近在看注册表方面的东西。正巧醒哥回来了，让我做个修改文件关联的程序。具体用什么方法实现，不用管，只要能实现就可以了。</p>
+<p>那就用注册表来实现好了。</p>
+<p>那么利用注册表的话有几种方法可以修改关联方式呢？</p>
+<p>首先介绍一下最简单的一种方法：直接修改打开方式。</p>
+<p>首先先尝试下修改.txt文件吧, 如果直接修改.exe文件的话，怕修改以后regedit.exe都进不去了，那就囧了，呵呵。</p>
+<p>首先我们找到.txt文件的打开方式所在的键值位置：</p>
+<p>根键是</p>
+<p>HKEY_CLASSES_ROOT</p>
+<p>子键是</p>
+<p>&#8220;txtfileshellopencommand&#8221;</p>
+<p>这里的默认键值是</p>
+<p>%SystemRoot%system32NOTEPAD.EXE %1</p>
+<p>这里简单介绍一下</p>
+<p>这个键值的类型是REG_EXPAND_SZ,  它与REG_SZ有什么区别呢？</p>
+<p>我们看到默认键值里面<span style="color: #ff0000;">%SystemRoot%</span><span style="color: #000000;"> 这个大家应该都知道是环境变量，两个%中间的SystemRoot 对应了你自己电脑里面的路径。</span></p>
+<p>REG_EXPAND_SZ 在执行的时候会把环境变量转换成具体的路径。</p>
+<p><span style="color: #ff0000;">那么最后那个 %1 是什么意思呢？</span></p>
+<p>我们这里<span style="color: #000000;">尝试一下去掉%1 ，会发现打开任何的.txt文件，都显示空白的文本文件。</span></p>
+<p>也就是说<strong><span style="color: #ff0000;"> 参数%1 的作用就是启动Notepad程序的同时 打开这个txt文件</span></strong></p>
+<p>现在我们把这个默认的键值改掉，比如改成 &#8220;C:WindowsSystem32cmd.exe&#8221;</p>
+<p>现在再次尝试一下，打开任何.txt文件都会启动cmd.exe了</p>
+<p>那么对于exe关联应该也是一样的。我们找到exe关联启动方式的位置：</p>
+<p>主键</p>
+<p>HKEY_CLASSES_ROOT</p>
+<p>子键</p>
+<p>&#8220;exefileshellopencommand&#8221;</p>
+<p>键值</p>
+<p>&#8220;%1&#8243; %*</p>
+<p>自己尝试一下，虽然成功了，但是发现了几个比较奇怪的问题。。。</p>
+<p>1.比如改成qq.exe  随便点个exe文件打开，内存占用突然变得很大，然后很久才打开。不知道为什么。</p>
+<p>&nbsp;</p>
+<p>然后就是通过API来实现了。</p>
+<p>这个其实就是几个函数的问题啦，还是比较简单的，明天详细实现并讲解一下。</p>
+<p>&nbsp;</p>
+<p>最后想想，还有没有别的方法来实现呢？今天自己借了本注册表编程的书简单看了下，发现是有的！！！！</p>
+<p>这里先卖个关子，今天很晚了，洗洗先睡了，明天接着上！~~~</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/02/汇编笔记/" itemprop="url">
+                汇编笔记
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-02T21:49:06+08:00" content="2012-05-02">
+            2012-05-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>复习一下16位王爽老师的汇编的基础知识</p>
+<p>1寄存器</p>
+<p>AX  AH  AL</p>
+<p>BX   BH  BL</p>
+<p>CX</p>
+<p>DX</p>
+<p>2 CS  IP 段地址+偏移地址</p>
+<p>jmp指令 修改 cs:ip</p>
+<p>3 DS 默认的段寄存器  []存放偏移地址</p>
+<p>mov add sub  指令</p>
+<p>4.栈机制 （再次复习一下）</p>
+<p>5.（）表示里面的数值</p>
+<p>6.loop指令 循环goto指令</p>
+<p>cx 自动减1</p>
+<p>[bx]和loop的联合使用</p>
+<p>7.start 代码开始处</p>
+<p>代码段</p>
+<p>code segment</p>
+<p>code ends</p>
+<p>数据段</p>
+<p>data segment</p>
+<p>data ends</p>
+<p>栈段</p>
+<p>stack segment</p>
+<p>stack ends</p>
+<p>8.and  设为0 和or 指令 设为1</p>
+<p>9SI DI 与bx 功能相近的寄存器 不能分成8位来使用</p>
+<p>10.寄存器</p>
+<p>ax, bx, cx, dx, ah, al, bh, bl, ch, cl, dh, dl</p>
+<p>sp, bp, si, di</p>
+<p>段寄存器</p>
+<p>ds, ss, cs, es</p>
+<p>11.div 伪指令dd</p>
+<p>重复指令dup</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/02/烫烫烫烫烫烫烫烫烫烫烫烫/" itemprop="url">
+                烫烫烫烫烫烫烫烫烫烫烫烫
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-02T16:26:07+08:00" content="2012-05-02">
+            2012-05-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>昨天睡觉的时候就在想，为什么未初始化的字符数组会出现烫烫 这样的情况呢？</p>
+<p>学过汇编的应该知道，肯定跟指令有关系的。</p>
+<p>今天百度了一下，有下面的解释，讲的非常详细：</p>
+<p><a href="http://bbs.dlut.edu.cn/nforum/article/C/25711" target="_blank" rel="external">http://bbs.dlut.edu.cn/nforum/article/C/25711</a></p>
+<p>VC经常输出烫的原因是，在vc的debug编译选项下，栈区的未初始化数据，每一个byte</p>
+<p>都被设置为0xCC，</p>
+<p>cccc的汉字编码就是烫。</p>
+<h1 id="include_&lt;stdio-h&gt;">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;">include &lt;stdlib.h&gt;</h1><p>int main(int argc, char* argv[])</p>
+<p>{</p>
+<p>char c[12];</p>
+<p>printf(&#8220;%s&#8221;,c);</p>
+<p>return 0;</p>
+<p>}</p>
+<p>以上代码，在vc的dubeg模式下会输出烫，在release模式下输出空。</p>
+<h1 id="include_&lt;stdio-h&gt;-1">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;-1">include &lt;stdlib.h&gt;</h1><p>char c[12];</p>
+<p>int main(int argc, char* argv[])</p>
+<p>{</p>
+<p>printf(&#8220;%s&#8221;,c);</p>
+<p>return 0;</p>
+<p>}</p>
+<p>这段代码总是输出空，<span style="color: #ff0000;">说明只有栈区的未初始化变量被设置为0xCC。</span></p>
+<p>最近才知道这是<span style="color: #ff0000;"> int 3h</span>的机器码，设置了一个断点。</p>
+<p><span style="color: #ff0000;">有时未初始化变量被设置为0xCD,这时就是汉字屯了。</span></p>
+<p>更具体见</p>
+<p><a href="http://blog.csdn.net/chenyu2202863/archive/2008/06/17/2555780.aspx" target="_blank" rel="external">http://blog.csdn.net/chenyu2202863/archive/2008/06/17/2555780.aspx</a></p>
+<p>摘一段</p>
+<p>名字      描述</p>
+<p>0xCD   Clean Memory    申请的内存由malloc或者new完成</p>
+<p>0xDD   Dead Memory    释放后的内存，用来检测悬垂指针</p>
+<p>0xFD   Fence Memory    动态申请后的内存值，没有初始化。用来检测数组的下标界</p>
+<p>限</p>
+<p>0xAB   (Allocated Block?)    使用LocalAlloc（）分配的内存 0x0DF0ADBA Bad</p>
+<p>Food     使用LocalAlloc并且参数为LMEM_FIXED，但是还没写入</p>
+<p>0xCC    使用了/GZ选项，没有初始化的自动变量在DBGHEAP.C文件中，</p>
+<p>大一学c语言主要是在tc下，学c++开始使用vc6。当把一个字符串作为一个类的构造函</p>
+<p>数的参数传入时，</p>
+<p>那时我知道的c库函数聊聊无几。只好像c语言一样，自己用指针实现了strcpy。</p>
+<p>为了防止溢出，类里保存这个字符串的属性给了很大空间。这样没有被填充的属性剩余</p>
+<p>空间保持了默认</p>
+<p>的0xcc，就是一串串的烫啊，真是烫死我了。</p>
+<p>前几天还有人问我，就顺带提一下。在vc6工具栏点右键，选中Build才能得到生成</p>
+<p>release版程序的下拉列表。</p>
+<p>只有release版的程序才可以在没有安装vc的机器上运行。</p>
+<p>最后，加上我补充的一句，未防止不同编译器对字符数组的初始化不同，建议声明完数</p>
+<p>组后立即初始化；</p>
+<p>不如</p>
+<h1 id="define_MAX_64;">define MAX 64;</h1><p>char   buff[MAX];</p>
+<p>memset(buff,0,sizeof(buff));</p>
+<p>这样就不会令你 一直 烫烫烫烫啦。。。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/05/01/注册表修改IE默认主页/" itemprop="url">
+                注册表修改IE默认主页
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-01T22:04:25+08:00" content="2012-05-01">
+            2012-05-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>自己的IE9被hao123 和搜狗浏览器给篡改了，而且每次打开都是两个一起出来。。。</p>
+<p>由于以前自己都用的是火狐和crome，对这个也没太在意。</p>
+<p>这几天想玩一下注册表编程，就想先从篡改IE默认首页开始。</p>
+<p>那么首先应该把自己的IE首页恢复过来吧。</p>
+<p>查看了下网上的资料，IE首页的键值好像存放在下面这个目录里：</p>
+<blockquote>
+<p>HKEY_LOCAL_MACHINESOFTWAREMicrosoftInternet ExplorerMainStart Page HKEY_CURRENT_USERSoftwareMicrosoftInternet ExplorerMainStart Page</p>
+<p>但是进入目录之后发现里面好像根本就没有www.hao123.com这样的字符串信息嘛。</p>
+<p>看来元凶不在这个路径下面。</p>
+<p>既然如此，自己就来搜索一下好了。</p>
+<p>在注册表编辑器里面<span style="color: #3366ff;">ctrl+F</span>搜索一下www.hao123.com，发现这个网址的字符串竟然在这个目录下面：</p>
+<p><span style="color: #3366ff;">计算机KHEY-USERSS-1-5-21-455092624-2783291490-1266880768-1000SoftwareMicrosoftInternet ExplorerMain 下面</span></p>
+<p>发现了<span style="color: #ff0000;">Start Page 和Secondary Start Page</span></p>
+<p>里面存放的就是万恶的元凶hao123和搜狗两个默认主页了。</p>
+<p>把他们全部改成百度首页，重新打开，就OK了。</p>
+<p>这里自己产生的疑问就是，搜索出来的这个路径是什么东东呢？</p>
+<p>这个就涉及到注册表的结构了嘛，简单百度之,得到如下解释：</p>
+<p>S-1-5-21-1658001358-1336221227-1912232085-500 (SID)</p>
+<p>HKEY_USERSS-1-5-21-1658001358-1336221227-1912232085-500</p>
+<p>这个是目前登陆用户的sid，每一个网络上的用户都被域用户管理器分配了一个sid，每一个sid都是唯一的，所以它依赖与登陆用户，这个信息改变。它是从用户配置文件的ntuser.dat文件调出的。一般来说，它的子键很多，是基与安装的软件的，选择的和最终设置。</p>
+<p><span style="color: #ff0000;">所以前面那个就是我自己电脑的SID了。</span></p>
+<p>如此一来，又有个疑问产生了，如果像hao123这样只是改变了不同登录用户里面的默认首页的话，那么我重新创建个windows账号，新创建的账号里面的iE默认首页应该是没有被篡改的吧。。。。。。</p>
+<p>还有听说有些流氓软件还有重启时候自动修改注册表的。自己先重启一下，看看情况。。。</p>
+</blockquote>
+<p>&nbsp;</p>
+<p>好吧，我又回来了。自己重启了一下，然后又新建了一个用户账号，发现这里的IE默认网页没有被篡改。而且自己重新进了注册表浏览器，发现windows给我分配的SID变化了。不是原来那一长串东东了。看来hao123和搜狗还是比较“友善”的，修改的只是不用用户下面的默认首页。</p>
+<p>那么自己在注册表编程的时候，能不能也像hao123那样只是修改登录用户下面的默认首页呢？</p>
+<p>这样的话首先必须获得windows分配给我们的SID，也就是那一长串东东</p>
+<p>找一下有没有这样的API函数。。。</p>
+<p>肯定是有的嘛。。。</p>
+<p>首先参考一下下面两篇文章：</p>
+<p>这篇文章详细讲解了SID</p>
+<p><a href="http://www.51cto.com/art/200512/13623.htm" target="_blank" rel="external">http://www.51cto.com/art/200512/13623.htm</a></p>
+<p>&nbsp;</p>
+<blockquote>
+<p>还有一种方法可以获得SID和用户名称的对应关系：</p>
+<p>1. Regedt32:</p>
+<p>HKEY_LOCAL_MACHINESOFTWAREMicrosoftWindows NTCurrentVersion ProfileList</p>
+<p>2. 这个时候可以在左侧的窗口看到SID的值，可以在右侧的窗口中ProfileImagePath看到不同的SID关联的用户名，</p>
+</blockquote>
+<p>然后这篇文章列出了关于SID的API</p>
+<p><a href="http://blogs.msdn.com/b/gaihu/archive/2011/07/06/windows-4-sid.aspx" target="_blank" rel="external">http://blogs.msdn.com/b/gaihu/archive/2011/07/06/windows-4-sid.aspx</a></p>
+<p>查找一下CSDN，应该就可以了。。。。</p>
+<p>明天可以实践一下。。。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/14/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/14/">14</a><span class="page-number current">15</span><a class="page-number" href="/page/16/">16</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/16/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

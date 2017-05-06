@@ -1,0 +1,654 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="CDMA,Net," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Recently my Nokia is broken, so I bought  an iPhone 5S and is now using 4G.
+As a student of communication engineering, It&amp;#8217;s a great need to know the principles of 3G/4G.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What does my CDMA work for my smartphone?">
+<meta property="og:url" content="http://yoursite.com/2014/03/31/What-does-my-CDMA-work-for-my-smartphone/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Recently my Nokia is broken, so I bought  an iPhone 5S and is now using 4G.
+As a student of communication engineering, It&amp;#8217;s a great need to know the principles of 3G/4G.">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-161133.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-162440.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163519.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163538.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163615.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163555.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165055.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165122.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165114.png">
+<meta property="og:updated_time" content="2015-07-25T11:35:43.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What does my CDMA work for my smartphone?">
+<meta name="twitter:description" content="Recently my Nokia is broken, so I bought  an iPhone 5S and is now using 4G.
+As a student of communication engineering, It&amp;#8217;s a great need to know the principles of 3G/4G.">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> What does my CDMA work for my smartphone? // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              What does my CDMA work for my smartphone?
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-03-31T16:53:58+08:00" content="2014-03-31">
+            2014-03-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Recently my Nokia is broken, so I bought  an iPhone 5S and is now using 4G.</p>
+<p>As a student of communication engineering, It&#8217;s a great need to know the principles of 3G/4G.<br><a id="more"></a><br>Here I learned a course in coursera :Networks: Friends, Money, and Bytes.</p>
+<p>The course answered 20 Questions about networks using math as a tool.</p>
+<p><a href="https://class.coursera.org/friendsmoneybytes-004/lecture" target="_blank" rel="external">https://class.coursera.org/friendsmoneybytes-004/lecture</a></p>
+<p>below is what I&#8217;ve learned about the first problem: What does my CDMA work for my smartphone?</p>
+<p>&nbsp;</p>
+<p>1.the technology used in the 3G.</p>
+<p>3G use CDMA (码分多址 code division multiple access). And here is a wikipedia page introduce CDMA:</p>
+<p><a href="http://zh.wikipedia.org/wiki/%E7%A0%81%E5%88%86%E5%A4%9A%E5%9D%80" target="_blank" rel="external">http://zh.wikipedia.org/wiki/%E7%A0%81%E5%88%86%E5%A4%9A%E5%9D%80</a></p>
+<p>&nbsp;</p>
+<p>we should know the difference between CDMA, TDMA, FDMA, and also OFDM used in 4G.</p>
+<p>&nbsp;</p>
+<p>2.cellular network</p>
+<p><a href="http://miibotree.com/?attachment_id=923" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-161133.png" alt="Screenshot from 2014-03-31 16:11:33"></a></p>
+<p><span id="more-922"></span></p>
+<p>notice that BS means Base Station,  and MS means Mobile Station(our iPhone, Android devices)</p>
+<p>The structure is cellular because the signal is transmitted by Electromagnetic(电磁波), so signal will be attenuated by obstacles. So there are many MS in the cellular network.</p>
+<p>Here we can see: technology must depend on the physical.</p>
+<p>&nbsp;</p>
+<p>3.near far problem</p>
+<p>however, in a cellular, there may be lots of MS, some is near the BS while others is far. Thus a problem occur, We call the near far problem : signals BS received from the near MS is much more powerful than the far.Thus the far MS may not communicate with BS because the signal is covered by the near MS&#8217;s signal. Let&#8217;s see a picture:</p>
+<p><a href="http://miibotree.com/?attachment_id=924" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-162440.png" alt="Screenshot from 2014-03-31 16:24:40"></a></p>
+<p>&nbsp;</p>
+<p>G11 and G22(generally Gii)  are the direct channel gains, and G12 and G21 are interference(干扰) channel gains. If G12 is stronger than G11, here the problem occur.</p>
+<p>So the main technology we have to solve is the near far problem: by control the power.</p>
+<p>Means every MS control it&#8217;s power(far more and near less).so when the signals reach to BS, they almost the same.</p>
+<p>PS:this model is very similar to the  mutual information model in Theory And Coding.</p>
+<p>4.DPC(discrete power control algorithm)</p>
+<p><a href="http://miibotree.com/?attachment_id=925" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163519.png" alt="Screenshot from 2014-03-31 16:35:19"></a></p>
+<p>Gij is channel gains, pi is MSi&#8217;s power and ni is noise</p>
+<p>so SIR is ratio of signal/(interference + noise)</p>
+<p>&nbsp;</p>
+<p>the signal is discrete, and here we give the DPC algorithm:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><a href="http://miibotree.com/?attachment_id=926" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163538.png" alt="Screenshot from 2014-03-31 16:35:38"></a></p>
+<p>&nbsp;</p>
+<p>ri is the targer SIR, and SIRi[t] is a feedback(反馈)from the BS. the algorithm is very simple because there is no parameters. and it&#8217;s both elegant and practical.</p>
+<p>Again we summarize our problem:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><a href="http://miibotree.com/?attachment_id=928" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163615.png" alt="Screenshot from 2014-03-31 16:36:15"></a></p>
+<p>5.game theory</p>
+<p>the DPC problem is a game problem.</p>
+<p>So we could first learn something about game theory:</p>
+<p><a href="http://zh.wikipedia.org/zh-cn/%E5%8D%9A%E5%BC%88%E8%AE%BA" target="_blank" rel="external">http://zh.wikipedia.org/zh-cn/%E5%8D%9A%E5%BC%88%E8%AE%BA</a></p>
+<p><a href="http://zh.wikipedia.org/wiki/%E5%9B%9A%E5%BE%92%E5%9B%B0%E5%A2%83" target="_blank" rel="external">http://zh.wikipedia.org/wiki/%E5%9B%9A%E5%BE%92%E5%9B%B0%E5%A2%83</a></p>
+<p>&nbsp;</p>
+<p><a href="http://miibotree.com/?attachment_id=927" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-163555.png" alt="Screenshot from 2014-03-31 16:35:55"></a></p>
+<p>&nbsp;</p>
+<p>By using DPC, we could get many solutions (the blue boundary), and by using game(Uncooperative), we could get a best  strategy.</p>
+<p>6.examples:</p>
+<p><a href="http://miibotree.com/?attachment_id=929" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165055.png" alt="Screenshot from 2014-03-31 16:50:55"></a></p>
+<p><a href="http://miibotree.com/?attachment_id=931" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165122.png" alt="Screenshot from 2014-03-31 16:51:22"></a></p>
+<p>&nbsp;</p>
+<p><a href="http://miibotree.com/?attachment_id=930" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/03/Screenshot-from-2014-03-31-165114.png" alt="Screenshot from 2014-03-31 16:51:14"></a></p>
+<p>&nbsp;</p>
+<p>for more details, please learn the course.</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CDMA/" rel="tag">#CDMA</a>
+          
+            <a href="/tags/Net/" rel="tag">#Net</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/04/04/What-does-CRLF-means/" rel="prev">What does CRLF means?</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/03/20/Heap-Corruption-in-Linux/" rel="next">Heap Corruption in Linux</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

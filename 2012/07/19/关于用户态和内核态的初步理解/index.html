@@ -1,0 +1,625 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++,ring0,内核," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="今天在测试socket的内核缓冲区大小的时候，初步了解了内核态与用户态的切换过程。
+我的测试是这样的：首先建立c/s模型，建立socket连接，然后让服务器端不断的发送消息，每次发送1024个字节，而客户端不接收数据。这样当服务器端发送了24K左右以后，就会阻塞在send处，无法再发送数据了。
+同理，客户端发送消息的时候也是一样的。测试结果显示缓冲区大小也是25K左右。
+这样我们就初步证明了内核缓">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于用户态和内核态的初步理解">
+<meta property="og:url" content="http://yoursite.com/2012/07/19/关于用户态和内核态的初步理解/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="今天在测试socket的内核缓冲区大小的时候，初步了解了内核态与用户态的切换过程。
+我的测试是这样的：首先建立c/s模型，建立socket连接，然后让服务器端不断的发送消息，每次发送1024个字节，而客户端不接收数据。这样当服务器端发送了24K左右以后，就会阻塞在send处，无法再发送数据了。
+同理，客户端发送消息的时候也是一样的。测试结果显示缓冲区大小也是25K左右。
+这样我们就初步证明了内核缓">
+<meta property="og:updated_time" content="2015-07-25T04:59:29.398Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于用户态和内核态的初步理解">
+<meta name="twitter:description" content="今天在测试socket的内核缓冲区大小的时候，初步了解了内核态与用户态的切换过程。
+我的测试是这样的：首先建立c/s模型，建立socket连接，然后让服务器端不断的发送消息，每次发送1024个字节，而客户端不接收数据。这样当服务器端发送了24K左右以后，就会阻塞在send处，无法再发送数据了。
+同理，客户端发送消息的时候也是一样的。测试结果显示缓冲区大小也是25K左右。
+这样我们就初步证明了内核缓">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 关于用户态和内核态的初步理解 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              关于用户态和内核态的初步理解
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-19T21:42:05+08:00" content="2012-07-19">
+            2012-07-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>今天在测试socket的内核缓冲区大小的时候，初步了解了内核态与用户态的切换过程。</p>
+<p>我的测试是这样的：首先建立c/s模型，建立socket连接，然后让服务器端不断的发送消息，每次发送1024个字节，而客户端不接收数据。这样当服务器端发送了24K左右以后，就会阻塞在send处，无法再发送数据了。</p>
+<p>同理，客户端发送消息的时候也是一样的。测试结果显示缓冲区大小也是25K左右。</p>
+<p>这样我们就初步证明了内核缓冲区的存在性。</p>
+<p>也 就是说，如果我们只是发送数据而没有接收数据的话，那么我们使用send函数发送数据的时候，最终会调用内核态ring0级的send函数（究竟是哪个内 核API自己现在还不是很清楚）。在内核态应该有一块缓冲区专门用来存放发送的数据，而且类似管道机制，如果数据没有存满，那么允许一直存放，直到到达缓 冲区最大容许存放的大小。</p>
+<p>从应用层转换到内核层这整个过程是很繁琐的，中间会调用很多API。</p>
+<p>关于应用层到内核层的切换问题，下面这个链接举了一个最常见的fork函数的例子。以及在哪些情况下会使操作系统运行在ring0级别上。</p>
+<p><span id="more-374"></span></p>
+<p><a href="http://rf.eefocus.com/article/09-12/1628861261320722.html?sort=899_939_950_0" target="_blank" rel="external">http://rf.eefocus.com/article/09-12/1628861261320722.html?sort=899_939_950_0</a></p>
+<p><span style="color: #6600cc;">用户态切换到内核态的3种方式</span></p>
+<p><span style="color: #6600cc;">a. 系统调用</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> 这是用户态进程主动要求切换到内核态的一种方式，用户态进程通过系统调用申请使用操作系统提供的服务程序完成工作，比如前例中fork()实际上就是执行 了一个创建新进程的系统调用。而系统调用的机制其核心还是使用了操作系统为用户特别开放的一个中断来实现，例如Linux的int80h中断。</span></p>
+<p><span style="color: #6600cc;">b. 异常</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;">  </span><wbr><span style="color: #6600cc;">当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会触发由当前运行进程切换到处理此异常的内核相关程序中，也就转到了内核态，比如缺页异常。</span></p>
+<p><span style="color: #6600cc;">c. 外围设备的中断</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;">  </span><wbr><span style="color: #6600cc;">当 外围设备完成用户请求的操作后，会向CPU发出相应的中断信号，这时CPU会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先 前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换。比如硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中 执行后续操作等。</span></p>
+<p><span style="color: #6600cc;"> </span><wbr></p>
+<p><span style="color: #6600cc;">这3种方式是系统在运行时由用户态转到内核态的最主要方式，其中系统调用可以认为是用户进程主动发起的，异常和外围设备中断则是被动的。</span></p>
+<p>&nbsp;</p>
+<p>那么看了上面的概念之后，自然而然就产生了这样一个疑惑：<span style="color: #cc0000;">我们怎么样可以主动进入到ring0呢？</span></p>
+<p>&nbsp;</p>
+<p>今天初步看了《寒江独钓 windows内核安全编程》这本书，自己只是想把基础概念了解一下。</p>
+<p>简单的说，我们自己写一个内核模块，或者说是驱动程序，当然不是说我们真正开发驱动，而是我们通过这种方法可以进入ring0层。可以任意修改内核。</p>
+<p>我们知道，用户空间是各个进程隔离的，但是内核空间是共享的。编写的内核模块运行在内核空间，成为操作系统的一个模块，最终被所有需要该模块提供功能的应用程序调用。</p>
+<p>那么这个内核模块是被哪个进程拥有的呢？实际上，内核模块位于任何一个进程空间中。这取决于请求的来源、处理的过程等。</p>
+<p>还有几个基本概念需要我们了解的：</p>
+<p><a href="http://blog.csdn.net/vangoals/article/details/4359612" target="_blank" rel="external">http://blog.csdn.net/vangoals/article/details/4359612</a></p>
+<p><a href="http://blog.csdn.net/yangbostar/article/details/5774774" target="_blank" rel="external">http://blog.csdn.net/yangbostar/article/details/5774774</a></p>
+<p>驱动对象       设备对象    请求（IRP）<span style="color: #000000;">  分发函数</span></p>
+<p><span style="color: #993399;">    首先，谈谈驱动对象（DRIVER_OBJECT），可以说驱动对象代表的是一个驱动程序（或者叫内核模块）。在写内核程序时，必须要填写这样一种结构， 来告诉Windows程序提供的功能。内核程序并不生成进程，它们有系统的System进程加载，可以存在于任何的进程。</span></p>
+<p><span style="color: #993399;">      设备对象（DEVICE_OBJECT）可以是一个具体的物理设备，如：键盘、硬盘等；也可以是一个虚拟的“设备”，如：用于进程间通信的管道。设备对象 由驱动对象创建，一个驱动对象可以创建很多个设备对象。这些设备对象储存在一个设备栈中，这些设备对象是用链表连接在一起的，当新的设备对象产生时应该是 用的尾插入（和人理解）。</span></p>
+<p><span style="color: #993399;">      对于请求，我们可以理解为Windows SDK程序设计里的消息。一般都是以IRP方式传递的。而设备对象是唯一可以接受请求的实体。然而一个驱动对象中可能会有很多个设备对象，那么是由哪一个设备对象来处理呢？</span></p>
+<p><span style="color: #993399;">我的理解是：就像MFC中的消息传递机制一样，会有一个消息的接收顺序；IRP请求也是这样，它先发送到设备栈中最上面的一个设备（最新加入），没有被处理就继续向下发送，如果到最后都还是没有被处理，我认为会有一个默认的处理。</span></p>
+<p><span style="color: #993399;">    请求是有各种各样的类型，有的要求读，有的要求写，那么它们就要被分类后，分发到对应的自己编写的处理函数，这些函数叫做“分发函数”，也有翻译为“派遣函数”</span></p>
+<p>&nbsp;</p>
+<p>以上内容只是自己初步学习的笔迹总结，可能有很多错误的地方，还请大家指正。谢谢</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/ring0/" rel="tag">#ring0</a>
+          
+            <a href="/tags/内核/" rel="tag">#内核</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/07/20/内联函数与宏定义的区别/" rel="prev">内联函数与宏定义的区别</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/07/11/windowsSDK实现-屏幕实时监控-热键截图-功能/" rel="next">windowsSDK实现 屏幕实时监控 热键截图 功能</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

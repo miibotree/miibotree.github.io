@@ -1,0 +1,621 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OpenCV," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="在论文分析中已经讲了几个主要的步骤，接下来我们就具体地来实现：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Leafsnap实现(2)-服务端实现">
+<meta property="og:url" content="http://yoursite.com/2015/07/13/Leafsnap实现-2-服务端实现/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="在论文分析中已经讲了几个主要的步骤，接下来我们就具体地来实现：">
+<meta property="og:updated_time" content="2015-07-25T11:28:11.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Leafsnap实现(2)-服务端实现">
+<meta name="twitter:description" content="在论文分析中已经讲了几个主要的步骤，接下来我们就具体地来实现：">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Leafsnap实现(2)-服务端实现 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Leafsnap实现(2)-服务端实现
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-13T10:54:52+08:00" content="2015-07-13">
+            2015-07-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在论文分析中已经讲了几个主要的步骤，接下来我们就具体地来实现：<br><a id="more"></a></p>
+<p>1.RGB2SV</p>
+<p>首先我们需要把RGB色彩空间下的图案转化为在HSV色彩空间下，并且忽略H空间，只用SV空间。也就是说把H空间的所有值都设为0.关键代码如下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cvCvtColor<span class="list">(<span class="keyword">image</span>,change,CV_RGB2HSV)</span><span class="comment">;  //将RGB色系转换为HSV色系</span></span><br><span class="line"></span><br><span class="line">cvSplit<span class="list">(<span class="keyword">change</span>,H,S,V,<span class="number">0</span>)</span><span class="comment">;//分离多通道</span></span><br><span class="line"></span><br><span class="line">cvMerge<span class="list">(<span class="keyword">Zero</span>,S,V,<span class="number">0</span>,two)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>2.使用EM算法来对图像进行二值化</p>
+<p>首先我们通过<a href="http://docs.opencv.org/modules/ml/doc/expectation_maximization.html" target="_blank" rel="external">OpenCV的官方文档</a>来了解EM算法，主要看具体实现。</p>
+<p>文章说了训练函数是有三种类型的，根据文章说明，我们选择第二种方式 <strong>trainE</strong> ，也就是先从E-Step开始，需要提供均值、权重和协方差矩阵。</p>
+<p>下面来看看第二种类型的函数声明：</p>
+<p>C++: bool EM::trainE(InputArray samples, InputArray means0, InputArray covs0=noArray(), InputArray weights0=noArray(), OutputArray logLikelihoods=noArray(), OutputArray labels=noArray(), OutputArray probs=noArray())</p>
+<p>参数介绍：</p>
+<p>samples ：单信道矩阵，每行是一个sample。必须是CV_64F类型</p>
+<p>means0：初始均值</p>
+<p>covs0： 初始协方差</p>
+<p>weights0： 初始权重</p>
+<p>logLikelihoods：可选的输出选项，包含了一个输出矩阵，里面是每个sample相似度算法的值</p>
+<p>labels：对于每一个sample，都有一个分类标记</p>
+<p>probs：后验概率矩阵</p>
+<p>在做这一步的时候碰到了一个问题：如何提取多通道图像中某个通道的值？</p>
+<p><a href="http://www.cnblogs.com/ronny/p/opencv_road_2.html" target="_blank" rel="external">这篇文章</a>告诉了我解决方案。还有一个需要注意的地方就是如果是三维的类型要使用Vec3b</p>
+<p>在写代码的时候，多次碰到一个问题：IplImage*类型到Mat类型的转化。</p>
+<p>这里还有一些历史渊源。一开始的OpenCV版本操作图像使用的是IplImage*的类型，后来有了Mat之后，OpenCV推荐使用Mat类型，因为不用手动申请和释放内存，就很方便了。</p>
+<p>同时碰到有些openCV函数有前缀cv，有些没有前缀cv，举个例子：</p>
+<p>cvDrawContours，第一个参数就要接受IplImage*类型</p>
+<p>而 drawContours，第一个参数需要接受Mat类型。</p>
+<p>前面一个应该是老版本，而后面一个是新版本。由于自己写代码的时候没有特别注意，使用的都是老版本的函数，都不接受Mat类型，每次用都把Mat转到IplImage。有一种本末倒置的感觉。下次写代码需要注意这个问题。</p>
+<p>3.去除false positive region</p>
+<p>这里的方法就是提取轮廓，首先提取当前图像的所有外轮廓，然后选取面积最大的那个外轮廓，忽略其他所有轮廓。关键代码如下：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cvFindContours(dsw, storage, &amp;amp<span class="comment">;first_contour, sizeof(CvContour), CV_RETR_EXTERNAL, CV_CHAIN_APPROX_SIMPLE);</span></span><br><span class="line"></span><br><span class="line">//外轮廓也可能有多个，所以我们需要选取出最主要的，也就是最大的外轮廓</span><br><span class="line">//这一步就是cut false positive,虽然没有在图上体现出来，但是我们只要获得了最大轮廓就相当于做了这一步</span><br><span class="line">//因为后面的步骤只用到了轮廓这个特征点集</span><br><span class="line">CvSeq *max_contour<span class="comment">;//该变量保存了最大的那个轮廓</span></span><br><span class="line">double max_area = 0<span class="comment">;</span></span><br><span class="line">double area = 0<span class="comment">;</span></span><br><span class="line">int cnt = 0<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">for(<span class="comment">; first_contour != 0; first_contour = first_contour-&amp;gt;h_next)</span></span><br><span class="line">&#123;</span><br><span class="line">area = cvContourArea(first_contour)<span class="comment">;</span></span><br><span class="line">if(area &amp;gt<span class="comment">; max_area)</span></span><br><span class="line">&#123;</span><br><span class="line">max_area = area<span class="comment">;</span></span><br><span class="line">max_contour = first_contour<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">cnt++<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">max_contour-&amp;gt<span class="comment">;h_next = 0;//为了防止把后面的轮廓也画上去</span></span><br></pre></td></tr></table></figure>
+<p>这里注意轮廓点的类型转换，由于我使用的还是老版本，找了半天才找到<a href="http://blog.csdn.net/augusdi/article/details/9000276" target="_blank" rel="external">这个方法</a>。</p>
+<p>4.顶帽变换去茎</p>
+<p>顶帽算法不难，但是本身这个方法不是特别有效能够去茎，而且顶帽算法有个kernel参数，需要设置区域大小。这里的参数也需要调试。首先来看一下<a href="http://www.opencv.org.cn/opencvdoc/2.3.2/html/doc/tutorials/imgproc/opening_closing_hats/opening_closing_hats.html" target="_blank" rel="external">这篇文章</a>介绍，明白顶帽变换的作用，图像做差之后就是可能是茎的一些区域了。关键代码如下：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">#</span>define morph_size  <span class="number">10</span></span><br><span class="line"></span><br><span class="line">Mat origin<span class="params">(img_origin)</span>;</span><br><span class="line"><span class="comment">//设定内核</span></span><br><span class="line">Mat element = getStructuringElement<span class="params">(</span><br><span class="line">MORPH_CROSS, Size<span class="params">( <span class="number">2</span>*morph_size + <span class="number">1</span>, <span class="number">2</span>*morph_size+<span class="number">1</span> )</span>, Point<span class="params">( morph_size, morph_size )</span> )</span>;</span><br><span class="line"><span class="comment">/// 运行指定形态学操作</span></span><br><span class="line">morphologyEx<span class="params">(origin, img_tophat, MORPH_TOPHAT, element)</span>;</span><br></pre></td></tr></table></figure>
+<p>之后还要选取可能是茎的区域从图像中除去。这一步目前还没有很好的方法。</p>
+<p>&nbsp;</p>
+<p>5.计算HoCS特征</p>
+<p>两种方法，面积法和周长法。这一步就是有点烦，就是两个for循环从左到右，从上到下每个点判断。但是要注意边界条件。目前只实现了面积法，周长法有空也实现一下。这一步看具体代码。</p>
+<p>&nbsp;</p>
+<p>6.树叶比较</p>
+<p>计算出HoCS特征之后，把数据库中的叶子图片特征都提取出来并保存起来。每次新来一张图片，先提取这张图片的HoCS特征，然后跟所有数据库中的特征比较一遍，找出最像的前N个特征，这些特征所属的叶子种类就是最后的返回结果。</p>
+<p>&nbsp;</p>
+<p>最后给出原文献和我目前的进度源码：</p>
+<p>原文献：</p>
+<p><a href="http://pan.baidu.com/s/1nYnMI" target="_blank" rel="external">http://pan.baidu.com/s/1nYnMI</a></p>
+<p>源码（包括前面的分类）：</p>
+<p><a href="https://github.com/miibotree/Leafsnap" target="_blank" rel="external">https://github.com/miibotree/Leafsnap</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag">#OpenCV</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/24/Leafsnap实现-3-Android端实现/" rel="prev">Leafsnap实现(3)-Android端实现</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/09/Leafsnap实现-1-–树叶分类器/" rel="next">Leafsnap实现(1)–树叶分类器</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

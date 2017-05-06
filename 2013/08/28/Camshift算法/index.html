@@ -1,0 +1,612 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OpenCV,camshift,未分类," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="由于接下来要开始用camshift结合机器学习做手势识别的项目，这里就把暑假项目里面做的camshift算法给总结一下。
+opencv的书里面有camshift的算法介绍和相关的例子，这里还是先把概念来说一下：
+一.Camshift算法介绍
+Camshift算法是MeanShift算法的改进，称为连续自适应的MeanShift算法，它的基本思想是视频图像的所有帧作MeanShift运算，并将上一帧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Camshift算法">
+<meta property="og:url" content="http://yoursite.com/2013/08/28/Camshift算法/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="由于接下来要开始用camshift结合机器学习做手势识别的项目，这里就把暑假项目里面做的camshift算法给总结一下。
+opencv的书里面有camshift的算法介绍和相关的例子，这里还是先把概念来说一下：
+一.Camshift算法介绍
+Camshift算法是MeanShift算法的改进，称为连续自适应的MeanShift算法，它的基本思想是视频图像的所有帧作MeanShift运算，并将上一帧">
+<meta property="og:updated_time" content="2015-07-25T01:43:18.449Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Camshift算法">
+<meta name="twitter:description" content="由于接下来要开始用camshift结合机器学习做手势识别的项目，这里就把暑假项目里面做的camshift算法给总结一下。
+opencv的书里面有camshift的算法介绍和相关的例子，这里还是先把概念来说一下：
+一.Camshift算法介绍
+Camshift算法是MeanShift算法的改进，称为连续自适应的MeanShift算法，它的基本思想是视频图像的所有帧作MeanShift运算，并将上一帧">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Camshift算法 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Camshift算法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-08-28T13:25:05+08:00" content="2013-08-28">
+            2013-08-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>由于接下来要开始用camshift结合机器学习做手势识别的项目，这里就把暑假项目里面做的camshift算法给总结一下。</p>
+<p>opencv的书里面有camshift的算法介绍和相关的例子，这里还是先把概念来说一下：</p>
+<p>一.Camshift算法介绍</p>
+<p>Camshift算法是MeanShift算法的改进，称为连续自适应的MeanShift算法，它的基本思想是视频图像的所有帧作MeanShift运算，并将上一帧的结果（即Search Window的中心和大小）作为下一帧MeanShift算法的Search Window的初始值，如此迭代下去。</p>
+<p><span id="more-722"></span></p>
+<p>Camshift算法可以分为三个部分：</p>
+<p>1.RGB颜色空间对光照亮度变化较为敏感，为了减少此变化对跟踪效果的影响，首先将图像从RGB空间转换到HSV空间。</p>
+<p>2.对其中的H分量作直方图，在直方图中代表了不同H分量值出现的概率或者像素个数，就是说可以查找出H分量大小为h的概率或者像素个数，即得到了颜色概率查找表。</p>
+<p>3.将图像中每个像素的值用其颜色出现的概率对替换，就得到了颜色概率分布图。这个过程就叫反向投影，颜色概率分布图是一个灰度图像。</p>
+<p>二.MeanShift算法</p>
+<p>刚才说到Camshift算法是对Meanshift算法的改进，所以下面介绍一下Meanshift算法：</p>
+<p>Meanshift算法是一种密度函数梯度估计的非参数方法，通过迭代寻优找到概率分布的极值来定位目标。算法过程如下：</p>
+<p>1.在颜色概率分布图中自动或者手动选取搜索窗口</p>
+<p>2.计算零阶矩：</p>
+<p>3.计算一阶矩：</p>
+<p>4.计算搜索窗的质心：</p>
+<p>5.调整搜索框大小</p>
+<p>6.移动搜索窗的中心到质心，如果移动距离大于预设的固定阈值，则重复2)3)4)，直到搜索窗的中心与质心间的移动距离小于预设的固定阈值，或者循环运算的次数达到某一最大值，停止计算。</p>
+<p>三.跟踪算法的OpenCV实现</p>
+<p>1：函数的原型为</p>
+<p>RotatedRectCamShift(InputArrayprobImage, Rect&amp; window, TermCriteria criteria)；</p>
+<p>其中probImage为输入图像直方图的反向投影图，window为要跟踪目标的初始位置矩形框，criteria为算法结束条件。函数返回一个有方向角度的矩阵。该函数的实现首先是利用meanshift算法计算出要跟踪的中心，然后调整初始窗口的大小位置和方向角度。在camshift内部调用了meanshift算法计算目标的重心。</p>
+<p>下面是具体的代码：</p>
+<figure class="highlight processing"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br></pre></td><td class="code"><pre><span class="line">#ifdef _CH_</span><br><span class="line">#pragma <span class="keyword">package</span> &amp;lt;opencv&amp;gt;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">#ifndef _EiC</span><br><span class="line">#include &amp;quot;cv.h&amp;quot;</span><br><span class="line">#include &amp;quot;highgui.h&amp;quot;</span><br><span class="line">#include &amp;lt;stdio.h&amp;gt;</span><br><span class="line">#include &amp;lt;ctype.h&amp;gt;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">IplImage *<span class="built_in">image</span> = <span class="number">0</span>, *hsv = <span class="number">0</span>, *<span class="built_in">hue</span> = <span class="number">0</span>, *mask = <span class="number">0</span>, *backproject = <span class="number">0</span>, *histimg = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//用HSV中的Hue分量进行跟踪</span></span><br><span class="line">CvHistogram *hist = <span class="number">0</span>;</span><br><span class="line"><span class="comment">//直方图类</span></span><br><span class="line"><span class="built_in">int</span> backproject_mode = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> select_object = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> track_object = <span class="number">0</span>;</span><br><span class="line"><span class="built_in">int</span> show_hist = <span class="number">1</span>;</span><br><span class="line">CvPoint origin;</span><br><span class="line">CvRect selection;</span><br><span class="line">CvRect track_window;</span><br><span class="line">CvBox2D track_box;</span><br><span class="line"><span class="comment">//Meanshift跟踪算法返回的Box类</span></span><br><span class="line"><span class="comment">//typedef struct CvBox2D&#123;</span></span><br><span class="line"><span class="comment">//CvPoint2D32f center;</span></span><br><span class="line"><span class="comment">//CvSize2D32f size;</span></span><br><span class="line"><span class="comment">//float angle;</span></span><br><span class="line"><span class="comment">//&#125;CvBox2D;</span></span><br><span class="line">CvConnectedComp track_comp;</span><br><span class="line"><span class="comment">//连接部件 </span></span><br><span class="line"><span class="comment">//typedef struct CvConnectedComp&#123;</span></span><br><span class="line"><span class="comment">//double area;</span></span><br><span class="line"><span class="comment">//float value;</span></span><br><span class="line"><span class="comment">//CvRect rect;</span></span><br><span class="line"><span class="comment">//&#125; CvConnectedComp;</span></span><br><span class="line"><span class="built_in">int</span> hdims = <span class="number">16</span>;</span><br><span class="line"><span class="comment">//划分直方图bins的个数，越多越精确</span></span><br><span class="line"><span class="built_in">float</span> hranges_arr[] = &#123;<span class="number">0</span>,<span class="number">180</span>&#125;;</span><br><span class="line"><span class="comment">//像素值的范围</span></span><br><span class="line"><span class="built_in">float</span>* hranges = hranges_arr;</span><br><span class="line"><span class="comment">//用于初始化CvHistogram类</span></span><br><span class="line"><span class="built_in">int</span> vmin = <span class="number">10</span>, vmax = <span class="number">256</span>, smin = <span class="number">30</span>;</span><br><span class="line"><span class="comment">//用于设置滑动条</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> on_mouse( <span class="built_in">int</span> event, <span class="built_in">int</span> x, <span class="built_in">int</span> y, <span class="built_in">int</span> flags, <span class="keyword">void</span>* param )</span><br><span class="line"><span class="comment">//鼠标回调函数,该函数用鼠标进行跟踪目标的选择</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>( !<span class="built_in">image</span> )</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( <span class="built_in">image</span>-&amp;gt;origin )</span><br><span class="line">        y = <span class="built_in">image</span>-&amp;gt;<span class="variable">height</span> - y;</span><br><span class="line">    <span class="comment">//如果图像原点坐标在左下,则将其改为左上</span></span><br><span class="line">    <span class="keyword">if</span>( select_object )</span><br><span class="line">    <span class="comment">//select_object为1,表示在用鼠标进行目标选择</span></span><br><span class="line">    <span class="comment">//此时对矩形类selection用当前的鼠标位置进行设置</span></span><br><span class="line">    &#123;</span><br><span class="line">        selection.x = MIN(x,origin.x);</span><br><span class="line">        selection.y = MIN(y,origin.y);</span><br><span class="line">        selection.<span class="variable">width</span> = selection.x + CV_IABS(x - origin.x);</span><br><span class="line">        selection.<span class="variable">height</span> = selection.y + CV_IABS(y - origin.y);</span><br><span class="line"></span><br><span class="line">        selection.x = MAX( selection.x, <span class="number">0</span> );</span><br><span class="line">        selection.y = MAX( selection.y, <span class="number">0</span> );</span><br><span class="line">        selection.<span class="variable">width</span> = MIN( selection.<span class="variable">width</span>, <span class="built_in">image</span>-&amp;gt;<span class="variable">width</span> );</span><br><span class="line">        selection.<span class="variable">height</span> = MIN( selection.<span class="variable">height</span>, <span class="built_in">image</span>-&amp;gt;<span class="variable">height</span> );</span><br><span class="line">        selection.<span class="variable">width</span> -= selection.x;</span><br><span class="line">        selection.<span class="variable">height</span> -= selection.y;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span>( event )</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">case</span> CV_EVENT_LBUTTONDOWN:</span><br><span class="line">    <span class="comment">//鼠标按下,开始点击选择跟踪物体</span></span><br><span class="line">        origin = cvPoint(x,y);</span><br><span class="line">        selection = cvRect(x,y,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">        select_object = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> CV_EVENT_LBUTTONUP:</span><br><span class="line">    <span class="comment">//鼠标松开,完成选择跟踪物体</span></span><br><span class="line">        select_object = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>( selection.<span class="variable">width</span> &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; selection.<span class="variable">height</span> &amp;gt; <span class="number">0</span> )</span><br><span class="line">        <span class="comment">//如果选择物体有效，则打开跟踪功能</span></span><br><span class="line">            track_object = -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CvScalar hsv2rgb( <span class="built_in">float</span> <span class="built_in">hue</span> )</span><br><span class="line"><span class="comment">//用于将Hue量转换成RGB量</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">int</span> rgb[<span class="number">3</span>], p, sector;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="built_in">int</span> sector_data[][<span class="number">3</span>]=</span><br><span class="line">        &#123;&#123;<span class="number">0</span>,<span class="number">2</span>,<span class="number">1</span>&#125;, &#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">0</span>&#125;, &#123;<span class="number">1</span>,<span class="number">0</span>,<span class="number">2</span>&#125;, &#123;<span class="number">2</span>,<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>,<span class="number">2</span>&#125;&#125;;</span><br><span class="line">    <span class="built_in">hue</span> *= <span class="number">0.033333333333333333333333333333333</span>f;</span><br><span class="line">    sector = cvFloor(<span class="built_in">hue</span>);</span><br><span class="line">    p = cvRound(<span class="number">255</span>*(<span class="built_in">hue</span> - sector));</span><br><span class="line">    p ^= sector &amp;amp; <span class="number">1</span> ? <span class="number">255</span> : <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    rgb[sector_data[sector][<span class="number">0</span>]] = <span class="number">255</span>;</span><br><span class="line">    rgb[sector_data[sector][<span class="number">1</span>]] = <span class="number">0</span>;</span><br><span class="line">    rgb[sector_data[sector][<span class="number">2</span>]] = p;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> cvScalar(rgb[<span class="number">2</span>], rgb[<span class="number">1</span>], rgb[<span class="number">0</span>],<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main( <span class="built_in">int</span> argc, <span class="built_in">char</span>** argv )</span><br><span class="line">&#123;</span><br><span class="line">    CvCapture* capture = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( argc == <span class="number">1</span> || (argc == <span class="number">2</span> &amp;amp;&amp;amp; strlen(argv[<span class="number">1</span>]) == <span class="number">1</span> &amp;amp;&amp;amp; isdigit(argv[<span class="number">1</span>][<span class="number">0</span>])))</span><br><span class="line">    <span class="comment">//打开摄像头</span></span><br><span class="line">        capture = cvCaptureFromCAM( argc == <span class="number">2</span> ? argv[<span class="number">1</span>][<span class="number">0</span>] - &amp;#<span class="number">039</span>;<span class="number">0</span>&amp;#<span class="number">039</span>; : <span class="number">0</span> );</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span>( argc == <span class="number">2</span> )</span><br><span class="line">    <span class="comment">//打开avi</span></span><br><span class="line">        capture = cvCaptureFromAVI( argv[<span class="number">1</span>] ); </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>( !capture )</span><br><span class="line">    <span class="comment">//打开视频流失败</span></span><br><span class="line">    &#123;</span><br><span class="line">        fprintf(stderr,&amp;quot;Could not initialize capturing...\n&amp;quot;);</span><br><span class="line">        <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    printf( &amp;quot;Hot keys: \n&amp;quot;</span><br><span class="line">        &amp;quot;\tESC - quit the program\n&amp;quot;</span><br><span class="line">        &amp;quot;\tc - stop the tracking\n&amp;quot;</span><br><span class="line">        &amp;quot;\tb - <span class="keyword">switch</span> to/from backprojection view\n&amp;quot;</span><br><span class="line">        &amp;quot;\th - show/hide object histogram\n&amp;quot;</span><br><span class="line">        &amp;quot;To initialize tracking, select the object with mouse\n&amp;quot; );</span><br><span class="line"><span class="comment">//打印程序功能列表</span></span><br><span class="line">    cvNamedWindow( &amp;quot;Histogram&amp;quot;, <span class="number">1</span> );</span><br><span class="line">    <span class="comment">//用于显示直方图</span></span><br><span class="line">    cvNamedWindow( &amp;quot;CamShiftDemo&amp;quot;, <span class="number">1</span> );</span><br><span class="line">    <span class="comment">//用于显示视频</span></span><br><span class="line">    cvSetMouseCallback( &amp;quot;CamShiftDemo&amp;quot;, on_mouse, <span class="number">0</span> );</span><br><span class="line">    <span class="comment">//设置鼠标回调函数</span></span><br><span class="line">    cvCreateTrackbar( &amp;quot;Vmin&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;vmin, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    cvCreateTrackbar( &amp;quot;Vmax&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;vmax, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    cvCreateTrackbar( &amp;quot;Smin&amp;quot;, &amp;quot;CamShiftDemo&amp;quot;, &amp;amp;smin, <span class="number">256</span>, <span class="number">0</span> );</span><br><span class="line">    <span class="comment">//设置滑动条</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(;;)</span><br><span class="line">    <span class="comment">//进入视频帧处理主循环</span></span><br><span class="line">    &#123;</span><br><span class="line">        IplImage* frame = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">int</span> i, bin_w, c;</span><br><span class="line"></span><br><span class="line">        frame = cvQueryFrame( capture );</span><br><span class="line">        <span class="keyword">if</span>( !frame )</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( !<span class="built_in">image</span> )</span><br><span class="line">        <span class="comment">//image为0,表明刚开始还未对image操作过,先建立一些缓冲区</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">image</span> = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="built_in">image</span>-&amp;gt;origin = frame-&amp;gt;origin;</span><br><span class="line">            hsv = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="built_in">hue</span> = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            mask = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配掩膜图像空间</span></span><br><span class="line">            backproject = cvCreateImage( cvGetSize(frame), <span class="number">8</span>, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配反向投影图空间,大小一样,单通道</span></span><br><span class="line">            hist = cvCreateHist( <span class="number">1</span>, &amp;amp;hdims, CV_HIST_ARRAY, &amp;amp;hranges, <span class="number">1</span> );</span><br><span class="line">            <span class="comment">//分配直方图空间</span></span><br><span class="line">            histimg = cvCreateImage( cvSize(<span class="number">320</span>,<span class="number">200</span>), <span class="number">8</span>, <span class="number">3</span> );</span><br><span class="line">            <span class="comment">//分配用于直方图显示的空间</span></span><br><span class="line">            cvZero( histimg );</span><br><span class="line">            <span class="comment">//置背景为黑色</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cvCopy( frame, <span class="built_in">image</span>, <span class="number">0</span> );</span><br><span class="line">        cvCvtColor( <span class="built_in">image</span>, hsv, CV_BGR2HSV );</span><br><span class="line">        <span class="comment">//把图像从RGB表色系转为HSV表色系</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( track_object )</span><br><span class="line">        <span class="comment">//track_object非零,表示有需要跟踪的物体</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">int</span> _vmin = vmin, _vmax = vmax;</span><br><span class="line"></span><br><span class="line">            cvInRangeS( hsv, cvScalar(<span class="number">0</span>,smin,MIN(_vmin,_vmax),<span class="number">0</span>),</span><br><span class="line">                        cvScalar(<span class="number">180</span>,<span class="number">256</span>,MAX(_vmin,_vmax),<span class="number">0</span>), mask );</span><br><span class="line">            <span class="comment">//制作掩膜板，只处理像素值为H：0~180，S：smin~256，V：vmin~vmax之间的部分</span></span><br><span class="line">            cvSplit( hsv, <span class="built_in">hue</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> );</span><br><span class="line"><span class="comment">//分离H分量</span></span><br><span class="line">            <span class="keyword">if</span>( track_object &amp;lt; <span class="number">0</span> )</span><br><span class="line">            <span class="comment">//如果需要跟踪的物体还没有进行属性提取，则进行选取框类的图像属性提取</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">float</span> max_val = <span class="number">0.</span>f;</span><br><span class="line">                cvSetImageROI( <span class="built_in">hue</span>, selection );</span><br><span class="line">                <span class="comment">//设置原选择框为ROI</span></span><br><span class="line">                cvSetImageROI( mask, selection );</span><br><span class="line">                <span class="comment">//设置掩膜板选择框为ROI</span></span><br><span class="line">                cvCalcHist( &amp;amp;<span class="built_in">hue</span>, hist, <span class="number">0</span>, mask );</span><br><span class="line">                <span class="comment">//得到选择框内且满足掩膜板内的直方图</span></span><br><span class="line">                cvGetMinMaxHistValue( hist, <span class="number">0</span>, &amp;amp;max_val, <span class="number">0</span>, <span class="number">0</span> );</span><br><span class="line">                cvConvertScale( hist-&amp;gt;bins, hist-&amp;gt;bins, max_val ? <span class="number">255</span>\. / max_val : <span class="number">0.</span>, <span class="number">0</span> );</span><br><span class="line">                <span class="comment">// 对直方图的数值转为0~255</span></span><br><span class="line">                cvResetImageROI( <span class="built_in">hue</span> );</span><br><span class="line">                <span class="comment">//去除ROI</span></span><br><span class="line">                cvResetImageROI( mask );</span><br><span class="line">                <span class="comment">//去除ROI</span></span><br><span class="line">                track_window = selection;</span><br><span class="line">                track_object = <span class="number">1</span>;</span><br><span class="line"><span class="comment">//置track_object为1,表明属性提取完成</span></span><br><span class="line">                cvZero( histimg );</span><br><span class="line">                bin_w = histimg-&amp;gt;<span class="variable">width</span> / hdims;</span><br><span class="line">                <span class="keyword">for</span>( i = <span class="number">0</span>; i &amp;lt; hdims; i++ )</span><br><span class="line">                <span class="comment">//画直方图到图像空间</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">int</span> val = cvRound( cvGetReal1D(hist-&amp;gt;bins,i)*histimg-&amp;gt;<span class="variable">height</span>/<span class="number">255</span> );</span><br><span class="line">                    CvScalar <span class="built_in">color</span> = hsv2rgb(i*<span class="number">180.</span>f/hdims);</span><br><span class="line">                    cvRectangle( histimg, cvPoint(i*bin_w,histimg-&amp;gt;<span class="variable">height</span>),</span><br><span class="line">                                 cvPoint((i+<span class="number">1</span>)*bin_w,histimg-&amp;gt;<span class="variable">height</span> - val),</span><br><span class="line">                                 <span class="built_in">color</span>, -<span class="number">1</span>, <span class="number">8</span>, <span class="number">0</span> );</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            cvCalcBackProject( &amp;amp;<span class="built_in">hue</span>, backproject, hist );</span><br><span class="line">            <span class="comment">//计算hue的反向投影图</span></span><br><span class="line">            cvAnd( backproject, mask, backproject, <span class="number">0</span> );</span><br><span class="line">            <span class="comment">//得到掩膜内的反向投影</span></span><br><span class="line">            cvCamShift( backproject, track_window,</span><br><span class="line">                        cvTermCriteria( CV_TERMCRIT_EPS | CV_TERMCRIT_ITER, <span class="number">10</span>, <span class="number">1</span> ),</span><br><span class="line">                        &amp;amp;track_comp, &amp;amp;track_box );</span><br><span class="line">            <span class="comment">//使用MeanShift算法对backproject中的内容进行搜索,返回跟踪结果</span></span><br><span class="line">            track_window = track_comp.<span class="built_in">rect</span>;</span><br><span class="line">            <span class="comment">//得到跟踪结果的矩形框</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( backproject_mode )</span><br><span class="line">                cvCvtColor( backproject, <span class="built_in">image</span>, CV_GRAY2BGR );</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>( <span class="built_in">image</span>-&amp;gt;origin )</span><br><span class="line">                track_box.angle = -track_box.angle;</span><br><span class="line">            cvEllipseBox( <span class="built_in">image</span>, track_box, CV_RGB(<span class="number">255</span>,<span class="number">0</span>,<span class="number">0</span>), <span class="number">3</span>, CV_AA, <span class="number">0</span> );</span><br><span class="line">            <span class="comment">//画出跟踪结果的位置</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>( select_object &amp;amp;&amp;amp; selection.<span class="variable">width</span> &amp;gt; <span class="number">0</span> &amp;amp;&amp;amp; selection.<span class="variable">height</span> &amp;gt; <span class="number">0</span> )</span><br><span class="line">        <span class="comment">//如果正处于物体选择，画出选择框</span></span><br><span class="line">        &#123;</span><br><span class="line">            cvSetImageROI( <span class="built_in">image</span>, selection );</span><br><span class="line">            cvXorS( <span class="built_in">image</span>, cvScalarAll(<span class="number">255</span>), <span class="built_in">image</span>, <span class="number">0</span> );</span><br><span class="line">            cvResetImageROI( <span class="built_in">image</span> );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cvShowImage( &amp;quot;CamShiftDemo&amp;quot;, <span class="built_in">image</span> );</span><br><span class="line">        cvShowImage( &amp;quot;Histogram&amp;quot;, histimg );</span><br><span class="line"></span><br><span class="line">        c = cvWaitKey(<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>( (<span class="built_in">char</span>) c == <span class="number">27</span> )</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">switch</span>( (<span class="built_in">char</span>) c )</span><br><span class="line">        <span class="comment">//按键切换功能</span></span><br><span class="line">        &#123;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;b&amp;#<span class="number">039</span>;:</span><br><span class="line">            backproject_mode ^= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;c&amp;#<span class="number">039</span>;:</span><br><span class="line">            track_object = <span class="number">0</span>;</span><br><span class="line">            cvZero( histimg );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> &amp;#<span class="number">039</span>;h&amp;#<span class="number">039</span>;:</span><br><span class="line">            show_hist ^= <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>( !show_hist )</span><br><span class="line">                cvDestroyWindow( &amp;quot;Histogram&amp;quot; );</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                cvNamedWindow( &amp;quot;Histogram&amp;quot;, <span class="number">1</span> );</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            ;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cvReleaseCapture( &amp;amp;capture );</span><br><span class="line">    cvDestroyWindow(&amp;quot;CamShiftDemo&amp;quot;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#ifdef _EiC</span><br><span class="line">main(<span class="number">1</span>,&amp;quot;camshiftdemo.c&amp;quot;);</span><br><span class="line">#endif</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenCV/" rel="tag">#OpenCV</a>
+          
+            <a href="/tags/camshift/" rel="tag">#camshift</a>
+          
+            <a href="/tags/未分类/" rel="tag">#未分类</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/08/28/原-Camshift算法改进–自启动和自结束/" rel="prev">[原]Camshift算法改进–自启动和自结束</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/06/02/Machine-Learning-Week6-Ex5/" rel="next">Machine Learning Week6 Ex5</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

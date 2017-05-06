@@ -1,0 +1,614 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ACM,递推," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="既然上了ACM的课程，那就好好的学，从做作业开始吧- -|||
+本次课程是递推算法。这里注意要区别递推和递归的区别。
+递归是函数自身循环调用自身，这是一个逆向求解的过程。因为递归程序要用到栈来保存函数指针，所以效率不是很高。
+而递推是正向求解的过程，关键就是求得递推公式。
+在做递推题目的时候，需要注意的就是数值的增长是很快的。如果定义int类型的数组，很快就会溢出的。所以这点必须注意。
+拿最经典的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACM递推系列–[ACM_HDU_1279] Children’s Queue">
+<meta property="og:url" content="http://yoursite.com/2013/03/24/ACM递推系列–-ACM-HDU-1279-Children’s-Queue/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="既然上了ACM的课程，那就好好的学，从做作业开始吧- -|||
+本次课程是递推算法。这里注意要区别递推和递归的区别。
+递归是函数自身循环调用自身，这是一个逆向求解的过程。因为递归程序要用到栈来保存函数指针，所以效率不是很高。
+而递推是正向求解的过程，关键就是求得递推公式。
+在做递推题目的时候，需要注意的就是数值的增长是很快的。如果定义int类型的数组，很快就会溢出的。所以这点必须注意。
+拿最经典的">
+<meta property="og:updated_time" content="2015-07-25T04:41:02.337Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACM递推系列–[ACM_HDU_1279] Children’s Queue">
+<meta name="twitter:description" content="既然上了ACM的课程，那就好好的学，从做作业开始吧- -|||
+本次课程是递推算法。这里注意要区别递推和递归的区别。
+递归是函数自身循环调用自身，这是一个逆向求解的过程。因为递归程序要用到栈来保存函数指针，所以效率不是很高。
+而递推是正向求解的过程，关键就是求得递推公式。
+在做递推题目的时候，需要注意的就是数值的增长是很快的。如果定义int类型的数组，很快就会溢出的。所以这点必须注意。
+拿最经典的">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> ACM递推系列–[ACM_HDU_1279] Children’s Queue // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              ACM递推系列–[ACM_HDU_1279] Children’s Queue
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-03-24T18:34:44+08:00" content="2013-03-24">
+            2013-03-24
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>既然上了ACM的课程，那就好好的学，从做作业开始吧- -|||</p>
+<p>本次课程是递推算法。这里注意要区别递推和递归的区别。</p>
+<p>递归是函数自身循环调用自身，这是一个逆向求解的过程。因为递归程序要用到栈来保存函数指针，所以效率不是很高。</p>
+<p>而递推是正向求解的过程，关键就是求得递推公式。</p>
+<p>在做递推题目的时候，需要注意的就是数值的增长是很快的。如果定义int类型的数组，很快就会溢出的。所以这点必须注意。</p>
+<p>拿最经典的题目来做例子，肯定是比较好的。</p>
+<p>解题思路如下：</p>
+<p>一个长度n的队列可以看成一个n &#8211; 1的队列再追加的1个小孩，这个小孩只可能是：</p>
+<p>a.男孩，任何n &#8211; 1的合法队列追加1个男孩必然是合法的，情况数为f[n - 1]；</p>
+<p>b.女孩，在前n &#8211; 1的以女孩为末尾的队列后追加1位女孩也是合法的，我们可以转化为n &#8211; 2的队列中追加2位女孩；</p>
+<p>一种情况是在n &#8211; 2的合法队列中追加2位女孩，情况数为f[n - 2]；</p>
+<p>但我们注意到本题的难点，可能前n &#8211; 2位以女孩为末尾的不合法队列（即单纯以1位女孩结尾），也可以追加2位女孩成为合法队列，而这种n &#8211; 2不合法队列必然是由n &#8211; 4合法队列+1男孩+1女孩的结构，即情况数为f[n - 4]。</p>
+<p>所以最后得到的递推公式如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f<span class="comment">[n]</span> = f<span class="comment">[n - 1]</span> + f<span class="comment">[n - 2]</span> + f<span class="comment">[n - 4]</span></span><br></pre></td></tr></table></figure>
+<p>核心的东西有了，接下来还有一个需要注意的地方就是大数据的处理。</p>
+<p>学习了下面这个题目：</p>
+<p><a href="http://www.clanfei.com/2012/04/629.html" target="_blank" rel="external">http://www.clanfei.com/2012/04/629.html</a></p>
+<p>最终的源代码如下：</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">#include&amp;lt;stdio.h&amp;gt;</span><br><span class="line">int main()&#123;</span><br><span class="line">        int n;</span><br><span class="line">        int f<span class="comment">[1001]</span><span class="comment">[101]</span> = &#123;0&#125;;</span><br><span class="line">        f<span class="comment">[0]</span><span class="comment">[1]</span> = 1;</span><br><span class="line">        f<span class="comment">[1]</span><span class="comment">[1]</span> = 1;</span><br><span class="line">        f<span class="comment">[2]</span><span class="comment">[1]</span> = 2;</span><br><span class="line">        f<span class="comment">[3]</span><span class="comment">[1]</span> = 4;</span><br><span class="line">        for(int i = 4; i &amp;lt; 1001; ++i)&#123;</span><br><span class="line">                for(int j = 1; j &amp;lt; 101; ++j)&#123;</span><br><span class="line">                        f<span class="comment">[i]</span><span class="comment">[j]</span> += f<span class="comment">[i - 1]</span><span class="comment">[j]</span> + f<span class="comment">[i - 2]</span><span class="comment">[j]</span> + f<span class="comment">[i - 4]</span><span class="comment">[j]</span>;     //数组的每一位相加</span><br><span class="line">                        f<span class="comment">[i]</span><span class="comment">[j + 1]</span> += f<span class="comment">[i]</span><span class="comment">[j]</span> / 10000; //超过4位的部分保存至数组下一位中</span><br><span class="line">                        f<span class="comment">[i]</span><span class="comment">[j]</span> %= 10000;       //每位数组只保存其中4位</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        while(scanf(&amp;quot;%d&amp;quot;, &amp;amp;n) != EOF)&#123;</span><br><span class="line">                int k = 100;</span><br><span class="line">                while(!f<span class="comment">[n]</span><span class="comment">[k--]</span>);      //排除前面为空的数组</span><br><span class="line">                printf(&amp;quot;%d&amp;quot;, f<span class="comment">[n]</span><span class="comment">[k + 1]</span>);      //输出结果的前四位</span><br><span class="line">                for(; k &amp;gt; 0; --k)&#123;</span><br><span class="line">                        printf(&amp;quot;%04d&amp;quot;, f<span class="comment">[n]</span><span class="comment">[k]</span>);        //输出其余的所有四位数字，若数字小于四位，则前面用0填充</span><br><span class="line">                &#125;</span><br><span class="line">                printf(&amp;quot;\n&amp;quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考学习博客：</p>
+<p><a href="http://www.clanfei.com/2012/04/379.html" target="_blank" rel="external">http://www.clanfei.com/2012/04/379.html</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ACM/" rel="tag">#ACM</a>
+          
+            <a href="/tags/递推/" rel="tag">#递推</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/03/31/源码阅读之函数指针/" rel="prev">源码阅读之函数指针</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/03/24/Use-OpenSSL-Command-Line/" rel="next">Use OpenSSL Command Line</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

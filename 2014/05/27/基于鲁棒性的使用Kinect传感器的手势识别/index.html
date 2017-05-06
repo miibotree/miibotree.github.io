@@ -1,0 +1,687 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Kinect," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="基于鲁棒性的使用Kinect传感器的手势识别">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于鲁棒性的使用Kinect传感器的手势识别">
+<meta property="og:url" content="http://yoursite.com/2014/05/27/基于鲁棒性的使用Kinect传感器的手势识别/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="基于鲁棒性的使用Kinect传感器的手势识别">
+<meta property="og:updated_time" content="2015-07-25T11:34:34.388Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于鲁棒性的使用Kinect传感器的手势识别">
+<meta name="twitter:description" content="基于鲁棒性的使用Kinect传感器的手势识别">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 基于鲁棒性的使用Kinect传感器的手势识别 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              基于鲁棒性的使用Kinect传感器的手势识别
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-27T13:57:57+08:00" content="2014-05-27">
+            2014-05-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><strong>基于鲁棒性的使用Kinect传感器的手势识别</strong><br><a id="more"></a></p>
+<p>Authors: Zhou Ren, Junsong Yuan, Member, IEEE, Jingjing Meng, Member, IEEE, and Zhengyou Zhang, Fellow, IEEE 翻译：Miibotree</p>
+<p>IEEE magizine：<a href="http://ieeexplore.ieee.org/xpls/icp.jsp?arnumber=6470686&amp;tag=1" target="_blank" rel="external">http://ieeexplore.ieee.org/xpls/icp.jsp?arnumber=6470686&amp;tag=1</a></p>
+<p>原文pdf：<a href="http://pan.baidu.com/s/1c0Bx0Ec" target="_blank" rel="external">http://pan.baidu.com/s/1c0Bx0Ec</a></p>
+<p>译文pdf： <a href="http://pan.baidu.com/s/1bnncUth" target="_blank" rel="external">http://pan.baidu.com/s/1bnncUth</a></p>
+<p>&nbsp;</p>
+<p>这是我第一次翻译这么长的一篇文章。总共耗时三天。在一开始翻译的时候感觉比较困难，越翻译到后面感觉越容易。</p>
+<p><span style="font-family: 宋体, SimSun;"><span lang="zh-CN">在翻译的过程中碰到了一些问题。因为是学术性的文章，在翻译一些专业名词的时候无法做到准确翻译，例如：</span></span>signature<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">这个单词在信息安全中是签名的意思，但是在这里明显不是这个意思。我把它翻译为<span style="font-family: 'Times New Roman', serif;">“</span>信息值<span style="font-family: 'Times New Roman', serif;">”</span>，但是仍然不够准确。</span></span></p>
+<p><span style="font-family: 宋体, SimSun;"><span lang="zh-CN">翻译过程中最难的是</span></span>EMD<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">来源这一部分。因为是英文源的词汇，翻译成中文之后总感觉怪怪的，所以在整篇文章中保留了</span></span>Finger-Earth Mover’s Distance FEMD<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">的英文原文。</span></span></p>
+<p><span style="font-family: 宋体, SimSun;"><span lang="zh-CN">除了翻译工作之外，在完成整个翻译工作之后，已经可以对除了公式之外的文章中所有内容都很熟悉。翻译的过程其实也是学习的过程。我学习到了一种查找资料的途径，</span></span>IEEE<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">上的文章虽然很多都是中国人发表的，但总体来说技术含量很高。</span></span></p>
+<p><span style="font-family: 宋体, SimSun;"><span lang="zh-CN">选择这么长的这篇文章翻译是有原因的。因为在之前做项目的时候课题也跟</span></span>Kinect<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">手势识别相关，所以通过学习</span></span>IEEE<span style="font-family: 宋体, SimSun;"><span lang="zh-CN">上的这篇文章，让我看到了差距和不足。这为我在以后做项目的过程中找到了一个进步的点。</span></span></p>
+<p><span id="more-982"></span></p>
+<p>摘要&#8212;-Kinect传感器是近年来新出的深度传感器设备，它提供了新兴的人机交互的方式。尽管借助于Kinect，我们已经在例如骨架追踪，人脸识别和人类动作识别方面取得了很大的进步，但是有效的手势识别仍然存在着一个显著的问题。相比于整个人的躯干部分，人手的部分相对来说较小但是有着更加复杂的关节，会因为分割错误而更容易导致错误。因此，手势识别成为了一个非常具有挑战性的问题。本文讨论了一种使用Kinect传感器的基于鲁棒性的手势识别系统。为了处理在Kinect传感器中产生的手势形状的噪声，我们提出了一种创新的距离测量，Finger-Earth Mover’s Distance (FEMD),用来度量手势形状的不同之处。因为这种方法仅仅匹配手指部分而不是整个手部，所以它可以更好地区别手势中细微的差异。多次实验说明了我们的手势识别系统的准确率（93.2%表示在10个手势的数据集合中的准确率），有效率（每一帧的平均值为0.0750），有效的处理手关节的扭曲，方向或者尺度的变化，并且可以运行在不稳定的环境中（杂乱无章的背景和光线条件）。我们这个系统的优势是可以在未来展示两个真实的人机交互应用。</p>
+<p>索引词&#8212;-Finger-Earth Mover’s Distance, 手势识别, 人机交互, Kinect系统。</p>
+<p>一．简介</p>
+<p>因为手势识别在虚拟现实，手语识别和电脑游戏中的广泛应用，使得它成为人机交互（HCI）中很重要的一个部分。尽管前人已经做了很多工作，传统的基于视觉的手势识别方法仍然远远不能满足现实生活中的应用。因为自然的光学传感，我们捕捉到的图像的质量会因为光照条件和杂乱的背景受到变化。因此基于光学的传感器不能有效地检测和追踪手，很大程度上影响了手势识别。</p>
+<p>一种有效的方法是使用其它类型的传感器，通过数据手套去捕捉手势运动。跟光学传感器不同，这类传感器通常会更有效，而且不会被光学条件和杂乱的背景所影响。然而，因为需要用户使用数据手套，有时还需要进行校准工作，这通常会带来不便，会妨碍自然的手势动作。并且，数据手套可能会比光学传感器更加昂贵。因此，这个方法在手势识别中并不流行。</p>
+<p>近期的Kinect传感器，一种具有深度摄像头的设备，它的出现给手势识别带来了一种新的形式。即使不需要使用数据手套，Kinect传感器就可以有效地检测和进行手势分类。因此它为手势识别提供了一种有效的方式。尽管近年来Kinect传感器已经成功地被应用在人脸识别，骨架追踪，动作识别上，利用Kinect进行手势识别仍然是一个问题。虽然Kinect深度摄像头的分辨率很低，只有640*480，使用它追踪大物体可以工作的很好，但是对于小物体来说，却很难被检测和分类。 人手仅仅占据图像中的一小部分，但是却有着复杂的关节。因此，手的分类通常是不准确的，这会显著地影响识别的步骤。</p>
+<p>为了说明上述的问题，第一行的Fig.1展示了三个例子。从中我们可以看到等高线（在第二行）有显著的局部变形和姿势的变化。由于Kinect传感器的低分辨率和不准确性，第二只手的两个手指由于靠得太近而没有被区分出来。不幸的是，传统的形状识别方法，像对应基形状匹配算法，骨架匹配方法，不能在严重扭曲的情况下有效地识别出形状的轮廓。例如：在图1中显示的第三行，后面两幅手势的红色骨骼非常相似。因此骨骼匹配算法把他们分为同一类。</p>
+<p>显然，识别这样具有噪声的手势轮廓是一个挑战，特别是当有很多手势需要识别的时候。为了解决这个问题，我们提出了一种新兴的基于形状距离测量方式的方法：Finger-Earth Mover’s Distance (FEMD)。FEMD主要用在手势形状识别上。因为它只匹配手指而不是整个手，所以这个方法可以更好地处理用Kinect传感器时所产生的手势形状噪声。</p>
+<p>图2展示了我们的手势识别系统的框架。我们用Kinect传感器作为输入设备来捕捉彩色图像和跟它对应的深度图像。在深度图像的帮助下，我们可以在复杂的背景和光照条件下有效地检测到用户的手。然后，我们通过形状分解的检测程序，用手指部位来重新表示手的形状。最终，我们获得的手势形状和每一个手势模板进行FEMD的方法匹配来得出差异值，作为手势识别的算法。</p>
+<p>为了评价这种方法，我们建立一个新的具有挑战性的数据集（包含了从不同环境中采集的1000个实例）。通过在这个数据集中做测试，我们的手势识别系统不仅展示出了良好的准确性和有效性（0.0750秒每帧的准确率为93.2%），而且在不稳定的环境和手势的方向变化，规模，关节和形状畸变中也展现出了良好的稳定性。我们把我们的算法和形状背景，在第四节B4中的骨骼路径相似度算法相比较，显示出了我们算法在手势识别上的优越性。另外，在我们手势识别的基础之上，我们还在建立了两个现实人机交互接口的例子（在第五节中）来说明算法的有效性。这篇文章的主要贡献在于：</p>
+<p>我们提出了基于FEMD的part-based手势识别系统。它在方向性，规模，关节改变以及手形的局部变形方面都体现出了良好的性能。据我们所知，这个第一个使用Kinect传感器的基于part-based手势识别系统。</p>
+<p>我们使用了两个HCI应用程序来演示我们的手势识别算法。这个系统在不稳定的环境中表现出良好的准确性和有效。它在其它的HCI应用程序中也同样适用。</p>
+<p>二．相关工作</p>
+<p>很多基于视觉的手势识别方法已经在文献[16]-[18]中提出，从[5]-[7]中可以看到更完整的信息。基于视觉的手势识别算法可以被分为两类。第一类是基于静态学习的方法：对于一组动态的手势，把它们当作随机过程的输出，手势识别的过程可以用静态模型的方法，例如PCA，HMMs，和更先进的粒子滤波和缩合算法。第二类是基于规则的方法：基于规则的方法提出了一组在输入特性中已经预编码规则的集合，可以同时适用于静态和动态的手势。当测试一个手势的时候，从输入中提取出一组属性于已经编码的规则集合进行比较。测试中最符合预编码规则的那个手势将作为被识别出的手势输出。</p>
+<p>不幸的是，目前所有已经存在的手势识别算法都会被用户和环境所限制，这大大阻碍了真实应用的传播使用。一方面，为了推断手掌的姿势和关节的角度， 很多方法使用彩色标记来提取出高级属性，例如指尖，关节位置或者手掌上的锚点[21]–[24]。另一方面， 有人提出了通过边缘或者使用椭圆肤色模型代表手掌区域的方法。然而，这两类方法在手势分割方面存在共同的不准确之处：由于色彩标记和肤色模型对环境的敏感性，没有一种方法在杂乱的环境中能够表现的很出色。除此之外，少数研究尝试完全重建3D的手表面。尽管3D数据能够提供能够处理像自遮挡之类有价值的信息，一种精确的、实时的3D重建方法仍然十分困难。 更进一步，高成本的计算成本也是造成该方法不能被广泛使用的原因。</p>
+<p>幸运的是，近来的深度传感器（Kinect传感器）已经提供了一种高效的手势分割解决方案。然而，由于低分辨率和不准确的深度映射，获得的手的轮廓可能包含了很多噪声干扰。一般的形状识别方法在手势形状非常扭曲的情况下的效果往往不好。例如，基于轮廓的识别方法，在瞬间会因为局部的失真造成干扰。基于骨架的方法同样会造成轮廓失真，因为在轮廓中即使是细小的噪声或者轻微的变化常常就会对骨骼表示的拓扑图造成严重的扰乱。Bai et al.提出的骨骼修剪方法，可以应对轮廓噪声使得基于骨骼的方法有很强的鲁棒性。然而，基于骨骼的方法仍然不能处理像图1所示的那种模糊问题。图中第二和第三幅骨骼形状比第一和第二幅更加相似。</p>
+<p>至于对应的基于形状识别方法，例如shape contexts[13]和inner-distance[14]，它们也同样不能有效地解决如图1中所示的模糊问题。因为第二和第三幅手比对应的第一和第二幅手有着更多相似的内容。</p>
+<p>三．PART-BASED手势识别</p>
+<p>现在我们来介绍我们的part-based手势识别系统。图2显示了我们的框架，由两部分组成：手部检测和手势识别。</p>
+<p>A.手部检测</p>
+<p>如图2所示，我们使用Kinect传感器作为输入设备，开启了彩色摄像头和对应的640*480分辨率的深度摄像头的映射。通常Kinect传感器到处的深度数据是可使用的，但是在细节上不够准确。为了给手势形状分割，我们首先使用Kinect windows SDK中的手势追踪函数来对手的位置进行定位。</p>
+<p>然后，通过固定深度间隔给手势位置设定阈值，我们就获得了一个大致的手的区域，如图3（a）所示。第二步，我们要求用户在手腕上戴上一个黑色的环带，用来更精准地对手势形状进行定位。在检测到黑色像素之后，我们使用RANSAC画出一条线来对黑带进行定位。如3（b）所示。手的形状大概是100*100的像素分辨率，其中可能包含严重的失真。 在检测到手的形状之后，我们用时间序列曲线来表示，如图3（c）所示。这种表示方法可以被成功地用来对形状的分类和聚类。时间序列曲线记录下来了每个轮廓顶点和一个中心点的相对距离。我们把中心点定义为做了距离变换（Distance Trnsform）之后在形状上的最大距离的点（青色点），如图3（b）所示; 定义初始点（红点）为从黑带（绿线）中检测出的根据RANSAC线得出的初始点。</p>
+<p>在我们的时间序列表示方法中，横轴表示每个轮廓顶点和跟中心点有关的初始点之间的角度，归一化为360。纵轴表示轮廓顶点和中心点的欧几里德距离，以最大内切圆的半径归一化。如图3所示：时间序列曲线捕获到了很好的手的拓扑性质，如手指部分。</p>
+<p>B.手势识别</p>
+<p>如图2所示的手势识别模块是我们整个part-based手势识别系统的主要部分。在得出了手势形状和它对应的时间序列曲线的情况下，我们来如何有效地识别手势。</p>
+<p>1)模板匹配：我们使用模板匹配的方法作为识别，输入的手被分类为具有最小差异距离的那类：这里H表示输入的手；Tc是类C的所有模板；FEMD（H, Tc）计算出了输入的手和每个模板的Finger-Earth Mover&#8217;s Distance。现在我们来介绍Finger-Earth Mover&#8217;s Distance。</p>
+<p>2) Finger-Earth Mover&#8217;s Distance:在 [33], Rubner et al. 提出了一种通用的灵活的测量方法，称为Earth Mover&#8217;s Distance (EMD),用来测量签名或者直方图的距离。EMD 在很多问题上被广泛使用，例如基于内容的图像检索和模式识别[34], [35]。</p>
+<p>EMD用来度量概率分布的距离。它是根据 把土桩从一组位置移动到同一个空间另一组孔这样过程的这种物理模拟被命名的。土桩和孔的位置表示在签名的每个群集的平均值，各土桩或孔的尺寸为簇的权重，桩和孔之间的地面距离为移动一个单位的土壤所需要的总工作量。把这个运输问题作为差异的距离度量，就是寻找最小代价运输&#8212;-使用最小的工作量来移动土壤。</p>
+<p>文献[36] 和 [37]使用了EMD来进行轮廓提取和匹配，它由一组局部描述性特征代表了轮廓，并计算了局部特征之间对应的最小EMD值。然而，当应用到手势识别时，现有的基于EMD的轮廓匹配算法有两个不足之处时：</p>
+<p>两个手形状的不同主要体现在全局特征而不是局部特征。如图4（a）和（b）所示，手指（全局特征）是它们最主要的不同。此外，大量的局部特性减慢了轮廓匹配的速度。因此，在轮廓匹配中最好考虑全局特征。</p>
+<p>EMD允许局部匹配，也就是说，一个手形和其子集在EMD算法中的结果是相同的：如图4（c）和（d），这两个手形的EMD距离是零，因为图4（d）是图4（c）的子集。然而在许多情况下，部分匹配是不合逻辑的，如在图4（a）和（b）中，图4（b）的手是图4（a）的一部份。显然，我们应该考虑它们的不同。</p>
+<p>我们的Finger-Earth Mover&#8217;s Distance（FEMD）可以解决在使用EMD的轮廓匹配方法时的这两个不足之处。与考虑每个局部特征作为簇[36]的EMD算法不同，我们全局特征（手指簇）代表手的输入。另外，我们在空的手指上赋一个惩罚值来缓和全局特征中的局部匹配。</p>
+<p>为中的第一个手的信息值，是代表簇， 表示簇的权重。</p>
+<p>是第个簇第二个手的信息值，</p>
+<p>现在，我们来说明如何用时间序列曲线来表示一个信息值。图4（e）和（f）分别表示图4(a) and (b)的时间序列曲线，其中每一根手指都用一段曲线来表示。</p>
+<p>我们每一个信息值的簇定义为时间序列曲线上的手指段：</p>
+<p>每个簇 被定义为每个段端点之间的角度间隔，, ;</p>
+<p>簇的权重， , 被定义为手指段中归一化的区域。</p>
+<p>是信息值 R 和T的距离矩阵, dij表示从ri 到tj的距离矩阵。</p>
+<p>dij 定义为跟 完全重叠的，在区间 的最小移动距离。</p>
+<p>对于这两个信息值, R 和 T, 它们的FEMD 距离被定义为移动土桩最少的工作量加上空洞中需要被填的泥土的量的惩罚值。</p>
+<p>其中 是归一化因子, fij 是簇ri 到簇 tj的转移, 从而构成了转移矩阵F。参数 表示从第一项到第二项的重要性的设置参数。我们会在第 IV-C节中测试 参数 。 我们可以看到, Eempty, dij 是两个信息值中的常量; 为了计算FEMD, 我们需要计算F的值。 F 定义为移动所有的土管所需要的最小工作量。</p>
+<p>在EMD中我们按照定义定义了转移矩阵F , 我们也尝试找到移动土管的最小工作量。</p>
+<p>第一个约束条件限制了转移矩阵的方向性：从土管到洞。后一个约束规定了需要被移动的土壤的最大值。我们会在第 IV-C节中展示使用基于EMD轮廓匹配的FEMD算法的优越性。</p>
+<p>C.手指检测</p>
+<p>为了在不同手形中计算FEMD距离，我们需要把每一个手指作为一个簇，用信息值来表示手的形状。也就是说，从手形中检测出手指的部分。在图5中，我们提出了两种手指检测方法来从手形中获得手指的部分。现在我们来介绍这两种算法：</p>
+<p>1）近凸分解：我们注意到手指具有共同的几何性质：手的部分形状是近凸的。因此，我们调整了在[38], [39]提出的最小近凸分解(MNCD) 作为手指检测方法，如图5（a）所示：</p>
+<p>目标函数中第一项的目标是减少不是手指的冗余部分，第二项是提高分解的视觉自然度。参数平衡了第一和第二项之间的影响度。我们将在第IV-C节中探讨它的影响。</p>
+<p>2）阈值分解: 尽管近凸分解算法可以准确地检测到手指部分，但是在计算中它太过复杂，而且不能用于实时计算。因此我们提出了另外一种更加有效的手指检测方法作为替代：阈值分解，如图5（b）所示。</p>
+<p>正如上文所说，时间序列曲线能够很好的揭示手的拓扑信息。如图5所示，每个手指对应于一个曲线的峰值。因此，我们可以利用时间序列曲线中的高度信息来分解手指。具体的说，我们在时间序列曲线中定义了一个段，它的高度超出我们所设定的阈值hf。通过这种方法，我们可以快速地检测出手指。然而，我们需要设定一个合适的阈值hf。在第IV-C节中我们会讨论参数hf。</p>
+<p>IV. 参数评价</p>
+<p>数据集合</p>
+<p>我们使用Kinect传感器新采集了一组手势数据。</p>
+<p>(http: // eeeweba.ntu.edu.sg / computervision / people / home / renzhou / HandGesture.htm).</p>
+<p>我们的数据集分为10个部分，包含了从1到10的10种手势。每一部分都包含了10个相同手势的不同姿势。因此我们的数据集总数为</p>
+<p>每一组数据包含了彩色图像和对应的深度图像。我们的数据集合是模拟真实背景的数据，在杂乱的背景中采集。另外，对于每个手势，每个部分的姿势从手的方向，大小，关节等等都不同。</p>
+<p>B. 效果评估</p>
+<p>所有的实验都在Intel CoreTM 2 Quad 2.66GHz CPU with 3 GB of RAM的机器中完成。</p>
+<p>我们以下几个方面来评估我们系统的性能：</p>
+<p>在杂乱背景下的鲁棒性:我们的手势识别系统在杂乱的背景下有很好的鲁棒性，因为我们的手形检测利用的是深度信息，所以我们可以很容易地移除背景的干扰。图6（a）的例子展示了一个在杂乱背景中的例子，这个例子对于其他利用色彩标记的方法很难被识别出来。在图6（b）中，我们也展示了一个比较特殊的例子：这个例子中手跟皮肤交错在一起，而那些基于颜色的手势识别方法很难识别这个例子。</p>
+<p>但是，我们使用Kinect传感器的手势分类在这种情况下能够准确地识别出来，如图6所示。</p>
+<p>在手部扭曲，不同方向，大小，关节下的鲁棒性:在真实环境中，不同的手可能具有不同的方向，大小和关节。另外，在有限的深度分辨率下，手的形状经常扭曲，模糊。但是，我们可以演示改进的差异距离度量算法，Finger-Earth Mover’s Distance (FEMD),不仅对手的方向和大小有很强的鲁棒性，而且对手的扭曲和关节也同样敏感。</p>
+<p>图7（a）展示了不同方向的3个手。我们可以看到，初始点（图中红色的点）和中心点（蓝色点）已经在形状中被相对修正了。因此这些手的时间序列曲线（图7（a）中的第二行）很相似，而且他们的差异很小。在图7（b）中，有3只不同大小的手。因为时间序列曲线和FEMD距离已经进行过归一化，他们会被认为是相同的手势。因此我们可以认为，FEMD在方向和大小的变化上都有很强的鲁棒性。</p>
+<p>此外，我们的手势识别方法对于由于不完善的手势分割所带来的关节和扭曲也具有很好鲁棒性。因为改进的FEMD距离度量使用了全局特性（手指）来计算差异度，所以局部变形是可以被接受的。在关节处理方面，图8展示了一个例子：最左边的一列显示了同一个手势的4幅手的图片；中间一列现实了对应的手势形状；最右边的一列显示了对应的时间序列曲线。我们可以看到，图8（c）和（d）中的手势形状已经严重扭曲了。然而，图8中最右边的列中的图片说明，通过检测手指部分（识别出的黄色的部分），我们把手指部分的每一个形状作为一个信息值。特别地，图8（a）和（b）的信息值包含两个簇：</p>
+<p>图8（c）和（d）的信息值只有一个簇：</p>
+<p>从第.III-B2节中,我们可以估计出 和土地距离，</p>
+<p>根据定义，我们知道FEDM距离 。因此，我们的FEDM度量对扭曲和关节部分不敏感。</p>
+<p>3）准确性和有效性:为了估计我们这个系统的准确性和有效性， 我们在新采集到的数据集中做了两个实验。实验I进行了阈值分解（第III-C2 节中提到）来检测手指部分的FEMD测量，实验二使用了近凸分解（第III-C1 节中提到）来做FEDM的手指检测。</p>
+<p>实验 I: 阈值分解+ FEMD: 在实验I中，我们设定了高度阈值hf=1.6和FEDM参数=0.5。</p>
+<p>图10是实验I的混淆矩阵。准确率为93.2%。根据表格显示，最令人困惑的手势分类是手势4和5，手势8和1显示了两类令人困惑的手势分类。</p>
+<p>因为大拇指相对来说较短较小，如果仅仅根据高度阈值来分解手，一些重要的手指区域很可能会因此损失。如图9所示，所有的大拇指都没有很好的被分割出来。因此这两个例子的FEMD距离很小，使得识别变得困难。</p>
+<p>但是它们在阈值分解的处理速度上却很快。另外，由于提取出的全局特征很小，FEDM表现的很有效率。表I给了实验I的手势识别过程的平均运行时间为0.0750秒。在先前的工作中我们仅仅使用Matlab，这次我们用C++重写并优化了FEMD算法，这比以前的工作有了更好的结果。我们看到，基于FEMD的阈值分解可以实时的运行。</p>
+<p>实验II: 近凸分解 + FEMD: 为了从手中更加准确地分割出手指，我们用近凸分解的方法做了另外一个实验。这里我们同样设定来近凸分解的参数=0.5 和FEMD的参数=0.5。图12现实了利用近凸分解算法计算出的手指检测的结果。结果显示该算法的准确性比阈值分解要高的多。</p>
+<p>图11显示了实验II的混淆矩阵。没有令人困惑的分类。表I中的第四行给出了实验II的准确率和平均运行时间。由于更精准的手指分割，实验II的准确率（93.9%）比实验I的准确率（93.2%）要高的多。另一方面，因为更加复杂的手指检测算法，实验II的速度（4.0012秒）比实验I的速度（0.0750秒）却慢得多。</p>
+<p>跟其它的方法相比较:FEMD是一种part-based手势匹配度量方法。我们把它于形状上下文，基于骨骼的匹配算法，路径相似度等传统的correspondence-based的匹配算法作了比较，这些算法的平均准确率和平均运行时间在表I中给出。我们在第III-A节中用相同的方法来对手势的形状做了预先分割。</p>
+<p>图13显示了形状上下文方法的混淆矩阵。从图13（a）和（b）中我们都可以看出最让人困惑的手势分类是3，4，5。我们已经在图1和8中提到过，这是因为手指在这几组分类中更加容易变形，使得它们不易辨认。图15显示了使用形状上下文的方法，一些手的形状局部变形的例子。</p>
+<p>从表I中的前两行中我们看到，在形状上下文算法中考虑 TPS变形的弯曲成本之后，识别的结果反而变差了。原因是为了保持旋转不变性，</p>
+<p>形状上下文需要把每个点的切向量作为数极直方图框的正轴。然而，由于我们的形状是用二进制表示的，一个细微的变化可能会严重影响点的切向量的形状。因此增加了TPS弯曲成本反而使得结果变差了。</p>
+<p>图14显示了骨骼匹配的混淆矩阵。我们首先用[2]方法改进了骨骼数据中的噪声然后用[3]提出的路径相似度方法进行匹配。从图中我们看到很多手势都已经不能辨别。例如手势1和9，手势6和8。原因是使用这种方法，它们的全局结构非常相似。</p>
+<p>如图16所示，非常不同的手势（a）（b）具有非常相似的骨骼。因此使用骨骼匹配算法不能有效进行分类。</p>
+<p>C. 参数设置</p>
+<p>在本节中，我们估计三个重要的参数&#8212;-在手指检测阈值分解方法（III-C2节）中的高度阈值参数hf，在近凸分解中（III-C1节）的参数，在FEMD公式（III-B2节）中的参数。</p>
+<p>结果如图17所示。在阈值分解中，hf决定了分解圆的半径（图5（b））。如果hf太小（hf&lt;=1.5），手指不能被很好的分解；如果hf太大(hf&gt;=1.7)，正常的手指区域会丢失。从图17（a）中我们可以看到选择hf=1.6是最合适的。在使用近凸分解的手指检测方法中，平衡了视觉自然性和数量的关系。如图17（b）所示，如果我们仅仅最小化视觉自然性那一项（=0），会给parts带来很大的噪声从而影响FEDM。另外，如果忽略视觉自然性那项而使得parts部分最小化，曲线在&gt;0.8之后也下降的很快，我们获得的部分可能就不包含手指了。在FEMD方法中，用来调制土壤移动的工作量Emove和空洞惩罚值Eempty之间的关系。从图17（c）中我们看到，仅仅考虑Emove（=1）或者Eempty（=0）FEMD都不能很好地计算出不同手形的差异性。这个曲线也说明了FEMD在不同手形的差异度识别上比EMD（=1的特殊情况）要好。</p>
+<p>V. 应用</p>
+<p>近来出现了很多非常注重人机交互（HCI）的研究，旨在通过创造易于使用的界面，促进人机之间自然的交流和操作。由于手的灵巧性，手在人诸多的肢体部分中成为了最有效的交互工具。采用手势作为HCI中的接口不仅在像虚拟现实系统和体感游戏中有广泛的应用，而且在像提供助听辅助，使用非接触的手在无菌环境中保证健康护理等日常生活中也有着广泛应用。现在我们提出把手势作为接口，在我们的手势识别系统的顶层介绍两个真实的HCI应用程序：算术计算和剪刀石头布的游戏。这里我们要说明一下，在我们的示例程序中，我们采用了使用基于阈值分解方法的FEMD距离测量的基于框架的手势识别，同时考虑了准确性和效率。如表I所示，跟使用基于近凸分解的手指检测方法的FEMD有着相似的准确率。</p>
+<p>算数计算</p>
+<p>算数计算是一个很有趣的HCI应用程序。与传统用键盘或者鼠标的方式不同，我们通过手势向电脑输入算数命令。如图19所示，我们定义了14组手势来表示14中命令，包括数字0-9和+，-，*，/四个运算符。通过把每个手势识别为一个命令，电脑可以根据用户的指令进行计算。图18给出了两个例子和系统框图。</p>
+<p>B. 剪刀石头布游戏</p>
+<p>剪刀石头布是一个经典的游戏。规则是：石头赢剪刀；剪刀赢布；布赢石头。在我们的演示程序中，我们写了一个电脑跟人对战的程序。电脑随机出一个，我们的系统识别出人出什么手势。根据规则，我们的系统判断谁胜谁负。图20给出了两个例子。这两个例子在ACM Multi-</p>
+<p>media 2011已经展示过了。它表现出了良好的准确性和实时性。我们也可以在我们的系统顶层做更多的演示程序。我们通过Kinect传感器采集的手势数据集和我们的演示程序说明了这两个HCI应用程序的价值。</p>
+<p><a href="http://eeeweba.ntu.edu.sg/computervision/people/home/renzhou" target="_blank" rel="external">http://eeeweba.ntu.edu.sg/computervision/people/home/renzhou</a>.</p>
+<p>VI. 总结和未来工作</p>
+<p>由于必须同时考虑到如棒性，准确性，有效性，做出一个真实的手势识别应用程序是一个很有挑战性的工作。在本文中，我们展示了一个有良好鲁棒性的使用Kinect的基于part-based手势识别系统。我们使用了Finger-Earth Mover’s Distance(FEMD)方法来测量差异度，该方法用每个手指的部分作为一个簇加上手指的空洞惩罚值来作为手形的信息值。在我们采集的数据集上做的大量的实验证明我们的手势识别系统是准确而有效的。具体的说，当使用基于阈值分解的手指检测方法下，我们的FEMD手势识别系统的平均准确率在93.2%，每一帧的运行时间为0.0750秒。在使用一种以牺牲效率为代价却更为准确的指纹检测方法时，准确率提高到93.9%。同时考虑到准确性和效率，我们最终使用了基于阈值分解的手指检测方法作为我们在实时演示程序中的最终算法。</p>
+<p>我们的论文的一个主要贡献是提出了part-based（基于部分）表示的距离度量。</p>
+<p>传统的距离测量方法例如上下文形状距离，路径相似度在面对局部的扭曲和形状变化的时候表现出的鲁棒性并不好。因为上下文形状和骨骼算法在面对手势变化和严重的局部变形的时候变现出的结果并不一致。</p>
+<p>改进的FEMD距离测量在part-based的基础上用每一根手指作为一个簇把手的形状作为一个信息值。这样的表示方法可以用来计算全局特征，因此在局部变形的情况下它表现出了良好的鲁棒性。另外，它在IV-B2节中提到的关节，方向和大小变化上都体现出了良好的鲁棒性。</p>
+<p>另外一个贡献在于我们完成了两个建立在我们的手势识别系统上的真实HCI应用程序。</p>
+<p>它展示了我们的手势识别技术可以模拟人类之间的交流，把手势作为一种自然而直观的方式。因此，我们可以把该技术利用在提供助听辅助，使用非接触的手在无菌环境中保证健康护理等日常生活中。</p>
+<p>我们未来的研究将主要集中在探索一个更有效的part-based表示方法，为了解决如图9所示的问题，以及基于近凸分解的手指检测算法在效率上的缺点。我们将会为我们的手势识别系统创造更有趣的HCI应用程序。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Kinect/" rel="tag">#Kinect</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/02/13/刷PAT上浙大-96-99/" rel="prev">刷PAT上浙大 96 / 99</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/05/25/shell语句单引号和双引号的复合使用/" rel="next">shell语句单引号和双引号的复合使用</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

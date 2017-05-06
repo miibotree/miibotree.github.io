@@ -1,0 +1,636 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="&amp;nbsp;
+自己看对话框也有些时间了，下面来总结下对话框的一些知识点。
+对话框有模态对话框和非模态对话框两种基本形式。
+非模态对话框允许我们把输入焦点切换到同一个应用程序的另一个窗口，该对话框也无需关闭，这个比较普遍。
+模态对话框主要是两类：应用程序模式对话框和系统对话框。应用程序对话框不允许我们在本应用程序中切换输入焦点，但是可以切换到其他应用程序中去，比如点击记事本的文件打开按钮，会弹出选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="widowsSDK创建对话框的三种方法">
+<meta property="og:url" content="http://yoursite.com/2012/01/24/widowsSDK创建对话框的三种方法/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="&amp;nbsp;
+自己看对话框也有些时间了，下面来总结下对话框的一些知识点。
+对话框有模态对话框和非模态对话框两种基本形式。
+非模态对话框允许我们把输入焦点切换到同一个应用程序的另一个窗口，该对话框也无需关闭，这个比较普遍。
+模态对话框主要是两类：应用程序模式对话框和系统对话框。应用程序对话框不允许我们在本应用程序中切换输入焦点，但是可以切换到其他应用程序中去，比如点击记事本的文件打开按钮，会弹出选择">
+<meta property="og:updated_time" content="2015-07-25T05:05:01.362Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="widowsSDK创建对话框的三种方法">
+<meta name="twitter:description" content="&amp;nbsp;
+自己看对话框也有些时间了，下面来总结下对话框的一些知识点。
+对话框有模态对话框和非模态对话框两种基本形式。
+非模态对话框允许我们把输入焦点切换到同一个应用程序的另一个窗口，该对话框也无需关闭，这个比较普遍。
+模态对话框主要是两类：应用程序模式对话框和系统对话框。应用程序对话框不允许我们在本应用程序中切换输入焦点，但是可以切换到其他应用程序中去，比如点击记事本的文件打开按钮，会弹出选择">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> widowsSDK创建对话框的三种方法 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              widowsSDK创建对话框的三种方法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-24T16:21:00+08:00" content="2012-01-24">
+            2012-01-24
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>&nbsp;</p>
+<p><strong><span style="font-size: 18px; color: #000000;">自己看对话框也有些时间了，下面来总结下对话框的一些知识点。</span></strong></p>
+<p><strong><span style="font-size: 18px; color: #3366ff;">对话框有模态对话框和非模态对话框两种基本形式。</span></strong></p>
+<p><span style="color: #ff0000;">非模态对话框</span>允许我们把输入焦点切换到同一个应用程序的另一个窗口，该对话框也无需关闭，这个比较普遍。</p>
+<p><span style="color: #ff0000;">模态对话框</span>主要是两类：<span style="color: #ff0000;">应用程序模式对话框和系统对话框</span>。应用程序对话框<span style="color: #ff0000;">不允许我们在本应用程序中切换输入焦点，但是可以切换到其他应用程序中去</span>，比如点击记事本的文件打开按钮，会弹出选择打开文件的对话框，这个对话框不能切换到记事本中，但是可以切换到其他应用程序中去。这个就是属于应用程序模式对话框。系统对话框则比较恶毒，<span style="color: #ff0000;">不允许你切换到任何一个应用程序中</span>，我们一看名字就知道，系统对话框，看似比较紧急，要求我们必须首要解决····</p>
+<hr>
+<p><strong><span style="font-size: 16px;">我的第一种方法是用模态对话框来建立一个最简单的对话框</span></strong>。首先是.c文件的代码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;quot;resource.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM) ;</span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> AboutDlgProc (HWND, <span class="built_in">UINT</span>, WPARAM, LPARAM) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WINAPI WinMain (HI<span class="built_in">NSTANCE</span> hInstance, HI<span class="built_in">NSTANCE</span> hPrevInstance,</span><br><span class="line">PSTR szCmdLine, <span class="keyword">int</span> iCmdShow)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">static</span> TCHAR szAppName[] = TEXT (&amp;quot;ModeDia&amp;quot;) ;</span><br><span class="line">HWND hwnd ;</span><br><span class="line">MSG msg ;</span><br><span class="line">WNDCLASS wndclass ;</span><br><span class="line"></span><br><span class="line">wndclass<span class="variable">.style</span> = CS_HREDRAW | CS_VREDRAW ;</span><br><span class="line">wndclass<span class="variable">.lpfnWndProc</span> = WndProc ;</span><br><span class="line">wndclass<span class="variable">.cbClsExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.cbWndExtra</span> = <span class="number">0</span> ;</span><br><span class="line">wndclass<span class="variable">.hInstance</span> = hInstance ;</span><br><span class="line">wndclass<span class="variable">.hIcon</span> = LoadIcon (<span class="literal">NULL</span>, IDI_APPLI<span class="built_in">CATION</span>) ;</span><br><span class="line">wndclass<span class="variable">.hCursor</span> = LoadCursor (<span class="literal">NULL</span>, IDC_ARROW) ;</span><br><span class="line">wndclass<span class="variable">.hbrBackground</span> = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</span><br><span class="line">wndclass<span class="variable">.lpszMenuName</span> = szAppName ;</span><br><span class="line">wndclass<span class="variable">.lpszClassName</span> = szAppName ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!RegisterClass (&amp;amp;amp;wndclass))</span><br><span class="line">&#123;</span><br><span class="line">MessageBox (<span class="literal">NULL</span>, TEXT (&amp;quot;This program requires Windows NT!&amp;quot;),</span><br><span class="line">szAppName, MB_ICONERROR) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hwnd = CreateWindow (szAppName,</span><br><span class="line">TEXT (&amp;quot;A Dialog Program&amp;quot;),</span><br><span class="line">WS_OVERLAPPEDWINDOW,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line"><span class="literal">NULL</span>,</span><br><span class="line">hInstance,</span><br><span class="line"><span class="literal">NULL</span>) ;</span><br><span class="line"></span><br><span class="line">ShowWindow (hwnd, iCmdShow) ;</span><br><span class="line">UpdateWindow (hwnd) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (GetMessage (&amp;amp;amp;msg, <span class="literal">NULL</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">&#123;</span><br><span class="line">TranslateMessage (&amp;amp;amp;msg) ;</span><br><span class="line">DispatchMessage (&amp;amp;amp;msg) ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> msg<span class="variable">.wParam</span> ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT <span class="built_in">CALLBACK</span> WndProc (HWND hwnd, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">HDC hdc ;</span><br><span class="line">PAINTSTRUCT ps ;</span><br><span class="line">RECT rect ;</span><br><span class="line"><span class="keyword">static</span> HI<span class="built_in">NSTANCE</span> hInstance;</span><br><span class="line"><span class="keyword">switch</span> (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_CREATE:</span><br><span class="line">hInstance = ((LPCREATESTRUCT) lParam) -&amp;amp;gt; hInstance;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span> (LOWORD (wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> IDM_APP_ABOUT :</span><br><span class="line">DialogBox (hInstance, TEXT(&amp;quot;AboutBox&amp;quot;), hwnd, AboutDlgProc);</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">case</span> WM_PAINT:</span><br><span class="line">hdc = BeginPaint (hwnd, &amp;amp;amp;ps) ;</span><br><span class="line"></span><br><span class="line">GetClientRect (hwnd, &amp;amp;amp;rect) ;</span><br><span class="line"></span><br><span class="line">DrawText (hdc, TEXT (&amp;quot;Hello, Windows <span class="number">98</span>!&amp;quot;), -<span class="number">1</span>, &amp;amp;amp;rect,</span><br><span class="line">DT_SINGLELINE | DT_CENTER | DT_VCENTER) ;</span><br><span class="line"></span><br><span class="line">EndPaint (hwnd, &amp;amp;amp;ps) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_DESTROY:</span><br><span class="line">PostQuitMessage (<span class="number">0</span>) ;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> DefWindowProc (hwnd, message, wParam, lParam) ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> <span class="built_in">CALLBACK</span> AboutDlgProc(HWND hDlg, <span class="built_in">UINT</span> message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">switch</span> (message)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> WM_INITDIALOG:</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">case</span> WM_COMMAND:</span><br><span class="line"><span class="keyword">switch</span> (LOWORD(wParam))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> IDOK:</span><br><span class="line"><span class="keyword">case</span> ID<span class="built_in">CANCEL</span>:</span><br><span class="line">EndDialog(hDlg, <span class="number">0</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p></p><p align="left">这里我们还是要用到菜单和资源。所以首先添加菜单资源。我们<span style="color: #ff0000;">把菜单的ID改成&#8221;MODEDIA&#8221;，</span>这里的双引号也要加上。</p>
+<p>然后在菜单里添加名称为 <span style="color: #ff0000;"> help </span>的 一栏，在这栏的下拉列表里面添加 <span style="color: #ff0000;"> About&#8230;  </span>这个选项,我们将这个选项的<span style="color: #ff0000;">ID改成IDM_APP_ABOUT</span></p>
+<p>然后我们添加对话框资源，确认新生成的对话框有两个按钮，分别为确定和取消，<span style="color: #ff0000;">确定按钮的ID为IDOK    取消按钮的ID为IDCANCEL</span>系统默认的名字就是这样的。我们为了以防万一检查一下。</p>
+<p>最后编译运行一下，一个最简单的模态对话框就出来了。</p>
+<p></p><p align="left"><strong><span style="font-size: 16px;">接下来我们来实现一下非模态对话框。</span></strong></p>
+<p>其实只是创建对话框的函数不一样，整个创建对话框的工作是交给windows去完成的，不用我们操心的。</p>
+<p>非模态对话框相对来说是比较常用的。下面是几个注意点，我们其实只要在模态对话框里面改进一下就可以了<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">还记得模态对话框的创建函数吗？</span><br><span class="line"></span><br><span class="line">DialogBox (hInstance, TEXT(&amp;#8220<span class="comment">;AboutBox&amp;#8221;), hwnd, AboutDlgProc;</span></span><br><span class="line"></span><br><span class="line">&lt;p align="left"&gt;下面是非模态对话框的创建函数：</span><br><span class="line"></span><br><span class="line">hDlgModeless = CreateDialog (hInstance, szTemplate, hwndParent, DialogProc)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">CreateDialog函数返回的是对话框的窗口句柄，我们把这个窗口句柄存在全&lt;span style="color: #ff0000<span class="comment">;"&gt;局变量hDlgModeless&lt;/span&gt;当中。</span></span><br><span class="line"></span><br><span class="line">而在模态对话框当中，&lt;span style="color: #ff0000<span class="comment">;"&gt;DIalogBox是直到对话框销毁后才返回值的&lt;/span&gt;。</span></span><br><span class="line"></span><br><span class="line">&lt;p align="left"&gt;接下来我们来看一下非模态对话框的样式语句：</span><br><span class="line"></span><br><span class="line">&lt;span style="color: #3366ff<span class="comment">;"&gt;STYLE WS_POPUP | WS_CAPTION | WS_SYSMENU | WS VISIBLE&lt;/span&gt;</span></span><br><span class="line"></span><br><span class="line">你可以用记事本打开你刚才编译好的模态对话框的.rc资源文件来进行对比。为了创建一个非模态的对话框，我们把样式改成上面的语句。</span><br><span class="line"></span><br><span class="line">在这里要注意最后一个样式&lt;span style="color: #ff0000<span class="comment">;"&gt;WS_VISIBLE    &lt;/span&gt;（可视的）</span></span><br><span class="line"></span><br><span class="line">如果你忘记把这个样式加入进去的话，对话框将不会显示，除非你再调用下面的语句：</span><br><span class="line"></span><br><span class="line">ShowWindow (hDlgModeless,SW_SHOW)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">来达到同样的效果。</span><br><span class="line"></span><br><span class="line">&lt;p align="left"&gt;第三个差异：&lt;span style="color: #ff0000<span class="comment">;"&gt;非模态对话框进入你的消息队列&lt;/span&gt;。所以我们应该更改消息循环：</span></span><br><span class="line"></span><br><span class="line">        while (GetMessage (&amp;amp<span class="comment">;msg, NULL, 0, 0))</span></span><br><span class="line"></span><br><span class="line">        &#123;</span><br><span class="line"></span><br><span class="line">               if (hDlgModeless == 0 || !IsDialogMessage (hDlgModeless, &amp;amp<span class="comment">;msg))</span></span><br><span class="line"></span><br><span class="line">               &#123;</span><br><span class="line"></span><br><span class="line">                       TranslateMessage (&amp;amp<span class="comment">;msg) ;</span></span><br><span class="line"></span><br><span class="line">                       DispatchMessage (&amp;amp<span class="comment">;msg) ;</span></span><br><span class="line"></span><br><span class="line">               &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">什么时候进入消息循环呢？我们在对话框还没生成或已经销毁  hDlgModeless == 0 (这个时候的消息不是由非模态对话框产生的)</span><br><span class="line"></span><br><span class="line">或者 消息是针对非模态对话框的时候 ! IsDialogMessage (hDlgModeless, &amp;amp<span class="comment">;msg)  （这和时候的消息是由非模态对话框产生的）</span></span><br><span class="line"></span><br><span class="line">&lt;p align="left"&gt;最后的一点差异，模态对话框使用EndDialog结束，  非模态对话框使用DestroyWindow来结束。同时把hDlgModeless的全局变量设置为NULL</span><br><span class="line"></span><br><span class="line">DestroyWindow(hDlg)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">hDlgModeless = NULL<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">好了，下面就是非模态对话框的代码了：</span><br><span class="line"></span><br><span class="line">```</span><br><span class="line">#include &amp;lt<span class="comment">;windows.h&amp;gt;</span></span><br><span class="line">#include &amp;quot<span class="comment">;resource.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) <span class="comment">;</span></span><br><span class="line">BOOL CALLBACK AboutDlgProc (HWND, UINT, WPARAM, LPARAM) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">HWND hDlgModeless<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,</span><br><span class="line">PSTR szCmdLine, int iCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">static TCHAR szAppName[] = TEXT (&amp;quot<span class="comment">;MODEDIA&amp;quot;) ;</span></span><br><span class="line">HWND hwnd <span class="comment">;</span></span><br><span class="line">MSG msg <span class="comment">;</span></span><br><span class="line">WNDCLASS wndclass <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">wndclass.style = CS_HREDRAW | CS_VREDRAW <span class="comment">;</span></span><br><span class="line">wndclass.lpfnWndProc = WndProc <span class="comment">;</span></span><br><span class="line">wndclass.cbClsExtra = 0 <span class="comment">;</span></span><br><span class="line">wndclass.cbWndExtra = 0 <span class="comment">;</span></span><br><span class="line">wndclass.hInstance = hInstance <span class="comment">;</span></span><br><span class="line">wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION) <span class="comment">;</span></span><br><span class="line">wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) <span class="comment">;</span></span><br><span class="line">wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) <span class="comment">;</span></span><br><span class="line">wndclass.lpszMenuName = szAppName <span class="comment">;</span></span><br><span class="line">wndclass.lpszClassName = szAppName <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">if (!RegisterClass (&amp;amp<span class="comment">;amp;wndclass))</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox (NULL, TEXT (&amp;quot<span class="comment">;This program requires Windows NT!&amp;quot;),</span></span><br><span class="line">szAppName, MB_ICONERROR) <span class="comment">;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hwnd = CreateWindow (szAppName,</span><br><span class="line">TEXT (&amp;quot<span class="comment">;A Modeless Dialog Program&amp;quot;),</span></span><br><span class="line">WS_OVERLAPPEDWINDOW,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">CW_USEDEFAULT,</span><br><span class="line">NULL,</span><br><span class="line">NULL,</span><br><span class="line">hInstance,</span><br><span class="line">NULL) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">ShowWindow (hwnd, iCmdShow) <span class="comment">;</span></span><br><span class="line">UpdateWindow (hwnd) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">while (GetMessage (&amp;amp<span class="comment">;amp;msg, NULL, 0, 0))</span></span><br><span class="line">&#123;</span><br><span class="line">if (hDlgModeless == 0 || !IsDialogMessage (hDlgModeless, &amp;amp<span class="comment">;amp;msg))</span></span><br><span class="line">&#123;</span><br><span class="line">TranslateMessage (&amp;amp<span class="comment">;amp;msg) ;</span></span><br><span class="line">DispatchMessage (&amp;amp<span class="comment">;amp;msg) ;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">return msg.wParam <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">HDC hdc <span class="comment">;</span></span><br><span class="line">PAINTSTRUCT ps <span class="comment">;</span></span><br><span class="line">RECT rect <span class="comment">;</span></span><br><span class="line">static HINSTANCE hInstance<span class="comment">;</span></span><br><span class="line">switch (message)</span><br><span class="line">&#123;</span><br><span class="line">case WM_CREATE:</span><br><span class="line">hInstance = ((LPCREATESTRUCT) lParam) -&amp;amp<span class="comment">;gt; hInstance;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">case WM_COMMAND:</span><br><span class="line">switch (LOWORD (wParam))</span><br><span class="line">&#123;</span><br><span class="line">case IDM_APP_ABOUT :</span><br><span class="line">hDlgModeless = CreateDialog (hInstance, TEXT(&amp;quot<span class="comment">;AboutBox&amp;quot;), hwnd, AboutDlgProc);</span></span><br><span class="line">break<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">return 0<span class="comment">;</span></span><br><span class="line">case WM_PAINT:</span><br><span class="line">hdc = BeginPaint (hwnd, &amp;amp<span class="comment">;amp;ps) ;</span></span><br><span class="line"></span><br><span class="line">GetClientRect (hwnd, &amp;amp<span class="comment">;amp;rect) ;</span></span><br><span class="line"></span><br><span class="line">DrawText (hdc, TEXT (&amp;quot<span class="comment">;Hello, Windows 98!&amp;quot;), -1, &amp;amp;amp;rect,</span></span><br><span class="line">DT_SINGLELINE | DT_CENTER | DT_VCENTER) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">EndPaint (hwnd, &amp;amp<span class="comment">;amp;ps) ;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">case WM_DESTROY:</span><br><span class="line">PostQuitMessage (0) <span class="comment">;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">return DefWindowProc (hwnd, message, wParam, lParam) <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BOOL CALLBACK AboutDlgProc(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">switch (message)</span><br><span class="line">&#123;</span><br><span class="line">case WM_INITDIALOG:</span><br><span class="line">return TRUE<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">case WM_COMMAND:</span><br><span class="line">switch (LOWORD(wParam))</span><br><span class="line">&#123;</span><br><span class="line">case IDOK:</span><br><span class="line">case IDCANCEL:</span><br><span class="line">DestroyWindow(hDlg)<span class="comment">;</span></span><br><span class="line">hDlgModeless = NULL<span class="comment">;</span></span><br><span class="line">break<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">break<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">```</span><br><span class="line"></span><br><span class="line">资源的创建过程与上面的相同，这里就不再叙述了。</span><br><span class="line"></span><br><span class="line">现在再试一下，是不是可以移动父窗口了，呵呵~</span><br></pre></td></tr></table></figure></p>
+<p></p><p align="left"><span style="font-size: 16px;"><strong>第三种方法是把对话框作为窗口，注册一个窗口类来实现</strong></span>。我下面的例子创建的是一个非模态对话框。</p>
+<p>下面先上代码.cpp文件</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;windows.h&amp;gt;</span></span><br><span class="line">#include &amp;quot<span class="comment">;resource.h&amp;quot;</span></span><br><span class="line">LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,</span><br><span class="line">PSTR szCmdLine, int iCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">static TCHAR szAppName[]=TEXT (&amp;quot<span class="comment">;Dialog3&amp;quot;);</span></span><br><span class="line">HWND hwnd<span class="comment">;</span></span><br><span class="line">MSG msg<span class="comment">;</span></span><br><span class="line">WNDCLASS wndclass<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">wndclass.style = CS_HREDRAW | CS_VREDRAW<span class="comment">;</span></span><br><span class="line">wndclass.lpfnWndProc = WndProc <span class="comment">;</span></span><br><span class="line">wndclass.cbClsExtra = 0 <span class="comment">;</span></span><br><span class="line">wndclass.cbWndExtra = DLGWINDOWEXTRA <span class="comment">; // 注意这里!</span></span><br><span class="line">wndclass.hInstance = hInstance <span class="comment">;</span></span><br><span class="line">wndclass.hIcon = LoadIcon (hInstance, szAppName) <span class="comment">;</span></span><br><span class="line">wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) <span class="comment">;</span></span><br><span class="line">wndclass.hbrBackground = (HBRUSH) (COLOR_BTNFACE + 1) <span class="comment">;</span></span><br><span class="line">wndclass.lpszMenuName = NULL <span class="comment">;</span></span><br><span class="line">wndclass.lpszClassName = szAppName <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">if (!RegisterClass(&amp;amp<span class="comment">;amp;wndclass))</span></span><br><span class="line">&#123;</span><br><span class="line">MessageBox (NULL, TEXT(&amp;quot<span class="comment">;This program requires Windows NT!&amp;quot;),</span></span><br><span class="line">szAppName, MB_ICONERROR)<span class="comment">;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">hwnd = CreateDialog (hInstance, szAppName, 0, NULL)<span class="comment">;//创建非模态对话框</span></span><br><span class="line"></span><br><span class="line">ShowWindow (hwnd, iCmdShow)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">while (GetMessage (&amp;amp<span class="comment">;amp;msg, NULL, 0, 0))</span></span><br><span class="line">&#123;</span><br><span class="line">TranslateMessage(&amp;amp<span class="comment">;amp;msg);</span></span><br><span class="line">DispatchMessage(&amp;amp<span class="comment">;amp;msg);</span></span><br><span class="line">&#125;</span><br><span class="line">return msg.wParam <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">switch (message)</span><br><span class="line">&#123;</span><br><span class="line">case WM_COMMAND:</span><br><span class="line">SetFocus(hwnd)<span class="comment">;</span></span><br><span class="line">switch (LOWORD (wParam))</span><br><span class="line">&#123;</span><br><span class="line">case OK:</span><br><span class="line">MessageBox(hwnd, TEXT(&amp;quot<span class="comment">;This is a demoless Dialog program&amp;quot;), TEXT(&amp;quot;OK&amp;quot;), MB_OK);</span></span><br><span class="line">return 0<span class="comment">;</span></span><br><span class="line">case CANCEL:</span><br><span class="line">return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">case WM_DESTROY:</span><br><span class="line">PostQuitMessage (0) <span class="comment">;</span></span><br><span class="line">return 0 <span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">return DefWindowProc (hwnd, message, wParam, lParam) <span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>resource.h文件</p>
+<h1 id="define_OK_1">define OK 1</h1><h1 id="define_CANCEL_2">define CANCEL 2</h1><p></p><p align="left">在源文件里面添加名为Dialog.dlg的文件（创建一个.txt的文件然后重命名）</p>
+<p>Dialog3 DIALOG -1, -1, 102, 122</p>
+<p>//STYLE WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX</p>
+<p>STYLE 0x00000000L | 0x00C00000L |  0x00080000L | 0x00020000L</p>
+<p>CLASS &#8220;Dialog3&#8243;</p>
+<p>CAPTION &#8220;Dialog3&#8243;</p>
+<p>{</p>
+<pre><code>PUSHBUTTON &amp;<span class="string">#8220</span>;OK&amp;<span class="string">#8221</span>;,           <span class="number">68</span>,  <span class="number">8</span>,  <span class="number">24</span>, <span class="number">30</span>, <span class="number">10</span>
+
+PUSHBUTTON &amp;<span class="string">#8220</span>;CANCEL&amp;<span class="string">#8221</span>;,       <span class="number">65</span>,  <span class="number">8</span>,  <span class="number">40</span>, <span class="number">30</span>, <span class="number">10</span>
+</code></pre><p>}</p>
+<p>最后在编译生成的资源文件里面添加</p>
+<h1 id="include_&#8220;Dialog3-dlg&#8221;">include &#8220;Dialog3.dlg&#8221;</h1><p></p><p align="left">第三种方法看起来比较奇怪。这到底是对话框还是窗口呢？<span style="color: #ff0000;">其实对话框就是一个窗口！！</span></p>
+<p><span style="color: #000000;">下面来看一下注意点：</span></p>
+<p>wndclass.cbWndExtra    = DLGWINDOWEXTRA ;    // 注意这里!</p>
+<p><span style="color: #ff0000;"><span style="color: #000000;">这句告诉windows我要使用自己的窗口过程</span></span></p>
+<p><span style="color: #ff0000;"><span style="color: #000000;">另外一定要注意资源文件里面<span style="color: #000000;">的</span></span></span></p>
+<p>CLASS &#8220;Dialog3&#8243;</p>
+<p>这句告诉windows我要使用自己的窗口过程来处理对话框消息</p>
+<p>资源文件引用了Dialog.dlg，这个文件用来创建自定义的对话框</p>
+<p>这里我还有2个不明白的地方：</p>
+<p>//STYLE WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX</p>
+<p>STYLE 0x00000000L | 0x00C00000L |  0x00080000L | 0x00020000L我在引用STYLE的时候，直接引用编译时提示找不到定义，于是我找到样式对应的值就可以了。我不知道为什么会这样，请高手指教。</p>
+<p>另外这个对话框创建出来后按钮不起作用。我也不知道是什么原因，照理来说LOWORD（wParam）存的应该是按钮的ID啊。这里也暂时留下疑问，请高手解答。</p>
+<p>第二个问题已经解决了。</p>
+<p>可以在编译后的资源文件里面看到生成的对话框和按钮，可以在那里设置ID,用上面的方法生成的ID是随机的。</p>
+<pre><code>PUSHBUTTON &amp;<span class="string">#8220</span>;OK&amp;<span class="string">#8221</span>;,           <span class="number">68</span>,  <span class="number">8</span>,  <span class="number">24</span>, <span class="number">30</span>, <span class="number">10</span>这里的OK只不过是按钮上的文本字符串而已，并不是按钮的ID。我把这里搞混了，所以出错了。
+</code></pre><p>我可以设置按钮的ID为“OK”，然后就可以了（注：一般设置按钮ID的时候我们使用ID_BTNOK，这样标准一点）</p>
+<p></p><p align="left">以上是我自己总结的对话框的知识。有错误的地方，还请指教。谢谢^_^</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/27/学期总结（一）/" rel="prev">学期总结（一）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/23/Gentoo-Linux安装注意事项/" rel="next">Gentoo Linux安装注意事项</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#define_OK_1"><span class="nav-text">define OK 1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_CANCEL_2"><span class="nav-text">define CANCEL 2</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_“Dialog3-dlg”"><span class="nav-text">include “Dialog3.dlg”</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

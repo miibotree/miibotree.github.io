@@ -1,0 +1,686 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="bmp,windowsSDK,信息安全,远控," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="为了自己做出一个远控程序，自己花了点时间学习了有关绘图方面的知识点。
+&amp;nbsp;
+一.基本概念的了解
+为了实现实时屏幕显示的功能，首先学习了下《windows程序设计》的第14章，位图和位块的传输。
+理解了下位图和位块的区别，基本概念。
+概念一：位图与图元的区别：
+位图                  图元
+
+点阵                  矢量      （位图与图元的主要区别就在这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK实现 屏幕实时监控 热键截图 功能">
+<meta property="og:url" content="http://yoursite.com/2012/07/11/windowsSDK实现-屏幕实时监控-热键截图-功能/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="为了自己做出一个远控程序，自己花了点时间学习了有关绘图方面的知识点。
+&amp;nbsp;
+一.基本概念的了解
+为了实现实时屏幕显示的功能，首先学习了下《windows程序设计》的第14章，位图和位块的传输。
+理解了下位图和位块的区别，基本概念。
+概念一：位图与图元的区别：
+位图                  图元
+
+点阵                  矢量      （位图与图元的主要区别就在这">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/11/1342005222_2994.png">
+<meta property="og:updated_time" content="2015-07-25T05:03:25.940Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK实现 屏幕实时监控 热键截图 功能">
+<meta name="twitter:description" content="为了自己做出一个远控程序，自己花了点时间学习了有关绘图方面的知识点。
+&amp;nbsp;
+一.基本概念的了解
+为了实现实时屏幕显示的功能，首先学习了下《windows程序设计》的第14章，位图和位块的传输。
+理解了下位图和位块的区别，基本概念。
+概念一：位图与图元的区别：
+位图                  图元
+
+点阵                  矢量      （位图与图元的主要区别就在这">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK实现 屏幕实时监控 热键截图 功能 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK实现 屏幕实时监控 热键截图 功能
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-11T19:39:05+08:00" content="2012-07-11">
+            2012-07-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>为了自己做出一个远控程序，自己花了点时间学习了有关绘图方面的知识点。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">一.基本概念的了解</span></p>
+<p>为了实现实时屏幕显示的功能，首先学习了下《windows程序设计》的第14章，位图和位块的传输。</p>
+<p>理解了下位图和位块的区别，基本概念。</p>
+<p><span style="color: #ff6600; font-size: small;">概念一：位图与图元的区别：</span></p>
+<p><span style="color: #3366ff;">位图                  图元</span></p>
+<p></p>
+<p><span style="color: #3366ff;">点阵                  矢量      （位图与图元的主要区别就在这里了）</span></p>
+<p></p>
+<p><span style="color: #3366ff;">容易失真          不失真</span></p>
+<p><span style="color: #3366ff;">较大                  较小</span></p>
+<p><span style="color: #3366ff;">传输速度快      传输速度慢</span></p>
+<p><span style="color: #ff6600; font-size: small;">概念二：与设备无关的位图</span></p>
+<p><span style="color: #ff6600; font-size: small;">DDB   设备相关位图</span></p>
+<p><span style="color: #ff6600; font-size: small;">DIB     设备无关位图</span></p>
+<p><span style="color: #ff6600; font-size: small;"><span style="color: #3333ff; font-size: x-small;">windows编程里面提到，这两个概念有时候是很难区分的。所以我在这里就不具体讲解两者的区别了，对我们的功能实现应该没什么关系。但是因为这是个经常出现的字眼，所以这里先提一下。</span></span></p>
+<p><span style="color: #993399; font-size: medium;">二.BitBlt函数</span></p>
+<p>接下来我们来看BitBlt 函数，这个函数是我们这次功能实现的最关键的一个函数了~~~~</p>
+<p><span id="more-370"></span></p>
+<blockquote>
+<p>BOOL BitBlt(</p>
+<p>__in  HDC hdcDest,</p>
+<p>__in  <span style="color: blue;">int</span> nXDest,</p>
+<p>__in  <span style="color: blue;">int</span> nYDest,</p>
+<p>__in  <span style="color: blue;">int</span> nWidth,</p>
+<p>__in  <span style="color: blue;">int</span> nHeight,</p>
+<p>__in  HDC hdcSrc,</p>
+<p>__in  <span style="color: blue;">int</span> nXSrc,</p>
+<p>__in  <span style="color: blue;">int</span> nYSrc,</p>
+<p>__in  DWORD dwRop</p>
+<p>);</p>
+</blockquote>
+<p>参数虽然多，但是用起来不难</p>
+<p>hdcDest 目标设备描述表</p>
+<p>nXDest   目标起始x坐标位置</p>
+<p>nYDest   目标起始y坐标位置</p>
+<p>nWidth   宽度</p>
+<p>nHeight 高度</p>
+<p>hdcSrc   源设备描述表</p>
+<p>nXSrc     源起始x坐标</p>
+<p>nYSrc     源起始y坐标</p>
+<p>dwRop   这个参数比较复杂，我们这里就是简单的原封不动的复制，所以使用了 SRCCOPY</p>
+<p>更多关于这个函数的用法，参照MSDN</p>
+<p>当然了，如果你想缩放图片，你还可以使用函数StretchBlt  这个函数比BitBlt多了两个参数。</p>
+<p>在我的程序中，将屏幕的图像传输到我自己的程序中：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdcClient = BeginPaint <span class="list">(<span class="keyword">hwnd</span>, <span class="keyword">&amp;amp</span><span class="comment">;ps); //获得目标（本程序）设备描述符</span></span><br><span class="line">hdcWindow = GetWindowDC <span class="list">(<span class="keyword">NULL</span>)</span><span class="comment">; //获得源目标（屏幕）设备描述符</span></span><br><span class="line">BitBlt <span class="list">(<span class="keyword">hdcClient</span>, <span class="number">0</span>, <span class="number">0</span>, cxClient, cyClient, hdcWindow , <span class="number">0</span>, <span class="number">0</span>, SRCCOPY)</span><span class="comment">;</span></span></span><br></pre></td></tr></table></figure>
+<p><span style="color: #6600cc; font-size: medium;">三.实时显示</span></p>
+<p>我通过设置定时器，每隔1ms刷新一次软件的客户区。当然发消息没有这么快。但是至少这样能保证已经达到了最快的更新速度。</p>
+<p>&nbsp;</p>
+<p>程序开始时触发定时器</p>
+<figure class="highlight"><figcaption><span>WM_CREATE:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SetTimer (hwnd, ID_TIMER, 100, TimerProc) ;&#10;return 0 ;</span><br></pre></td></tr></table></figure>
+<p>定时器函数</p>
+<figure class="highlight"><figcaption><span>CALLBACK TimerProc (HWND hwnd, UINT message, UINT iTimerID, DWORD dwTime)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;InvalidateRect(hwnd, NULL, NULL); //&#26080;&#25928;&#25972;&#20010;&#23631;&#24149;&#23458;&#25143;&#21306;&#65292;&#37325;&#32472;&#23458;&#25143;&#21306;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>当这个功能实现的时候，出现了一个很奇怪的问题~~~。给大家截个图看看当前效果：</p>
+<p><img src="http://my.csdn.net/uploads/201207/11/1342005222_2994.png" alt=""></p>
+<p>有很多镜像！~~~这样的结果是正确的。我如果把我的程序放到我的另一个显示器上面（我有两个显示屏），那么程序显示就正常了，显示的是我原来那个屏幕上的图像。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">四：保存bmp图片</span></p>
+<p>这里直接贴代码了：</p>
+<figure class="highlight"><figcaption><span>ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;HBITMAP hBitmap;&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;DC&#10;HDC hScreenDC = CreateDC(L&#34;DISPLAY&#34;, NULL, NULL, NULL);&#10;HDC hmemDC = CreateCompatibleDC(hScreenDC);&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;&#30340;&#23485;&#21644;&#39640;&#10;int ScreenWidth = GetDeviceCaps(hScreenDC, HORZRES);&#10;int ScreenHeight = GetDeviceCaps(hScreenDC, VERTRES);&#10;// &#26087;&#30340;BITMAP&#65292;&#29992;&#20110;&#19982;&#25152;&#38656;&#25130;&#21462;&#30340;&#20301;&#32622;&#20132;&#25442;&#10;HBITMAP hOldBM;&#10;// &#20445;&#23384;&#20301;&#22270;&#25968;&#25454;&#10;PVOID lpvpxldata;&#10;// &#25130;&#23631;&#33719;&#21462;&#30340;&#38271;&#23485;&#21450;&#36215;&#28857;&#10;INT ixStart;&#10;INT iyStart;&#10;INT iX;&#10;INT iY;&#10;// &#20301;&#22270;&#25968;&#25454;&#22823;&#23567;&#10;DWORD dwBitmapArraySize;&#10;// &#20960;&#20010;&#22823;&#23567;&#10;DWORD nBitsOffset;&#10;DWORD lImageSize ;&#10;DWORD lFileSize ;&#10;// &#20301;&#22270;&#20449;&#24687;&#22836;&#10;BITMAPINFO bmInfo;&#10;// &#20301;&#22270;&#25991;&#20214;&#22836;&#10;BITMAPFILEHEADER bmFileHeader;&#10;// &#20889;&#25991;&#20214;&#29992;&#10;HANDLE hbmfile;&#10;DWORD dwWritten;&#10;&#10;// &#22914;&#26524;LPRECT &#20026;NULL &#25130;&#21462;&#25972;&#20010;&#23631;&#24149;&#10;ixStart = iyStart = 0;&#10;iX = ScreenWidth;&#10;iY = ScreenHeight;&#10;&#10;// &#21019;&#24314;BTIMAP&#10;hBitmap = CreateCompatibleBitmap(hScreenDC, iX, iY);&#10;// &#23558;BITMAP&#36873;&#25321;&#20837;&#20869;&#23384;DC&#12290;&#10;hOldBM = (HBITMAP)SelectObject(hmemDC, hBitmap);&#10;// BitBlt&#23631;&#24149;DC&#21040;&#20869;&#23384;DC&#65292;&#26681;&#25454;&#25152;&#38656;&#25130;&#21462;&#30340;&#33719;&#21462;&#35774;&#32622;&#21442;&#25968;&#10;BitBlt(hmemDC, 0, 0, iX, iY, hScreenDC, ixStart, iyStart, SRCCOPY);&#10;// &#23558;&#26087;&#30340;BITMAP&#23545;&#35937;&#36873;&#25321;&#22238;&#20869;&#23384;DC&#65292;&#36820;&#22238;&#20540;&#20026;&#34987;&#26367;&#25442;&#30340;&#23545;&#35937;&#65292;&#26082;&#25152;&#25130;&#21462;&#30340;&#20301;&#22270;&#10;hBitmap = (HBITMAP)SelectObject(hmemDC, hOldBM);&#10;if(filename == NULL)&#10;&#123;&#10;DeleteDC( hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;// &#20026;&#20301;&#22270;&#25968;&#25454;&#30003;&#35831;&#20869;&#23384;&#31354;&#38388;&#10;dwBitmapArraySize = ((((iX*32) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)* iY;&#10;lpvpxldata = HeapAlloc(GetProcessHeap(),HEAP_NO_SERIALIZE,dwBitmapArraySize);&#10;ZeroMemory(lpvpxldata,dwBitmapArraySize);&#10;&#10;// &#28155;&#20805; BITMAPINFO &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmInfo,sizeof(BITMAPINFO));&#10;bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);&#10;bmInfo.bmiHeader.biWidth = iX;&#10;bmInfo.bmiHeader.biHeight = iY;&#10;bmInfo.bmiHeader.biPlanes = 1;&#10;bmInfo.bmiHeader.biBitCount = BitCount;&#10;bmInfo.bmiHeader.biCompression = BI_RGB;&#10;&#10;// &#28155;&#20805; BITMAPFILEHEADER &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER));&#10;nBitsOffset = sizeof(BITMAPFILEHEADER) + bmInfo.bmiHeader.biSize;&#10;lImageSize =&#10;((((bmInfo.bmiHeader.biWidth * bmInfo.bmiHeader.biBitCount) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)&#10;* bmInfo.bmiHeader.biHeight;&#10;lFileSize = nBitsOffset + lImageSize;&#10;bmFileHeader.bfType = &#39;B&#39;+(&#39;M&#39;&#38;lt;&#38;lt;8);&#10;bmFileHeader.bfSize = lFileSize;&#10;bmFileHeader.bfOffBits = nBitsOffset;&#10;&#10;// &#33719;&#21462;DIB&#29992;&#20110;&#20889;&#20837;&#21040;&#25991;&#20214;&#10;GetDIBits(hmemDC, hBitmap, 0, bmInfo.bmiHeader.biHeight,&#10;lpvpxldata, &#38;amp;bmInfo, DIB_RGB_COLORS);&#10;// &#20889;&#25991;&#20214;&#10;hbmfile = CreateFile(filename,&#10;GENERIC_WRITE,&#10;FILE_SHARE_WRITE,&#10;NULL,&#10;CREATE_ALWAYS,&#10;FILE_ATTRIBUTE_NORMAL,&#10;NULL);&#10;&#10;WriteFile(hbmfile,&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,&#38;amp;bmInfo,sizeof(BITMAPINFO),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,lpvpxldata,lImageSize,&#38;amp;dwWritten,NULL);&#10;CloseHandle(hbmfile);&#10;&#10;// &#37322;&#25918;&#20869;&#23384;&#65292;&#28165;&#38500;&#19981;&#21516;&#30340;DC&#12290;&#10;// &#36825;&#37324;&#27809;&#26377;&#21024;&#38500;BITMAP&#23545;&#35937;&#65292;&#38656;&#22312;&#26174;&#31034;&#23436;&#25104;&#21518;&#21024;&#38500;&#10;HeapFree(GetProcessHeap(),HEAP_NO_SERIALIZE,lpvpxldata);&#10;ReleaseDC(0, hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码基本上不加修改就能直接用了。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">五.格式转换</span></p>
+<p>一般远控在传输图像的时候都是把图片进行了压缩的。所以我想把bmp格式的图片转换成png。这里使用了GDI+的库。很方便就实现了。</p>
+<p>windowsSDK程序需要的注意点：</p>
+<p>1.保证是.cpp格式  .c格式的话就不能 因为这个库只有c++下面才能使用。</p>
+<p>2.使用前引入头文件 和 库</p>
+<figure class="highlight"><figcaption><span>&lt;GdiPlus.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">using namespace Gdiplus;&#10;#pragma comment(lib, &#34;gdiplus.lib&#34;)</span><br></pre></td></tr></table></figure>
+<p>3.实例代码</p>
+<p>参考下面这篇文章，将的非常好：<a href="http://blog.csdn.net/yuzl32/article/details/5389919" target="_blank" rel="external">http://blog.csdn.net/yuzl32/article/details/5389919</a></p>
+<figure class="highlight"><figcaption><span>&lt;windows.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;gdiplus.h&#38;gt;&#10;#include &#38;lt;stdio.h&#38;gt;&#10;using namespace Gdiplus;&#10;&#10;#pragma comment(lib,&#34;gdiplus&#34;)&#10;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)&#10;&#123;&#10;UINT num = 0; // number of image encoders&#10;UINT size = 0; // size of the image encoder array in bytes&#10;&#10;ImageCodecInfo* pImageCodecInfo = NULL;&#10;&#10;//2.&#33719;&#21462;GDI+&#25903;&#25345;&#30340;&#22270;&#20687;&#26684;&#24335;&#32534;&#30721;&#22120;&#31181;&#31867;&#25968;&#20197;&#21450;ImageCodecInfo&#25968;&#32452;&#30340;&#23384;&#25918;&#22823;&#23567;&#10;GetImageEncodersSize(&#38;amp;num, &#38;amp;size);&#10;if(size == 0)&#10;return -1; // Failure&#10;&#10;//3.&#20026;ImageCodecInfo&#25968;&#32452;&#20998;&#37197;&#36275;&#39069;&#31354;&#38388;&#10;pImageCodecInfo = (ImageCodecInfo*)(malloc(size));&#10;if(pImageCodecInfo == NULL)&#10;return -1; // Failure&#10;&#10;//4.&#33719;&#21462;&#25152;&#26377;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#20449;&#24687;&#10;GetImageEncoders(num, size, pImageCodecInfo);&#10;&#10;//5.&#26597;&#25214;&#31526;&#21512;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#30340;Clsid&#10;for(UINT j = 0; j &#38;lt; num; ++j)&#10;&#123;&#10;if( wcscmp(pImageCodecInfo[j].MimeType, format) == 0 )&#10;&#123;&#10;*pClsid = pImageCodecInfo[j].Clsid;&#10;free(pImageCodecInfo);&#10;return j; // Success&#10;&#125;&#10;&#125;&#10;&#10;//6.&#37322;&#25918;&#27493;&#39588;3&#20998;&#37197;&#30340;&#20869;&#23384;&#10;free(pImageCodecInfo);&#10;return -1; // Failure&#10;&#125;&#10;&#10;INT main()&#10;&#123;&#10;GdiplusStartupInput gdiplusStartupInput;&#10;ULONG_PTR gdiplusToken;&#10;&#10;//1.&#21021;&#22987;&#21270;GDI+&#65292;&#20197;&#20415;&#21518;&#32493;&#30340;GDI+&#20989;&#25968;&#21487;&#20197;&#25104;&#21151;&#35843;&#29992;&#10;GdiplusStartup(&#38;amp;gdiplusToken, &#38;amp;gdiplusStartupInput, NULL);&#10;&#10;CLSID encoderClsid;&#10;Status stat;&#10;&#10;//7.&#21019;&#24314;Image&#23545;&#35937;&#24182;&#21152;&#36733;&#22270;&#29255;&#10;Image* image = new Image(L&#34;f://11.bmp&#34;);&#10;&#10;// Get the CLSID of the PNG encoder.&#10;GetEncoderClsid(L&#34;image/png&#34;, &#38;amp;encoderClsid);&#10;&#10;//8.&#35843;&#29992;Image.Save&#26041;&#27861;&#36827;&#34892;&#22270;&#29255;&#26684;&#24335;&#36716;&#25442;&#65292;&#24182;&#25226;&#27493;&#39588;3)&#24471;&#21040;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;Clsid&#20256;&#36882;&#32473;&#23427;&#10;stat = image-&#38;gt;Save(L&#34;11.png&#34;, &#38;amp;encoderClsid, NULL);&#10;&#10;if(stat == Ok)&#10;printf(&#34;Bird.png was saved successfully/n&#34;);&#10;else&#10;printf(&#34;Failure: stat = %d/n&#34;, stat);&#10;&#10;//9.&#37322;&#25918;Image&#23545;&#35937;&#10;delete image;&#10;//10.&#28165;&#29702;&#25152;&#26377;GDI+&#36164;&#28304;&#10;GdiplusShutdown(gdiplusToken);&#10;return 0;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>六.键盘热键实现截图。</p>
+<p>按下空格实现截图。其实这里还可以改进，焦点必须在程序里面才能进行截图。其实可以Hook键盘消息来进行截图操作。</p>
+<p>&nbsp;</p>
+<p>最后发一个不完善的版本：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23631;&#24149;&#23454;&#26102;&#30417;&#25511; &#28909;&#38190;&#25130;&#22270;&#36719;&#20214;&#10;&#20316;&#32773;:Miibotree&#10;---------------------------------------*/&#10;&#10;#include &#38;lt;windows.h&#38;gt;&#10;#include &#38;lt;GdiPlus.h&#38;gt;&#10;&#10;using namespace Gdiplus;&#10;&#10;#pragma comment(lib, &#34;gdiplus.lib&#34;)&#10;&#10;#define ID_TIMER 1&#10;&#10;HBITMAP ghBitmap = NULL;&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;VOID CALLBACK TimerProc (HWND, UINT, UINT, DWORD );&#10;&#10;HBITMAP ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect); //&#20840;&#23631;&#25130;&#22270;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid); // Get the CLSID of the PNG encoder.&#10;BOOL Bmp2Png(); //&#36827;&#34892;&#26684;&#24335;&#36716;&#21270;&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;static TCHAR szAppName [] = TEXT (&#34;BitBlt&#34;) ;&#10;HWND hwnd ;&#10;MSG msg ;&#10;WNDCLASS wndclass ;&#10;&#10;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;wndclass.lpfnWndProc = WndProc ;&#10;wndclass.cbClsExtra = 0 ;&#10;wndclass.cbWndExtra = 0 ;&#10;wndclass.hInstance = hInstance ;&#10;wndclass.hIcon = LoadIcon (NULL, IDI_INFORMATION) ;&#10;wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;&#10;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;wndclass.lpszMenuName = NULL ;&#10;wndclass.lpszClassName = szAppName ;&#10;&#10;if (!RegisterClass (&#38;amp;wndclass))&#10;&#123;&#10;MessageBox (NULL, TEXT (&#34;This program requires Windows NT!&#34;),&#10;szAppName, MB_ICONERROR) ;&#10;return 0 ;&#10;&#125;&#10;&#10;hwnd = CreateWindow (szAppName, TEXT (&#34;BitBlt Demo&#34;),&#10;WS_OVERLAPPEDWINDOW,&#10;CW_USEDEFAULT, CW_USEDEFAULT,&#10;CW_USEDEFAULT, CW_USEDEFAULT,&#10;NULL, NULL, hInstance, NULL) ;&#10;&#10;ShowWindow (hwnd, iCmdShow) ;&#10;UpdateWindow (hwnd) ;&#10;&#10;while (GetMessage (&#38;amp;msg, NULL, 0, 0))&#10;&#123;&#10;TranslateMessage (&#38;amp;msg) ;&#10;DispatchMessage (&#38;amp;msg) ;&#10;&#125;&#10;return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;static int cxClient, cyClient, cxSource, cySource ;&#10;HDC hdcClient, hdcWindow ;&#10;int x, y ;&#10;PAINTSTRUCT ps ;&#10;&#10;HDC hMemDC; // &#20869;&#23384;&#35774;&#22791;&#25551;&#36848;&#34920;&#10;HBITMAP hBitmap, hOldBitmap; // &#20301;&#22270;&#21477;&#26564;&#65292;&#29992;&#20110;&#26367;&#25442;&#20869;&#23384;&#20013;&#22270;&#20687;&#10;RECT rect; //&#30697;&#24418;&#21306;&#22495;&#10;&#10;switch (message)&#10;&#123;&#10;case WM_CREATE:&#10;SetTimer (hwnd, ID_TIMER, 100, TimerProc) ;&#10;return 0 ;&#10;&#10;case WM_SIZE:&#10;cxClient = LOWORD (lParam) ; //&#26412;&#31243;&#24207;&#31383;&#21475;&#23485;&#24230;&#10;cyClient = HIWORD (lParam) ; //&#26412;&#31243;&#24207;&#31383;&#21475;&#38271;&#24230;&#10;return 0 ;&#10;&#10;case WM_KEYDOWN:&#10;switch(wParam)&#10;&#123;&#10;case VK_SPACE:&#10;//&#25130;&#22270;&#20989;&#25968;&#10;ghBitmap = ScreenCapture(L&#34;D:\taskmgr.bmp&#34; ,32, NULL);&#10;//&#26684;&#24335;&#36716;&#25442;&#10;Bmp2Png();&#10;return 0;&#10;&#125;&#10;return 0;&#10;&#10;case WM_PAINT:&#10;hdcClient = BeginPaint (hwnd, &#38;amp;ps); //&#33719;&#24471;&#30446;&#26631;&#65288;&#26412;&#31243;&#24207;&#65289;&#35774;&#22791;&#25551;&#36848;&#31526;&#10;hdcWindow = GetWindowDC (NULL); //&#33719;&#24471;&#28304;&#30446;&#26631;&#65288;&#23631;&#24149;&#65289;&#35774;&#22791;&#25551;&#36848;&#31526;&#10;BitBlt (hdcClient, 0, 0, cxClient, cyClient, hdcWindow , 0, 0, SRCCOPY);&#10;//&#30446;&#26631;&#35774;&#22791; &#28304;&#35774;&#22791;&#10;&#10;cxSource = GetSystemMetrics (SM_CXSCREEN); //&#33719;&#24471;&#23631;&#24149;&#20998;&#36776;&#29575;&#10;cySource = GetSystemMetrics (SM_CYSCREEN);&#10;rect.left = 0; rect.right = cxSource; rect.top = 0; rect.bottom = cySource;&#10;&#10;ReleaseDC (hwnd, hdcWindow) ;&#10;EndPaint (hwnd, &#38;amp;ps) ;&#10;return 0 ;&#10;&#10;case WM_DESTROY:&#10;PostQuitMessage (0) ;&#10;return 0 ;&#10;&#125;&#10;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;&#10;&#10;VOID CALLBACK TimerProc (HWND hwnd, UINT message, UINT iTimerID, DWORD dwTime)&#10;&#123;&#10;InvalidateRect(hwnd, NULL, NULL);&#10;&#125;&#10;&#10;HBITMAP ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect)&#10;&#123;&#10;HBITMAP hBitmap;&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;DC&#10;HDC hScreenDC = CreateDC(L&#34;DISPLAY&#34;, NULL, NULL, NULL);&#10;HDC hmemDC = CreateCompatibleDC(hScreenDC);&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;&#30340;&#23485;&#21644;&#39640;&#10;int ScreenWidth = GetDeviceCaps(hScreenDC, HORZRES);&#10;int ScreenHeight = GetDeviceCaps(hScreenDC, VERTRES);&#10;// &#26087;&#30340;BITMAP&#65292;&#29992;&#20110;&#19982;&#25152;&#38656;&#25130;&#21462;&#30340;&#20301;&#32622;&#20132;&#25442;&#10;HBITMAP hOldBM;&#10;// &#20445;&#23384;&#20301;&#22270;&#25968;&#25454;&#10;PVOID lpvpxldata;&#10;// &#25130;&#23631;&#33719;&#21462;&#30340;&#38271;&#23485;&#21450;&#36215;&#28857;&#10;INT ixStart;&#10;INT iyStart;&#10;INT iX;&#10;INT iY;&#10;// &#20301;&#22270;&#25968;&#25454;&#22823;&#23567;&#10;DWORD dwBitmapArraySize;&#10;// &#20960;&#20010;&#22823;&#23567;&#10;DWORD nBitsOffset;&#10;DWORD lImageSize ;&#10;DWORD lFileSize ;&#10;// &#20301;&#22270;&#20449;&#24687;&#22836;&#10;BITMAPINFO bmInfo;&#10;// &#20301;&#22270;&#25991;&#20214;&#22836;&#10;BITMAPFILEHEADER bmFileHeader;&#10;// &#20889;&#25991;&#20214;&#29992;&#10;HANDLE hbmfile;&#10;DWORD dwWritten;&#10;&#10;// &#22914;&#26524;LPRECT &#20026;NULL &#25130;&#21462;&#25972;&#20010;&#23631;&#24149;&#10;ixStart = iyStart = 0;&#10;iX = ScreenWidth;&#10;iY = ScreenHeight;&#10;&#10;// &#21019;&#24314;BTIMAP&#10;hBitmap = CreateCompatibleBitmap(hScreenDC, iX, iY);&#10;// &#23558;BITMAP&#36873;&#25321;&#20837;&#20869;&#23384;DC&#12290;&#10;hOldBM = (HBITMAP)SelectObject(hmemDC, hBitmap);&#10;// BitBlt&#23631;&#24149;DC&#21040;&#20869;&#23384;DC&#65292;&#26681;&#25454;&#25152;&#38656;&#25130;&#21462;&#30340;&#33719;&#21462;&#35774;&#32622;&#21442;&#25968;&#10;BitBlt(hmemDC, 0, 0, iX, iY, hScreenDC, ixStart, iyStart, SRCCOPY);&#10;// &#23558;&#26087;&#30340;BITMAP&#23545;&#35937;&#36873;&#25321;&#22238;&#20869;&#23384;DC&#65292;&#36820;&#22238;&#20540;&#20026;&#34987;&#26367;&#25442;&#30340;&#23545;&#35937;&#65292;&#26082;&#25152;&#25130;&#21462;&#30340;&#20301;&#22270;&#10;hBitmap = (HBITMAP)SelectObject(hmemDC, hOldBM);&#10;if(filename == NULL)&#10;&#123;&#10;DeleteDC( hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;// &#20026;&#20301;&#22270;&#25968;&#25454;&#30003;&#35831;&#20869;&#23384;&#31354;&#38388;&#10;dwBitmapArraySize = ((((iX*32) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)* iY;&#10;lpvpxldata = HeapAlloc(GetProcessHeap(),HEAP_NO_SERIALIZE,dwBitmapArraySize);&#10;ZeroMemory(lpvpxldata,dwBitmapArraySize);&#10;&#10;// &#28155;&#20805; BITMAPINFO &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmInfo,sizeof(BITMAPINFO));&#10;bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);&#10;bmInfo.bmiHeader.biWidth = iX;&#10;bmInfo.bmiHeader.biHeight = iY;&#10;bmInfo.bmiHeader.biPlanes = 1;&#10;bmInfo.bmiHeader.biBitCount = BitCount;&#10;bmInfo.bmiHeader.biCompression = BI_RGB;&#10;&#10;// &#28155;&#20805; BITMAPFILEHEADER &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER));&#10;nBitsOffset = sizeof(BITMAPFILEHEADER) + bmInfo.bmiHeader.biSize;&#10;lImageSize =&#10;((((bmInfo.bmiHeader.biWidth * bmInfo.bmiHeader.biBitCount) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)&#10;* bmInfo.bmiHeader.biHeight;&#10;lFileSize = nBitsOffset + lImageSize;&#10;bmFileHeader.bfType = &#39;B&#39;+(&#39;M&#39;&#38;lt;&#38;lt;8);&#10;bmFileHeader.bfSize = lFileSize;&#10;bmFileHeader.bfOffBits = nBitsOffset;&#10;&#10;// &#33719;&#21462;DIB&#29992;&#20110;&#20889;&#20837;&#21040;&#25991;&#20214;&#10;GetDIBits(hmemDC, hBitmap, 0, bmInfo.bmiHeader.biHeight,&#10;lpvpxldata, &#38;amp;bmInfo, DIB_RGB_COLORS);&#10;// &#20889;&#25991;&#20214;&#10;hbmfile = CreateFile(filename,&#10;GENERIC_WRITE,&#10;FILE_SHARE_WRITE,&#10;NULL,&#10;CREATE_ALWAYS,&#10;FILE_ATTRIBUTE_NORMAL,&#10;NULL);&#10;&#10;WriteFile(hbmfile,&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,&#38;amp;bmInfo,sizeof(BITMAPINFO),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,lpvpxldata,lImageSize,&#38;amp;dwWritten,NULL);&#10;CloseHandle(hbmfile);&#10;&#10;// &#37322;&#25918;&#20869;&#23384;&#65292;&#28165;&#38500;&#19981;&#21516;&#30340;DC&#12290;&#10;// &#36825;&#37324;&#27809;&#26377;&#21024;&#38500;BITMAP&#23545;&#35937;&#65292;&#38656;&#22312;&#26174;&#31034;&#23436;&#25104;&#21518;&#21024;&#38500;&#10;HeapFree(GetProcessHeap(),HEAP_NO_SERIALIZE,lpvpxldata);&#10;ReleaseDC(0, hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)&#10;&#123;&#10;UINT num = 0; // number of image encoders&#10;UINT size = 0; // size of the image encoder array in bytes&#10;&#10;ImageCodecInfo* pImageCodecInfo = NULL;&#10;&#10;//2.&#33719;&#21462;GDI+&#25903;&#25345;&#30340;&#22270;&#20687;&#26684;&#24335;&#32534;&#30721;&#22120;&#31181;&#31867;&#25968;&#20197;&#21450;ImageCodecInfo&#25968;&#32452;&#30340;&#23384;&#25918;&#22823;&#23567;&#10;GetImageEncodersSize(&#38;amp;num, &#38;amp;size);&#10;if(size == 0)&#10;return -1; // Failure&#10;&#10;//3.&#20026;ImageCodecInfo&#25968;&#32452;&#20998;&#37197;&#36275;&#39069;&#31354;&#38388;&#10;pImageCodecInfo = (ImageCodecInfo*)(malloc(size));&#10;if(pImageCodecInfo == NULL)&#10;return -1; // Failure&#10;&#10;//4.&#33719;&#21462;&#25152;&#26377;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#20449;&#24687;&#10;GetImageEncoders(num, size, pImageCodecInfo);&#10;&#10;//5.&#26597;&#25214;&#31526;&#21512;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#30340;Clsid&#10;for(UINT j = 0; j &#38;lt; num; ++j)&#10;&#123;&#10;if( wcscmp(pImageCodecInfo[j].MimeType, format) == 0 )&#10;&#123;&#10;*pClsid = pImageCodecInfo[j].Clsid;&#10;free(pImageCodecInfo);&#10;return j; // Success&#10;&#125;&#10;&#125;&#10;&#10;//6.&#37322;&#25918;&#27493;&#39588;3&#20998;&#37197;&#30340;&#20869;&#23384;&#10;free(pImageCodecInfo);&#10;return -1; // Failure&#10;&#125;&#10;&#10;BOOL Bmp2Png()&#10;&#123;&#10;GdiplusStartupInput gdiplusStartupInput;&#10;ULONG_PTR gdiplusToken;&#10;&#10;//1.&#21021;&#22987;&#21270;GDI+&#65292;&#20197;&#20415;&#21518;&#32493;&#30340;GDI+&#20989;&#25968;&#21487;&#20197;&#25104;&#21151;&#35843;&#29992;&#10;GdiplusStartup(&#38;amp;gdiplusToken, &#38;amp;gdiplusStartupInput, NULL);&#10;&#10;CLSID encoderClsid;&#10;Status stat;&#10;&#10;//7.&#21019;&#24314;Image&#23545;&#35937;&#24182;&#21152;&#36733;&#22270;&#29255;&#10;Image* image = new Image(L&#34;D:\taskmgr.bmp&#34;);&#10;&#10;// Get the CLSID of the PNG encoder.&#10;GetEncoderClsid(L&#34;image/png&#34;, &#38;amp;encoderClsid);&#10;&#10;//8.&#35843;&#29992;Image.Save&#26041;&#27861;&#36827;&#34892;&#22270;&#29255;&#26684;&#24335;&#36716;&#25442;&#65292;&#24182;&#25226;&#27493;&#39588;3)&#24471;&#21040;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;Clsid&#20256;&#36882;&#32473;&#23427;&#10;stat = image-&#38;gt;Save(L&#34;D:\taskmgr.png&#34;, &#38;amp;encoderClsid, NULL);&#10;&#10;if(stat == Ok)&#10;MessageBoxA(NULL, &#34;&#26684;&#24335;&#36716;&#25442;&#25104;&#21151;&#34;, &#34;&#25104;&#21151;&#34;, MB_OK);&#10;else&#10;MessageBoxA(NULL, &#34;&#26684;&#24335;&#36716;&#25442;&#22833;&#36133;&#34;, &#34;&#22833;&#36133;&#34;, MB_OK | MB_ICONERROR);&#10;&#10;//9.&#37322;&#25918;Image&#23545;&#35937;&#10;delete image;&#10;//10.&#28165;&#29702;&#25152;&#26377;GDI+&#36164;&#28304;&#10;GdiplusShutdown(gdiplusToken);&#10;return TRUE;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><span style="color: #6600cc; font-size: medium;">七.改进之处</span></p>
+<p>可以自动根据时间戳创建文件以及文件夹，加上键盘Hook功能。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/bmp/" rel="tag">#bmp</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+            <a href="/tags/信息安全/" rel="tag">#信息安全</a>
+          
+            <a href="/tags/远控/" rel="tag">#远控</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/07/19/关于用户态和内核态的初步理解/" rel="prev">关于用户态和内核态的初步理解</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/07/09/远程控制程序的实现/" rel="next">远程控制程序的实现</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

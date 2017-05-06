@@ -1,0 +1,706 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="在看对话框之前，还是觉得有必要先看一下子窗口控件，很多对话框的知识点都涉及到子窗口控件。
+正好看到学长的一篇实现窗口透明化的文章，对它比较感兴趣，于是就想拿这个例子来练练手
+首先先介绍下窗口透明化的实现：
+首先是下面这个函数
+LONG SetWindowLong（HWND hWnd，int nlndex，LONG dwNewLong）；
+SetWindowLong该函数改变指定窗口的属性．函数也将">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK利用子窗口控件设置窗口透明">
+<meta property="og:url" content="http://yoursite.com/2012/01/20/windowsSDK利用子窗口控件设置窗口透明/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="在看对话框之前，还是觉得有必要先看一下子窗口控件，很多对话框的知识点都涉及到子窗口控件。
+正好看到学长的一篇实现窗口透明化的文章，对它比较感兴趣，于是就想拿这个例子来练练手
+首先先介绍下窗口透明化的实现：
+首先是下面这个函数
+LONG SetWindowLong（HWND hWnd，int nlndex，LONG dwNewLong）；
+SetWindowLong该函数改变指定窗口的属性．函数也将">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/tongue.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/smile.gif">
+<meta property="og:updated_time" content="2015-07-25T05:04:00.094Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK利用子窗口控件设置窗口透明">
+<meta name="twitter:description" content="在看对话框之前，还是觉得有必要先看一下子窗口控件，很多对话框的知识点都涉及到子窗口控件。
+正好看到学长的一篇实现窗口透明化的文章，对它比较感兴趣，于是就想拿这个例子来练练手
+首先先介绍下窗口透明化的实现：
+首先是下面这个函数
+LONG SetWindowLong（HWND hWnd，int nlndex，LONG dwNewLong）；
+SetWindowLong该函数改变指定窗口的属性．函数也将">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK利用子窗口控件设置窗口透明 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK利用子窗口控件设置窗口透明
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-20T21:36:00+08:00" content="2012-01-20">
+            2012-01-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在看对话框之前，还是觉得有必要先看一下子窗口控件，很多对话框的知识点都涉及到子窗口控件。</p>
+<p>正好看到学长的一篇实现窗口透明化的文章，对它比较感兴趣，于是就想拿这个例子来练练手<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/tongue.gif" alt="吐舌头"></p>
+<p>首先先介绍下<span style="color:#3333ff">窗口透明化</span>的实现：</p>
+<p>首先是下面这个函数</p>
+<p><span style="font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px">LONG SetWindowLong（HWND hWnd，int nlndex，LONG dwNewLong）；</span></p>
+<p><span style="font-family:arial,宋体,sans-serif; font-size:14px; line-height:25px">SetWindowLong该函数改变指定窗口的属性．函数也将指定的一个32位&#20540;设置在窗口的额外存储空间的指定偏移位置。</span></p>
+<p><span style="color:rgb(51,51,51); font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; background-color:rgb(247,247,247)"></span></p>
+<p><pre style="margin-top:0px; margin-bottom:20px; padding-top:0px; padding-right:5px; padding-bottom:16px; padding-left:5px; border-top-width:1px; border-right-width:1px; border-bottom-width:1px; border-left-width:15px; border-style:initial; border-color:initial; font-size:12px; vertical-align:baseline; overflow-x:auto; overflow-y:auto; width:589px; line-height:16px; color:rgb(85,85,85); font-family:微软雅黑,FixedSys; background-color:rgb(250,250,250); border-top-style:solid; border-right-style:solid; border-bottom-style:solid; border-top-color:rgb(204,204,204); border-right-color:rgb(204,204,204); border-bottom-color:rgb(204,204,204); border-left-style:solid; border-left-color:rgb(204,204,204)"><span style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-style:initial; border-color:initial; font-size:12px; vertical-align:baseline"> SetWindowLong(hwnd,GWL_EXSTYLE,WS_EX_LAYERED);</span><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span>上面这条代码扩展了一种窗口风&amp;#26684;，其中<span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"color:#ff0000"</span>&gt;</span>GWL_EXSTYLE设定一个新的扩展风&amp;#26684;<span class="tag">&lt;/<span class="title">span</span>&gt;</span>。<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span>接下来我们就可以使用下面这个函数来实现窗口的透明化：<span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span>BOOL SetLayeredWindowAttributes(</span><br><span class="line"></span><br><span class="line">HWND hwnd, // handle to the layered window 透明窗体的句柄</span><br><span class="line"></span><br><span class="line">COLORREF crKey, // specifies the color key 颜色&amp;#20540;</span><br><span class="line"></span><br><span class="line">BYTE bAlpha, // value for the blend function 透明度，取&amp;#20540;范围是[0,255]</span><br><span class="line"></span><br><span class="line">DWORD dwFlags // action 透明方式，可以取两个&amp;#20540;：</span><br><span class="line"></span><br><span class="line">&amp;nbsp;);</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"color:#ff0000"</span>&gt;</span>&amp;nbsp; 当取&amp;#20540;为LWA_ALPHA时，crKey参数无效，bAlpha参数有效；&amp;nbsp;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;&amp;nbsp;当取&amp;#20540;为LWA_COLORKEY时，bAlpha参数有效，而窗体中的所有颜色为crKey的地方将变为透明。<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"color:rgb(51,51,51); font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; line-height:18px; background-color:rgb(247,247,247)"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-style:initial; border-color:initial; font-size:13px; vertical-align:baseline"</span>&gt;</span>其中dwFlags有LWA_ALPHA（&amp;#20540;为2）和LWA_COLORKEY（&amp;#20540;为1）两种设置，如果LWA_ALPHA被设置的话，通过bAlpha参数指定窗体的透明度；如果LWA_COLORKEY标志被设置的话，则指定关键色为crKey，该颜色所覆盖的区域将从窗体去除，去除后的区域将不再进行点击检测，其他颜色则正常显示。如果阿尔法混合&amp;#20540;设置为0，其窗口区域同样不进行点击检测。<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"color:rgb(51,51,51); font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; line-height:18px; background-color:rgb(247,247,247)"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-style:initial; border-color:initial; font-size:13px; vertical-align:baseline"</span>&gt;</span>以上这些就是有关窗口透明度实现的方法了，好，现在我结合子窗口控件来具体实现它。代码如下：<span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"color:rgb(51,51,51); font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; line-height:18px; background-color:rgb(247,247,247)"</span>&gt;</span><span class="tag">&lt;<span class="title">span</span> <span class="attribute">style</span>=<span class="value">"margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-style:initial; border-color:initial; font-size:13px; vertical-align:baseline"</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span><span class="tag">&lt;/<span class="title">span</span>&gt;</span></span><br></pre></td></tr></table></figure></pre></p>
+<h1 id="include_&lt;windows-h&gt;">include &lt;windows.h&gt;</h1><h1 id="define_ID_EDIT_1_//定义编辑框ID">define ID_EDIT      1     //定义编辑框ID</h1><h1 id="define_ID_BUTTON_2_//定义确定按钮ID">define ID_BUTTON    2     //定义确定按钮ID</h1><p>LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;</p>
+<p>int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,<br>                    PSTR szCmdLine, int iCmdShow)<br>{<br>     static TCHAR szAppName[] = TEXT (&amp;quot;HelloWin&amp;quot;) ;<br>     HWND         hwnd ;<br>     MSG          msg ;<br>     WNDCLASS     wndclass ;</p>
+<pre><code>wndclass.style         = CS_HREDRAW | CS_VREDRAW <span class="comment">;</span>
+wndclass.lpfnWndProc   = WndProc <span class="comment">;</span>
+wndclass.cbClsExtra    = 0 <span class="comment">;</span>
+wndclass.cbWndExtra    = 0 <span class="comment">;</span>
+wndclass.hInstance     = hInstance <span class="comment">;</span>
+wndclass.hIcon         = LoadIcon (NULL, IDI_APPLICATION) <span class="comment">;</span>
+wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW) <span class="comment">;</span>
+wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) <span class="comment">;</span>
+wndclass.lpszMenuName  = NULL <span class="comment">;</span>
+wndclass.lpszClassName = szAppName <span class="comment">;</span>
+
+if (!RegisterClass (&amp;amp<span class="comment">;amp;wndclass))</span>
+{
+     MessageBox (NULL, TEXT (&amp;amp<span class="comment">;quot;This program requires Windows NT!&amp;amp;quot;),</span>
+                 szAppName, MB_ICONERROR) <span class="comment">;</span>
+     return 0 <span class="comment">;</span>
+}
+
+hwnd = CreateWindow (szAppName,
+                     TEXT (&amp;amp<span class="comment">;quot;The Hello Program&amp;amp;quot;),</span>
+                     WS_OVERLAPPEDWINDOW,
+                     CW_USEDEFAULT,
+                     CW_USEDEFAULT,
+                     CW_USEDEFAULT,
+                     CW_USEDEFAULT,
+                     NULL,
+                     NULL,
+                     hInstance,
+                     NULL) <span class="comment">;</span>
+
+ShowWindow (hwnd, iCmdShow) <span class="comment">;</span>
+UpdateWindow (hwnd) <span class="comment">;</span>
+
+while (GetMessage (&amp;amp<span class="comment">;amp;msg, NULL, 0, 0))</span>
+{
+     TranslateMessage (&amp;amp<span class="comment">;amp;msg) ;</span>
+     DispatchMessage (&amp;amp<span class="comment">;amp;msg) ;</span>
+}
+return msg.wParam <span class="comment">;</span>
+</code></pre><p>}</p>
+<p>LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)<br>{</p>
+<pre><code> static HWND hwndEdit ;
+ static HWND hwndButton ;
+ HDC         hdc ;
+ PAINTSTRUCT ps ;
+ RECT        rect ;
+ TCHAR         <span class="built_in">str</span>[<span class="number">20</span>];
+ int         i;
+
+ switch <span class="params">(message)</span>
+ {
+ case WM_CREATE:
+     <span class="comment">//产生子窗口控件：编辑框</span>
+     hwndEdit = CreateWindow <span class="params">(TEXT <span class="params">(&amp;amp;quot;edit&amp;amp;quot;)</span>, NULL,
+         WS_CHILD | WS_VISIBLE |
+         WS_BORDER | ES_LEFT |
+         ES_AUTOHSCROLL | ES_AUTOVSCROLL,
+         <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, hwnd, <span class="params">(HMENU)</span> ID_EDIT,
+         <span class="params">(<span class="params">(LPCREATESTRUCT)</span> lParam)</span> -&amp;amp;gt; hInstance, NULL)</span> ;
+     <span class="comment">//产生子窗口控件：按钮</span>
+     hwndButton = CreateWindow<span class="params">(TEXT<span class="params">(&amp;amp;quot;button&amp;amp;quot;)</span>,
+                                TEXT<span class="params">(&amp;amp;quot;确定&amp;amp;quot;)</span>,
+                                WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,
+                                <span class="number">100</span>,<span class="number">50</span>,
+                                <span class="number">50</span>,<span class="number">20</span>,
+                                hwnd,<span class="params">(HMENU)</span> ID_BUTTON,
+                                <span class="params">(<span class="params">(LPCREATESTRUCT)</span> lParam)</span> -&amp;amp;gt; hInstance, NULL)</span>;
+      <span class="comment">//增加窗口样式</span>
+      SetWindowLong<span class="params">(hwnd,GWL_EXSTYLE,WS_EX_LAYERED)</span>;
+      <span class="comment">//设置窗口透明度</span>
+      SetLayeredWindowAttributes<span class="params">(hwnd, RGB<span class="params">(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>)</span>, <span class="number">255</span>, LWA_ALPHA)</span>;
+      return <span class="number">0</span> ;
+
+ case WM_SETFOCUS :
+     SetFocus <span class="params">(hwndEdit)</span> ;            <span class="comment">//设置输入焦点</span>
+     return <span class="number">0</span> ;
+
+ case WM_SIZE :                        <span class="comment">//创建文本框窗口大小</span>
+     MoveWindow <span class="params">(hwndEdit, <span class="number">0</span>, <span class="number">0</span>, LOWORD <span class="params">(lParam)</span>/<span class="number">4</span>, HIWORD <span class="params">(lParam)</span>/<span class="number">16</span>, TRUE)</span> ;
+     return <span class="number">0</span> ;
+
+ case WM_COMMAND :
+        switch <span class="params">(LOWORD <span class="params">(wParam)</span>)</span>
+             case ID_BUTTON:        <span class="comment">//将从编辑框获得的数值应用到窗口透明度里面去</span>
+                    {
+                        GetDlgItemText<span class="params">(hwnd, ID_EDIT, str, sizeof<span class="params">(str)</span>/sizeof<span class="params">(TCHAR)</span>)</span>;
+                        i = _wtoi<span class="params">(str)</span>;
+                        SetLayeredWindowAttributes<span class="params">(hwnd, RGB<span class="params">(<span class="number">255</span>,<span class="number">255</span>,<span class="number">255</span>)</span>, i, LWA_ALPHA)</span>;
+                    }
+            return <span class="number">0</span>;
+return <span class="number">0</span>;
+
+ case WM_DESTROY:
+      PostQuitMessage <span class="params">(<span class="number">0</span>)</span> ;
+      return <span class="number">0</span> ;
+ }
+ return DefWindowProc <span class="params">(hwnd, message, wParam, lParam)</span> ;
+</code></pre><p>}<br>```</p>
+<p>在编辑框里输入0-255的任意数字，点击确定，窗口就能实现透明化的设置了。</p>
+<p><span style="font-family:arial,宋体,sans-serif; font-size:14px; line-height:24px"><span style="color:rgb(51,51,51); font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; line-height:18px; background-color:rgb(247,247,247)"><span style="margin-top:0px; margin-right:0px; margin-bottom:0px; margin-left:0px; padding-top:0px; padding-right:0px; padding-bottom:0px; padding-left:0px; border-top-width:0px; border-right-width:0px; border-bottom-width:0px; border-left-width:0px; border-style:initial; border-color:initial; font-size:13px; vertical-align:baseline">接下来的任务我打算在看完对话框之后再用对话框实现窗口透明的效果，增加滚动条的实现，鼠标的实现，更好地理解和学习对话框<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/smile.gif" alt="微笑"></span></span></span></p>
+<p><span style="font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; color:#333333"><span style="line-height:18px">我是一个新手，希望大家能帮我指出错误我好加以改正，谢谢~~</span></span></p>
+<p><span style="font-family:微软雅黑,Arial,Helvetica,sans-serif; font-size:13px; color:#333333"><span style="line-height:18px"></span></span></p>
+<p></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/23/Gentoo-Linux安装注意事项/" rel="prev">Gentoo Linux安装注意事项</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/17/fedora-16-使用LiveCD修复grub2引导/" rel="next">fedora 16 使用LiveCD修复grub2引导</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<windows-h>"><span class="nav-text">include <windows.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_ID_EDIT_1_//定义编辑框ID"><span class="nav-text">define ID_EDIT      1     //定义编辑框ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_ID_BUTTON_2_//定义确定按钮ID"><span class="nav-text">define ID_BUTTON    2     //定义确定按钮ID</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

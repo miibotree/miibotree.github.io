@@ -1,0 +1,645 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="信息安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="刚刚上完创造学的课回来，上课的时候教授老是讲机械方面的东西，自己又不懂，脑子里面胡思乱想，于是就随便想了些东西，产生了对口令登陆创新的一些想法。
+1.传统的口令登陆
+我们在输入密码的时候使用*号或者是黑色的实心圆圈输入密码的方式已经沿用了不知道多少时间了。再神秘的东西接触了这么长的时间以后可能也会感到没有新鲜感了吧。
+或者就像是linux里面的口令输入，干脆就是什么都不显示，倒也是一个不错的方法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="口令登陆创新的一些想法">
+<meta property="og:url" content="http://yoursite.com/2012/02/20/口令登陆创新的一些想法/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="刚刚上完创造学的课回来，上课的时候教授老是讲机械方面的东西，自己又不懂，脑子里面胡思乱想，于是就随便想了些东西，产生了对口令登陆创新的一些想法。
+1.传统的口令登陆
+我们在输入密码的时候使用*号或者是黑色的实心圆圈输入密码的方式已经沿用了不知道多少时间了。再神秘的东西接触了这么长的时间以后可能也会感到没有新鲜感了吧。
+或者就像是linux里面的口令输入，干脆就是什么都不显示，倒也是一个不错的方法。">
+<meta property="og:image" content="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243575.jpg">
+<meta property="og:image" content="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243576.jpg">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/20/0_1329743856RRt8.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/20/0_1329743821suM0.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/20/0_13297441283E1U.gif">
+<meta property="og:updated_time" content="2015-07-25T04:58:07.911Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="口令登陆创新的一些想法">
+<meta name="twitter:description" content="刚刚上完创造学的课回来，上课的时候教授老是讲机械方面的东西，自己又不懂，脑子里面胡思乱想，于是就随便想了些东西，产生了对口令登陆创新的一些想法。
+1.传统的口令登陆
+我们在输入密码的时候使用*号或者是黑色的实心圆圈输入密码的方式已经沿用了不知道多少时间了。再神秘的东西接触了这么长的时间以后可能也会感到没有新鲜感了吧。
+或者就像是linux里面的口令输入，干脆就是什么都不显示，倒也是一个不错的方法。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 口令登陆创新的一些想法 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              口令登陆创新的一些想法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-20T21:55:00+08:00" content="2012-02-20">
+            2012-02-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>刚刚上完创造学的课回来，上课的时候教授老是讲机械方面的东西，自己又不懂，脑子里面胡思乱想，于是就随便想了些东西，产生了对口令登陆创新的一些想法。</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">1.传统的口令登陆</span></strong></p>
+<p>我们在输入密码的时候使用*号或者是黑色的实心圆圈输入密码的方式已经沿用了不知道多少时间了。再神秘的东西接触了这么长的时间以后可能也会感到没有新鲜感了吧。</p>
+<p>或者就像是linux里面的口令输入，干脆就是什么都不显示，倒也是一个不错的方法。</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">2.口令登陆的创新</span></strong></p>
+<p>（一）其实最初有这个想法还是在看了<strong><span style="color: #3366ff;">win8</span></strong>的图片密码登陆后产生的。下面来看看win8的图片密码登陆功能：</p>
+<p>，微软公司透露了win8的一项新功能，出了传统密码设置外，用户还可通过&ldquo;图片密码&rdquo;来实现系统登录。</p>
+<p><a href="http://www.pcpop.com/doc/pic/002243575.html" target="_blank" rel="external"><img src="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243575.jpg" alt="Windows 8 支持图片密码登录 "></a></p>
+<center></center>
+
+<p>用户可增设图像密码保护自己的相关资料</p>
+<p>&nbsp;&nbsp;&nbsp; 据了解，该功能融合了个人图片和手势的密码存放方式，它可以增加密码的安全性和可记忆程度。用户仅需一个手势，即可解锁Windows 8，他人很难看出自定义图像中的玄机。</p>
+<p><a href="http://www.pcpop.com/doc/pic/002243576.html" target="_blank" rel="external"><img src="http://img5.pcpop.com/ArticleImages/500x375/2/2243/002243576.jpg" alt="Windows 8 支持图片密码登录 "></a></p>
+<p>用户可增设图像密码保护自己的相关资料</p>
+<p>&nbsp;&nbsp;&nbsp; 此外微软还补充表示，该功能为可选，并不会取代传统字符密码。</p>
+<p>**<span style="color: #000099;"></span></p>
+<p>**</p>
+<p><strong><span style="color: #000099;">（二）手机解锁</span></strong></p>
+<p><span style="color: #33cc00;">i）迷宫解锁</span></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_1329743856RRt8.gif" alt=""></p>
+<p><span style="color: #33cc00;">ii）指纹解锁</span></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_1329743821suM0.gif" alt=""></p>
+<p><span style="color: #33cc00;">iii）模拟指纹解锁</span></p>
+<p>我的诺基亚不支持多点触控，所以以前下载过一款软件，将手指按上去，每隔一段时间自动进行一次&ldquo;扫描&rdquo;，并发出一次&ldquo;嘟&rdquo;的声音。你可以提前设定好声音的次数，当达到你设定声音次数的时候松开手指，这个时候解锁成功。它的本质是通过判断声音的次数来进行解锁的判断</p>
+<p><strong><span style="color: #3366ff;">（三）中银e令</span></strong></p>
+<p><img src="http://hi.csdn.net/attachment/201202/20/0_13297441283E1U.gif" alt=""></p>
+<p>通过每隔一段时间变换e口令来实现动态口令变化</p>
+<p>与这类似的还有无线上网登录时候的短信动态（静态）口令登陆</p>
+<p><strong><span style="color: #3366ff;">（四）无线上网动态口令</span></strong></p>
+<p>通过短信发送自动生成的动态密码的方式实现</p>
+<p><strong><span style="font-size: 16px; color: #ff6600;">3.实现口令登陆创新需要考虑到的因素</span></strong></p>
+<p><strong><span style="color: #3366ff;">（一）口令的唯一性</span></strong></p>
+<p>这里需要运用概率论的知识。保证用户在登陆的时候口令的唯一性。这个口令的概率要小到一定范围以内，减少偶然碰撞与恶意碰撞，同时避免重复</p>
+<p><strong><span style="color: #3366ff;">（二）简单性</span></strong></p>
+<p>为什么普通的字符串口令登陆能流行这么长时间？很重要的原因就是它的简单性。同时它便于数据的管理，以及密码学基础能够对密码进行加密的各种方式。尤其是现代密码体制更加强了这种口令的安全性。</p>
+<p><strong><span style="color: #3366ff;">（三）考虑到不同年龄段</span></strong></p>
+<p>老年人可能更倾向于简单的密码设置。这在带来方便的同时也降低了密码的安全度。而年轻人倾向于创建很多不同的密码，到后来由于缺乏统一的管理和记忆最后把很多密码都忘记了。</p>
+<p><strong><span style="color: #3366ff;">（四）趣味性</span></strong></p>
+<p>上面的例子中，win8的图片密码方式和手机解锁方式很好地体现了口令的创新机制。所以我认为以后的口令创新方式可能是多种多样的，同时也是富有一定的趣味性的。不会让人觉得输入你的口令是一件很枯燥的事情。</p>
+<p><strong><span style="font-size: 16px; color: #ffcc33;">4.实现口令创新的一些想法</span></strong></p>
+<p><strong><span style="color: #3366ff;">（一）类的继承（母体-&gt;子体）</span></strong></p>
+<p>创建一个父类，在继承父类的基础上扩展子类的功能，这样减少了密码记忆的难度。</p>
+<p>同时联系你注册的网站的信息进行不同子类的扩展。</p>
+<p>但是这种方法有很大的缺陷和局限性。</p>
+<p><strong><span style="color: #3366ff;">（二）基因突变</span></strong></p>
+<p>生物中的基因结构的碱基对排列确实是很神奇啊。所以心想能不能借鉴这种算法来实现口令排列？关于利用遗传算法实现这种口令排列。</p>
+<p>当然这只是我的构想而已。</p>
+<p><strong><span style="color: #3366ff;">（三）从静态到动态</span></strong></p>
+<p>用&ldquo;文字&rdquo;的形式实现口令登陆当然是最基础的，win8实现图像进行口令登陆。所以我想能不能利用声音，图像，等其它多媒体技术来实现相对动态的口令登陆。</p>
+<p>但是利用这种方式会设计到更多算法，以及更多的数据储存。</p>
+<p><strong><span style="color: #3366ff;">（四）联想 与 信息</span></strong></p>
+<p>关于联想，其实跟（一）有一点相似之处。但是具体怎么联想，自己还没有想到。</p>
+<p>关于信息， 我想利用头脑风暴法来实现尽量多的信息实现来将信息&ldquo;嵌入&rdquo;到口令中。</p>
+<p>&nbsp;</p>
+<p>暂时就想到这些信息了，以上内容只是自己随便想想的，很多不实际，错误的地方还请大家指正。谢谢。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/信息安全/" rel="tag">#信息安全</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/02/22/JAVA学习笔记/" rel="prev">JAVA学习笔记</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/02/17/关于计算机专业的人如何学好编程/" rel="next">关于计算机专业的人如何学好编程</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

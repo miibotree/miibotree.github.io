@@ -1,0 +1,603 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ONVIF," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这段时间在做毕设，做的东西是基于Onvif的视频流云存储。把碰到的一些问题记录下来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Onvif协议客户端开发【1.概念篇】">
+<meta property="og:url" content="http://yoursite.com/2015/04/29/Onvif协议客户端开发【1-概念篇】/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这段时间在做毕设，做的东西是基于Onvif的视频流云存储。把碰到的一些问题记录下来。">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2015/04/rpc.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2015/04/rpc_detail.png">
+<meta property="og:updated_time" content="2015-07-25T11:28:04.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Onvif协议客户端开发【1.概念篇】">
+<meta name="twitter:description" content="这段时间在做毕设，做的东西是基于Onvif的视频流云存储。把碰到的一些问题记录下来。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Onvif协议客户端开发【1.概念篇】 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Onvif协议客户端开发【1.概念篇】
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-04-29T13:28:33+08:00" content="2015-04-29">
+            2015-04-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这段时间在做毕设，做的东西是基于Onvif的视频流云存储。把碰到的一些问题记录下来。<br><a id="more"></a></p>
+<p><span id="more-1024"></span></p>
+<p>一.如何理解Onvif协议</p>
+<p>一开始拿到这个课题只知道要通过Onvif协议获得视频流，然后把视频流存储下来。但是对于Onvif协议根本没有理解。我在翻译外文文献的时候，文章中反复出现stub这个单词，我也翻译不好这个单词。后来才发现，原来这个单词是RPC（远程过程调用）的概念。所以，我们首先来看看RPC：</p>
+<p>这里引用了某位同学的博客，分深入和浅出两篇讲解了RPC的过程：</p>
+<h1 id="深入浅出RPC——浅出篇"><a href="http://mindwind.me/blog/2014/09/15/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BARPC%E2%80%94%E2%80%94%E6%B5%85%E5%87%BA%E7%AF%87.html" target="_blank" rel="external">深入浅出RPC——浅出篇</a></h1><h1 id="深入浅出RPC——深入篇"><a href="http://mindwind.me/blog/2014/09/22/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BARPC%E2%80%94%E2%80%94%E6%B7%B1%E5%85%A5%E7%AF%87.html" target="_blank" rel="external">深入浅出RPC——深入篇</a></h1><p>这里主要盗用下面两张图来很好的说明整个过程：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2015/04/rpc.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2015/04/rpc.png" alt="rpc"></a></p>
+<p><a href="http://miibotree.com/wp-content/uploads/2015/04/rpc_detail.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2015/04/rpc_detail.png" alt="rpc_detail"></a></p>
+<p>具体这两张图片的含义通过上面的两个博客应该能够很清晰的理解了。</p>
+<p>&nbsp;</p>
+<p>二.学习Onvif协议</p>
+<p>在理解了RPC之后，可以开始学习Onvif了。简单来说，可以把Onvif协议想像成Http协议，客户端发出请求，然后服务端在收到请求之后把所需信息返回给客户端。以浏览器为例子，html代码通过http协议来传送。其实Onvif的整个过程很类似的，当你想去学习onvif协议的时候，所有介绍onvif的文章里面都会提到，onvif是基于soap协议和wsdl协议的，而soap协议和wsdl协议都是基于xml的。我们先不管soap协议和wsdl协议是什么东西，但是对于xml我们应该比较熟悉的。我们知道xml里面其实传送的是数据或请求命令，那么这里就可以把xml想像成html了。这样一来就比较好理解了。举个例子：</p>
+<p>对于网络摄像头，我们可以看成是服务端（Onvif里面把IP摄像头定义为NVT设备 ：Network Video Transmitter），既然是服务端，就跑着很多“服务”，比如说设置IP的服务，控制摄像头移动、调焦的服务，提供网络视频流的服务，等等。而每一个服务都有一个Profile（配置文件）。我们想要使用这些服务，必须首先去请求获得这些Profile（配置文件），这些Profile里面有关于对应服务的具体信息。</p>
+<p>客户端首先去请求获得某个服务的Profile，服务端收到请求后把该Peofile里面的信息返回给客户端。这样客户端根据收到的Profile里面的信息就可以使用服务了。（当然真正的过程远比这个复杂，但是大致就是这个流程）。</p>
+<p>那么，服务端提供哪些服务呢？我们可以认为在wsdl协议里面规范了提供的服务。</p>
+<p>那么，客户端和服务端是怎么进行交互的呢？我们可以认为soap协议规范了交互这个过程。</p>
+<p>现在我们对整个流程的了解更进了一步，接下来我们再回过头来看看上面的第一张图。</p>
+<p>我们编写的是客户端，所以我们就是caller。我们所要编写的代码是红色的那部分，也就是逻辑函数。</p>
+<p>而具体的函数实现是在黄色的User-stub里面实现的。黄色的这部分不用我们来做，刚才已经说了，交互是通过soap来进行的，所以我们可以使用工具来自动生成User-stub,具体步骤如下：</p>
+<p>1.使用Onvif协议的官方wsdl文档生成头文件，使用的工具是wsdl2h</p>
+<p>2.根据头文件生成stub代码，使用的工具是soapcpp2</p>
+<p>最后，绿色的部分是RPC runtime，由于我们编写的是红色的逻辑代码的函数，而RPC runtime是根据黄色的User-stub生成的，所以调试起来会比较麻烦。搜索一下别人的博客可以发现一些调试技巧，这里就不写出来了，大家可以自己找一下。</p>
+<p>&nbsp;</p>
+<p>希望这篇文章对您理解Onvif的整个流程有所帮助。</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ONVIF/" rel="tag">#ONVIF</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/29/Onvif协议客户端开发【2-资料篇】/" rel="prev">Onvif协议客户端开发【2.资料篇】</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/25/A-New-Start/" rel="next">A New Start</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#深入浅出RPC——浅出篇"><span class="nav-text">深入浅出RPC——浅出篇</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#深入浅出RPC——深入篇"><span class="nav-text">深入浅出RPC——深入篇</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

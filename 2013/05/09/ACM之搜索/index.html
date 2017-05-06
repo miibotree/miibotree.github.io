@@ -1,0 +1,594 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ACM,搜索," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这次课程讲了搜索，二分查找和三分查找应该比较简单，主要是迷宫的深度优先或者是广度算法。
+这里首先讲到了剪枝。很形象，在一棵树中，发现某个树的结点已经无效，那么该结点后面的所有结点都没有必要再去搜索了，直接把该枝结点剪掉，就是所谓的剪枝。
+课件中提到了奇偶性剪枝，拿走迷宫的例子来说，因为不管怎么走步数的奇偶性质是不变的，如果你剩下的时间是偶数，而步数是奇数，那么必定走不出迷宫。这就是奇偶性剪枝。
+迷">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ACM之搜索">
+<meta property="og:url" content="http://yoursite.com/2013/05/09/ACM之搜索/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这次课程讲了搜索，二分查找和三分查找应该比较简单，主要是迷宫的深度优先或者是广度算法。
+这里首先讲到了剪枝。很形象，在一棵树中，发现某个树的结点已经无效，那么该结点后面的所有结点都没有必要再去搜索了，直接把该枝结点剪掉，就是所谓的剪枝。
+课件中提到了奇偶性剪枝，拿走迷宫的例子来说，因为不管怎么走步数的奇偶性质是不变的，如果你剩下的时间是偶数，而步数是奇数，那么必定走不出迷宫。这就是奇偶性剪枝。
+迷">
+<meta property="og:updated_time" content="2015-07-25T04:42:27.251Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ACM之搜索">
+<meta name="twitter:description" content="这次课程讲了搜索，二分查找和三分查找应该比较简单，主要是迷宫的深度优先或者是广度算法。
+这里首先讲到了剪枝。很形象，在一棵树中，发现某个树的结点已经无效，那么该结点后面的所有结点都没有必要再去搜索了，直接把该枝结点剪掉，就是所谓的剪枝。
+课件中提到了奇偶性剪枝，拿走迷宫的例子来说，因为不管怎么走步数的奇偶性质是不变的，如果你剩下的时间是偶数，而步数是奇数，那么必定走不出迷宫。这就是奇偶性剪枝。
+迷">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> ACM之搜索 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              ACM之搜索
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-05-09T21:32:46+08:00" content="2013-05-09">
+            2013-05-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这次课程讲了搜索，二分查找和三分查找应该比较简单，主要是迷宫的深度优先或者是广度算法。</p>
+<p>这里首先讲到了剪枝。很形象，在一棵树中，发现某个树的结点已经无效，那么该结点后面的所有结点都没有必要再去搜索了，直接把该枝结点剪掉，就是所谓的剪枝。</p>
+<p>课件中提到了奇偶性剪枝，拿走迷宫的例子来说，因为不管怎么走步数的奇偶性质是不变的，如果你剩下的时间是偶数，而步数是奇数，那么必定走不出迷宫。这就是奇偶性剪枝。</p>
+<p>迷宫问题的关键就是剪枝，也就是算法优化。这里给自己做个提醒。</p>
+<p>以前写过马践踏棋盘，是用栈写的，基本思路跟下面的这道迷宫问题可能差不多。</p>
+<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1010" target="_blank" rel="external">http://acm.hdu.edu.cn/showproblem.php?pid=1010</a></p>
+<p>心里想着这个算法可以做个界面，然后简单的RPG小游戏的走路算法就可以实现了！~</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># include &amp;lt;iostream.h&amp;gt; </span></span><br><span class="line"><span class="comment"># include &amp;lt;string.h&amp;gt; </span></span><br><span class="line"><span class="comment"># include &amp;lt;stdlib.h&amp;gt; </span></span><br><span class="line"></span><br><span class="line">char <span class="keyword">map</span>[<span class="number">9</span>][<span class="number">9</span>]; </span><br><span class="line"><span class="keyword">int</span> n,<span class="keyword">m</span>,t,di,dj; </span><br><span class="line">bool escape; 											<span class="regexp">//</span>判断是否走出迷宫的标志位</span><br><span class="line"><span class="keyword">int</span> dir[<span class="number">4</span>][<span class="number">2</span>] = &#123;&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;, &#123;<span class="number">0</span>,<span class="number">1</span>&#125;, &#123;<span class="number">1</span>,<span class="number">0</span>&#125;, &#123;-<span class="number">1</span>,<span class="number">0</span>&#125;&#125;; 		<span class="regexp">//</span>四个方向的走路</span><br><span class="line"></span><br><span class="line">void dfs(<span class="keyword">int</span> si,<span class="keyword">int</span> sj,<span class="keyword">int</span> cnt) </span><br><span class="line">&#123;    </span><br><span class="line">	<span class="keyword">int</span> i,temp; </span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(si &amp;<span class="keyword">gt</span>; n || sj &amp;<span class="keyword">gt</span>; <span class="keyword">m</span> || si &amp;<span class="keyword">lt</span>;= <span class="number">0</span> || sj &amp;<span class="keyword">lt</span>;= <span class="number">0</span>) <span class="keyword">return</span>; <span class="regexp">//</span>越边界</span><br><span class="line">	<span class="keyword">if</span>(cnt == t &amp;amp;&amp;amp; si == di &amp;amp;&amp;amp; sj == dj)    escape = <span class="number">1</span>;<span class="regexp">//</span>走出了迷宫</span><br><span class="line">	<span class="keyword">if</span>(escape) <span class="keyword">return</span>; </span><br><span class="line"></span><br><span class="line">	temp = (t-cnt) - <span class="keyword">abs</span>(si-di) - <span class="keyword">abs</span>(sj-dj); 		   <span class="regexp">//</span>最小剩余时间</span><br><span class="line">	<span class="keyword">if</span>(temp &amp;<span class="keyword">lt</span>; <span class="number">0</span> || temp &amp;amp; <span class="number">1</span>) <span class="keyword">return</span>; 				   <span class="regexp">//</span>时间剪枝和奇偶性剪枝</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &amp;<span class="keyword">lt</span>; <span class="number">4</span>; i++)&#123; </span><br><span class="line">		<span class="keyword">if</span>(<span class="keyword">map</span>[si+dir[i][<span class="number">0</span>]][sj+dir[i][<span class="number">1</span>]]!=&amp;<span class="comment">#039;X&amp;#039;)		//没有遇到障碍</span></span><br><span class="line">		&#123; </span><br><span class="line">			<span class="keyword">map</span>[si+dir[i][<span class="number">0</span>]][sj+dir[i][<span class="number">1</span>]]=&amp;<span class="comment">#039;X&amp;#039;; 		//把走过已经塌掉的路作为障碍</span></span><br><span class="line">			dfs(si+dir[i][<span class="number">0</span>],sj+dir[i][<span class="number">1</span>],cnt+<span class="number">1</span>); 		<span class="regexp">//</span>深度遍历算法</span><br><span class="line">			<span class="keyword">map</span>[si+dir[i][<span class="number">0</span>]][sj+dir[i][<span class="number">1</span>]]=&amp;<span class="comment">#039;.&amp;#039;; 		//执行到这一步说明走迷宫失败，将该步还原以便后面的搜索</span></span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">	<span class="keyword">return</span>; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main() </span><br><span class="line">&#123; </span><br><span class="line">	<span class="keyword">int</span> i,j,si,sj; </span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(cin&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;n&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;<span class="keyword">m</span>&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;t)</span><br><span class="line">	&#123; </span><br><span class="line">		<span class="keyword">if</span>(n == <span class="number">0</span> &amp;amp;&amp;amp; <span class="keyword">m</span> == <span class="number">0</span> &amp;amp;&amp;amp; t == <span class="number">0</span>) <span class="keyword">break</span>;						<span class="regexp">//</span>输入结束 </span><br><span class="line">		<span class="keyword">int</span> wall = <span class="number">0</span>;												<span class="regexp">//</span>统计障碍物总数</span><br><span class="line">		<span class="keyword">for</span>(i = <span class="number">1</span>;i &amp;<span class="keyword">lt</span>;= n;i++) </span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(j = <span class="number">1</span>;j &amp;<span class="keyword">lt</span>;= <span class="keyword">m</span>;j++)</span><br><span class="line">			&#123; </span><br><span class="line">				cin&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;<span class="keyword">map</span>[i][j]; 									<span class="regexp">//</span>输入地图</span><br><span class="line">				<span class="keyword">if</span>(<span class="keyword">map</span>[i][j] == &amp;<span class="comment">#039;S&amp;#039;) &#123; si = i; sj = j; &#125; 			//起始位置</span></span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">map</span>[i][j] == &amp;<span class="comment">#039;D&amp;#039;) &#123; di = i; dj = j; &#125; 		//目的位置</span></span><br><span class="line">				<span class="keyword">else</span> <span class="keyword">if</span>(<span class="keyword">map</span>[i][j] == &amp;<span class="comment">#039;X&amp;#039;) wall++; 					//障碍物</span></span><br><span class="line">			&#125; </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">if</span>(n * <span class="keyword">m</span> - wall &amp;<span class="keyword">lt</span>;= t)										//时间剪枝</span><br><span class="line">	   &#123;</span><br><span class="line">		   cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;NO&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">		   <span class="keyword">continue</span>;</span><br><span class="line">	   &#125;</span><br><span class="line"></span><br><span class="line">	   escape = <span class="number">0</span>; </span><br><span class="line">       <span class="keyword">map</span>[si][sj] = &amp;<span class="comment">#039;X&amp;#039;;</span></span><br><span class="line">       dfs(si,sj,<span class="number">0</span>); 												<span class="regexp">//</span>深度优先搜索</span><br><span class="line">       <span class="keyword">if</span>(escape) </span><br><span class="line">			cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;YES&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl; </span><br><span class="line">       <span class="keyword">else</span> </span><br><span class="line">			cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;NO&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl; </span><br><span class="line">   &#125; </span><br><span class="line">   <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ACM/" rel="tag">#ACM</a>
+          
+            <a href="/tags/搜索/" rel="tag">#搜索</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/05/16/C语言位域/" rel="prev">C语言位域</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/09/VS2010-LNK1123-转换到-COFF-期间失败-文件无效或损坏/" rel="next">VS2010:LNK1123: 转换到 COFF 期间失败: 文件无效或损坏</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

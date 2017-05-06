@@ -1,0 +1,677 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Scintilla,c/c++,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这节的目标就是写出语法高亮，代码折叠这两个效果。
+还是首先给大家发个效果图看一下：
+
+主要参考文档：
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html
+
+当然官方文档是必不可少的。
+其实有了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scintilla控件在Win32环境下的使用（二）">
+<meta property="og:url" content="http://yoursite.com/2012/09/17/Scintilla控件在Win32环境下的使用（二）/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这节的目标就是写出语法高亮，代码折叠这两个效果。
+还是首先给大家发个效果图看一下：
+
+主要参考文档：
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html
+
+当然官方文档是必不可少的。
+其实有了">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/09/QQ截图20120917165723.png">
+<meta property="og:updated_time" content="2015-07-25T05:07:26.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scintilla控件在Win32环境下的使用（二）">
+<meta name="twitter:description" content="这节的目标就是写出语法高亮，代码折叠这两个效果。
+还是首先给大家发个效果图看一下：
+
+主要参考文档：
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html
+http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html
+
+当然官方文档是必不可少的。
+其实有了">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Scintilla控件在Win32环境下的使用（二） // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Scintilla控件在Win32环境下的使用（二）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:42:59+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这节的目标就是写出语法高亮，代码折叠这两个效果。</p>
+<p>还是首先给大家发个效果图看一下：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/09/QQ截图20120917165723.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/09/QQ截图20120917165723.png" alt="" title="QQ截图20120917165723"></a></p>
+<p>主要参考文档：</p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html</a></p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html</a></p>
+<p><span id="more-417"></span></p>
+<p>当然官方文档是必不可少的。</p>
+<p>其实有了第一节的工作，如果你玩过vim，那么接下来的工作有点类似于配置.vimrc文件了。</p>
+<p>只不过比配置vimrc文件麻烦的是我们要自己确定发送消息的时机。</p>
+<p>让Scintilla支持语法高亮</p>
+<p>有了前面的SendEditor控制函数，我们就可以配置语法高亮了，下面这段代码可以使我们的Scintilla控件显示C++语法高亮代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* g_szKeywords=</span><br><span class="line"><span class="string">"asm auto bool break case catch char class const "</span></span><br><span class="line"><span class="string">"const_cast continue default delete do double "</span></span><br><span class="line"><span class="string">"dynamic_cast else enum explicit extern false finally "</span></span><br><span class="line"><span class="string">"float for friend goto if inline int long mutable "</span></span><br><span class="line"><span class="string">"namespace new operator private protected public "</span></span><br><span class="line"><span class="string">"register reinterpret_cast register return short signed "</span></span><br><span class="line"><span class="string">"sizeof static static_cast struct switch template "</span></span><br><span class="line"><span class="string">"this throw true try typedef typeid typename "</span></span><br><span class="line"><span class="string">"union unsigned using virtual void volatile "</span></span><br><span class="line"><span class="string">"wchar_t while"</span>;</span><br><span class="line">...</span><br><span class="line">SendEditor(S<span class="built_in">CI_SETLEXER</span>, SCLEX_CPP); <span class="comment">//C++语法解析</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_SETKEYWORDS</span>, <span class="number">0</span>, (sptr_t)g_szKeywords);<span class="comment">//设置关键字// 下面设置各种语法元素前景色</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_WORD, <span class="number">0x00FF0000</span>); <span class="comment">//关键字</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_STRING, <span class="number">0x001515A3</span>); <span class="comment">//字符串</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_CHARACTER, <span class="number">0x001515A3</span>); <span class="comment">//字符</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_PREPROCESSOR, <span class="number">0x00808080</span>);<span class="comment">//预编译开关</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENT, <span class="number">0x00008000</span>);<span class="comment">//块注释</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENTLINE, <span class="number">0x00008000</span>);<span class="comment">//行注释</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENTDOC, <span class="number">0x00008000</span>);<span class="comment">//文档注释（/**开头）</span></span><br></pre></td></tr></table></figure>
+<p>上面这段代码自己在c下面还得改一改。在第一篇里面自己定义的SendEditor函数是有四个参数的。所以我在传递参数的时候也必须满足4个参数。</p>
+<p>所以所有关于SendEditor的函数就变成了类似下面这样：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">ptr</span>,SCI_SETLEXER, SCLEX_CPP, <span class="number">0</span>)</span><span class="comment">; //C++语法解析</span></span><br></pre></td></tr></table></figure>
+<p>语法解析只负责把代码拆分开，至于哪些是关键字，还得我们来指定。</p>
+<p>要支持语法高亮，要做三件事：</p>
+<p>一、选定语法解析器设置关键字</p>
+<p>语法解析器用于把一大段代码分解成一个个的单词(token)，另外还用于代码折叠的控制（后面会说到）。</p>
+<p>选定语法解析器的命令是SCI_SETLEXER，如：</p>
+<p>SendEditor(SCI_SETLEXER, SCLEX_CPP);</p>
+<p>除了SCLEX_CPP以外，还有SCLEX_HTML、SCLEX_PERL、SCLEX_SQL、SCLEX_VB等一大堆，定 义在SciLexer.h里。现代的IDE应该可以定位SCLEX_CPP定义，它周围的SCLEX_XXX就是其它的语法解析器。</p>
+<p>另外，也可以用SCI_SETLEXERLANGUAGE命令，如：</p>
+<p>SendEditor(SCI_SETLEXERLANGUAGE, 0, (sptr_t)&#8221;cpp&#8221;);</p>
+<p>SCI_SETLEXERLANGUAGE接受的是一个字符串参数，这个字符串定义于代码解析器源代码（srclex*.cxx） 最后面LexerModule开头的那行代码，那里的第三个参数就是。</p>
+<p>二、设置关键字</p>
+<p>语法解析只负责把代码拆分开，至于哪些是关键字，还得我们来指定。</p>
+<p>这种方式带来了些许的灵活性，比如我们要高亮一种自定义的语言，这种语言的风格与C++类似（如Java、C#、php等），我们也 可以选定SCLEX_CPP作为语法解析器，然后定义自己的关键字。(所以不需要把各种解析器都编译进DLL文件里)</p>
+<p>设置关键字的命令是SCI_SETKEYWORDS。它的wParam用于指定关键字种类，可以是0~8即9种类型，这样我们可以做 更细致的区分，如把关键字for if和int bool区分显示。lParam指定关键字，以空格分隔。</p>
+<p>三、设置文本元素对应的字体风格</p>
+<p>即字体、前景色、背景色、斜体粗体等</p>
+<p>设置字体风格的命令以SCI_STYLE作为前缀，这组命令比较多，为了不浪费篇幅，偶这里只列举几个，其它的可以参考这里</p>
+<p>（<a href="http://scintilla.sourceforge.net/ScintillaDoc.html#StyleDefinition）" target="_blank" rel="external">http://scintilla.sourceforge.net/ScintillaDoc.html#StyleDefinition）</a></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">S<span class="built_in">CI_STYLESETBACK</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置背景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFORE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置前景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFONT</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">char</span> *fontName) <span class="comment">//设置字体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETSIZE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> sizeInPoints)<span class="comment">//设置字号</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBOLD</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">bool</span> bold) <span class="comment">//设置粗体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBACK</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置背景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFORE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置前景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFONT</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">char</span> *fontName) <span class="comment">//设置字体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETSIZE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> sizeInPoints)<span class="comment">//设置字号</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBOLD</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">bool</span> bold) <span class="comment">//设置粗体</span></span><br></pre></td></tr></table></figure>
+<p>这里的styleNumber是指文本元素，如关键字、行号、控制字串等。前面代码中的SCE_C_XXXX是C++解析器分解出的 语法相关的元素。另外还有</p>
+<p>STYLE_DEFAULT（默认）</p>
+<p>STYLE_LINENUMBER（行号）</p>
+<p>STYLE_BRACELIGHT（括号匹 配）</p>
+<p>STYLE_BRACEBAD（括号失配）</p>
+<p>STYLE_CONTROLCHAR（控制字符）</p>
+<p>STYLE_INDENTGUIDE（缩进线）</p>
+<p>STYLE_CALLTIP（调用提示）</p>
+<p>SCI_STYLECLEARALL //把所有文本元素设置成与STYLE_DEFAULT相同的风格</p>
+<p>Scintilla文档建议的顺序是先向STYLE_DEFAULT设置一些通用风格，然后再用SCI_STYLECLEARALL 把所有元素风格重置成与STYLE_DEFAULT一致，最后单独设置其它元素。</p>
+<p>加上当前行高亮功能：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETCARETLINEVISIBLE</span>, TRUE)</span><span class="comment">;</span></span><br><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETCARETLINEBACK</span>, <span class="number">0</span>xb0ffff)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>把TAB宽度由默认的8改为4（依个人习惯~~）</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETTABWIDTH</span>, <span class="number">4</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>让Scintilla实现代码折叠</p>
+<p>页边(Margins)和标记(Markers)</p>
+<p>代码折叠是现代IDE和代码编辑器的必备功能，如果现在推出一个不支持折叠的编辑器，那是要被BS地~~。为了不被BS，很有必要先“研究”一下Scintilla的页边(Margins)和标记(Markers)功能。</p>
+<p>页 边(Margins)：页边是位于文本显示区左边的一竖条区域，它可以用于显示行号、书签、断点标记等东东。Scintilla最多可以有5个页边（从左 到右的编号为0~4），每个页边可以使用SCI_SETMARGINTYPEN命令确定是用于显示行号还是符号。我们可以用 SCI_SETMARGINWIDTHN命令控制一个页边的宽度，如果设置为0，则表示不显示该页边。默认是只显示宽度为16的1号页边。</p>
+<p>标 记(Markers)：标记，不用说也知道是用来标记文本位置（确切地说，是文本行）的。我们可以使用32种标记（编号0~31），我们可以自由决定这 32种标记的意义，如标记0用来表示断点、标记1~10表示书签、标记20表示语法错误行等等。不过，如果编辑器要支持代码折叠功能，我们得把标记 25~31留出来，把这7个标记作为代码折叠专用标记（后面还会讲到）。</p>
+<p>告诉页边显示哪些标记</p>
+<p>当页边不是设定为显示行号时（由SCI_SETMARGINTYPEN命令设置），那么它就会显示标记。刚才说过Scintilla有32种标记，一般来说不会让一个页边来显示所有的标记，而是只显示部分标记。</p>
+<p>在一个页边里可以显示哪几种标记由SCI_SETMARGINMASKN命令设置，它的参数是一个32位掩码（mask）值，掩码值的第n位为1时表示该页边可显示n号标记。</p>
+<p>所有页边相关的命令以SCI_SETMARGIN或SCI_GETMARGIN作为前缀，如：</p>
+<p>SCI_SETMARGINTYPEN(int margin, int type) 设置页边显示行号还是符号，type可以是SC_MARGIN_SYMBOL或SC_MARGIN_NUMBER</p>
+<p>SCI_SETMARGINWIDTHN(int margin, int pixelWidth) 设置页边宽度</p>
+<p>SCI_SETMARGINMASKN(int margin, int mask) 设置页边掩码</p>
+<p>SCI_SETMARGINSENSITIVEN(int margin, bool sensitive) 设置页边是否接受鼠标点击事件</p>
+<p>所有标记相关的命令以SCI_MARKER作为前缀，如：</p>
+<p>SCI_MARKERADD(int line, int markerNumber) 在指定行加入一个markerNumber号标记</p>
+<p>SCI_MARKERDEFINE(int markerNumber, int markerSymbols) 定义markerNumber号标记的样式</p>
+<p>SCI_MARKERDELETE(int line, int markerNumber) 在指定行上的删除markerNumber号标记</p>
+<p>SCI_MARKERDELETEALL(int markerNumber) 删除文本中所有markerNumber号标记</p>
+<p>SCI_MARKERSETFORE(int markerNumber, int colour) 为markerNumber号标记指定前景色</p>
+<p>SCI_MARKERSETBACK(int markerNumber, int colour) 为markerNumber号标记指定背景色</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先写10行文本上去</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i SendEditor(ptr,S<span class="built_in">CI_APPENDTEXT</span>, <span class="number">12</span>, (sptr_t)<span class="string">"hello worldn"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1号页边，宽度为20，显示行号</span></span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_SETMARGINTYPEN</span>,<span class="number">1</span>, SC_MARGIN_NUMBER);</span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_SETMARGINWIDTHN</span>,<span class="number">1</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; ihwndFrom==hwndScintilla)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">switch</span>(lpnmhdr-&amp;gt;code)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> SCN_MARGINCLICK:</span><br><span class="line"><span class="keyword">if</span> (notify-&amp;gt;margin == MARGIN_FOLD_INDEX)</span><br><span class="line">&#123;</span><br><span class="line">line_number = SendEditor(ptr,S<span class="built_in">CI_LINEFROMPOSITION</span>,notify-&amp;gt;position,<span class="number">0</span>);</span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_TOGGLEFOLD</span>, line_number,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好啦。这样一来我们就实现了代码高亮和代码折叠这两个功能了。</p>
+<p>如果想继续深入学习更多scintilla的功能的话，就只能啃读官方文档了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Scintilla/" rel="tag">#Scintilla</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/10/11/C-继承性和派生类-新手学习问题小结（二）/" rel="prev">C++继承性和派生类 新手学习问题小结（二）</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/09/17/Scintilla控件在Win32环境下的使用（一）/" rel="next">Scintilla控件在Win32环境下的使用（一）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

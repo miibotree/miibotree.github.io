@@ -1,0 +1,602 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="看完视频想自己动手实践一下看看QQ.exe的PE格式
+2012版的qq中protect版本和本来的版本是有大的不一样的。这里从两个exe文件大小的不同就可以看出来了。这里就先分析一下普通的qq.exe文件好了。
+首先用Resource Hacker工具查看一下资源文件，发现在图标这一栏里面有8只大小不一样的企鹅。。。。。。
+我这里第4只好像特别大。。。。这里就先分析下第1只企鹅的图标资源吧。。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分析QQ.exe资源目录结构">
+<meta property="og:url" content="http://yoursite.com/2012/04/25/分析QQ-exe资源目录结构/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="看完视频想自己动手实践一下看看QQ.exe的PE格式
+2012版的qq中protect版本和本来的版本是有大的不一样的。这里从两个exe文件大小的不同就可以看出来了。这里就先分析一下普通的qq.exe文件好了。
+首先用Resource Hacker工具查看一下资源文件，发现在图标这一栏里面有8只大小不一样的企鹅。。。。。。
+我这里第4只好像特别大。。。。这里就先分析下第1只企鹅的图标资源吧。。。。">
+<meta property="og:image" content="http://my.csdn.net/uploads/201204/25/1335339414_2497.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif">
+<meta property="og:updated_time" content="2015-07-25T05:01:12.652Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="分析QQ.exe资源目录结构">
+<meta name="twitter:description" content="看完视频想自己动手实践一下看看QQ.exe的PE格式
+2012版的qq中protect版本和本来的版本是有大的不一样的。这里从两个exe文件大小的不同就可以看出来了。这里就先分析一下普通的qq.exe文件好了。
+首先用Resource Hacker工具查看一下资源文件，发现在图标这一栏里面有8只大小不一样的企鹅。。。。。。
+我这里第4只好像特别大。。。。这里就先分析下第1只企鹅的图标资源吧。。。。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 分析QQ.exe资源目录结构 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              分析QQ.exe资源目录结构
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-25T15:54:59+08:00" content="2012-04-25">
+            2012-04-25
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>看完视频想自己动手实践一下看看QQ.exe的PE格式</p>
+<p>2012版的qq中protect版本和本来的版本是有大的不一样的。这里从两个exe文件大小的不同就可以看出来了。这里就先分析一下普通的qq.exe文件好了。</p>
+<p>首先用Resource Hacker工具查看一下资源文件，发现在图标这一栏里面有8只大小不一样的企鹅。。。。。。</p>
+<p>我这里第4只好像特别大。。。。这里就先分析下第1只企鹅的图标资源吧。。。。</p>
+<p>关于资源表这里就不特别讲解了，大家可以参考一下小甲鱼的课件，讲的很清楚的哦。</p>
+<p><a href="http://www.fishc.com/a/shipin/jiemixilie/_PExilie_/1051.html" target="_blank" rel="external">http://www.fishc.com/a/shipin/jiemixilie/_PExilie_/1051.html</a></p>
+<p>这里就把课件里面的一张最重要的图片贴出来吧：</p>
+<p><img src="http://my.csdn.net/uploads/201204/25/1335339414_2497.gif" alt=""></p>
+<p>然后自己就跟着这张图片还有小甲鱼的讲解自己也演练了一遍：</p>
+<p>&nbsp;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#9;&#9;qq.exe resource analyse&#10;&#9;&#9;by Miibotree&#10;*/&#10;//&#22359;&#23545;&#40784;&#21644;&#25991;&#20214;&#23545;&#40784;&#37117;&#26159;1000H  &#25152;&#20197;&#36825;&#37324;&#30340;RVA&#21644;offset&#26159;&#19968;&#26679;&#30340;&#65292;&#26041;&#20415;&#20102;&#35745;&#31639;&#10;//&#36164;&#28304;&#34920;&#30340;RVA&#26159;1A000  &#22823;&#23567;&#26159;10790&#10;//&#31532;&#22235;&#20010;&#21306;&#22359;.rsrc&#30340;&#36215;&#22987;&#22320;&#22336;&#26159;1A000 &#22823;&#23567;&#26159;10790 &#35828;&#26126;&#36825;&#20010;&#21306;&#22359;&#37324;&#38754;&#23384;&#30340;&#20840;&#37096;&#37117;&#26159;&#36164;&#28304;&#10;//&#28982;&#21518;&#29992;WinHex&#25171;&#24320;qq.exe&#27491;&#24335;&#26469;&#20998;&#26512;&#19968;&#19979;&#10;&#10;//&#31532;&#19968;&#23618;&#30446;&#24405; &#36164;&#28304;&#31867;&#22411;&#10;typedef struct _IMAGE_RESOURCE_DIRECTORY &#123;&#10;    DWORD   Characteristics;   &#9;&#9;00 00 00 00H&#10;    DWORD   TimeDateStamp; &#9;&#9;&#9;00 00 00 00H&#10;    WORD    MajorVersion;      &#9;&#9;00 04H&#10;    WORD    MinorVersion;      &#9;&#9;00 00H&#10;    WORD    NumberOfNamedEntries; &#9;00 00H&#10;    WORD    NumberOfIdEntries;      00 04H//&#36825;&#37324;&#35828;&#26126;&#26377;4&#31181;&#36164;&#28304;&#31867;&#22411;&#10;//  IMAGE_RESOURCE_DIRECTORY_ENTRY DirectoryEntries[];&#10;&#125; IMAGE_RESOURCE_DIRECTORY, *PIMAGE_RESOURCE_DIRECTORY;&#10;&#10;typedef struct _IMAGE_RESOURCE_DIRECTORY_ENTRY &#123;&#10;    union &#123;&#10;        struct &#123;&#10;            DWORD NameOffset:31;&#10;            DWORD NameIsString:1;&#10;        &#125;;&#10;        DWORD   Name;&#10;        WORD    Id;&#10;    &#125;;&#10;    union &#123;&#10;        DWORD   OffsetToData;&#10;        struct &#123;&#10;            DWORD   OffsetToDirectory:31;&#10;            DWORD   DataIsDirectory:1;&#10;        &#125;;&#10;    &#125;;&#10;&#125; IMAGE_RESOURCE_DIRECTORY_ENTRY, *PIMAGE_RESOURCE_DIRECTORY_ENTRY;&#10;//&#9;&#9;&#9;name           OffsetToData&#10;//&#19968;&#12290;1 &#9;0000 0003H&#9;    8000 0030H &#22270;&#26631;  8&#65288;&#21313;&#20845;&#36827;&#21046;&#65289; = 1000&#65288;&#20108;&#36827;&#21046;&#65289;&#26368;&#39640;&#20301;&#20026;1&#65292;&#20302;31&#20301;&#20316;&#20026;&#25351;&#38024;&#20351;&#29992;&#10;//&#19968;&#12290;2&#9;    0000 000EH&#9;&#9;8000 0080H &#29256;&#26412;&#20449;&#24687;&#10;//&#19968;&#12290;3&#9;&#9;0000 0010H&#9;&#9;8000 0098H qq&#33258;&#23450;&#20041;&#30340;&#10;//&#19968;&#12290;4&#9;&#9;0000 0018H&#9;&#9;8000 00B0H &#24212;&#35813;&#20063;&#26159;qq&#33258;&#23450;&#20041;&#30340;&#10;//&#19968;&#12290;5 &#9;0000 0000H&#9;&#9;0000 0000H &#26368;&#21518;&#19968;&#20010;&#20840;&#37096;&#37117;&#26159;0&#34920;&#31034;&#32467;&#26463;&#20102;&#21543;&#10;//&#31532;&#19968;&#23618;&#32467;&#26463;&#65292;&#25105;&#20204;&#39318;&#20808;&#36861;&#36394;&#19968;&#19979;qq&#22270;&#26631;&#21543;&#65292;&#25152;&#20197;&#20808;&#39134;&#21040;&#31532;&#20108;&#23618;&#21435;&#20102;&#65292;&#21704;&#21704;&#10;&#10;//&#31532;&#20108;&#23618;&#30446;&#24405;  &#36164;&#28304;ID&#10;//&#19968;.1.&#20108;&#10;typedef struct _IMAGE_RESOURCE_DIRECTORY &#123;&#10;    DWORD   Characteristics;   &#9;&#9;00 00 00 00H&#10;    DWORD   TimeDateStamp; &#9;&#9;&#9;00 00 00 00H&#10;    WORD    MajorVersion;      &#9;&#9;00 04H&#10;    WORD    MinorVersion;      &#9;&#9;00 00H&#10;    WORD    NumberOfNamedEntries; &#9;00 00H&#10;    WORD    NumberOfIdEntries;      00 08H//&#36825;&#37324;&#35828;&#26126;&#26377;8&#20010;&#22270;&#26631;&#10;//  IMAGE_RESOURCE_DIRECTORY_ENTRY DirectoryEntries[];&#10;&#125; IMAGE_RESOURCE_DIRECTORY, *PIMAGE_RESOURCE_DIRECTORY;&#10;&#10;//&#19968;&#12290;1.&#20108;&#12290;1-8&#10;//&#9;&#9;&#9;name           OffsetToData&#10;//&#9;&#9;&#9;0000 0001H&#9;&#9;8000 00C8H&#10;//&#9;&#9;&#9;0000 0002H&#9;&#9;8000 00E0H&#10;//&#9;&#9;&#9;0000 0003H&#9;&#9;8000 00F8H&#10;//&#9;&#9;&#9;0000 0004H&#9;&#9;8000 0110H&#10;//&#9;&#9;&#9;0000 0005H&#9;&#9;8000 0128H&#10;//&#9;&#9;&#9;0000 0006H&#9;&#9;8000 0140H&#10;//&#9;&#9;&#9;0000 0007H&#9;&#9;8000 0158H&#10;//&#9;&#9;&#9;0000 0008H&#9;&#9;8000 0170H&#10;//&#9;&#9;&#9;0000 0000H&#9;&#9;0000 0000H&#10;//&#31532;&#20108;&#23618;&#32467;&#26463;&#65292;&#39134;&#21040;&#31532;&#19977;&#23618;&#21435;&#21543;&#65292;&#21621;&#21621;&#21621;&#21621;&#10;&#10;//&#31532;&#19977;&#23618;&#30446;&#24405;  &#36164;&#28304;&#20195;&#30721;&#39029;&#10;//&#19968;&#12290;1.&#20108;&#12290;1&#12290;&#19977;&#10;typedef struct _IMAGE_RESOURCE_DIRECTORY &#123;&#10;    DWORD   Characteristics;   &#9;&#9;00 00 00 00H&#10;    DWORD   TimeDateStamp; &#9;&#9;&#9;00 00 00 00H&#10;    WORD    MajorVersion;      &#9;&#9;00 04H&#10;    WORD    MinorVersion;      &#9;&#9;00 00H&#10;    WORD    NumberOfNamedEntries; &#9;00 00H&#10;    WORD    NumberOfIdEntries;      00 01H//&#36825;&#37324;&#35828;&#26126;&#21482;&#26377;&#19968;&#20010;&#36164;&#28304;&#20195;&#30721;&#39029;&#10;//  IMAGE_RESOURCE_DIRECTORY_ENTRY DirectoryEntries[];&#10;&#125; IMAGE_RESOURCE_DIRECTORY, *PIMAGE_RESOURCE_DIRECTORY;&#10;&#10;//&#19968;&#12290;1.&#20108;&#12290;1&#12290;&#19977;&#12290;1&#10;//&#9;&#9;&#9;name           OffsetToData&#10;//&#9;&#9;&#9;0000 0409H&#9;   0000 01D0H&#10;//&#9;&#9;&#9;0000 0000H&#9;   0000 0000H&#10;//&#31532;&#19977;&#23618;&#32467;&#26463;&#65292;&#31163;&#25105;&#20204;&#30340;&#26368;&#32456;&#32988;&#21033;&#36234;&#26469;&#36234;&#36817;&#20102;&#65292;&#21152;&#27833;&#21834;&#21834;&#21834;&#21834;&#21834;&#10;&#10;//&#33410;&#28857; &#36164;&#28304;&#25968;&#25454;&#25351;&#38024;&#10;//&#19968;&#12290;1.&#20108;&#12290;1&#12290;&#19977;&#12290;1&#12290;&#22235;&#10;IMAGE_RESOURCE_DATA_ENTRY STRUCT&#10;&#10;    OffsetToData     DWORD     ?    ; &#36164;&#28304;&#25968;&#25454;&#30340;RVA  &#9;00 01 A2 80H&#10;    Size             DWORD     ?    ; &#36164;&#28304;&#25968;&#25454;&#30340;&#38271;&#24230; &#9;00 00 01 28H &#10;    CodePage         DWORD     ?    ; &#20195;&#30721;&#39029;, &#19968;&#33324;&#20026;0&#9;00 00 04 E0H&#10;    Reserved         DWORD     ?    ; &#20445;&#30041;&#23383;&#27573;&#9;&#9;&#9;00 00 00 00H&#10;&#10;IMAGE_RESOURCE_DATA_ENTRY ENDS&#10;//&#33410;&#28857; &#36164;&#28304;&#25968;&#25454;&#25351;&#38024;&#32467;&#26463;&#65292;&#29616;&#22312;&#32456;&#20110;&#21487;&#20197;&#36827;&#20837;&#25105;&#20204;&#30340;&#26368;&#32456;&#23567;&#20225;&#40517;&#22270;&#26631;&#30340;&#24208;&#23665;&#30495;&#38754;&#30446;&#20102;&#12290;&#12290;&#12290;&#10;&#10;//&#22270;&#26631;&#36164;&#28304;&#10;//1A280 - 1A3A8</span><br></pre></td></tr></table></figure>
+<p>最后得到了图标资源的位置。用eXeScope打开看一下，发现是一样的。呵呵，简单就分析到这里了。</p>
+<p>&nbsp;</p>
+<p><img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif" alt="大笑"><img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif" alt="大笑"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/28/关于socket的阻塞/" rel="prev">关于socket的阻塞</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/24/手动PE编辑-写出MessageBox/" rel="next">手动PE编辑 写出MessageBox</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

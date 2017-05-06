@@ -1,0 +1,707 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="程序人生," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="我们学一个专业，不管是什么专业，要完整的对该专业有一个深入的认识和了解，就都必须涉及到建立体系的过程。这个体系的构建是很缓慢的一个过程。一个学期你学的那些专业课都是这个体系的砖瓦，只不过一开始你并不知道原来这些专业课是用来构建这个体系的砖瓦。这就好像我们玩填字迷宫游戏一样，要等到你解出了一定的答案之后，你才会发现，原来这里面的体系结构是这样的，然 后你的脑海里才会慢慢的成型出一个庞大的计算机体系架">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机体系结构的建立">
+<meta property="og:url" content="http://yoursite.com/2013/12/03/计算机体系结构的建立/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="我们学一个专业，不管是什么专业，要完整的对该专业有一个深入的认识和了解，就都必须涉及到建立体系的过程。这个体系的构建是很缓慢的一个过程。一个学期你学的那些专业课都是这个体系的砖瓦，只不过一开始你并不知道原来这些专业课是用来构建这个体系的砖瓦。这就好像我们玩填字迷宫游戏一样，要等到你解出了一定的答案之后，你才会发现，原来这里面的体系结构是这样的，然 后你的脑海里才会慢慢的成型出一个庞大的计算机体系架">
+<meta property="og:image" content="http://m3.img.libdd.com/farm5/d/2013/1203/14/CB823D8F12F5E4615E11B26E7353E9BD_B500_900_500_500.jpeg">
+<meta property="og:image" content="http://m3.img.libdd.com/farm5/d/2013/1203/14/28AC887E1F6800B1A5086057BEB8E112_B500_900_500_291.jpeg">
+<meta property="og:image" content="http://m2.img.libdd.com/farm5/d/2013/1203/14/21EF8339891F249A8B282EF2E9C96C41_B500_900_500_335.jpeg">
+<meta property="og:image" content="http://m3.img.libdd.com/farm4/d/2013/1203/15/28B08F291DB2A9C7F799EB70054DAC6F_B500_900_500_374.jpeg">
+<meta property="og:image" content="http://m3.img.libdd.com/farm4/d/2013/1203/16/3A95F144545835E7EA3E4773669E547E_B500_900_500_200.jpeg">
+<meta property="og:image" content="http://m1.img.libdd.com/farm5/d/2013/1203/17/ACBC000BE4E2053289C86A98EE1C1EBF_B500_900_404_467.png">
+<meta property="og:image" content="http://m1.img.libdd.com/farm5/d/2013/1203/21/B42D9E4F18A2899BB3A60FCCC2713578_B500_900_417_256.jpeg">
+<meta property="og:image" content="http://m1.img.libdd.com/farm4/d/2013/1203/21/7110BA66C275869CDF47ABC3D23B0656_B500_900_375_117.jpeg">
+<meta property="og:image" content="http://m1.img.libdd.com/farm4/d/2013/1203/21/9E4C6FD3975A75EB0153FA47B7CFD707_B500_900_500_114.jpeg">
+<meta property="og:image" content="http://m1.img.libdd.com/farm4/d/2013/1203/21/614ED586C8BFA369E4B8D08ED52773D0_B500_900_500_325.jpeg">
+<meta property="og:updated_time" content="2015-07-25T04:58:32.874Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机体系结构的建立">
+<meta name="twitter:description" content="我们学一个专业，不管是什么专业，要完整的对该专业有一个深入的认识和了解，就都必须涉及到建立体系的过程。这个体系的构建是很缓慢的一个过程。一个学期你学的那些专业课都是这个体系的砖瓦，只不过一开始你并不知道原来这些专业课是用来构建这个体系的砖瓦。这就好像我们玩填字迷宫游戏一样，要等到你解出了一定的答案之后，你才会发现，原来这里面的体系结构是这样的，然 后你的脑海里才会慢慢的成型出一个庞大的计算机体系架">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 计算机体系结构的建立 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              计算机体系结构的建立
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-12-03T21:35:24+08:00" content="2013-12-03">
+            2013-12-03
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>我们学一个专业，不管是什么专业，要完整的对该专业有一个深入的认识和了解，就都必须涉及到建立体系的过程。这个体系的构建是很缓慢的一个过程。一个学期你学的那些专业课都是这个体系的砖瓦，只不过一开始你并不知道原来这些专业课是用来构建这个体系的砖瓦。<strong>这就好像我们玩填字迷宫游戏一样，要等到你解出了一定的答案之后，你才会发现，原来这里面的体系结构是这样的，</strong>然 后你的脑海里才会慢慢的成型出一个庞大的计算机体系架构，这个时候你再回过头，发现原来之前学过的那些课程都是来填补你的那个庞大的体系架构的，而对你以 后的学习而言，既然你已经有这个成型的体系架构了，就好像造房子已经造出了一个框架，接下来的任务，就是把房子里的每一个房间都填满家具。</p>
+<p><span id="more-856"></span></p>
+<p><img src="http://m3.img.libdd.com/farm5/d/2013/1203/14/CB823D8F12F5E4615E11B26E7353E9BD_B500_900_500_500.jpeg" alt=""></p>
+<p>这个月我断断续续的在思考计算机的体系架构，大概也总结归纳出了一些东西。其中说到给我帮助最大的一门课程，要数《计算机组成原理》这门课程了。这门课程帮助我更加深入了解了硬件层面的东西，它比汇编层更加底层，帮助我串起了计算机内部的整个流程。</p>
+<p>&nbsp;</p>
+<p>接下来我开始我想说的话题：关于计算机的体系架构。</p>
+<p>这是一个广义的话题，不单单指《计算机组成原理》这本书。</p>
+<p>首先我想说的是，既然是体系架构，我们就可以把它想象成一个二维的平面，它既有纵向的轴，又有横向的轴。合起来就是一个二维的平面。既然是二维的，首先我们来建立坐标系。</p>
+<p><img src="http://m3.img.libdd.com/farm5/d/2013/1203/14/28AC887E1F6800B1A5086057BEB8E112_B500_900_500_291.jpeg" alt=""></p>
+<p>现在这个平面是完全空白的，接下来我要慢慢填充这个平面</p>
+<p>&nbsp;</p>
+<p><strong>1.1 前言 </strong></p>
+<p>后面我要说的很多东西，大家可以参考这本书：深入理解计算机系统（ComputerSystems: A Programmer&#8217;sPerspective）。</p>
+<p>我是在写这篇文章发现写不清楚的时候搜到的这本书。原来外国人早就把我想说的都说的无比详细了&#8211;|||</p>
+<p>我自己首先尝试以一种坐标化的简洁的方式来阐释这个庞大的问题。</p>
+<p>&nbsp;</p>
+<p><strong>1.2从硬件到软件</strong></p>
+<p>下面这个纵轴实现了人机交互。这个y轴大概可以是这个样子的：</p>
+<p><img src="http://m2.img.libdd.com/farm5/d/2013/1203/14/21EF8339891F249A8B282EF2E9C96C41_B500_900_500_335.jpeg" alt=""></p>
+<p>硬件和软件就不说了，大家肯定都知道，但是不懂。看《计算机组成原理》这本书你就能对硬件有深入的了解；而对软件要有深入了解，那就必须写代码了，因为软件就是代码写出来的。</p>
+<p>操作系统：连接硬件到软件的，是操作系统。操作系统的功能是调度硬件。用户发出的命令交给操作系统，再由操作系统管理硬件完成相应的功能。这就是整个人机交互的过程。</p>
+<p>API：这个层是专门开放给programers的。programers做的工作大都是与API打交道，不外乎是两种：</p>
+<ol>
+<li><p>初级的programers 用API。</p>
+</li>
+<li><p>高级的programers 写API。</p>
+</li>
+</ol>
+<p>这个纵轴其实就是一台电脑里面的所有东西。有硬件，有软件（包括操作系统也是软件）。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>1.3学科纵轴的建立：</strong></p>
+<p>学科纵轴的建立 是建立在<strong>1.2这条纵轴</strong>的基础上的。我把它分为三个部分：</p>
+<p>专业应用学科</p>
+<p>专业理论学科</p>
+<p>数学，物理工具学科</p>
+<p>&nbsp;</p>
+<p>下面我们来看看这条学科纵轴：</p>
+<p><img src="http://m3.img.libdd.com/farm4/d/2013/1203/15/28B08F291DB2A9C7F799EB70054DAC6F_B500_900_500_374.jpeg" alt=""></p>
+<p>这条纵轴的建立的依据也是以<strong>1.2计算机组成的纵轴</strong>为基础而建立的。</p>
+<p>这条纵轴是从理论到应用的走向：</p>
+<p>工具-&gt; 专业理论-&gt; 专业应用</p>
+<p><strong>为什么从数学开始？</strong>答案很简单，从 计算机 这三个字中就可以看出，计算机设计的初衷，是为了解决计算问题。所以如果大家不学好数学，肯定学不好计算机啦- -</p>
+<p>接下来的<strong>专业理论学科，</strong>就是我今天要讲的整个东西的核心了。我们大学学的这些课程，是理论课程。理论是应用的前提。</p>
+<p>而最顶层的就是<strong>专业应用</strong>了。协会里面大家做的事情不管是 Web Linux Windows 逆向 渗透，都是偏重于应用层面的。</p>
+<p>有一个80：20的理论，说计算机专业学的100%的知识到最后真正只要用20%。偏向于理论还是偏向于应用，说白了就是这个比例的问题。你是想从上到下的学习，还是从下到上的学习。每个人的学习路线都不一样。而我的选择是从下到上。先建立地基，再造大厦。</p>
+<p>首先我们要掌握 数学和英语 作为工具，接下来我们需要学习理论，最后才能把理论应用于实践。</p>
+<p><strong>我今天尝试着想讲明白的事情，是如何把所有学的东西全部串联起来。</strong></p>
+<p><strong>最难讲清楚的，是专业课程之间的联系。</strong></p>
+<p>试问：</p>
+<p>没有学好高数，你连积分都不会，怎么学信号与系统的傅立叶变换？</p>
+<p>你连信号与系统的傅立叶变换都不会，你怎么学通信原理的编码和载波？</p>
+<p>你没学好通信原理，怎么学计算机通信网络整个体系？大家都知道TCP有三次握手协议，有ACK和SYN，你知道ACK背后的error cotrol么？知道一根网线里面传的是模拟信号还是数字信号么？</p>
+<p>&nbsp;</p>
+<p>有 人说我即使不知道这些东西我也可以写代码搞安全啊。确实，由于抽象和封装，你在应用层可以完全不用理会物理层，即使你不知道一切都可以工作的很好。但是如 果你能知道底层的一些细节，绝对会对你写应用层有很多帮助。而且体系框架建立的过程中牵涉到很多跨学科的东西，计算机本身就是一门跨学科。</p>
+<p>&nbsp;</p>
+<p><strong>1.4编程语言纵轴的建立</strong></p>
+<p><img src="http://m3.img.libdd.com/farm4/d/2013/1203/16/3A95F144545835E7EA3E4773669E547E_B500_900_500_200.jpeg" alt=""></p>
+<p>&nbsp;</p>
+<p>从这条纵轴我们可以看到：从最底层的二进制数据到对应的高级语言的关系：</p>
+<p>总结出了下面几点：</p>
+<p>1.越底层的语言，机器越看得懂；越高层的语言，人越看的懂。</p>
+<p>2.从底层到高层的过程，其实是一个不断抽象，不断封装的过程。所谓抽象，其中一个思想就是封装。如果说我想实现同样一个功能，用不同的语言可能会有大致如下的一个公式（：</p>
+<p><strong>Python code _ 1 line = C code _ 10 lines = Asm code _ 100 lines = Binary code _ 1000 bits</strong></p>
+<p>可 以看到我们如果用python写出来的代码，这种高级语言屏蔽了太多计算机内部的一些细节东西。比如说内存管理。用高级语言写代码，对于人的效率大大提 高，但是对于机器的效率却大大下降了。由此导致的对于人而言，写代码更加方便，但是想要精确地修改某些功能的难度也大大提高了。我们跨学科的来看看下面两 条线：</p>
+<p>&nbsp;</p>
+<p>在生物上，我们可以看到这样的一条线：</p>
+<p><strong>碱基对-&gt;染色体-&gt; 细胞-&gt; 器官-&gt; 组织-&gt; 个体</strong></p>
+<p>在物理上，我们可以同样看到这样一条线：</p>
+<p><strong>夸克-&gt;原子-&gt; 分子-&gt; 化合物</strong></p>
+<p>更进一步，我们还可以这样子连接这条线：</p>
+<p><strong>夸克-&gt;原子-&gt; 分子-&gt; 化合物-**</strong>&gt;碱基对-&gt;染色体-&gt; 细胞-&gt; 器官-&gt; 组织-&gt; 个体**</p>
+<p>如此我们把学科之间也给联系起来了。</p>
+<p>大 自然完美的体现了抽象和封装这个思想。我们生活的这个维度，只能看到个体。而组织这个概念，也是近代生物科学发展起来之后才有的概念。更不用说去看细胞， 看染色体了。大自然封装的很完美，它只留了很小的一个口子，让我们可以用显微镜，用科学的方法去拆开这个个体，一窥究竟。</p>
+<p>&nbsp;</p>
+<p><strong>1.5 OSI网络模型</strong></p>
+<p><img src="http://m1.img.libdd.com/farm5/d/2013/1203/17/ACBC000BE4E2053289C86A98EE1C1EBF_B500_900_404_467.png" alt=""></p>
+<p>刚才讲的都是计算机个体里面的东西。如何做到计算机之间的联系？这里就引出通信这个概念。通信的目的是将个体联系起来。</p>
+<p>OSI模型是什么？说白了还是封装。把底层的数据一层一层封装起来。打包传送起来肯定比散装的方便嘛。</p>
+<p>有了这个网络模型之后，我们引出了通信这个概念，其实这里我们可以把通信和计算机两门学科相互之间联系起来了。</p>
+<p>把单个的计算机看成一个一个的细胞，通信就是细胞与细胞之间的信息交互。</p>
+<p><img src="http://m1.img.libdd.com/farm5/d/2013/1203/21/B42D9E4F18A2899BB3A60FCCC2713578_B500_900_417_256.jpeg" alt=""></p>
+<p>这样我们建立了一个学科横轴：计算机和通信</p>
+<p><img src="http://m1.img.libdd.com/farm4/d/2013/1203/21/7110BA66C275869CDF47ABC3D23B0656_B500_900_375_117.jpeg" alt=""></p>
+<p>&nbsp;</p>
+<p><strong>1.6编译语言横轴的建立</strong></p>
+<p>这里涉及最简单的编译原理：一个helloworld.c的程序是如何变成可执行文件helloworld的?</p>
+<p>给出下面这张图：</p>
+<p><img src="http://m1.img.libdd.com/farm4/d/2013/1203/21/9E4C6FD3975A75EB0153FA47B7CFD707_B500_900_500_114.jpeg" alt=""></p>
+<p>这里也建立了一个横轴：从 源代码 到 可执行文件的 横轴。</p>
+<p>建立这两者关联的，叫编译器（这里是广义的叫法。广义的编译器包含了预处理器，狭义的编译器和链接器等）。</p>
+<p>纵向来看，hello.c在人看来是字符，在机器看来是0101101二进制数据；</p>
+<p>hello程序在人看来是一个程序，在机器看来是 0101的 二进制指令。</p>
+<p>所以这个横轴建立起来的关系是如何把数据（源代码）变成指令（可执行文件）的</p>
+<p><img src="http://m1.img.libdd.com/farm4/d/2013/1203/21/614ED586C8BFA369E4B8D08ED52773D0_B500_900_500_325.jpeg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/程序人生/" rel="tag">#程序人生</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/12/19/网络嗅探工具Errercap/" rel="prev">网络嗅探工具Errercap</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/11/29/信息隐藏–LSB算法/" rel="next">信息隐藏–LSB算法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

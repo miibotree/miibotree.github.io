@@ -1,0 +1,685 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux,进程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="本来想现在linux上熟悉下进程的有关概念然后去写windowsSDK的，没想到今天windows蓝屏了，新升级的3.2.2内核打开虚拟机的时候还要升级内核。升就升吧，没想到还错误了。没办法，看来只好在linux上面待着了。
+这几天自己只是熟悉了下进程的概念，然后简单的写了一些小程序。自己写点笔记免的忘掉。
+进程标识符：Linux环境下进程启动时候，系统分配给一个唯一的数&amp;#20540;给每个进程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux 进程控制入门">
+<meta property="og:url" content="http://yoursite.com/2012/01/30/linux-进程控制入门/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="本来想现在linux上熟悉下进程的有关概念然后去写windowsSDK的，没想到今天windows蓝屏了，新升级的3.2.2内核打开虚拟机的时候还要升级内核。升就升吧，没想到还错误了。没办法，看来只好在linux上面待着了。
+这几天自己只是熟悉了下进程的概念，然后简单的写了一些小程序。自己写点笔记免的忘掉。
+进程标识符：Linux环境下进程启动时候，系统分配给一个唯一的数&amp;#20540;给每个进程">
+<meta property="og:updated_time" content="2015-07-25T05:10:20.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux 进程控制入门">
+<meta name="twitter:description" content="本来想现在linux上熟悉下进程的有关概念然后去写windowsSDK的，没想到今天windows蓝屏了，新升级的3.2.2内核打开虚拟机的时候还要升级内核。升就升吧，没想到还错误了。没办法，看来只好在linux上面待着了。
+这几天自己只是熟悉了下进程的概念，然后简单的写了一些小程序。自己写点笔记免的忘掉。
+进程标识符：Linux环境下进程启动时候，系统分配给一个唯一的数&amp;#20540;给每个进程">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> linux 进程控制入门 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              linux 进程控制入门
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-30T21:17:00+08:00" content="2012-01-30">
+            2012-01-30
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>本来想现在linux上熟悉下进程的有关概念然后去写windowsSDK的，没想到今天windows蓝屏了，新升级的3.2.2内核打开虚拟机的时候还要升级内核。升就升吧，没想到还错误了。没办法，看来只好在linux上面待着了。</p>
+<p>这几天自己只是熟悉了下进程的概念，然后简单的写了一些小程序。自己写点笔记免的忘掉。</p>
+<p>进程标识符：Linux环境下进程启动时候，系统分配给一个唯一的数&#20540;给每个进程，这个数&#20540;就称为进程标识符。（感觉跟windows里面的句柄有点像）</p>
+<p>进程表示有进程号 PID 和 父进程号 PPID，都是非0整数</p>
+<p>使用函数getpid获得当前进程号，</p>
+<p>函数原型Pid_t getpid(void);</p>
+<p>使用函数getppid获得当前进程的父进程号</p>
+<p>函数原型Pid_t getppid(void);</p>
+<p>下面介绍LinuxC下与进程相关的函数</p>
+<p><span style="color:#3366FF">exec函数族&nbsp; 在进程中启动另一个</span><span style="color:#3366FF"><span style="color:#FF0000">程序</span>执行</span></p>
+<p>这个函数族有6个成员</p>
+<p></p><p></p>
+<p><span style="font-size:13px">exec函数族函数原型</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">#include &lt;unistd.h&gt;</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execl(const char _path, const char _arg, &#8230;);</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execlp(const char _file, const char _arg, &#8230;);</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execle(const char _path, const char _arg, &#8230;, char *const envp[]);</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execv(const char _path, char _const argv[]);</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execvp(const char _file, char _const argv[]);</span></p>
+<p><span style="font-size:13px"></span></p>
+<p><span style="font-size:13px">int execve(const char _path, char _const argv[], char *const envp[]);</span></p>
+<p><span style="font-size:13px">其中只有execve是真正意义上的系统调用，其它都是在此基础上经过包装的库函数。</span></p>
+<p><span style="font-size:13px">具体例子的相关链接：</span></p>
+<p></p>
+<p><a href="http://chping912.blog.163.com/blog/static/50338022201131411286369/" target="_blank" rel="external">http://chping912.blog.163.com/blog/static/50338022201131411286369/</a></p>
+<p><span style="color:#3366FF">system&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 在进程中开始另一个进程</span></p>
+<p><span style="color:#3366FF">&nbsp;&nbsp;<span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp; 函数原型</span></span></p>
+<p></p>
+<p><span style="color:#000000">&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ＃i nclude&lt;stdlib.h&gt;</span></p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; int system(const char * string);</p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 函数说明</span></p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; system()会调用fork()产生子进程，由子进程来调用/bin/sh-c string来执行参数string字符串所代表的命令，此命&gt;令执行完后随即返回原调用的进程。在调用system()期间&nbsp;&nbsp;&nbsp;&nbsp; SIGCHLD 信号会被暂时搁置，SIGINT和SIGQUIT 信号则会被忽略。</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 返回&#20540;</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; =-1:出现错误 </p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; =0:调用成功但是没有出现子进程 </p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; &gt;0:成功退出的子进程的id</p>
+<p></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 相关链接：<a href="http://apps.hi.baidu.com/share/detail/30770432" target="_blank" rel="external">http://apps.hi.baidu.com/share/detail/30770432</a></span></p>
+<p><span style="color:#3366FF">fork&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 从已存在的进程中复制一个新进程（这个进程叫做原来父进程的子进程）</span></p>
+<p><span style="color:#3366FF">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:#000000">这是个关键的函数，理解了这个函数也就是进程入门了吧，呵呵</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 废话不多说，先来看看函数原型：</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 　　#<strong>include</strong>&lt;unistd.h&gt;　　</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #<strong>include</strong>&lt;sys/types.h&gt;　　</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">&nbsp; &nbsp; &nbsp; &nbsp; 　　_pid_t fork_(</span></span></p>
+<p><strong>void</strong>); 　　（pid_t 是一个宏定义，其实质是int 被定义在#<strong>include</strong>&lt;_sys/types.h_&gt;中）</p>
+<p><span style="color:#3366FF"><span style="color:#000000">返回&#20540;： 若成功调用一次则返回两个&#20540;，子进程返回0，父进程返回子进程ID；否则，出错返回-1 　　</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">函数说明： 　　一个现有进程可以调用fork函数创建一个新进程。由fork创建的新进程被称为子进程（child process）。fork函数被调用一次但返回两次。两次返回的唯一区别是子进程中返回0&#20540;而父进程中返回子进程ID。 　　</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">子进程是父进程的副本，它将获得父进程数据空间、堆、栈等资源的副本。注意，子进程持有的是上述存储空间的“副本”，这意味着父子进程间不共享这些存储空间。 　</span></span></p>
+<p><span style="color:#3366FF"><span style="color:#000000">linux将复制父进程的地址空间内容给子进程，因此，子进程有了独立的地址空间。</span></span></p>
+<p><span style="color:#000000">我当初一直难以理解的fork函数的返回&#20540;。先看下示例代码：</span></p>
+<p><span style="color:#000000"></span></p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;unistd.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;sys/types.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">	//unsigned <span class="type">int</span> <span class="literal">result</span>;</span><br><span class="line">	pid_t <span class="literal">result</span>;</span><br><span class="line">	<span class="literal">result</span>=fork();</span><br><span class="line">	<span class="type">int</span> newret;</span><br><span class="line">	<span class="keyword">if</span> (<span class="literal">result</span>==-<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		perror(&amp;amp;quot;创建子进程失败&amp;amp;quot;);</span><br><span class="line">		exit;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (<span class="literal">result</span> == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&amp;amp;quot;返回值是:%d,说明这是子进程!n 此进程的进程号(<span class="type">PID</span>)是:%dn此进程的父进程号(<span class="type">PPID</span>)是:%dn&amp;amp;quot;,<span class="literal">result</span>,getpid(),getppid());</span><br><span class="line">		newret = system(&amp;amp;quot;ls -l&amp;amp;quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		sleep(<span class="number">10</span>);</span><br><span class="line">		printf(&amp;amp;quot;返回值是:%d,说明这是父进程!n 此进程的进程号(<span class="type">PID</span>)是:%dn此进程的父进程号(<span class="type">PPID</span>)是:%dn&amp;amp;quot;,<span class="literal">result</span>,getpid(),getppid());</span><br><span class="line">		newret = system(&amp;amp;quot;ping www.baidu.com&amp;amp;quot;);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个例子根据返回&#20540;判断当前进程是父进程还是子进程。再回头看看概念解释，应该能明白了吧，呵呵。</p>
+<p><span style="color:#000000">最后来个百度链接:<a href="http://baike.baidu.com/view/1952900.htm" target="_blank" rel="external">http://baike.baidu.com/view/1952900.htm</a></span></p>
+<p><span style="color:#000000"></span></p>
+<p></p>
+<p><span style="color:#3366FF">sleep&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 让进程暂停执行一段时间</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 函数原型：</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #include &lt;unistd.h&gt;</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; unsigned int sleep (unsigned int seconds);</span></p>
+<p><span style="color:#000000">比如，可以使用 sleep(10); &nbsp;&nbsp; 让当前进程睡上10秒钟</span></p>
+<p><span style="color:#000000">&nbsp; </span></p>
+<p></p>
+<p><span style="color:#000000">exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 终止进程</span></p>
+<p></p>
+<p><span style="color:#000000">_exit&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 终止进程</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 函数原型：</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; #include &lt;stdlib.h&gt;</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void exit(int status);</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void _exit(int status);</span></p>
+<p><span style="color:#000000">这里必须说明的是：_exit()直接使进程停止运行，清除其使用的内存空间，清除内核中的数据结构。</span></p>
+<p><span style="color:#000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; exit()则在执行退出前加了若干道工序，<span style="color:#FF0000">把文件缓冲区的内容写到文件</span>，最后调用_exit(),所以我们一般都使用exit()</span></p>
+<p></p>
+<p><span style="color:#3366FF"></span></p>
+<p></p>
+<p><span style="color:#3366FF">wait&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 暂停父进程，等待子进程运行完成</span></p>
+<p></p>
+<p><span style="color:#3366FF">waitpid&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 暂停父进程，等待子进程运行完成</span></p>
+<p><span style="color:#000000">了解这两个函数的作用，首先要了解僵尸进程的概念：</span></p>
+<p><span style="color:#000000">僵尸进程是&#20540;已经终止运行，但尚未被清除的进程。它的本质是一种数据结构。</span></p>
+<p><span style="color:#000000">当使用fork函数创建子进程时，子进程比父进程晚终止，父进程已经结束了，子进程还没终止，子进程就是僵尸进程了。所以我们才要用上面两个函数来避免僵尸进程的产生</span></p>
+<p><span style="color:#000000">更多关于僵尸进程的知识，请参考下面的链接：</span></p>
+<p><span style="color:#3366FF"><span style="color:#000000"><a href="http://www.newsmth.net/pc/pccon.php?id=6701&amp;nid=219142" target="_blank" rel="external">http://www.newsmth.net/pc/pccon.php?id=6701&amp;nid=219142</a></span></span></p>
+<p></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 下面列出函数原型：</p>
+<p>　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #include&lt;sys/types.h&gt;　</p>
+<p>　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #include&lt;sys/wait.h&gt;　</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pid_t wait(int *status);</p>
+<p>　&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pid_t waitpid(pid_t pid,int * status,int options);</p>
+<p>因为wait只是waitpid的一种特殊状态，所以这里只说下waitpid</p>
+<p>waitpid函数返回&#20540;是子进程的PID，这里的第三个参数可以是0，也可以是WNOHANG&nbsp;&nbsp; WUNTRACED</p>
+<p>使用WNOHANG可以使进程不阻塞而直接执行后面的代码。</p>
+<p>更多知识请参考：<a href="http://blog.csdn.net/wzhwho/article/details/3940952" target="_blank" rel="external">http://blog.csdn.net/wzhwho/article/details/3940952</a></p>
+<p>下面这个是我当时具体写一道题目遇到的问题：</p>
+<p><a href="http://topic.csdn.net/u/20120128/01/7f4a8d6f-6313-40dd-9a6c-930c1b430f67.html" target="_blank" rel="external">http://topic.csdn.net/u/20120128/01/7f4a8d6f-6313-40dd-9a6c-930c1b430f67.html</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/进程/" rel="tag">#进程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/02/01/linux消息队列进程通信/" rel="prev">linux消息队列进程通信</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/29/linux下翻墙/" rel="next">linux下翻墙</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

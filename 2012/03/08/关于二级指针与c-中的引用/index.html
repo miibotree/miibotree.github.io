@@ -1,0 +1,615 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++,数据结构," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="最近开始看数据结构。不过没有学过c++直接看数据结构。借了本书本也没有说用的是c还是c++语言进行描述。结果才刚开始看链表就遇到了很多问题。。。
+下面这段代码是单链表里面尾插法建表的函数，是从《数据结构教程 第2版 》李春葆编里摘抄下来的：
+1234567891011121314151617181920212223#define ElemType inttypedef struct LNode&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于二级指针与c++中的引用">
+<meta property="og:url" content="http://yoursite.com/2012/03/08/关于二级指针与c-中的引用/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="最近开始看数据结构。不过没有学过c++直接看数据结构。借了本书本也没有说用的是c还是c++语言进行描述。结果才刚开始看链表就遇到了很多问题。。。
+下面这段代码是单链表里面尾插法建表的函数，是从《数据结构教程 第2版 》李春葆编里摘抄下来的：
+1234567891011121314151617181920212223#define ElemType inttypedef struct LNode&amp;#">
+<meta property="og:updated_time" content="2015-07-25T05:00:20.858Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="关于二级指针与c++中的引用">
+<meta name="twitter:description" content="最近开始看数据结构。不过没有学过c++直接看数据结构。借了本书本也没有说用的是c还是c++语言进行描述。结果才刚开始看链表就遇到了很多问题。。。
+下面这段代码是单链表里面尾插法建表的函数，是从《数据结构教程 第2版 》李春葆编里摘抄下来的：
+1234567891011121314151617181920212223#define ElemType inttypedef struct LNode&amp;#">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 关于二级指针与c++中的引用 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              关于二级指针与c++中的引用
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-03-08T18:36:15+08:00" content="2012-03-08">
+            2012-03-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>最近开始看数据结构。不过没有学过c++直接看数据结构。借了本书本也没有说用的是c还是c++语言进行描述。结果才刚开始看链表就遇到了很多问题。。。</p>
+<p>下面这段代码是单链表里面尾插法建表的函数，是从《数据结构教程 第2版 》李春葆编里摘抄下来的：</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">#define ElemType int</span><br><span class="line"></span><br><span class="line">typedef struct LNode</span><br><span class="line">&#123;</span><br><span class="line">ElemType data<span class="comment">;</span></span><br><span class="line">struct LNode *next<span class="comment">;</span></span><br><span class="line">&#125;LinkList<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">void CreateListF(LinkList *&amp;amp<span class="comment">;L, ElemType a[], int n)</span></span><br><span class="line">&#123;</span><br><span class="line">LinkList *s, *r<span class="comment">;</span></span><br><span class="line">int i<span class="comment">;</span></span><br><span class="line">L = (LinkList *)malloc(sizeof(LinkList))<span class="comment">;</span></span><br><span class="line">r = L<span class="comment">;</span></span><br><span class="line">for (i = 0<span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">&#123;</span><br><span class="line">s = (LinkList *)malloc(sizeof(LinkList))<span class="comment">;</span></span><br><span class="line">s-&gt;data = a[i]<span class="comment">;</span></span><br><span class="line">r-&gt;next = s<span class="comment">;</span></span><br><span class="line">r = s<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line">r-&gt;next = NULL<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自己是在linux上面用的vim编辑器，用的是ddd调试器。</p>
+<p>由于没学过c++，一看到行参列表我就慌了～～～～</p>
+<p>void CreateListF(LinkList *&amp;L, ElemType a[], int n)</p>
+<p>*&amp;L 这个是什么东西啊？？</p>
+<p>后来问了学长，才发现这厮是c++里面的货色没学过c++的看数据结构伤不起啊</p>
+<p>果断百度c++里面有关“引用”的知识点。下面这段话来自百度百科</p>
+<p>引用就是某一变量（目标）的一个别名，对引用的操作与对变量直接操作完全一样。</p>
+<p>引用的声明方法：类型标识符 &amp;引用名=目标变量名；</p>
+<p>（1）&amp;；在此不是求地址运算，而是起标识作用。</p>
+<p>（2）类型标识符是指目标变量的类型。</p>
+<p>（3）声明引用时，必须同时对其进行初始化。</p>
+<p>（4）引用声明完毕后，相当于目标变量名有两个名称，即该目标原名称和引用名，且不能再把该引用名作为其他变量名的别名。　　ra=1; 等价于 a=1;</p>
+<p>（5）声明一个引用，不是新定义了一个变量，它只表示该引用名是目标变量名的一个别名，它本身不是一种数据类型，因此引用本身不占存储单元，系统也不给引用分配存储   单元。故：对引用求地址，就是对目标变量求地址。&amp;ra与&amp;a相等。</p>
+<p>（7）不能建立引用的引用，不能建立指向引用的指针。因为引用不是一种数据类型，所以没有引用的引用，没有引用的指针。</p>
+<p>例如：　　int n；</p>
+<p>int &amp;&amp;r=n；//错误，编译系统把&#8221;int &amp;&#8221;看成一体，把&#8221;&amp;r&#8221;看成一体，即建立了引用的引用，引用的对象应当是某种数据类型的变量</p>
+<p>int &amp;_p=n;//错误，编译系统把&#8221;int &amp;&#8221;看成一体，把&#8221; _p &#8220;看成一体，即建立了指向引用的指针，指针只能指向某种数据类型的变量</p>
+<p>（8）值得一提的是，可以建立指针的引用　　例如：　　int _p;　　int _&amp;q=p;//正确，编译系统把&#8221; int * &#8220;看成一体，把&#8221;&amp;q&#8221;看成一体，即建立指针p的引用，亦即给指针p起别名q。　　注意：学会这种分析方法，把什么看成一体，又把什么看成一体　　引用格式：一般在文章的注解中提到或在文中直接写出，也可以加引号（20字以下不用）</p>
+<p>看看7.8点。这样上面的问题就懂了一半。再百度一下，找到下面这个例子还有人家的分析解释：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> term</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">double</span> coef;    <span class="comment">//系数</span></span><br><span class="line"><span class="keyword">int</span> expn;    <span class="comment">//指数</span></span><br><span class="line"><span class="keyword">struct</span> term *next;    <span class="comment">//指向下一个结点的指针</span></span><br><span class="line">&#125;LinkList;</span><br><span class="line"><span class="keyword">void</span> Polynomial::CreateLinkList(LinkList *&amp;amp;L,<span class="keyword">double</span> Coef[],<span class="keyword">int</span> Exp[],<span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">L=(LinkList *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkList));</span><br><span class="line">L-&gt;next=L;</span><br><span class="line">LinkList *p,*q;</span><br><span class="line">p=L;</span><br><span class="line"><span class="keyword">int</span> i;</span><br><span class="line"><span class="keyword">for</span>(i=<span class="number">0</span>;i&amp;lt;n;i++)</span><br><span class="line">&#123;</span><br><span class="line">q=(LinkList*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(LinkList)); <span class="comment">//创建新结点</span></span><br><span class="line">q-&gt;coef=Coef[i];</span><br><span class="line">q-&gt;expn=Exp[i];</span><br><span class="line">q-&gt;next=L;</span><br><span class="line">p-&gt;next=q;</span><br><span class="line">p=q;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>LinkList _&amp;L什么意思？L=(LinkList _)malloc(sizeof(LinkList));？</p>
+<p>答：指针的引用而已，因CreateLinkList这个函数要修改链表，所以如果传一个指针类型的参数达不到修改目的的（因为传进去在函数里面改变的只是形参，实参没有改变。），所以用引用（c++里面独有的）。</p>
+<p>举个例子，void swap(int i,int j)这个函数是不能真正达到交换两个实参的值的，明白吧？因为是值传递，所以只是交换了形参，实参没有变。但是void swap(int &amp;i,int &amp;j)就能交换了</p>
+<p>指针也一样，如果想在函数里改变指针本身，就需要把形参类型设为指针的指针或者是指针的引用。</p>
+<p>那么我用c语言应该怎么来实现最开始那个创建链表呢？其实想通了很简单，只要传一个二级指针进去就可以了。</p>
+<p>void CreateListF(LinkList **L, ElemType a[], int n)//形参列表是二级指针，故可以在函数里面改变一级指针（这里L存放的是头节点的地址）</p>
+<figure class="highlight clojure"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="collection">&#123;</span><br><span class="line">LinkList *s, *r;</span><br><span class="line">int i;</span><br><span class="line">*L = <span class="list">(<span class="keyword">LinkList</span> *)</span>malloc<span class="list">(<span class="keyword">sizeof</span><span class="list">(<span class="keyword">LinkList</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">r = *L;</span><br><span class="line">for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line"><span class="collection">&#123;</span><br><span class="line">s = <span class="list">(<span class="keyword">LinkList</span> *)</span>malloc<span class="list">(<span class="keyword">sizeof</span><span class="list">(<span class="keyword">LinkList</span>)</span>)</span><span class="comment">;</span></span><br><span class="line">s-&gt;data = a<span class="collection">[i]</span><span class="comment">;</span></span><br><span class="line">r-&gt;next = s;</span><br><span class="line">r = s;</span><br><span class="line">&#125;</span></span><br><span class="line">r-&gt;next = NULL;</span><br><span class="line">&#125;</span></span></span><br></pre></td></tr></table></figure>
+<p>以上是自己的理解。若有错误的地方还请大家指正。谢谢大家^_^</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/03/11/LINK-error-LNK2001-无法解析的外部符号-mainCRTStartup/" rel="prev">LINK : error LNK2001 无法解析的外部符号_mainCRTStartup</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/03/08/vim自动补全/" rel="next">vim自动补全</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

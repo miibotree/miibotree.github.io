@@ -1,0 +1,605 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="线程间消息传递有很多种方法，这里使用的是使用一个全局的消息队列freebuf，同时在TCB中增加消息队列mq指针。
+发送消息的时候send线程就从freebuf中摘一个buffer节点，放到receiver线程的消息队列mq中。
+当receiver根据外部标识符查找到send线程的内部标识符之后，取下mq队列中的buffer节点，获得消息，然后归还这个节点。
+1）宏 和 结构体的定义
+123456">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己动手写操作系统(3)–线程间消息传递【Final】">
+<meta property="og:url" content="http://yoursite.com/2013/11/10/自己动手写操作系统-3-–线程间消息传递【Final】/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="线程间消息传递有很多种方法，这里使用的是使用一个全局的消息队列freebuf，同时在TCB中增加消息队列mq指针。
+发送消息的时候send线程就从freebuf中摘一个buffer节点，放到receiver线程的消息队列mq中。
+当receiver根据外部标识符查找到send线程的内部标识符之后，取下mq队列中的buffer节点，获得消息，然后归还这个节点。
+1）宏 和 结构体的定义
+123456">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/11/thread_com1.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/11/thread_com2.png">
+<meta property="og:updated_time" content="2015-07-25T05:11:03.313Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自己动手写操作系统(3)–线程间消息传递【Final】">
+<meta name="twitter:description" content="线程间消息传递有很多种方法，这里使用的是使用一个全局的消息队列freebuf，同时在TCB中增加消息队列mq指针。
+发送消息的时候send线程就从freebuf中摘一个buffer节点，放到receiver线程的消息队列mq中。
+当receiver根据外部标识符查找到send线程的内部标识符之后，取下mq队列中的buffer节点，获得消息，然后归还这个节点。
+1）宏 和 结构体的定义
+123456">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 自己动手写操作系统(3)–线程间消息传递【Final】 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              自己动手写操作系统(3)–线程间消息传递【Final】
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-11-10T17:12:34+08:00" content="2013-11-10">
+            2013-11-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>线程间消息传递有很多种方法，这里使用的是使用一个全局的消息队列freebuf，同时在TCB中增加消息队列mq指针。</p>
+<p>发送消息的时候send线程就从freebuf中摘一个buffer节点，放到receiver线程的消息队列mq中。</p>
+<p>当receiver根据外部标识符查找到send线程的内部标识符之后，取下mq队列中的buffer节点，获得消息，然后归还这个节点。</p>
+<p>1）宏 和 结构体的定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NBUF   10  /*定义了10个节点长度的消息队列*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*message buffer*/</span></span><br><span class="line"><span class="keyword">struct</span> buffer</span><br><span class="line">&#123;</span><br><span class="line">        <span class="keyword">int</span> sender;</span><br><span class="line">        <span class="keyword">int</span> size;</span><br><span class="line">        <span class="keyword">char</span> text[NTEXT];</span><br><span class="line">        <span class="keyword">struct</span> buffer *next;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*TCB structs*/</span></span><br><span class="line"><span class="keyword">struct</span> TCB&#123;</span><br><span class="line">        <span class="keyword">unsigned</span> <span class="keyword">char</span> far* <span class="built_in">stack</span>;</span><br><span class="line">        <span class="keyword">unsigned</span>         ss;</span><br><span class="line">        <span class="keyword">unsigned</span>         sp;</span><br><span class="line">        <span class="keyword">char</span>                 state;</span><br><span class="line">        <span class="keyword">char</span>                name[<span class="number">30</span>];</span><br><span class="line">        <span class="keyword">struct</span> TCB  *next;</span><br><span class="line">        <span class="keyword">struct</span> buffer *mq;        <span class="comment">/*recv thread message quene head point*/</span></span><br><span class="line">        semaphore mutex;        <span class="comment">/*recv thread message quene mutex signal*/</span></span><br><span class="line">        semaphore sm;                <span class="comment">/*recv thread message quene count signal*/</span></span><br><span class="line">&#125;tcb[NTCB];</span><br></pre></td></tr></table></figure>
+<p>2)函数定义</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> buffer *getbuff_from_idle(<span class="keyword">void</span>);</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">struct</span> buffer **mq, <span class="keyword">struct</span> buffer *buff)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">send</span><span class="params">(<span class="keyword">char</span> *receiver, <span class="keyword">char</span> *a, <span class="keyword">int</span> size)</span></span>;</span><br><span class="line"><span class="keyword">struct</span> buffer *remov(<span class="keyword">struct</span> buffer **mq, <span class="keyword">int</span> sender);</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">receive</span><span class="params">(<span class="keyword">char</span> *sender, <span class="keyword">char</span> *b)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">send_message_proc</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">recv_message_proc</span><span class="params">()</span></span>;</span><br></pre></td></tr></table></figure>
+<p><span id="more-785"></span></p>
+<p>3）图示说明</p>
+<p><a href="http://miibotree.com/?attachment_id=788" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/11/thread_com1.png" alt="thread_com1"></a></p>
+<p><a href="http://miibotree.com/?attachment_id=789" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/11/thread_com2.png" alt="thread_com2"></a></p>
+<p>4)具体函数实现</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*get a buffer from the global struct freebuf*/</span></span><br><span class="line">struct buffer <span class="built_in">*</span>getbuff_from_idle<span class="params">(void)</span></span><br><span class="line">&#123;</span><br><span class="line">        struct buffer <span class="built_in">*</span>buff;</span><br><span class="line">        buff = freebuf;</span><br><span class="line">        freebuf = freebuf-&gt;next;</span><br><span class="line">        return<span class="params">(buff)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* insert a struct buffer into the quene *mq */</span></span><br><span class="line">void insert<span class="params">(struct buffer **mq, struct buffer *buff)</span></span><br><span class="line">&#123;</span><br><span class="line">        struct buffer <span class="built_in">*</span>temp;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(buff == NULL)</span>        <span class="comment">/*buff is NULL*/</span></span><br><span class="line">                return;</span><br><span class="line">        buff-&gt;next = NULL;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(*mq == NULL)</span></span><br><span class="line">                <span class="built_in">*</span>mq = buff;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">                temp = <span class="built_in">*</span>mq;                <span class="comment">/*insert buffer into the tail of the *mq*/</span></span><br><span class="line">                while<span class="params">(temp-&gt;next != NULL)</span></span><br><span class="line">                        temp = temp-&gt;next;</span><br><span class="line">                temp-&gt;next = buff;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void send<span class="params">(char *receiver, char *a, int size)</span></span><br><span class="line">&#123;</span><br><span class="line">        struct buffer <span class="built_in">*</span>buff;</span><br><span class="line">        int i, id = -<span class="number">1</span>;</span><br><span class="line">        disable<span class="params">()</span>;</span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; NTCB; i++)</span></span><br><span class="line">        &#123;</span><br><span class="line">        <span class="comment">/*if receiver thread is not exist, then return*/</span></span><br><span class="line">                <span class="keyword">if</span> <span class="params">(strcmp<span class="params">(receiver, tcb[i].name)</span> == <span class="number">0</span>)</span></span><br><span class="line">                &#123;</span><br><span class="line">                        id = i;</span><br><span class="line">                        break;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(id == -<span class="number">1</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">                printf<span class="params">(<span class="string">"Error: Receiver not exist!\n"</span>)</span>;</span><br><span class="line">                enable<span class="params">()</span>;</span><br><span class="line">                return;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*get the idle message buffer*/</span></span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;sfb)</span>;<span class="comment">/*?what is the sfb for?*/</span></span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;mutexfb)</span>;</span><br><span class="line">        buff = getbuff_from_idle<span class="params">()</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;mutexfb)</span>;</span><br><span class="line">        <span class="comment">/*fill the message buffer info.*/</span></span><br><span class="line">        buff-&gt;sender = current;</span><br><span class="line">        buff-&gt;size = size;</span><br><span class="line">        buff-&gt;next = NULL;</span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; buff-&gt;size; i++, a++)</span></span><br><span class="line">        &#123;</span><br><span class="line">                buff-&gt;<span class="built_in">text</span>[i] = <span class="built_in">*</span>a;</span><br><span class="line">        &#125;</span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;tcb[id].mutex)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*insert buff into the receiver's quene*/</span></span><br><span class="line">        insert<span class="params">(&amp;#<span class="number">038</span>;<span class="params">(tcb[id].mq)</span>, buff)</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;tcb[id].mutex)</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;tcb[id].sm)</span>;</span><br><span class="line"></span><br><span class="line">        enable<span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct buffer <span class="built_in">*</span>remov<span class="params">(struct buffer **mq, int sender)</span></span><br><span class="line">&#123;</span><br><span class="line">        struct buffer <span class="built_in">*</span>temp, <span class="built_in">*</span>find_buffer;</span><br><span class="line">        temp = <span class="built_in">*</span>mq;</span><br><span class="line">        <span class="comment">/*if is the head buffer*/</span></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(temp-&gt;sender == sender)</span></span><br><span class="line">        &#123;</span><br><span class="line">                find_buffer = temp;</span><br><span class="line">                temp = temp-&gt;next;</span><br><span class="line">                return <span class="params">(find_buffer)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">                while<span class="params">(temp-&gt;next != NULL)</span></span><br><span class="line">                &#123;</span><br><span class="line">                        <span class="comment">/*sender represents where the message comes from*/</span></span><br><span class="line">                        <span class="keyword">if</span> <span class="params">(temp-&gt;next-&gt;sender == sender)</span></span><br><span class="line">                        &#123;</span><br><span class="line">                                find_buffer = temp-&gt;next;</span><br><span class="line">                                temp-&gt;next = temp-&gt;next-&gt;next;</span><br><span class="line">                                return <span class="params">(find_buffer)</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">else</span></span><br><span class="line">                        &#123;</span><br><span class="line">                                temp = temp-&gt;next;</span><br><span class="line">                        &#125;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*argv sender means where the message comes from*/</span></span><br><span class="line">int receive<span class="params">(char *sender, char *b)</span></span><br><span class="line">&#123;</span><br><span class="line">        int i = <span class="number">0</span>, id = -<span class="number">1</span>, size;</span><br><span class="line">        struct buffer <span class="built_in">*</span>get_buffer = NULL, <span class="built_in">*</span>buff = NULL;</span><br><span class="line"></span><br><span class="line">        disable<span class="params">()</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*find the sender TCB*/</span></span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; NTCB; i++)</span></span><br><span class="line">        &#123;</span><br><span class="line">                <span class="keyword">if</span><span class="params">(strcmp<span class="params">(sender, tcb[i].name)</span> == <span class="number">0</span>)</span></span><br><span class="line">                &#123;</span><br><span class="line">                        id = i;</span><br><span class="line">                        break;</span><br><span class="line">                &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(id == -<span class="number">1</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">                printf<span class="params">(<span class="string">"Error: Sender not exist\n"</span>)</span>;</span><br><span class="line">                enable<span class="params">()</span>;</span><br><span class="line">                return;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*judge message quene idle?*/</span></span><br><span class="line"></span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;tcb[current].sm)</span>;</span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;tcb[current].mutex)</span>;</span><br><span class="line">        get_buffer = remov<span class="params">(&amp;#<span class="number">038</span>;<span class="params">(tcb[current].mq)</span>, id)</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;tcb[current].mutex)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="params">(get_buffer == NULL)</span></span><br><span class="line">        &#123;</span><br><span class="line">                V<span class="params">(&amp;#<span class="number">038</span>;tcb[current].sm)</span>;</span><br><span class="line">                enable<span class="params">()</span>;</span><br><span class="line">                return <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        size = get_buffer-&gt;size;</span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; get_buffer-&gt;size; i++,b++)</span></span><br><span class="line">                <span class="built_in">*</span>b = get_buffer-&gt;<span class="built_in">text</span>[i];</span><br><span class="line"></span><br><span class="line">        <span class="comment">/*reinitial the buff and put it into the global buff: freebuf*/</span></span><br><span class="line">        get_buffer-&gt;sender = -<span class="number">1</span>;</span><br><span class="line">        get_buffer-&gt;size = <span class="number">0</span>;</span><br><span class="line">        get_buffer-&gt;<span class="built_in">text</span>[<span class="number">0</span>] = '\<span class="number">0</span>';</span><br><span class="line">        P<span class="params">(&amp;#<span class="number">038</span>;mutexfb)</span>;</span><br><span class="line">        insert<span class="params">(freebuf, get_buffer)</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;mutexfb)</span>;</span><br><span class="line">        V<span class="params">(&amp;#<span class="number">038</span>;sfb)</span>;</span><br><span class="line">        enable<span class="params">()</span>;</span><br><span class="line">        return size;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void send_message_proc<span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        int i, j, k;</span><br><span class="line">        char message[<span class="number">10</span>] = <span class="string">"message"</span>;</span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++)</span></span><br><span class="line">        &#123;</span><br><span class="line">                message[<span class="number">7</span>] = i + '<span class="number">0</span>';</span><br><span class="line">                message[<span class="number">8</span>] = '\<span class="number">0</span>';</span><br><span class="line">                send<span class="params">(<span class="string">"recv_message_proc"</span>, message, strlen<span class="params">(message)</span>)</span>;</span><br><span class="line">                printf<span class="params">(<span class="string">"message %s has been sent.\n"</span>, message)</span>;</span><br><span class="line">                <span class="keyword">if</span> <span class="params">(i % <span class="number">2</span> == <span class="number">1</span>)</span></span><br><span class="line">                        printf<span class="params">(<span class="string">"\n"</span>)</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">/*let CPU patch*/</span></span><br><span class="line">                <span class="keyword">for</span> <span class="params">(j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++)</span></span><br><span class="line">                    <span class="keyword">for</span> <span class="params">(k = <span class="number">0</span>; k &lt; <span class="number">10000</span>; k++)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        receive<span class="params">(<span class="string">"recv_message_proc"</span>, message)</span>;</span><br><span class="line">        <span class="keyword">if</span> <span class="params">(message[<span class="number">0</span>] == 'O' &amp;#<span class="number">038</span>;&amp;#<span class="number">038</span>; message[<span class="number">1</span>] == 'K')</span></span><br><span class="line">                printf<span class="params">(<span class="string">"All the message have been received, Successful!\n"</span>)</span>;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                printf<span class="params">(<span class="string">"Not all the message have been received, Failed!\n"</span>)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void recv_message_proc<span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">        int i, j, k;</span><br><span class="line">        int size;</span><br><span class="line">        char message[<span class="number">10</span>];</span><br><span class="line">        printf<span class="params">(<span class="string">"\n"</span>)</span>;</span><br><span class="line">        <span class="keyword">for</span> <span class="params">(i = <span class="number">0</span>; i &lt; <span class="number">6</span>; i++)</span></span><br><span class="line">        &#123;</span><br><span class="line">                <span class="comment">/*while loop until receive the message*/</span></span><br><span class="line">                while<span class="params">( <span class="params">(size = receive<span class="params">(<span class="string">"send_message_proc"</span>, message)</span>)</span> == <span class="number">0</span> )</span></span><br><span class="line">                &#123;</span><br><span class="line">                        ;</span><br><span class="line">                &#125;</span><br><span class="line">                message[size] = '\<span class="number">0</span>';</span><br><span class="line">                printf<span class="params">(<span class="string">"message %s has been received\n"</span>, message)</span>;</span><br><span class="line">                <span class="keyword">if</span> <span class="params">(i % <span class="number">2</span> == <span class="number">1</span>)</span></span><br><span class="line">                        printf<span class="params">(<span class="string">"\n"</span>)</span>;</span><br><span class="line">                <span class="keyword">for</span> <span class="params">(j = <span class="number">0</span>; j &lt; <span class="number">10000</span>; j++)</span></span><br><span class="line">                    <span class="keyword">for</span> <span class="params">(k = <span class="number">0</span>; k &lt; <span class="number">10000</span>; k++)</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        strcpy<span class="params">(message, <span class="string">"OK"</span>)</span>;</span><br><span class="line">        send<span class="params">(<span class="string">"send_message_proc"</span>, message, strlen<span class="params">(message)</span>)</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码请访问：</p>
+<p><a href="https://github.com/miibotree/DOS_OS/blob/master/Miithread_3.c" target="_blank" rel="external">https://github.com/miibotree/DOS_OS/blob/master/Miithread_3.c</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag">#OS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/11/11/Haskell学习笔记–入门/" rel="prev">Haskell学习笔记–入门</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/11/07/生产者和消费者问题/" rel="next">生产者和消费者问题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

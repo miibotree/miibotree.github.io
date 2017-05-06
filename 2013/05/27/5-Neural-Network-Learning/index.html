@@ -1,0 +1,794 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="MachineLearning," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第五讲——Neural Networks 神经网络的表示
+===============================
+（一）、Cost function
+（二）、Backpropag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(5) Neural Network Learning">
+<meta property="og:url" content="http://yoursite.com/2013/05/27/5-Neural-Network-Learning/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第五讲——Neural Networks 神经网络的表示
+===============================
+（一）、Cost function
+（二）、Backpropag">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342592677_7744.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342593231_9363.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342598576_3338.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342598667_2585.jpg">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?E%20=%20%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%7D%7B%28y_i-a_i%29%5E2%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CDelta%20W%20%5Cpropto%20-%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20W%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%20=%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D+%5CDelta%5CTheta_%7Bij%7D%5E%7B%28l%29%7D=%5CTheta_%7Bij%7D%5E%7B%28l%29%7D-%5Calpha%20%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?a_i%5E%7B%28l%29%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20%5Cfrac%7B1%7D%7B2%7D%28y-a_i%5E%7B%28l%29%7D%29%5E2%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20[%5Cfrac%7B1%7D%7B2%7D%28y-g%28z_i%5E%7B%28l%29%7D%29%29%5E2]%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%20%28a_i%5E%7B%28l%29%7D-y%29%5Ccdot%20g%7B%E2%80%99%7D%27%28z_i%5E%7B%28l%29%7D%29">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D%5C%5C%20=%20%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20[%5Csum_%7Bk%7D%5E%7BN%5E%7Bl%7D%7D%5CTheta_%7Bjk%7D%5Ccdot%20g%28z_k%5E%7B%28l%29%7D%29]%20%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D,i%5Cin%20k%5C%5C%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5CTheta_%7Bji%7D%5E%7Bl%7D%20=%20%5CTheta_%7Bji%7D%5E%7Bl%7D-%5Calpha%5Ccdot%20%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CDelta%20%5CTheta_%7Bk-1%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5CTheta%20_%7Bk-1%7D%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%20=%20a_k-y%20%5C%5C%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20g%28z_k%29%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7Be%5E%7B-z%7D%7D%7B%281+e%5E%7B-z%7D%29%5E2%7D%20=%20a_k%281-a_k%29%5C%5C%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20%5CTheta%20_%7Bk-1%7D%7D%20=%20a_%7Bk-1%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_%7Bk%7D%20=%20%5Cxi%20%28y-a_k%29a_k%281-a_k%29a_%7Bk-1%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bk%7D%20=%20%28y-a_k%29a_k%281-a_k%29">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342598929_7260.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342599882_9006.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/19/1342669084_1797.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342755240_7990.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?%5Cdelta_k%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20a_k%7D%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5CTheta_%7Bk%7D%5Cdelta_%7Bk+1%7D%5Ccdot%20g%27%28z_k%29%20%5C%5C%20%5CDelta%20w_%7Bij%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20a_j%5El%20%5Ccdot%20%5Cdelta_k%5E%28l+1%29%5C%5C%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20w_%7Bij%7D%7D">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342755924_6084.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342756492_7306.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342758124_6714.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342758617_6030.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342760070_2369.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342760372_7886.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342760485_3627.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342763419_5311.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201207/20/1342765350_2992.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342765672_2379.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342766687_6181.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342767581_5098.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342767872_4774.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342768036_8648.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342768080_8986.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/20/1342768354_6576.jpg">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(5) Neural Network Learning">
+<meta name="twitter:description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第五讲——Neural Networks 神经网络的表示
+===============================
+（一）、Cost function
+（二）、Backpropag">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> (5) Neural Network Learning // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              (5) Neural Network Learning
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-05-27T14:32:59+08:00" content="2013-05-27">
+            2013-05-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Machine Learning系列</p>
+<p>以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</p>
+<p><strong>第五讲——Neural Networks 神经网络的表示</strong></p>
+<p><strong>===============================</strong></p>
+<p><strong>（一）、Cost function</strong></p>
+<p><strong>（二）、Backpropagation algorithm</strong></p>
+<p>**（三）、Backpropagation intuition</p>
+<p>**</p>
+<p>**（四）、Implementation note: Unrolling parameters</p>
+<p>**</p>
+<p>**（五）、Gradient checking</p>
+<p>**</p>
+<p>**（六）、Random initialization</p>
+<p>**</p>
+<p><strong>（七）、Putting it together</strong></p>
+<hr>
+<hr>
+<p><span id="more-700"></span></p>
+<p><strong>===============================</strong></p>
+<p><strong>（一）、Cost function</strong></p>
+<hr>
+<p>假设神经网络的训练样本有m个，每个包含一组输入x和一组输出信号y，L表示神经网络层数，S<sub>l</sub>表示每层的neuron个数(SL表示输出层神经元个数)。</p>
+<p>将神经网络的分类定义为两种情况：二类分类和多类分类，</p>
+<p>卐二类分类：S<sub>L</sub>=1, y=0 or 1表示哪一类；</p>
+<p>卐K类分类：S<sub>L</sub>=K, y<sub>i </sub>= 1表示分到第i类；（K&gt;2）</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342592677_7744.jpg" alt=""></p>
+<p>我们在前几章中已经知道，Logistic hypothesis的Cost Function如下定义：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593231_9363.jpg" alt=""></p>
+<p>其中，前半部分表示hypothesis与真实值之间的距离，后半部分为对参数进行regularization的bias项，神经网络的cost function同理：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg" alt=""></p>
+<p>hypothesis与真实值之间的距离为 每个样本-每个类输出 的加和，对参数进行regularization的bias项处理所有参数的平方和</p>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（二）、Backpropagation algorithm</strong></p>
+<p>前面我们已经讲了cost function的形式，下面我们需要的就是最小化J(Θ)</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342598576_3338.jpg" alt=""></p>
+<p>想要根据gradient descent的方法进行参数optimization，首先需要得到cost function和一些参数的表示。根据forward propagation,我们首先进行training dataset 在神经网络上的各层输出值：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342598667_2585.jpg" alt=""></p>
+<p>我们定义神经网络的总误差为：</p>
+<center><a href="http://www.codecogs.com/eqnedit.php?latex=E%20=%20%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%7D%7B%28y_i-a_i%29%5E2%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?E%20=%20%5Cfrac%7B1%7D%7B2%7D%5Csum_%7Bi%7D%7B%28y_i-a_i%29%5E2%7D" alt="" title="E = \frac{1}{2}\sum_{i}{(y_i-a_i)^2}"></a></center><center>希望通过调整权重参数W（也就是theta）来最小化E。</center><center>由于</center><center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%20W%20%5Cpropto%20-%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20W%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%20W%20%5Cpropto%20-%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20W%7D" alt="" title="\Delta W \propto -\frac{\partial E}{\partial W}"></a></center><center></center><center>所以每一层按如下方式进行更新：</center><center><img src="http://latex.codecogs.com/gif.latex?%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%20=%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D+%5CDelta%5CTheta_%7Bij%7D%5E%7B%28l%29%7D=%5CTheta_%7Bij%7D%5E%7B%28l%29%7D-%5Calpha%20%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bij%7D%5E%7B%28l%29%7D%7D" alt="" title="\Theta_{ij}^{(l)} = \Theta_{ij}^{(l)}+\Delta\Theta_{ij}^{(l)}=\Theta_{ij}^{(l)}-\alpha \frac{\partial E(\Theta)}{\partial \Theta_{ij}^{(l)}}"></center><center></center></center><center><center>根据backpropagation算法进行梯度的计算，这里引入了error变量δ，该残差表明了该节点对最终输出值的残差产生了多少影响。</center><center>对于最后一层，我们可以直接算出网络产生的输出<img src="http://latex.codecogs.com/gif.latex?a_i%5E%7B%28l%29%7D" alt="" title="a_i^{(l)}">与实际值之间的差距，我们将这个差距定义为<img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D" alt="" title="\delta_{i}^{(l)}">。对于隐藏单元我们如何处理呢？我们将通过计算各层节点残差的加权平均值计算hidden layer的残差。读者可以自己验证下，其实<img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D" alt="" title="\delta_{i}^{(l)}">就是E对b求导的结果。</center></center><center><center>在最后一层中，</center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20%5Cfrac%7B1%7D%7B2%7D%28y-a_i%5E%7B%28l%29%7D%29%5E2%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20[%5Cfrac%7B1%7D%7B2%7D%28y-g%28z_i%5E%7B%28l%29%7D%29%29%5E2]%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%20%28a_i%5E%7B%28l%29%7D-y%29%5Ccdot%20g%7B%E2%80%99%7D%27%28z_i%5E%7B%28l%29%7D%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20%5Cfrac%7B1%7D%7B2%7D%28y-a_i%5E%7B%28l%29%7D%29%5E2%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Cfrac%7B%5Cpartial%20[%5Cfrac%7B1%7D%7B2%7D%28y-g%28z_i%5E%7B%28l%29%7D%29%29%5E2]%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%20%28a_i%5E%7B%28l%29%7D-y%29%5Ccdot%20g%7B%E2%80%99%7D%27%28z_i%5E%7B%28l%29%7D%29" alt="" title="\delta_{i}^{(l)} = \frac{\partial E}{\partial z_i^{(l)}}=\frac{\partial \frac{1}{2}(y-a_i^{(l)})^2}{\partial z_i^{(l)}}=\frac{\partial [\frac{1}{2}(y-g(z_i^{(l)}))^2]}{\partial z_i^{(l)}}= (a_i^{(l)}-y)\cdot g{’}"></a></center></center><center><center>对于前面的每一层，都有</center><center><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_j%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D%5C%5C%20=%20%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20[%5Csum_%7Bk%7D%5E%7BN%5E%7Bl%7D%7D%5CTheta_%7Bjk%7D%5Ccdot%20g%28z_k%5E%7B%28l%29%7D%29]%20%7D%7B%5Cpartial%20z_i%5E%7B%28l%29%7D%7D,i%5Cin%20k%5C%5C%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" alt="" title="\delta_{i}^{(l)} = \frac{\partial E}{\partial z_i^{(l)}}=\sum_{j}^{N^{(l+1)}} \frac{\partial E}{\partial z_j^{(l+1)}} \cdot \frac{\partial z_j^{(l+1)}}{\partial z_i^{(l)}}\\ = \sum_{j}^{N^{(l+1)}} \delta_{j}^{(l+1)}\cdot \frac{\partial [\sum_{k}^{N^{l}}\Theta_{jk}\cdot g(z_k^{(l)})] }{\partial z_i^{(l)}},i\in k\\ =\sum_{j}^{N^{(l+1)}} (\delta_{j}^{(l+1)}\cdot \Theta_{ji}) \cdot g{"></center></center><center><center>由此得到第l层第i个节点的残差计算方法：</center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l@plus;1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l@plus;1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bi%7D%5E%7B%28l%29%7D%20=%5Csum_%7Bj%7D%5E%7BN%5E%7B%28l+1%29%7D%7D%20%28%5Cdelta_%7Bj%7D%5E%7B%28l+1%29%7D%5Ccdot%20%5CTheta_%7Bji%7D%29%20%5Ccdot%20g%7B%27%7D%28z_i%29" alt="" title="\delta_{i}^{(l)} =\sum_{j}^{N^{(l+1)}} (\delta_{j}^{(l+1)}\cdot \Theta_{ji}) \cdot g{"></a></center></center><center><center>由于我们的真实目的是计算<a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%28%5CTheta%29%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%7D" alt="" title="\frac{\partial E(\Theta)}{\partial \Theta_{ji}}"></a>,且</center><center></center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfn_cm%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l@plus;1%29%7D%7D%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20z_i%5E%7B%28l@plus;1%29%7D%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%5Cdelta_i%5E%7B%28l@plus;1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%5Ccdot%20%5Cfrac%20%7B%5Cpartial%20z_i%5E%7B%28l+1%29%7D%7D%7B%5Cpartial%20%5CTheta_%7Bji%7D%5E%7Bl%7D%7D%20=%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" alt="" title="\fn_cm \frac{\partial E}{\partial \Theta_{ji}^{l}} = \frac{\partial E}{\partial z_i^{(l+1)}}\cdot \frac {\partial z_i^{(l+1)}}{\partial \Theta_{ji}^{l}} =\delta_i^{(l+1)}\cdot a_j^{(l)}"></a></center><center></center><center><center>所以我们可以得到神经网络中权重的update方程：</center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfn_cm%20%5CTheta_%7Bji%7D%5E%7Bl%7D%20=%20%5CTheta_%7Bji%7D%5E%7Bl%7D-%5Calpha%5Ccdot%20%5Cdelta_i%5E%7B%28l@plus;1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfn_cm%20%5CTheta_%7Bji%7D%5E%7Bl%7D%20=%20%5CTheta_%7Bji%7D%5E%7Bl%7D-%5Calpha%5Ccdot%20%5Cdelta_i%5E%7B%28l+1%29%7D%5Ccdot%20a_j%5E%7B%28l%29%7D" alt="" title="\fn_cm \Theta_{ji}^{l} = \Theta_{ji}^{l}-\alpha\cdot \delta_i^{(l+1)}\cdot a_j^{(l)}"></a><center>不断迭代直到落入local optima,就是backpropagation的算法过程。</center><center></center></center><center><center></center><center><strong>============================================================</strong></center><center><strong>Example of logistical cost:</strong></center><center></center></center><center><center>下面我们针对logistical cost给出计算的例子：</center><center>而对于每一层，其误差可以定义为：</center></center><center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%20%5CTheta_%7Bk-1%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5CTheta%20_%7Bk-1%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%20%5CTheta_%7Bk-1%7D%20=%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5CTheta%20_%7Bk-1%7D%7D" alt="" title="\Delta \Theta_{k-1} = \frac{\partial E}{\partial a_k}\cdot \frac{\partial a_k}{\partial z_k} \cdot \frac{\partial z_k}{\Theta _{k-1}}"></a></center></center>
+
+<div>分别代入即得</div>
+
+<center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%20=%20a_k-y%20%5C%5C%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20g%28z_k%29%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7Be%5E%7B-z%7D%7D%7B%281@plus;e%5E%7B-z%7D%29%5E2%7D%20=%20a_k%281-a_k%29%5C%5C%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20%5CTheta%20_%7Bk-1%7D%7D%20=%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%20=%20a_k-y%20%5C%5C%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20g%28z_k%29%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7Be%5E%7B-z%7D%7D%7B%281+e%5E%7B-z%7D%29%5E2%7D%20=%20a_k%281-a_k%29%5C%5C%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20%5CTheta%20_%7Bk-1%7D%7D%20=%20a_%7Bk-1%7D" alt="" title="\frac{\partial E}{\partial a_k} = a_k-y \\ \frac{\partial a_k}{\partial z_k} = \frac{\partial g(z_k))}{\partial z_k} = \frac{e^{-z}}{(1+e^{-z})^2} = a_k(1-a_k)\\ \frac{\partial z_k}{\partial \Theta _{k-1}} = a_{k-1}"></a></center><center></center><center>由此得来\theta_{k}的update方程：</center>
+
+<div></div>
+
+<p><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CTheta_%7Bk%7D%20=%20%5Cxi%20%28y-a_k%29a_k%281-a_k%29a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_%7Bk%7D%20=%20%5Cxi%20%28y-a_k%29a_k%281-a_k%29a_%7Bk-1%7D" alt="" title="\Theta_{k} = \xi (y-a_k)a_k(1-a_k)a_{k-1}"></a></center><center></center><center>如果将误差对激励函数（activation function）的导数记做δ，则有：</center><center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_%7Bk%7D%20=%20%28y-a_k%29a_k%281-a_k%29" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_%7Bk%7D%20=%20%28y-a_k%29a_k%281-a_k%29" alt="" title="\delta_{k} = (y-a_k)a_k(1-a_k)"></a></center><center></center><center><a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" alt="" title="\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}"></a></center><center></center><center>对于前面一层 ,更新同理，<a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D" alt="" title="\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}"></a>，只是上一层\Theta梯度的第一个分量E对a_k求导有所变化，</center><center></center><center>[![](<a href="http://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?%5Cbegin%7Balign*%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a</a>_%7Bj%7D%7D=%5Csum_%7Bk%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20a_%7Bj%7D%7D%5C%5C%20=%20%5Csum_%7Bk%7D%28y-a_k%29%5Ccdot%20a_k%281-a_k%29%5Ccdot%20%5CTheta_j%20%5Cend%7Balign_%7D “\begin{align_} \frac{\partial E}{\partial a_{j}}=\sum_{k} \frac{\partial E}{\partial a_k}\cdot \frac{\partial a_k}{\partial z_k}\cdot \frac{\partial z_k}{\partial a_{j}}\ = \sum_{k}(y-a_k)\cdot a_k(1-a_k)\cdot \Theta_j \end{align_}”)](<a href="http://www.codecogs.com/eqnedit.php?latex=%5Cbegin%7Balign" target="_blank" rel="external">http://www.codecogs.com/eqnedit.php?latex=%5Cbegin%7Balign</a>_%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_%7Bj%7D%7D=%5Csum_%7Bk%7D%20%5Cfrac%7B%5Cpartial%20E%7D%7B%5Cpartial%20a_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20a_%7Bj%7D%7D%5C%5C%20=%20%5Csum_%7Bk%7D%28y-a_k%29%5Ccdot%20a_k%281-a_k%29%5Ccdot%20%5CTheta_j%20%5Cend%7Balign*%7D)</center>但是[![](<a href="http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a</a>_%7Bk-1%7D “\Delta\Theta_k = \xi \delta_k \cdot a_{k-1}”)](<a href="http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D)始终是不变的。" target="_blank" rel="external">http://www.codecogs.com/eqnedit.php?latex=%5CDelta%5CTheta_k%20=%20%5Cxi%20%5Cdelta_k%20%5Ccdot%20a_%7Bk-1%7D)始终是不变的。</a></p>
+<p>&nbsp;</p>
+<p><center>下图就是上面推导得出的结果：</center><img src="http://my.csdn.net/uploads/201207/18/1342598929_7260.jpg" alt=""></p>
+<p>由上图我们得到了error变量δ的计算，下面我们来看backpropagation算法的伪代码：</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342599882_9006.jpg" alt=""></p>
+<p>ps：最后一步之所以写+=而非直接赋值是把Δ看做了一个矩阵，每次在相应位置上做修改。</p>
+<p>从后向前此计算每层依的δ，用Δ表示全局误差，每一层都对应一个Δ(l)。再引入D作为cost function对参数的求导结果。下图左边j是否等于0影响的是是否有最后的bias regularization项。左边是定义，右边可证明（比较繁琐）。</p>
+<p><img src="http://my.csdn.net/uploads/201207/19/1342669084_1797.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（三）、Backpropagation intuition</strong></p>
+<p>上面讲了backpropagation算法的步骤以及一些公式，在这一小节中我们讲一下最简单的back-propagation模型是怎样learning的。</p>
+<p>首先根据forward propagation方法从前往后计算z<sup>(j)</sup>,a<sup>(j) </sup>;</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342755240_7990.jpg" alt=""></p>
+<p>然后将原cost function 进行简化，去掉下图中后面那项regularization项，</p>
+<p><img src="http://my.csdn.net/uploads/201207/18/1342593405_4739.jpg" alt=""></p>
+<p>那么对于输入的第i个样本(xi,yi)，有</p>
+<p>Cost(i)=y<sup>(i)</sup>log(h<sub>θ</sub>(x<sup>(i)</sup>))+(1- y<sup>(i)</sup>)log(1- h<sub>θ</sub>(x<sup>(i)</sup>))</p>
+<p>&nbsp;</p>
+<p>由上文可知，</p>
+<p><a href="http://www.codecogs.com/eqnedit.php?latex=%5Cdelta_k%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20a_k%7D%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5CTheta_%7Bk%7D%5Cdelta_%7Bk@plus;1%7D%5Ccdot%20g%27%28z_k%29%20%5C%5C%20%5CDelta%20w_%7Bij%7D%20=%20%5CDelta%20w_%7Bij%7D%20@plus;%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5CDelta%20w_%7Bij%7D%20@plus;%20a_j%5El%20%5Ccdot%20%5Cdelta_k%5E%28l@plus;1%29%5C%5C%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20w_%7Bij%7D%7D" target="_blank" rel="external"><img src="http://latex.codecogs.com/gif.latex?%5Cdelta_k%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20a_k%7D%5Cfrac%7B%5Cpartial%20a_k%7D%7B%5Cpartial%20z_k%7D%20=%20%5CTheta_%7Bk%7D%5Cdelta_%7Bk+1%7D%5Ccdot%20g%27%28z_k%29%20%5C%5C%20%5CDelta%20w_%7Bij%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5CDelta%20w_%7Bij%7D%20+%20a_j%5El%20%5Ccdot%20%5Cdelta_k%5E%28l+1%29%5C%5C%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20w_%7Bij%7D%7D%20=%20%5Cfrac%7B%5Cpartial%20J%28%5CTheta%29%7D%7B%5Cpartial%20z_k%7D%20%5Ccdot%20%5Cfrac%7B%5Cpartial%20z_k%7D%7B%5Cpartial%20w_%7Bij%7D%7D" alt="" title="\delta_k = \frac{\partial J(\Theta)}{\partial z_k} = \frac{\partial J(\Theta)}{\partial a_k}\frac{\partial a_k}{\partial z_k} = \Theta_{k}\delta_{k+1}\cdot g"></a></p>
+<p>&nbsp;</p>
+<div>其中J就是cost。那么将其进行简化，暂时不考虑g&#8217;(zk) = ak(1-ak)的部分，就有：</div>
+
+<p><img src="http://my.csdn.net/uploads/201207/20/1342755924_6084.jpg" alt=""></p>
+<p>经过求导计算可得，对于上图有</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342756492_7306.jpg" alt=""></p>
+<p>换句话说, 对于每一层来说，δ分量都等于后面一层所有的δ加权和，其中权值就是参数Θ。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>(四)、Implementation note: Unrolling parameters</strong></p>
+<p>这一节讲述matlab中如何实现unrolling parameter。</p>
+<p>前几章中已经讲过<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">在matlab中利用梯度下降方法进行更新</a>的<a href="http://blog.csdn.net/abcjennifer/article/details/7716281" target="_blank" rel="external">根本</a>，两个方程：</p>
+<div>function [jVal, gradient] = costFunction(theta)</div><br><div>optTheta = fminunc(@costFunction, initialTheta, options)</div>
+
+<p>与linear regression和logistic regression不同，在神经网络中，参数非常多，每一层j有一个参数向量Θj和Derivative向量Dj。那么我们首先将各层向量连起来，组成大vectorΘ和D，传入function，再在计算中进行下图中的reshape，分别取出进行计算。</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342758124_6714.jpg" alt=""></p>
+<p>计算时，方法如下：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342758617_6030.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p>&nbsp;</p>
+<p><strong>（五）、Gradient checking</strong></p>
+<hr>
+<p>神经网络中计算起来数字千变万化难以掌握，那我们怎么知道它里头工作的对不对呢？不怕，我们有法宝，就是gradient checking，通过check梯度判断我们的code有没有问题，ok？怎么做呢，看下边：</p>
+<p>对于下面这个【Θ-J(Θ)】图，取Θ点左右各一点（Θ+ε），（Θ-ε），则有点Θ的导数（梯度）近似等于(J（Θ+ε）-J（Θ-ε）)/(2ε)。<img src="http://my.csdn.net/uploads/201207/20/1342760070_2369.jpg" alt=""></p>
+<p>对于每个参数的求导公式如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342760372_7886.jpg" alt=""></p>
+<p>由于在back-propagation算法中我们一直能得到J(Θ)的导数D（derivative），那么就可以将这个近似值与D进行比较，如果这两个结果相近就说明code正确，否则错误，如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342760485_3627.jpg" alt=""></p>
+<p>Summary: 有以下几点需要注意</p>
+<p>-在back propagation中计算出J(θ)对θ的导数D，并组成vector（Dvec）</p>
+<p>-用numerical gradient check方法计算大概的梯度gradApprox=(J（Θ+ε）-J（Θ-ε）)/(2ε)</p>
+<p>-看是否得到相同（or相近）的结果</p>
+<p>-（这一点非常重要）停止check，只用back propagation 来进行神经网络学习（否则会非常慢，相当慢）</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342763419_5311.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p>&nbsp;</p>
+<p>（六）、Random Initialization</p>
+<p>&nbsp;</p>
+<p>对于参数θ的initialization问题，我们之前采用全部赋0的方法，比如：</p>
+<p><img src="http://img.my.csdn.net/uploads/201207/20/1342765350_2992.jpg" alt=""></p>
+<p>this means all of your hidden units are computing all of the exact same function of the input. So this is a highly redundant representation. 因为一层内的所有计算都可以归结为1个，而这使得一些interesting的东西被ignore了。</p>
+<p>所以我们应该打破这种symmetry，randomly选取每一个parameter，在[-ε,ε]范围内：</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342765672_2379.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<hr>
+<hr>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>（七）、Putting it together</strong></p>
+<p>1. 选择神经网络结构</p>
+<p>我们有很多choices of network :</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342766687_6181.jpg" alt=""></p>
+<p>那么怎么选择呢？</p>
+<p>No. of input units: Dimension of features</p>
+<p>No. output units: Number of classes</p>
+<p>Reasonable default: 1 hidden layer, or if &gt;1 hidden layer, have same no. of hidden units in every layer (usually the more the better)</p>
+<p>2. 神经网络的训练</p>
+<p>① Randomly initialize weights</p>
+<p>② Implement forward propagation to get h<sub>θ</sub>(x<sup>(i)</sup>) for anyx<sup>(i)</sup></p>
+<p>③ Implement code to compute cost function J(θ)</p>
+<p>④ Implement backprop to compute partial derivatives<img src="http://my.csdn.net/uploads/201207/20/1342767581_5098.jpg" alt=""></p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342767872_4774.jpg" alt=""></p>
+<p>⑤</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768036_8648.jpg" alt=""></p>
+<p>⑥</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768080_8986.jpg" alt=""></p>
+<p>test:</p>
+<p><img src="http://my.csdn.net/uploads/201207/20/1342768354_6576.jpg" alt=""></p>
+<p>&nbsp;</p>
+<hr>
+<p>本章讲述了神经网络学习的过程，重点在于back-propagation算法，gradient-checking方法，希望能够有人用我之前<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">这篇文章中的类似方法</a>予以实现神经网络。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MachineLearning/" rel="tag">#MachineLearning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/06/02/6-Advice-for-applying-machine-learning/" rel="prev">(6)Advice for applying machine learning</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/20/（4）Neural-Networks-Representation/" rel="next">（4）Neural Networks: Representation</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

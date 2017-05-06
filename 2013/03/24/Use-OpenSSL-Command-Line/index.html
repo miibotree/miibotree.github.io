@@ -1,0 +1,709 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OpenSSL,c/c++,信息安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="使用 OpenSSL.exe(Linux 中可执行文件名是 openssl) 可以做很多工作，是一个很好的测试或调试工具。
+3.1 版本和编译参数
+显示版本和编译参数： &amp;gt;openssl version -a
+3.2 支持的子命令、密码算法
+查看支持的子命令： &amp;gt;openssl ?
+SSL 密码组合列表： &amp;gt;openssl ciphers
+3.3 测试密码算法速度
+测试所有算法速">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Use OpenSSL Command Line">
+<meta property="og:url" content="http://yoursite.com/2013/03/24/Use-OpenSSL-Command-Line/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="使用 OpenSSL.exe(Linux 中可执行文件名是 openssl) 可以做很多工作，是一个很好的测试或调试工具。
+3.1 版本和编译参数
+显示版本和编译参数： &amp;gt;openssl version -a
+3.2 支持的子命令、密码算法
+查看支持的子命令： &amp;gt;openssl ?
+SSL 密码组合列表： &amp;gt;openssl ciphers
+3.3 测试密码算法速度
+测试所有算法速">
+<meta property="og:updated_time" content="2015-07-25T05:06:01.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Use OpenSSL Command Line">
+<meta name="twitter:description" content="使用 OpenSSL.exe(Linux 中可执行文件名是 openssl) 可以做很多工作，是一个很好的测试或调试工具。
+3.1 版本和编译参数
+显示版本和编译参数： &amp;gt;openssl version -a
+3.2 支持的子命令、密码算法
+查看支持的子命令： &amp;gt;openssl ?
+SSL 密码组合列表： &amp;gt;openssl ciphers
+3.3 测试密码算法速度
+测试所有算法速">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Use OpenSSL Command Line // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Use OpenSSL Command Line
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-03-24T18:09:24+08:00" content="2013-03-24">
+            2013-03-24
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>使用 OpenSSL.exe(Linux 中可执行文件名是 openssl) 可以做很多工作，是一个很好的测试或调试工具。</p>
+<p>3.1 版本和编译参数</p>
+<p>显示版本和编译参数： &gt;openssl version -a</p>
+<p>3.2 支持的子命令、密码算法</p>
+<p>查看支持的子命令： &gt;openssl ?</p>
+<p>SSL 密码组合列表： &gt;openssl ciphers</p>
+<p>3.3 测试密码算法速度</p>
+<p>测试所有算法速度： &gt;openssl speed</p>
+<p>测试 RSA 速度： &gt;openssl speed rsa</p>
+<p>测试 DES 速度： &gt;openssl speed des</p>
+<p>3.4 RSA 密钥操作</p>
+<p>产生 RSA 密钥对： &gt;openssl genrsa -out 1.key 1024</p>
+<p>取出 RSA 公钥： &gt;openssl rsa -in 1.key -pubout -out 1.pubkey</p>
+<p>3.5 加密文件</p>
+<p>加密文件： &gt;openssl enc -e -rc4 -in 1.key -out 1.key.enc</p>
+<p>解密文件： &gt;openssl enc -d -rc4 -in 1.key.enc -out 1.key.dec</p>
+<p><span id="more-626"></span></p>
+<p>3.6 计算 Hash 值</p>
+<p>计算文件的 MD5 值： &gt;openssl md5 &lt; 1.key</p>
+<p>计算文件的 SHA1 值： &gt;openssl sha1 &lt; 1.key</p>
+<p>•  算法编程 API</p>
+<p>OpenSSL 中支持众多的密码算法，并提供了很好的封装和接口。密码算法主要分为如下几类：对称算法、公钥算法、散列算法、随机数产生算法等。</p>
+<p>OpenSSL 的目标是实现安全协议。其中相关协议和标准包括： SSL/TLS 、 PKCS#1 、 PCKS#10 、 X.509 、 PEM 、 OCSP 等。</p>
+<p>4.1 对称算法接口</p>
+<p>OpenSSL 中实现的对称算法太多，举三个例子： DES 、 AES 、 RC4 。</p>
+<p>4.1.1 DES</p>
+<p>DES 加密算法是分组算法。 DES 的基本操作是把 64 比特明文在 56 比特密钥指引下加密成 64 比特密文。在实际使用中把密钥看作 64 比特可以更方便。</p>
+<p>DES （ IN ， KEY ） = OUT</p>
+<p>(1) DES ECB 模式</p>
+<p>在 OpenSSL 中 ECB 操作模式对应的函数是 DES_ecb_encrypt() ，该函数把一个 8 字节明文分组 input 加密成为一个 8 字节密文分组 output 。参数中密钥结构 ks 是用函数 DES_set_key() 准备好的，而密钥 key 是用随机数算法产生的 64 个随机比特。参数 enc 指示是加密还是解密。该函数每次只加密一个分组，因此用来加密很多数据时不方便使用。</p>
+<p>void DES_ecb_encrypt(const_DES_cblock _input,DES_cblock _output, DES_key_schedule *ks,int enc);</p>
+<p>int DES_set_key(const_DES_cblock _key,DES_key_schedule _schedule);</p>
+<p>(2) DES CBC 模式</p>
+<p>DES 算法 CBC 操作模式加解密函数是 DES_ncbc_encrypt() 。参数 length 指示输入字节长度。如果长度不是 8 字节的倍数，则会被用 0 填充到 8 字节倍数。因此，输出可能比 length 长，而且必然是 8 字节的倍数。</p>
+<p>void DES_ncbc_encrypt(const unsigned char _input,unsigned char _output, long length, DES_key_schedule _schedule, DES_cblock _ivec, int enc);</p>
+<p>(3) DES CFB 模式</p>
+<p>DES 算法 CFB 操作模式加解密函数是 DES_cfb_encrypt() 。参数 length 指示输入字节长度。参数 numbits 则指示了 CFB 每次循环加密多少明文比特，也即密文反馈的比特数目。 ivec 是初始向量，被看做第 0 个密文分组，是不用保密但应随机取值的 8 个字节。如果在一次会话中数次调用 DES_cfb_encrypt() ，则应该记忆 ivec 。由于 CFB 模式中每次 DES 基本操作只加密 numbits 比特明文，因此如果 numbits 太小则效率太低。</p>
+<p>void DES_cfb_encrypt(const unsigned char _in, unsigned char _out, int numbits, long length, DES_key_schedule _schedule, DES_cblock _ivec, int enc);</p>
+<p>另有一个 numbit 是 64 比特的版本，既高效又没有填充的麻烦，推荐使用。 num 中的返回值指示了 ivec 中的状态，是和下次调用衔接的。</p>
+<p>void DES_cfb64_encrypt(const unsigned char _in, unsigned char _out, long length, DES_key_schedule _schedule, DES_cblock _ivec, int *num, int enc) ；</p>
+<p>(4) DES OFB 模式</p>
+<p>OFB 和 CFB 类似，也有两个函数，用法一样。</p>
+<p>void DES_ofb_encrypt(const unsigned char _in,unsigned char _out,int numbits,long length,DES_key_schedule _schedule,DES_cblock _ivec);</p>
+<p>void DES_ofb64_encrypt(const unsigned char _in,unsigned char _out,long length,DES_key_schedule _schedule,DES_cblock _ivec,int *num);</p>
+<p>(5) DES 函数示例程序</p>
+<p>见附件 A.1 。</p>
+<p>4.1.2 A ES</p>
+<p>AES 加密算法是分组算法。典型参数的 AES 的基本操作是把 128 比特明文在 128 比特密钥指引下加密成 128 比特密文。</p>
+<p>AES （ IN ， KEY ） = OUT</p>
+<p>OpenSSL 中关于 AES 的函数名和参数接口和 DES 的雷同。相关函数名如下 ( 参数略 ) 。</p>
+<p>int AES_set_encrypt_key();</p>
+<p>int AES_set_decrypt_key();</p>
+<p>void AES_ecb_encrypt();</p>
+<p>void AES_cbc_encrypt();</p>
+<p>void AES_cfb128_encrypt();</p>
+<p>void AES_ofb128_encrypt();</p>
+<p>AES 示例程序见附件 A.2 。</p>
+<p>4.1.3 RC4</p>
+<p>RC4 密码算法是流算法，也叫序列算法。流算法是从密钥作为种子产生密钥流，明文比特流和密钥流异或即加密。 RC4 算法由于算法简洁，速度极快，密钥长度可变，而且也没有填充的麻烦，因此在很多场合值得大力推荐。</p>
+<p>OpenSSL 中 RC4 算法有两个函数 : RC4_set_key() 设置密钥， RC4() 加解密。可以把 RC4 看作异或，因此加密两次即解密。</p>
+<p>void RC4_set_key(RC4_KEY _key, int len, const unsigned char _data);</p>
+<p>void RC4(RC4_KEY _key, unsigned long len, const unsigned char _indata, unsigned char *outdata);</p>
+<p>RC4 示例程序见附件 A.3 。</p>
+<p>例子 A.3.(1) 是利用 OpenSSL 动态库函数。例子 A.3.(2) 是把 RC4 的实现代码从 OpenSSL 中分离出来的。例子 A.3.(3) 是另一个演示实现。</p>
+<p>4.2 公钥算法</p>
+<p>OpenSSL 中实现了 RSA 、 DSA 、 ECDSA 等公钥算法。</p>
+<p>4.2.1 RSA</p>
+<p>RSA 是分组算法，典型的密钥模长度 1024 比特时，分组即是 1024 比特，即 128 字节。</p>
+<p>(1) RSA 密钥</p>
+<p>RSA 密钥产生函数 RSA_generate_key() ，需要指定模长比特数 bits 和公钥指数 e 。另外两个参数为 NULL 即可。</p>
+<p>RSA _ RSA_generate_key(int bits, unsigned long e, void (_callback) (int,int,void _),void _cb_arg);</p>
+<p>如果从文件中读取密钥，可使用函数 PEM_read_bio_PrivateKey()/ PEM_read_bio_PUBKEY(); EVP_PKEY 中包含一个 RSA 结构，可以引用。</p>
+<p>EVP_PKEY _PEM_read_bio_PrivateKey(BIO _bp, EVP_PKEY _*x, pem_password_cb _cb, void *u);</p>
+<p>(2) RSA 加密解密</p>
+<p>RSA 加密函数 RSA_public_encrypt() 使用公钥部分，解密函数 RSA_private_decrypt() 使用私钥。填充方式常用的有两种 RSA_PKCS1_PADDING 和 RSA_PKCS1_OAEP_PADDING 。出错时返回 -1 。输入必须比 RSA 钥模长短至少 11 个字节（在 RSA_PKCS1_PADDING 时？）。输出长度等于 RSA 钥的模长。</p>
+<p>int RSA_public_encrypt(int flen, const unsigned char _from,unsigned char _to, RSA *rsa,int padding);</p>
+<p>int RSA_private_decrypt(int flen, const unsigned char _from,unsigned char _to, RSA *rsa,int padding);</p>
+<p>(3) 签名和验证</p>
+<p>签名使用私钥，验证使用公钥。 RSA 签名是把被签署消息的散列值编码后用私钥加密，因此函数中参数 type 用来指示散列函数的类型，一般是 NID_md5 或 NID_sha1 。正确情况下返回 0 。</p>
+<p>int RSA_sign(int type, const unsigned char _m, unsigned int m_length, unsigned char _sigret, unsigned int _siglen, RSA _rsa);</p>
+<p>int RSA_verify(int type, const unsigned char _m, unsigned int m_length, unsigned char _sigbuf, unsigned int siglen, RSA *rsa);</p>
+<p>(4) RSA 函数示例程序</p>
+<p>RSA 示例程序见附件 A.4 。</p>
+<p>例子 A.4.(1) 是加密解密例子。例子 A.4.(2) 是签名验证例子。</p>
+<p>4.2.2 DSA</p>
+<p>（ TOBE ）</p>
+<p>4.2.2 ECDSA</p>
+<p>（ or NOT TOBE ）</p>
+<p>4.3 Hash 算法</p>
+<p>Hash 算法举 MD5 和 SHA1 两个例子。 Hash 算法重复接收用户输入，直到最后一次结束时输出散列结果。</p>
+<p>4.3.1 MD5</p>
+<p>MD5 算法输出的散列值是 16 字节。</p>
+<p>int MD5_Init(MD5_CTX *c);</p>
+<p>int MD5_Update(MD5_CTX _c, const void _data, size_t len);</p>
+<p>int MD5_Final(unsigned char _md, MD5_CTX _c);</p>
+<p>4.3.2 SHA1</p>
+<p>SHA1 算法输出的散列值是 20 字节。</p>
+<p>int SHA1_Init(SHA_CTX *c);</p>
+<p>int SHA1_Update(SHA_CTX _c, const void _data, size_t len);</p>
+<p>int SHA1_Final(unsigned char _md, SHA_CTX _c);</p>
+<p>4.3.3 MD5 例子</p>
+<p>MD5 示例程序见附件 A.5 。</p>
+<p>md5sum 这是一个实用小工具，可以计算一个文件的 MD5 值。</p>
+<p>4.4 随机数算法</p>
+<p>随机性是密码安全的基石。为了产生安全的伪随机数，必须有好的随机因素作为种子。 OpenSSL 在内部做了努力，但是仍建议在实用随机数产生函数之前添加随机因素。</p>
+<p>函数 RAND_add() 可以添加随机因素到内部状态中去。然后，即可以使用 RAND_bytes() 获得随机数。</p>
+<p>void RAND_add(const void *buf,int num,double entropy);</p>
+<p>int RAND_bytes(unsigned char *buf,int num); </p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OpenSSL/" rel="tag">#OpenSSL</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/信息安全/" rel="tag">#信息安全</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/03/24/ACM递推系列–-ACM-HDU-1279-Children’s-Queue/" rel="prev">ACM递推系列–[ACM_HDU_1279] Children’s Queue</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/03/23/DES算法/" rel="next">DES算法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,1058 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/05/25/shell语句单引号和双引号的复合使用/" itemprop="url">
+                shell语句单引号和双引号的复合使用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-25T11:16:15+08:00" content="2014-05-25">
+            2014-05-25
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>分析代码的时候碰到如下一条awk语句：</p>
+<figure class="highlight"><figcaption><span>style="color: #000000;"><span style="font-size: medium;">awk -v RS="\n\n" '/'"$b"'/&#123;print $1&#125;'</span></span>```</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#39318;&#20808;&#65292;&#25105;&#20204;&#31616;&#21270;&#38382;&#39064;:&#10;&#10;```&#60;span style=&#34;color: #000000;&#34;&#62;&#60;span style=&#34;font-size: medium;&#34;&#62;awk &#39;/&#39;&#34;$b&#34;&#39;/&#123;print $1&#125;&#39;&#60;/span&#62;&#60;/span&#62;</span><br></pre></td></tr></table></figure>
+<p>我们必须清楚的是，</p>
+<figure class="highlight"><figcaption><span>line**首先必须经过****shell****的解析**。```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;shell&#22312;&#35299;&#26512;&#36825;&#26465;command line&#30340;&#26102;&#20505;&#65292;&#20174;&#24038;&#21040;&#21491;&#36827;&#34892;&#35299;&#26512;&#65292;&#21333;&#24341;&#21495;&#21644;&#21452;&#24341;&#21495;&#30340;&#21305;&#37197;&#22914;&#19979;&#22270;&#25152;&#31034;:&#10;&#10;[![12](http://miibotree.com/wp-content/uploads/2014/05/12.jpeg)](http://miibotree.com/?attachment_id=977)&#10;&#10;&#31532;&#19968;&#23545;&#21333;&#24341;&#21495;&#20854;&#23454;&#26159;&#27809;&#26377;&#20160;&#20040;&#23454;&#36136;&#24615;&#30340;&#25928;&#26524;&#30340;&#12290;&#10;&#10;&#20013;&#38388;&#36825;&#23545;&#21452;&#24341;&#21495;&#22312;shell&#30340;&#35299;&#26512;&#19979;&#23558;$b&#21464;&#25104;&#21464;&#37327;&#30340;&#20540;&#12290;&#22914;&#26524;b=&#38;#8221;127.0.0.1&#38;#8243;,&#21017;&#23558;&#34987;&#35299;&#26512;&#25104;&#23383;&#31526;&#20018;&#38;#8221;127.0.0.1&#38;#8243;&#12290;&#10;&#10;&#21518;&#38754;&#37027;&#23545;&#21333;&#24341;&#21495;&#26159;&#20026;&#20102;&#23558;$1&#20445;&#25345;&#19981;&#21464;&#36865;&#20837;awk&#31243;&#24207;&#20013;&#12290;&#22240;&#20026;&#24403;&#21069;shell&#30340;$1&#65288;&#20063;&#23601;&#26159;&#35843;&#29992;&#24403;&#21069;&#36825;&#20010;shell&#31243;&#24207;&#30340;&#31243;&#24207;&#25152;&#20256;&#36827;&#26469;&#30340;&#21442;&#25968;&#65289;&#19968;&#33324;&#37117;&#26159;&#31354;&#12290;&#22914;&#26524;&#19981;&#21152;&#21333;&#24341;&#21495;&#65292;$1&#20250;&#34987;shell&#35299;&#26512;&#25104;&#31354;&#12290;&#32780;&#21152;&#20102;&#20043;&#21518;&#21017;&#25226;$1&#20256;&#20837;&#21040;awk&#31243;&#24207;&#20013;&#65292;&#22312;awk&#31243;&#24207;&#37324;&#38754;&#30340;$1&#23601;&#26159;&#31532;&#19968;&#20010;&#23383;&#27573;&#30340;&#24847;&#24605;&#12290;&#10;&#10;&#26368;&#32456;&#20256;&#20837;&#21040;awk&#31243;&#24207;&#20013;&#30340;&#21442;&#25968;&#26159;&#36825;&#20010;&#26679;&#23376;&#30340;(&#22914;&#26524;b=&#8221;127.0.0.1&#8221;)&#65306;</span><br></pre></td></tr></table></figure>
+<p>/127.0.0.1/{print $1}<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">所以说</span><br></pre></td></tr></table></figure></p>
+<p>awk ‘/‘“$b”‘/{print $1}’<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">等效于</span><br></pre></td></tr></table></figure></p>
+<p>awk /“$b”‘/{print $1}’<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">也等效于</span><br></pre></td></tr></table></figure></p>
+<p>awk ‘/‘$b’/{print $1}’<br>```</p>
+<p>测试证明结果一致.</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/05/25/SSL-TLS/" itemprop="url">
+                SSL & TLS
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-25T11:10:48+08:00" content="2014-05-25">
+            2014-05-25
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><strong>1． SSL历史和版本演进</strong></p>
+<p>SSL（Secure Sockets Layer）</p>
+<p>TLS (Transport Layer Security)<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/05/25/SSL-TLS/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/04/19/Using-Chinese-in-Latex-with-XeTex/" itemprop="url">
+                Using Chinese in Latex with XeTex
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-19T16:31:09+08:00" content="2014-04-19">
+            2014-04-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>Finally I can use Chinese in Latex / linux.</p>
+<p>first I want to show the code that works:</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">\documentclass[11pt]&#123;article&#125;</span></span><br><span class="line"><span class="string">\usepackage&#123;xeCJK&#125;</span></span><br><span class="line"><span class="string">\setCJKmainfont&#123;SimHei&#125;</span> %SimHei <span class="keyword">is</span> the Chinese font <span class="keyword">in</span> my fc-list</span><br><span class="line"><span class="string">\parindent</span> <span class="number">2em</span> %段首缩进</span><br><span class="line"></span><br><span class="line"><span class="string">\begin&#123;document&#125;</span></span><br><span class="line"><span class="string">\section&#123;举例&#125;</span></span><br><span class="line"><span class="string">\begin&#123;verbatim&#125;</span></span><br><span class="line">标点。</span><br><span class="line"><span class="string">\end&#123;verbatim&#125;</span></span><br><span class="line"></span><br><span class="line">汉字Chinese数学$x=y$空格</span><br><span class="line"><span class="string">\end&#123;document&#125;</span></span><br></pre></td></tr></table></figure>
+<p><span id="more-957"></span></p>
+<p>this code has no error in my environment:</p>
+<p>Fedora19 + texlive2013 + texmaker</p>
+<p>compiled by Xelatex.</p>
+<p>Be sure you have Chinese  fonts under <strong>/user/share/fonts/</strong></p>
+<p>and use command:</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">fc-<span class="type">list</span> : zh-cn</span><br></pre></td></tr></table></figure>
+<p>to see whether your fonts have been loaded into the cache.</p>
+<p>And I found a paper which indroduce CTex, XeTex and XeCJK</p>
+<p><a href="http://www.360doc.com/content/11/1112/15/532901_163797486.shtml" target="_blank" rel="external">http://www.360doc.com/content/11/1112/15/532901_163797486.shtml</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/04/16/CJK-Latex-in-Linux-use-XeTex/" itemprop="url">
+                CJK Latex in Linux use XeTex
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-16T17:08:58+08:00" content="2014-04-16">
+            2014-04-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>I want to Latex support Chinese in Linux.</p>
+<p>However, in windows there is CTEX project that can support Chinese almost perfectly.But Linux is rather difficult. And finally I found the below reference:</p>
+<p>[<a href="http://linux-wiki.cn/wiki/zh-hans/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89" target="_blank" rel="external">http://linux-wiki.cn/wiki/zh-hans/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89</a></p>
+<p>](<a href="http://linux-wiki.cn/wiki/zh-hans/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89" target="_blank" rel="external">http://linux-wiki.cn/wiki/zh-hans/LaTeX%E4%B8%AD%E6%96%87%E6%8E%92%E7%89%88%EF%BC%88%E4%BD%BF%E7%94%A8XeTeX%EF%BC%89</a>)</p>
+<p>Xelatex is included in Tex Live, and I copied the windows fonts to my fedora system.</p>
+<p>However, when I use ctex,there is an error.</p>
+<p><span id="more-950"></span></p>
+<p>The only way is to to use xeCJK directly without use packege.</p>
+<pre class="latex source-latex" style="margin: 1em 0px 1em 2em; display: block; white-space: pre; unicode-bidi: embed; padding: 0.5em; border-left-width: 3px; border-left-style: solid; border-left-color: #cccccc; font-size: 13px; color: #660000; overflow: auto; line-height: normal; font-family: monospace; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; orphans: auto; text-align: left; text-indent: 0px; text-transform: none; widows: auto; word-spacing: 0px; -webkit-text-stroke-width: 0px; background-color: #ffffff;"><span class="sy0" style="margin: 0px; color: #e02020;">\</span><span class="kw1" style="margin: 0px; color: #800000;">documentclass</span><span class="sy0" style="margin: 0px; color: #e02020;">[</span><span class="re2" style="margin: 0px; color: #c08020; font-weight: normal;">11pt</span><span class="sy0" style="margin: 0px; color: #e02020;">]{</span><span class="re9" style="margin: 0px; color: #2020c0; font-weight: normal;">article<span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+<span class="sy0" style="margin: 0px; color: #e02020;">\</span><span class="kw1" style="margin: 0px; color: #800000;">usepackage</span><span class="sy0" style="margin: 0px; color: #e02020;">[</span><span class="re2" style="margin: 0px; color: #c08020; font-weight: normal;">BoldFont,SlantFont,CJKsetspaces,CJKchecksingle</span><span class="sy0" style="margin: 0px; color: #e02020;">]{</span>xeCJK<span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+<span class="re12" style="margin: 0px; color: #800000; font-weight: normal;">\setCJKmainfont</span><span class="sy0" style="margin: 0px; color: #e02020;">[</span><span class="re2" style="margin: 0px; color: #c08020; font-weight: normal;">BoldFont=SimHei</span><span class="sy0" style="margin: 0px; color: #e02020;">]{</span>SimSun<span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+<span class="re12" style="margin: 0px; color: #800000; font-weight: normal;">\setCJKmonofont</span>{SimSun</span><span class="sy0" style="margin: 0px; color: #e02020;">}</span><span class="co1" style="margin: 0px; color: #2c922c; font-style: italic;">% 设置缺省中文字体</span>
+<span class="re12" style="margin: 0px; color: #800000; font-weight: normal;">\parindent</span> 2em   <span class="co1" style="margin: 0px; color: #2c922c; font-style: italic;">%段首缩进</span>
+
+<span class="re8" style="margin: 0px; color: #c00000; font-weight: normal;">\begin</span><span class="sy0" style="margin: 0px; color: #e02020;">{</span><span class="re9" style="margin: 0px; color: #2020c0; font-weight: normal;"><span class="re7" style="margin: 0px; color: #0000d0; font-weight: normal;">document</span><span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+<span class="sy0" style="margin: 0px; color: #e02020;">\</span><span class="kw1" style="margin: 0px; color: #800000;">section</span><span class="sy0" style="margin: 0px; color: #e02020;">{</span>举例<span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+<span class="re8" style="margin: 0px; color: #c00000; font-weight: normal;">\begin</span><span class="sy0" style="margin: 0px; color: #e02020;">{</span><span class="re7" style="margin: 0px; color: #0000d0; font-weight: normal;">verbatim</span><span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+标点。
+<span class="re8" style="margin: 0px; color: #c00000; font-weight: normal;">\end</span><span class="sy0" style="margin: 0px; color: #e02020;">{</span><span class="re7" style="margin: 0px; color: #0000d0; font-weight: normal;">verbatim</span><span class="sy0" style="margin: 0px; color: #e02020;">}</span>
+
+汉字Chinese数学<span class="re3" style="margin: 0px; color: #8020e0; font-weight: normal;">$x=y$</span>空格
+<span class="re8" style="margin: 0px; color: #c00000; font-weight: normal;">\end</span><span class="sy0" style="margin: 0px; color: #e02020;">{</span><span class="re7" style="margin: 0px; color: #0000d0; font-weight: normal;">document</span></span><span class="sy0" style="margin: 0px; color: #e02020;">}</span></pre>
+
+<p>however, there are still some errors:</p>
+<p>1. package CJKsetspaces not found.</p>
+<style type="text/css"><!--
+p, li { white-space: pre-wrap; }
+--></style>
+
+<p><span style="color: #ff0000;">! LaTeX Error: Unknown option <code>CJKsetspaces&amp;#8217; for package</code>fontspec&#8217;.</span></p>
+<p>2.I can only use SimHei, when I want to use other fonts, error occurs.</p>
+<p>I don&#8217;t know how to fix the problem&#8230;&#8230;</p>
+<p>Any one who could answer the problem please tell me.</p>
+<p>Thank you.</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/04/13/Some-JS-Templates-Prezi-Latex-Templates/" itemprop="url">
+                Some JS Templates & Prezi & Latex Templates
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-13T12:13:46+08:00" content="2014-04-13">
+            2014-04-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p><strong>1.Below are some JS Templates we can use in presentation.</strong><br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/04/13/Some-JS-Templates-Prezi-Latex-Templates/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/04/04/What-does-CRLF-means/" itemprop="url">
+                What does CRLF means?
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-04-04T19:57:13+08:00" content="2014-04-04">
+            2014-04-04
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>今天上Unix课程的时候老师讲了一个比较好玩的东西，关于CRLF的含义。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/04/04/What-does-CRLF-means/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/03/31/What-does-my-CDMA-work-for-my-smartphone/" itemprop="url">
+                What does my CDMA work for my smartphone?
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-03-31T16:53:58+08:00" content="2014-03-31">
+            2014-03-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Recently my Nokia is broken, so I bought  an iPhone 5S and is now using 4G.</p>
+<p>As a student of communication engineering, It&#8217;s a great need to know the principles of 3G/4G.<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/03/31/What-does-my-CDMA-work-for-my-smartphone/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/03/20/Heap-Corruption-in-Linux/" itemprop="url">
+                Heap Corruption in Linux
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-03-20T12:57:47+08:00" content="2014-03-20">
+            2014-03-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>Recently I am doing a PPT about penetration. And I want to introduce buffer overflow tech to my classmates. Especially I want to introduce the heap corruption tech.</p>
+<p>Heap corruption in Windows is rather complicated.So I want to introduce the memory management in  Linux. Here&#8217;re some references I&#8217;ve founded:</p>
+<p>&nbsp;</p>
+<p><a href="http://getpocket.com/a/read/571733519" target="_blank" rel="external">http://getpocket.com/a/read/571733519 </a></p>
+<p><a href="http://etutorials.org/Networking/network+security+assessment/Chapter+13.+Application-Level+Risks/13.5+Heap+Overflows/" target="_blank" rel="external">http://etutorials.org/Networking/network+security+assessment/Chapter+13.+Application-Level+Risks/13.5+Heap+Overflows/</a></p>
+<p>[<a href="http://www.win.tue.nl/~aeb/linux/hh/hh-11.html" target="_blank" rel="external">http://www.win.tue.nl/~aeb/linux/hh/hh-11.html</a></p>
+<p>](<a href="http://www.win.tue.nl/~aeb/linux/hh/hh-11.html" target="_blank" rel="external">http://www.win.tue.nl/~aeb/linux/hh/hh-11.html</a>)</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/28/A-Simple-Lex-usage-example/" itemprop="url">
+                A Simple Lex usage example
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-02-28T20:28:05+08:00" content="2014-02-28">
+            2014-02-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>Recently I&#8217;m learning a course: Compilers.</p>
+<p>And after I have the classes and read the dragon book, I am going to use Lex in my linux OS.</p>
+<p>here are some references:<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/02/28/A-Simple-Lex-usage-example/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/02/22/Fedora-19更新内核导致VirtualBox无法启动/" itemprop="url">
+                Fedora 19更新内核导致VirtualBox无法启动
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-02-22T21:44:45+08:00" content="2014-02-22">
+            2014-02-22
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>[<a href="http://dotcra.com/article/151" target="_blank" rel="external">http://dotcra.com/article/151</a></p>
+<p>](<a href="http://dotcra.com/article/151" target="_blank" rel="external">http://dotcra.com/article/151</a>)</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/4/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

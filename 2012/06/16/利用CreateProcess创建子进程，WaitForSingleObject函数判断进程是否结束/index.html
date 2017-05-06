@@ -1,0 +1,606 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="接着上几天的那个问题。
+以前都是用WinExec或者是system函数创建的子进程，这次用CreateProcess来获得它的句柄。
+CreateProcess函数。这个函数有10个参数。汗~~~~。其实我们主要用到的就是第一个参数，第二个参数，还有最后一个参数。
+123456789101112BOOL WINAPI CreateProcess(  __in_opt     LPCTSTR lpA">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用CreateProcess创建子进程，WaitForSingleObject函数判断进程是否结束">
+<meta property="og:url" content="http://yoursite.com/2012/06/16/利用CreateProcess创建子进程，WaitForSingleObject函数判断进程是否结束/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="接着上几天的那个问题。
+以前都是用WinExec或者是system函数创建的子进程，这次用CreateProcess来获得它的句柄。
+CreateProcess函数。这个函数有10个参数。汗~~~~。其实我们主要用到的就是第一个参数，第二个参数，还有最后一个参数。
+123456789101112BOOL WINAPI CreateProcess(  __in_opt     LPCTSTR lpA">
+<meta property="og:updated_time" content="2015-07-25T04:57:52.112Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="利用CreateProcess创建子进程，WaitForSingleObject函数判断进程是否结束">
+<meta name="twitter:description" content="接着上几天的那个问题。
+以前都是用WinExec或者是system函数创建的子进程，这次用CreateProcess来获得它的句柄。
+CreateProcess函数。这个函数有10个参数。汗~~~~。其实我们主要用到的就是第一个参数，第二个参数，还有最后一个参数。
+123456789101112BOOL WINAPI CreateProcess(  __in_opt     LPCTSTR lpA">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 利用CreateProcess创建子进程，WaitForSingleObject函数判断进程是否结束 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              利用CreateProcess创建子进程，WaitForSingleObject函数判断进程是否结束
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-06-16T21:36:26+08:00" content="2012-06-16">
+            2012-06-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>接着上几天的那个问题。</p>
+<p>以前都是用WinExec或者是system函数创建的子进程，这次用CreateProcess来获得它的句柄。</p>
+<p>CreateProcess函数。这个函数有10个参数。汗~~~~。其实我们主要用到的就是第一个参数，第二个参数，还有最后一个参数。</p>
+<figure class="highlight ceylon"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">BOOL WINAPI CreateProcess(</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span><span class="number">_</span>opt     LPCTSTR lpApplicationName,</span><br><span class="line">  <span class="number">__</span>inout<span class="number">_</span>opt  LPTSTR lpCommandLine,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span><span class="number">_</span>opt     LPSECURITY<span class="number">_</span>ATTRIBUTES lpProcessAttributes,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span><span class="number">_</span>opt     LPSECURITY<span class="number">_</span>ATTRIBUTES lpThreadAttributes,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span>         BOOL bInheritHandles,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span>         DWORD dwCreationFlags,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span><span class="number">_</span>opt     LPVOID lpEnvironment,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span><span class="number">_</span>opt     LPCTSTR lpCurrentDirectory,</span><br><span class="line">  <span class="number">__</span><span class="keyword">in</span>         LPSTARTUPINFO lpStartupInfo,</span><br><span class="line">  <span class="number">__</span><span class="keyword">out</span>        LPPROCESS<span class="number">_</span>INFORMATION lpProcessInformation</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>第一个参数是要打开的应用程序的路径，第二个参数是命令行参数。最后一个参数是用来返回新创建的进程的句柄。</p>
+<p>自己仔细看了一下《windows核心编程》这本书。但是不怎么看的懂。。。因为毕竟10个参数要全部看懂的话就比较困难的。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">HANDLE OpenNewFile(LPSTR NewFilePath)</span><br><span class="line">&#123;</span><br><span class="line">	STARTUPINFOA si = &#123; <span class="keyword">sizeof</span>(si) &#125;;  </span><br><span class="line">	SECURITY_ATTRIBUTES saProcess, saThread;  </span><br><span class="line">	PROCESS_INFORMATION piProcess;  </span><br><span class="line"></span><br><span class="line">	saProcess<span class="variable">.nLength</span> = <span class="keyword">sizeof</span>(saProcess);  </span><br><span class="line">	saProcess<span class="variable">.lpSecurityDescriptor</span> = <span class="literal">NULL</span>;  </span><br><span class="line">	saProcess<span class="variable">.bInheritHandle</span> = <span class="literal">TRUE</span>;  </span><br><span class="line"></span><br><span class="line">	saThread<span class="variable">.nLength</span> = <span class="keyword">sizeof</span>(saThread);  </span><br><span class="line">	saThread<span class="variable">.lpSecurityDescriptor</span> = <span class="literal">NULL</span>;  </span><br><span class="line">	saThread<span class="variable">.bInheritHandle</span> = <span class="literal">FALSE</span>;  </span><br><span class="line"></span><br><span class="line">	CHAR Command[<span class="number">100</span>];</span><br><span class="line">	strcpy(Command, <span class="string">"notepad.exe "</span>);</span><br><span class="line">	strcat(Command, NewFilePath);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">BOOL</span>   fRet =CreateProcessA(<span class="string">"C:\WINDOWS\SYSTEM32\NOTEPAD.EXE"</span>,</span><br><span class="line">		Command,  <span class="literal">NULL</span>,   <span class="literal">NULL</span>,   <span class="literal">FALSE</span>,   <span class="literal">NULL</span>,   <span class="literal">NULL</span>,   <span class="literal">NULL</span>,  &amp;<span class="preprocessor">#038;si, &amp;#038;piProcess);   </span></span><br><span class="line">	<span class="keyword">if</span>(fRet == <span class="literal">TRUE</span>)   </span><br><span class="line">		<span class="keyword">return</span>(piProcess<span class="variable">.hProcess</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 这段代码的前面初始化部分是copy《windows核心编程》的。参数LPSTR NewFilePath 是文件的路径名称。</p>
+<p>然后这个函数返回一个新创建的进程的句柄</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HRes = OpenNewFile<span class="list">(<span class="keyword">NewFilePath</span>)</span><span class="comment">;// 获得创建新进程打开notepad文件的句柄</span></span><br><span class="line"></span><br><span class="line">WaitForSingleObject<span class="list">(<span class="keyword">HRes</span>, INFINITE)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>下面是WaitForSingleObject这个函数原型：</p>
+<p>DWORD WINAPI WaitForSingleObject(</p>
+<p>　　__in HANDLE hHandle,</p>
+<p>　　__in DWORD dwMilliseconds</p>
+<p>　　);</p>
+<p>这个函数很简单，第一个参数就是句柄，第二个参数是等待多少时间（以毫秒计算）。这样就达到了阻塞的效果。</p>
+<p>如果是INFNITE,就是等到进程终止的时候才进行下面的代码，否则就一直阻塞等待。</p>
+<p>这样一来问题就很好的解决了。</p>
+<p>如果是直接用notepad打开某个文件，怎么知道它关闭了呢？其实思路应该还是跟上面的一样，就是首先获得这个进程的句柄，判断这个句柄是否存在，如果不存在，那么应该就是结束了。</p>
+<p>接下来再来解决上篇博客里写的那个问题。我首先用notepad文件打开一个.txt文件。然后再用CreateFile打开这个文件，并且设置第三个参数为0，就是设置共享模式为不共享，这个时候使用CreateFile能打开文件并且获得一个句柄，这就说明这个时候notepad程序已经关闭了.txt文件。</p>
+<p>不知道自己讲的对不对，有什么错误还恳请大家指正。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/06/17/C服务端与java客户端的socket通信注意事项/" rel="prev">C服务端与java客户端的socket通信注意事项</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/06/14/如何判断一个文件是否被关闭？/" rel="next">如何判断一个文件是否被关闭？</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

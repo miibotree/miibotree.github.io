@@ -1,0 +1,698 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Tree,数据结构," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="决心写一个哈夫曼树，巩固自己学的数据结构
+ 一、最优树的定义
+ 结点的路径长度定义为：
+从根结点到该结点的路径上
+
+分支的数目。
+树的路径长度定义为：
+树中每个结点的路径长度之和。
+  树的带权路径长度定义为：
+树中所有叶子结点的带权路径长度之和
+
+WPL(T) = Swklk(对所有叶子结点)。
+
+在所有含 n 个叶子结点、并带相同权
+值的 m 叉树中，必存在一棵其带权路径
+长度取最小值的树，称">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构树–哈夫曼树">
+<meta property="og:url" content="http://yoursite.com/2012/12/02/数据结构树–哈夫曼树/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="决心写一个哈夫曼树，巩固自己学的数据结构
+ 一、最优树的定义
+ 结点的路径长度定义为：
+从根结点到该结点的路径上
+
+分支的数目。
+树的路径长度定义为：
+树中每个结点的路径长度之和。
+  树的带权路径长度定义为：
+树中所有叶子结点的带权路径长度之和
+
+WPL(T) = Swklk(对所有叶子结点)。
+
+在所有含 n 个叶子结点、并带相同权
+值的 m 叉树中，必存在一棵其带权路径
+长度取最小值的树，称">
+<meta property="og:updated_time" content="2015-07-25T04:55:36.904Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构树–哈夫曼树">
+<meta name="twitter:description" content="决心写一个哈夫曼树，巩固自己学的数据结构
+ 一、最优树的定义
+ 结点的路径长度定义为：
+从根结点到该结点的路径上
+
+分支的数目。
+树的路径长度定义为：
+树中每个结点的路径长度之和。
+  树的带权路径长度定义为：
+树中所有叶子结点的带权路径长度之和
+
+WPL(T) = Swklk(对所有叶子结点)。
+
+在所有含 n 个叶子结点、并带相同权
+值的 m 叉树中，必存在一棵其带权路径
+长度取最小值的树，称">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 数据结构树–哈夫曼树 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              数据结构树–哈夫曼树
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-02T21:45:43+08:00" content="2012-12-02">
+            2012-12-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>决心写一个哈夫曼树，巩固自己学的数据结构</p>
+<p> 一、最优树的定义</p>
+<p> 结点的路径长度定义为：</p>
+<pre><code>从根结点到该结点的路径上
+
+分支的数目。
+</code></pre><p>树的路径长度定义为：</p>
+<pre><code>树中每个结点的路径长度之和。
+</code></pre><p>  树的带权路径长度定义为：</p>
+<pre><code>树中所有叶子结点的带权路径长度之和
+
+<span class="function"><span class="title">WPL</span><span class="params">(T)</span></span> = <span class="function"><span class="title">Swklk</span><span class="params">(对所有叶子结点)</span></span>。
+
+在所有含 n 个叶子结点、并带相同权
+</code></pre><p>值的 m 叉树中，必存在一棵其带权路径</p>
+<p>长度取最小值的树，称为“最优树”。</p>
+<p>二、如何构造最优树</p>
+<p>（1）根据给定的 n个权值 {w1, w2,…, wn}，构造 n 棵二叉树的集合</p>
+<pre><code><span class="attribute">   F </span>=<span class="string">{T1,   T2,  …, Tn}，
+
+其中每棵二叉树中均只含一个带权值</span>
+</code></pre><p>为 wi的根结点，其左、右子树为空树</p>
+<pre><code>（<span class="number">2</span>）在 <span class="literal">F</span>中选取其根结点的权值为最
+
+小的两棵二叉树，分别作为左、  
+
+右子树构造一棵新的二叉树，并
+
+置这棵新的二叉树根结点的权值
+
+为其左、右子树根结点的权值之
+
+和；
+
+ （<span class="number">3</span>）从<span class="literal">F</span>中删去这两棵树，同时加入
+
+ 刚生成的新树；
+
+重复(<span class="number">2</span>)和(<span class="number">3</span>)两步，直至<span class="literal">F</span>中只
+
+含一棵树为止。
+</code></pre><p>忙完攻防大赛之后自己终于可以敲敲代码了。</p>
+<p>把拖了两个礼拜的哈夫曼编码搞定了。哈哈。</p>
+<p>代码除了书上的6.12算法 HuffanCoding ，建立哈夫曼树和构造哈夫曼编码，其它全部都是自己写的。</p>
+<p>算法本身不难，就是多了对文件的操作。一些细节的地方自己还是调试了很长时间。</p>
+<p>如果大家对哈夫曼树不是很清楚，下面两篇博客讲的很清楚：</p>
+<p><a href="http://www.thecodeway.com/blog/?p=870" target="_blank" rel="external">http://www.thecodeway.com/blog/?p=870</a></p>
+<p><a href="http://www.cnblogs.com/syblogs/articles/2020145.html" target="_blank" rel="external">http://www.cnblogs.com/syblogs/articles/2020145.html</a></p>
+<p>简单描述下题目：</p>
+<p>一个完整的哈夫曼编码、译码系统：</p>
+<p>I  初始化，建立哈夫曼树，存于文件hfmTree中</p>
+<p>E 编码 将建好的哈夫曼树，对ToBeTran中的正文进行编码，将结果存入CodeFile中</p>
+<p>D 译码 利用建好的哈夫曼树将文件CodeFile中的代码进行译码，结果存入TextFile中</p>
+<p>P 印代码文件 将文件CodeFile以紧凑格式显示在终端上。同时将此字符形式的编码文件写入文件CodePrin中</p>
+<p>T 打印哈夫曼树，显示在终端上</p>
+<p>Q 退出</p>
+<p>最后，上代码：</p>
+<p><span id="more-524"></span></p>
+<p>huffman_define.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;malloc.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//define  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  OK 1  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  ERROR 0  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OVERFLOW -1  </span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> MAXWEIGHT 1000</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//typedef  </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;  </span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> TElemType;  </span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> weight;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> parent, lchild, rchild;</span><br><span class="line">&#125;HTNode, *HuffmanTree;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> * *HuffmanCode;</span><br><span class="line"></span><br><span class="line"><span class="comment">//functions</span></span><br><span class="line"><span class="function">Status <span class="title">Select</span><span class="params">(HuffmanTree HT, <span class="keyword">int</span> i, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s1, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s2)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HuffmanCoding</span><span class="params">(HuffmanTree &amp;amp;HT, HuffmanCode &amp;amp;HC, <span class="keyword">int</span> * w, <span class="keyword">int</span> n)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>huffman_define.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;quot;huffman_define.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//选择最小的2个序列号</span></span><br><span class="line"><span class="function">Status <span class="title">Select</span><span class="params">(HuffmanTree HT, <span class="keyword">int</span> i, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s1, <span class="keyword">unsigned</span> <span class="keyword">int</span> *s2)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//to know if is over</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent == <span class="number">0</span>)</span><br><span class="line">			count++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (count == <span class="number">0</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//to init s1, s2</span></span><br><span class="line">	*s1 = <span class="number">0</span>;</span><br><span class="line">	*s2 = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent != <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (HT[j].weight &amp;lt; HT[*s1].weight)</span><br><span class="line">			*s1 = j;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &amp;lt;= i; j++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (HT[j].parent != <span class="number">0</span>)</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (HT[j].weight &amp;lt; HT[*s2].weight  &amp;amp;&amp;amp; j != *s1)</span><br><span class="line">			*s2 = j;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HuffmanCoding</span><span class="params">(HuffmanTree &amp;amp;HT, HuffmanCode &amp;amp;HC, <span class="keyword">int</span> *w, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line"><span class="comment">//w存放n个字符的权值，构造哈夫曼树HT， 并求n个字符的哈夫曼编码HC</span></span><br><span class="line">	<span class="keyword">int</span> m  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> i  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> s1 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> s2 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> c  = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> f = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">char</span> *cd = NULL;</span><br><span class="line">	HuffmanTree p = NULL;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (n &amp;lt;= <span class="number">1</span>)</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	m = <span class="number">2</span> * n - <span class="number">1</span>;</span><br><span class="line">	HT = (HuffmanTree)<span class="built_in">malloc</span>((m + <span class="number">1</span>) * <span class="keyword">sizeof</span>(HTNode));<span class="comment">//0 not used?</span></span><br><span class="line"></span><br><span class="line">	HT[<span class="number">0</span>].weight = MAXWEIGHT;</span><br><span class="line">	<span class="keyword">for</span> (p = HT + <span class="number">1</span>, i = <span class="number">1</span>; i &amp;lt;= n; ++i, ++p, ++w)</span><br><span class="line">	&#123;</span><br><span class="line">		p-&amp;gt;weight = *w;</span><br><span class="line">		p-&amp;gt;lchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;rchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;parent = <span class="number">0</span>;</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">for</span> (; i &amp;lt;= m; ++i, ++p)</span><br><span class="line">	&#123;</span><br><span class="line">		p-&amp;gt;weight = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;lchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;rchild = <span class="number">0</span>;</span><br><span class="line">		p-&amp;gt;parent = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = n + <span class="number">1</span>; i &amp;lt;= m; ++i)&#123;<span class="comment">//create huffman tree</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="number">2</span> == Select(HT, i - <span class="number">1</span>, &amp;amp;s1, &amp;amp;s2))</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		HT[s1].parent = i;</span><br><span class="line">		HT[s2].parent = i;</span><br><span class="line">		HT[i].lchild = s1;</span><br><span class="line">		HT[i].rchild = s2;</span><br><span class="line">		HT[i].weight = HT[s1].weight + HT[s2].weight;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//--get char huffman coding from the leave node</span></span><br><span class="line">	HC = (HuffmanCode)<span class="built_in">malloc</span>((n + <span class="number">1</span>) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>*));</span><br><span class="line">	cd = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>(n * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">	cd[n-<span class="number">1</span>] = &amp;<span class="preprocessor">#039; &amp;#039;;</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt;= n; ++i)</span><br><span class="line">	&#123;</span><br><span class="line">		start = n - <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">for</span> (c = i, f = HT[i].parent; f != <span class="number">0</span>; c = f, f = HT[f].parent)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (HT[f].lchild == c)</span><br><span class="line">				cd[--start] = &amp;<span class="preprocessor">#039;0&amp;#039;;</span></span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				cd[--start] = &amp;<span class="preprocessor">#039;1&amp;#039;;</span></span><br><span class="line">		&#125;</span><br><span class="line">		HC[i] = (<span class="keyword">char</span> *)<span class="built_in">malloc</span>((n - start) * <span class="keyword">sizeof</span>(<span class="keyword">char</span>));</span><br><span class="line">		<span class="built_in">strcpy</span>(HC[i], &amp;amp;cd[start]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">free</span>(cd);</span><br><span class="line">&#125;<span class="comment">//HuffmanCoding</span></span><br></pre></td></tr></table></figure>
+<p>huffman.cpp</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;quot<span class="comment">;huffman_define.h&amp;quot;</span></span><br><span class="line"></span><br><span class="line">//functions</span><br><span class="line">int Init<span class="list">(<span class="keyword">HuffmanTree</span> <span class="keyword">&amp;amp</span><span class="comment">;HT, HuffmanCode &amp;amp;HC, char a[], int b[]);</span></span><br><span class="line">void Encoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span><span class="comment">;</span></span><br><span class="line">void Decoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span><span class="comment">;</span></span><br><span class="line">void Print<span class="list">()</span><span class="comment">;</span></span><br><span class="line">void TreePrint<span class="list">(<span class="keyword">HuffmanTree</span> HT, int n)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">//filepaths</span><br><span class="line">char TEST[<span class="number">20</span>]  = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TEST.txt&amp;quot;;</span></span><br><span class="line"></span><br><span class="line">char hfmTree[<span class="number">20</span>]  = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\hufmTree.txt&amp;quot;;</span></span><br><span class="line">char ToBeTran[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\ToBeTran.txt&amp;quot;;</span></span><br><span class="line">char CodeFile[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\CodeFile.txt&amp;quot;;</span></span><br><span class="line">char TextFile[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TextFile.txt&amp;quot;;</span></span><br><span class="line">char CodePrin[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\CodePrin.txt&amp;quot;;</span></span><br><span class="line">char TreePrin[<span class="number">20</span>] = <span class="keyword">&amp;quot</span><span class="comment">;D:\txt\TreePrin.txt&amp;quot;;</span></span><br><span class="line"></span><br><span class="line">int main<span class="list">()</span></span><br><span class="line">&#123;</span><br><span class="line">	int n = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	char a[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	int  b[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	HuffmanTree HT<span class="comment">;</span></span><br><span class="line">	HuffmanCode HC<span class="comment">;</span></span><br><span class="line">	char choise<span class="comment">;</span></span><br><span class="line">	while<span class="list">(<span class="number">1</span>)</span></span><br><span class="line">	&#123;</span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;nn-------------------------------------------------------------------------n&amp;quot;);</span></span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;It&amp;#039;s huffman coding_encoding system. Please Input your chioisen&amp;quot;);</span></span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;I: InitializationnE:EncodingnD:DecodingnP:PrintnT:Tree printingnQ:Quitn&amp;quot;);</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;choise);</span></span><br><span class="line">		switch<span class="list">(<span class="keyword">choise</span>)</span></span><br><span class="line">		&#123;</span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;I&amp;#039;):</span></span><br><span class="line">			n = Init<span class="list">(<span class="keyword">HT</span>, HC, a, b)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;E&amp;#039;):</span></span><br><span class="line">			Encoding<span class="list">(<span class="keyword">HC</span>, n, a)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;D&amp;#039;):	</span></span><br><span class="line">			Decoding<span class="list">(<span class="keyword">HC</span>, n, a)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;P&amp;#039;):</span></span><br><span class="line">			Print<span class="list">()</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;T&amp;#039;):</span></span><br><span class="line">			TreePrint<span class="list">(<span class="keyword">HT</span>, n)</span><span class="comment">;</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case <span class="list">(<span class="keyword">&amp;#039</span><span class="comment">;Q&amp;#039;):</span></span><br><span class="line">			return <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		default:</span><br><span class="line">			printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;Input wrong, please inpint again!~~n&amp;quot;);</span></span><br><span class="line">			break<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">		getchar<span class="list">()</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return <span class="number">0</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int Init<span class="list">(<span class="keyword">HuffmanTree</span> <span class="keyword">&amp;amp</span><span class="comment">;HT, HuffmanCode &amp;amp;HC, char a[], int b[])</span></span><br><span class="line">&#123;</span><br><span class="line">	memset<span class="list">(<span class="keyword">a</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	int n = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	int i = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;please input n:n&amp;quot;);</span></span><br><span class="line">	scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%d&amp;quot;, &amp;amp;n);</span></span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;please input %d code and weight:n&amp;quot;, n);</span></span><br><span class="line">	for <span class="list">(<span class="keyword">i</span> = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		getchar<span class="list">()</span><span class="comment">;</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;a[i]);</span></span><br><span class="line">		scanf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%d&amp;quot;, &amp;amp;b[i]);</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	HuffmanCoding<span class="list">(<span class="keyword">HT</span>, HC, b, n)</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(hfmTree, &amp;quot;w+&amp;quot;);</span><br><span class="line">	for (int i = 1; i &amp;lt; 2 *</span> n - <span class="number">1</span><span class="comment">; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		fprintf<span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span></span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	return n<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Encoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span></span><br><span class="line">&#123;</span><br><span class="line">	FILE <span class="variable">*f1 = fopen(ToBeTran, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">CodeFile</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line">	char temp = <span class="number">0</span><span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, &amp;amp;temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for <span class="list">(<span class="keyword">int</span> i = <span class="number">0</span><span class="comment">; i &amp;lt; n; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			if <span class="list">(<span class="keyword">a</span>[i] == temp)</span></span><br><span class="line">			&#123;</span><br><span class="line">				fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%sn&amp;quot;, HC[i+1]);</span></span><br><span class="line">				break<span class="comment">;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Decoding<span class="list">(<span class="keyword">HuffmanCode</span> HC, int n, char a[])</span></span><br><span class="line">&#123;</span><br><span class="line">	char temp[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	memset<span class="list">(<span class="keyword">temp</span> , <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(CodeFile, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">TextFile</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for <span class="list">(<span class="keyword">int</span> i = <span class="number">1</span><span class="comment">; i &amp;lt;= n; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			if <span class="list">(!strcmp<span class="list">(<span class="keyword">temp</span>, HC[i])</span>)</span></span><br><span class="line">			&#123;</span><br><span class="line">				fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%c&amp;quot;, a[i-1]);</span></span><br><span class="line">				break<span class="comment">;</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Print<span class="list">()</span></span><br><span class="line">&#123;</span><br><span class="line">	int count = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">	char temp[<span class="number">100</span>]<span class="comment">;</span></span><br><span class="line">	memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">	FILE <span class="variable">*f1 = fopen(CodeFile, &amp;quot;r+&amp;quot;);</span><br><span class="line">	FILE *</span>f2 = fopen<span class="list">(<span class="keyword">CodePrin</span>, <span class="keyword">&amp;quot</span><span class="comment">;w+&amp;quot;);</span></span><br><span class="line"></span><br><span class="line">	while <span class="list">(<span class="keyword">fscanf</span><span class="list">(<span class="keyword">f1</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp) != EOF)</span></span><br><span class="line">	&#123;</span><br><span class="line">		printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp);</span></span><br><span class="line">		fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;%s&amp;quot;, temp);</span></span><br><span class="line">		memset<span class="list">(<span class="keyword">temp</span>, <span class="number">0</span>, <span class="number">100</span>)</span><span class="comment">;</span></span><br><span class="line">		count += strlen<span class="list">(<span class="keyword">temp</span>)</span><span class="comment">;</span></span><br><span class="line">		if <span class="list">(<span class="keyword">count</span> <span class="keyword">&amp;gt</span><span class="comment">;= 50)</span></span><br><span class="line">		&#123;</span><br><span class="line">			printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">			fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">			count = <span class="number">0</span><span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf<span class="list">(<span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">	fprintf<span class="list">(<span class="keyword">f2</span>, <span class="keyword">&amp;quot</span><span class="comment">;n&amp;quot;);</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f1</span>)</span><span class="comment">;</span></span><br><span class="line">	fclose<span class="list">(<span class="keyword">f2</span>)</span><span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void TreePrint<span class="list">(<span class="keyword">HuffmanTree</span> HT, int n)</span></span><br><span class="line">&#123;</span><br><span class="line">	FILE <span class="variable">*f1 = fopen(TreePrin, &amp;quot;w+&amp;quot;);</span><br><span class="line">	for (int i = 1; i &amp;lt;= n; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		printf(&amp;quot;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span><br><span class="line">		fprintf(f1, &amp;quot;%dt%dt%dt%dt%dn&amp;quot;, i, HT[i].weight, HT[i].parent, HT[i].lchild, HT[i].rchild);</span><br><span class="line">	&#125;</span><br><span class="line">	fclose(f1); </span><br><span class="line">&#125;</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br></pre></td></tr></table></figure>
+<p>自己做的主要工作是实现了Select 函数，就是从已经存在的节点中选取两个权重最小的节点。</p>
+<p>另外，书上的算法有点小问题。</p>
+<pre><code>HT = <span class="params">(HuffmanTree)</span>malloc<span class="params">(<span class="params">(m + <span class="number">1</span>)</span> * sizeof<span class="params">(HTNode)</span>)</span>;   <span class="comment">//0 not used?</span>
+</code></pre><p>这里它申请了 m +  1 个节点大小的空间。根据书上的算法，他是从第1个开始的。没有用第0个节点。</p>
+<p>所以我们要稍微改进下书上的代码：</p>
+<p>for (p = HT + 1, i = 1; i &lt;= n; ++i, ++p, ++w)</p>
+<p>对于第0个节点，我们可以这样用：</p>
+<h1 id="define_MAXWEIGHT_1000">define MAXWEIGHT 1000</h1><p>HT[0].weight = MAXWEIGHT;</p>
+<p>然后在Select函数里面每次赋初值的时候将</p>
+<p>s1 = s2 = 0；</p>
+<p>这样就比较方便了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Tree/" rel="tag">#Tree</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/12/04/c-继承和派生题目/" rel="prev">c++继承和派生题目</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/11/28/关于默认构造函数的本质/" rel="next">关于默认构造函数的本质</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#define_MAXWEIGHT_1000"><span class="nav-text">define MAXWEIGHT 1000</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

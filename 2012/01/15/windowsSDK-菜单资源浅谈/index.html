@@ -1,0 +1,664 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这几天在看菜单，今天自己动手写了一下，出现了一些错误。
+首先我先自己简单的写了一个只包含菜单资源的文件：
+&amp;lt;windows.h&amp;gt;1#include &amp;#38;lt;resource.h&amp;#38;gt;&amp;#10;&amp;#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&amp;#10;&amp;#10;//TCHAR szAppName[]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK 菜单资源浅谈">
+<meta property="og:url" content="http://yoursite.com/2012/01/15/windowsSDK-菜单资源浅谈/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这几天在看菜单，今天自己动手写了一下，出现了一些错误。
+首先我先自己简单的写了一个只包含菜单资源的文件：
+&amp;lt;windows.h&amp;gt;1#include &amp;#38;lt;resource.h&amp;#38;gt;&amp;#10;&amp;#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&amp;#10;&amp;#10;//TCHAR szAppName[]">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/15/0_13266116480Ntj.gif">
+<meta property="og:updated_time" content="2015-07-25T05:04:17.826Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK 菜单资源浅谈">
+<meta name="twitter:description" content="这几天在看菜单，今天自己动手写了一下，出现了一些错误。
+首先我先自己简单的写了一个只包含菜单资源的文件：
+&amp;lt;windows.h&amp;gt;1#include &amp;#38;lt;resource.h&amp;#38;gt;&amp;#10;&amp;#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&amp;#10;&amp;#10;//TCHAR szAppName[]">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK 菜单资源浅谈 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK 菜单资源浅谈
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-15T14:57:00+08:00" content="2012-01-15">
+            2012-01-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这几天在看菜单，今天自己动手写了一下，出现了一些错误。</p>
+<p>首先我先自己简单的写了一个只包含菜单资源的文件：</p>
+<figure class="highlight"><figcaption><span>&lt;windows.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;resource.h&#38;gt;&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;&#10;//TCHAR szAppName[] = TEXT (&#38;amp;quot;ownmenu&#38;amp;quot;) ;      (&#25913;&#36827;&#21518;&#21152;&#30340;&#20195;&#30721;)&#10;TCHAR MenuName[] = TEXT(&#38;amp;quot;IDR_MENU1&#38;amp;quot;);&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;                    PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;     HWND     hwnd ;&#10;     MSG      msg ;&#10;     WNDCLASS wndclass ;&#10;&#10;     wndclass.style         = CS_HREDRAW | CS_VREDRAW ;&#10;     wndclass.lpfnWndProc   = WndProc ;&#10;     wndclass.cbClsExtra    = 0 ;&#10;     wndclass.cbWndExtra    = 0 ;&#10;     wndclass.hInstance     = hInstance ;&#10;     wndclass.hIcon         = LoadIcon (NULL, IDI_APPLICATION) ;&#10;     wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW) ;&#10;     wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;&#38;amp;nbsp;  //wndclass.lpszMenuName  = MenuName ;        &#65288;&#25913;&#36827;&#21518;&#21152;&#20837;&#30340;&#20195;&#30721;&#65289;&#10;     wndclass.lpszMenuName  = szAppName;       //&#31243;&#24207;&#21517;&#31216;&#21644;&#33756;&#21333;&#21517;&#31216;&#26159;&#19968;&#26679;&#30340;&#10;     wndclass.lpszClassName = szAppName ;&#10;&#10;     if (!RegisterClass (&#38;amp;amp;wndclass))&#10;     &#123;&#10;          MessageBox (NULL, TEXT (&#38;amp;quot;This program requires Windows NT!&#38;amp;quot;),&#10;                      szAppName, MB_ICONERROR) ;&#10;          return 0 ;&#10;     &#125;&#10;&#10;     hwnd = CreateWindow (szAppName, TEXT (&#38;amp;quot;Menu Demonstration&#38;amp;quot;),&#10;                          WS_OVERLAPPEDWINDOW,&#10;                          CW_USEDEFAULT, CW_USEDEFAULT,&#10;                          CW_USEDEFAULT, CW_USEDEFAULT,&#10;                          NULL, NULL, hInstance, NULL) ;&#10;&#10;     ShowWindow (hwnd, iCmdShow) ;&#10;     UpdateWindow (hwnd) ;&#10;&#10;     while (GetMessage (&#38;amp;amp;msg, NULL, 0, 0))&#10;     &#123;&#10;          TranslateMessage (&#38;amp;amp;msg) ;&#10;          DispatchMessage (&#38;amp;amp;msg) ;&#10;     &#125;&#10;     return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;&#10;     HMENU      hMenu ;                         //&#23450;&#20041;&#20102;&#33756;&#21333;&#21477;&#26564;&#10;&#10;     switch (message)&#10;     &#123;&#10;     case WM_COMMAND:                           //&#36873;&#25321;&#19968;&#39033;&#34987;&#21551;&#29992;&#30340;&#33756;&#21333;&#10;          hMenu = GetMenu (hwnd) ;&#10;&#10;          switch (LOWORD (wParam))              //&#37324;&#38754;&#21253;&#21547;&#30340;&#26159;&#33756;&#21333;ID&#10;          &#123;&#10;&#9;&#9;  case ID_FILE_NEW:&#10;&#9;&#9;&#9;  MessageBox(hwnd, TEXT(&#38;amp;quot;CREATE A NEW FILE&#38;amp;quot;), TEXT(&#38;amp;quot;hello&#38;amp;quot;), MB_OK);&#10;&#9;&#9;&#9;  break;&#10;&#9;&#9;  case ID_FILE_EXIT:&#10;&#9;&#9;&#9;  SendMessage(hwnd, WM_CLOSE, 0, 0);&#10;&#9;&#9;&#9;  break;&#10;&#10;          &#125;&#10;          break ;&#10;          return 0;&#10;&#10;     case WM_DESTROY:&#10;          PostQuitMessage (0) ;&#10;          return 0 ;&#10;     &#125;&#10;     return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;&#38;lt;</span><br></pre></td></tr></table></figure>
+<p>写完以后我新建一个资源文件，然后在里面添加菜单资源。</p>
+<p>接下来我编辑菜单如下图所示：<img src="http://hi.csdn.net/attachment/201201/15/0_13266116480Ntj.gif" alt=""></p>
+<p>注意一下系统默认的菜单ID是&nbsp; IDR_MENU1</p>
+<p>我创建的4个popup的初始ID是ID_FILE_NEW40001</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_OPEN40002</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_SAVE40003</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_EXIT</p>
+<p>然后我尝试更改ID，把数字给去掉</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_NEW</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_OPEN</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_SAVE</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_EXIT</p>
+<p>一编译，发现错误提示说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_NEW</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_OPEN</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_SAVE</p>
+<p>全部找不到。</p>
+<p>然后我去resource.h的文件里面去找，发现宏定义里面竟然没有把我改好以后的ID变掉，还是</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_NEW40001</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_OPEN40002</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_SAVE40003</p>
+<p>那么我心里想，就手工把后面的数字去掉吧&nbsp;&nbsp; -_-</p>
+<p>然后再次编译，错误提示说 &nbsp;&nbsp;ID_FILE_NEW&nbsp; &nbsp; redefinition</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; ID_FILE_OPEN&nbsp; &nbsp; redefinition</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ID_FILE_SAVE&nbsp; &nbsp; redefinition</p>
+<p>这就奇怪了，为什么会说&nbsp;&nbsp;&nbsp; 重定义错误呢？</p>
+<p>我在网上查了写有关redefinition 错误的资料&nbsp;&nbsp;</p>
+<p><span style="color:#000099">redefinition的错误</span></p>
+<p>原因一般是由于你调用的函数没有在前面声明，而系统会默认为int型</p>
+<p>而在后面你可能又写了函数体，但定义类型又不是int，所以报redefinition的错误</p>
+<p>解决办法是恢复h文件，或在文件前面添加报redefinition错误的函数的声明</p>
+<p>最后再看了下代码，终于发现问题所在了。</p>
+<p><span style="color:#FF0000">wndclass.lpszMenuName&nbsp; = szAppName;&nbsp;&nbsp;&nbsp;&nbsp;</span></p>
+<p>在定义窗口类的时候，我把菜单的名字和窗口的名字写做一样了，其实系统默认的窗口名字是IDR_MENU1</p>
+<p>所以在编译资源的时候，.h文件根本就不会改变!</p>
+<p>找到原因了，现在我有两种改进的方法：</p>
+<p><span style="color:#FF0000">1.将</span><span style="color:#FF0000">wndclass.lpszMenuName&nbsp; 命名为系统默认的 IDR_MENU1</span></p>
+<p></p>
+<p><span style="color:#FF0000">2. 将菜单名称变成ownmenu</span></p>
+<p><span style="color:#FF0000">但是依旧要注意，当你每次改变了菜单ID的时候，最好同时检查resource.h里面有没有发生改变，否则就会出现我上面说的错误哦!!~~~</span></p>
+<p><span style="color:#FF0000"></span></p>
+<p></p>
+<p>&nbsp; 下面再看看菜单引用的3种方法吧，其实自己一开始的时候是把下面的第一种方法和第二种方法搞混了，才会导致上面的错误。</p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px">第一种方法：</span></p>
+<p>在注册窗口类的时候就指定要菜单，在WNDCLASSEX结构体的成员lpszMenuName中，假设我把引入菜单的叫做”MenuDemo”,</p>
+<p>那么就可以这样引用：</p>
+<p>TCHAR szAppName[] = TEXT (“MenuDemo”)</p>
+<p>//code</p>
+<p>wndclass.lpszMenuName&nbsp; = szAppName ;</p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px"><span style="font-family:Microsoft YaHei; font-size:13px">上面这个例子是把程序名称和菜单名称做了相同的引用，用这种方法的话比较方便，比如在你的程序里面还有图标，声音或者其他的一些自定义资源的话，这种方法看起来就显得简单多了。</span></span></p>
+<p></p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px">在这里就指定了你要的菜单，在窗口建立之前就已经包含在窗口类中了，建立窗口的时候直接就出来菜单。这种方法比较简单，所以&nbsp;在一般情况下都用这种方法引用菜单资源。但是这种方法有一种缺陷：由于是在窗口类中指定的，所有由该窗口类派生出的窗口都有</span></p>
+<p>相同的菜单</p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px">第二种方法：</span></p>
+<p>HMENU hMenu</p>
+<p>TCHAR MenuName[] = TEXT(“MenuDemo”);</p>
+<p>//code</p>
+<p>hMenu = LoadMenu(hInstance,MenuName);</p>
+<p>hWinMain = CreateWindowEx(WS_EX_CLIENTEDGE,szClassName,szCaptionMain,</p>
+<p>WS_OVERLAPPEDWINDOW,100,100,600,400,NULL,hMenu,hInstance,NULL);</p>
+<p>通过在CreateWindowsEx第九个参数指定要引入的菜单。CreateWindow调用中的指定菜单可以覆盖窗口类中指定的任何菜单。</p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px">第三种方法：</span></p>
+<p>如果我们把CreateWindowEx第九个参数设置为NULL,并且也不在窗口类中指定NULL菜单，就可以在窗口被创建后在给窗口指定指定一个菜单：</p>
+<p><span style="font-family:Microsoft YaHei; font-size:13px">SetMenu(hwnd,hMenu);</span></p>
+<p>举个例子 ,在消息处理函数内 static HMENU hMenuFile1，hMenuFile1;</p>
+<p>在WM_CREATE:</p>
+<p>hInstance = (HINSTANCE)GetWindowsLong(hwnd,GWL_HINSTANCE);</p>
+<p>hMenuFile1 = LoadMenu(hInstance,TEXT(“MenuMain1″);&nbsp;&nbsp;&nbsp;&nbsp;//举个例子</p>
+<p>hMenuFile2 = LoadMenu(hInstance,TEXT(“MenuMain2″);面选择资源脚本多次，每个菜单都不同的名字。每当窗口过程处理WM_CREATE消息</p>
+<p>的时候windows就会动态的白菜单资源加载到内存中去。SetMenu(hwnd,hMenu)让程序显示hMenu指向的菜单，然后你可以任意</p>
+<p>SetMenu(hwnd,hMenuFile1)或者SetMenu(hwnd,hMenuFile2)之间切换，在windows程序设计上面通过按键来实现，这样你甚至可以多创建几个菜单。</p>
+<p>下面我们简单地来看看.rc跟菜单资源有关的代码</p>
+<p>当我们打开 .rc的资源文件的时候，如果你的工程里面添加了菜单资源的话，那么你可以看到类&#20284;下面这样的代码：</p>
+<figure class="highlight"><figcaption><span>MENU &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</span><a href="//OWNMENU是菜单的名称">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BEGIN&#10;    POPUP &#38;quot;&#38;amp;File&#38;quot;&#10;    BEGIN&#10;        MENUITEM &#38;quot;&#38;amp;New&#38;quot;,                        ID_FILE_NEW&#10;        MENUITEM &#38;quot;&#38;amp;Open&#38;quot;,                       ID_FILE_OPEN&#10;        MENUITEM &#38;quot;&#38;amp;Save&#38;quot;,                       ID_FILE_SAVE&#10;        MENUITEM &#38;quot;&#38;amp;Exit&#38;quot;,                       ID_FILE_EXIT&#10;    END&#10;END</span><br></pre></td></tr></table></figure>
+<p></p><p>这里的BEGIN 和END跟Pascal程序比较像，如果大家愿意的话其实可以手工用 {&nbsp; 来代替BEGIN&nbsp;&nbsp; ,用&nbsp;&nbsp;&nbsp; }&nbsp; 来代替 END。</p>
+<p>MENUITEM &quot;&amp;New&quot;,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ID_FILE_NEW &nbsp; 这里的MENUITEM还有另一个选项:POPUP</p>
+<p>对于MENUITEM&nbsp;&nbsp;&nbsp; 菜单项会生成一个带有特定ID的WM_COMMAND消息，比如上面这行代码 有ID_FILE_NEW这个ID，当然我们可以在resource.h里面找到它的数字ID</p>
+<p>对于POPUP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pop-up，翻译过来以后的意思是突然出现，冒出来的意思，所以在windows编程里我们可以将它理解为&quot;跳出来&quot;的菜单。&nbsp; 该菜单项会激活一个弹出窗口，这时它没有相关联的ID</p>
+<p>对于上面的代码，我们应该可以想象在菜单栏有File这个选项，当我们点击File的时候，会弹出New,Open,Save,Exit四个选项，每一个选项当你选中后都会触发WM_COMMAND消息，我们可以把功能写在里面。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/16/windowsSDK加速键实例分析/" rel="prev">windowsSDK加速键实例分析</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/13/vim进阶学习笔记/" rel="next">vim进阶学习笔记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

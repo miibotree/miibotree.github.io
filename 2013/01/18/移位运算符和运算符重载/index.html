@@ -1,0 +1,607 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c,c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="上几天考了C++，发现自己连最基本的左移右移的位移运算符都没有搞清楚。脑子一热就写错了。
+左移运算符 &amp;lt;&amp;lt; 从二进制来看，是向左移动位数， 然后覆盖左边的位数，后面不足的补0.
+右移运算符 &amp;gt;&amp;gt; 实现相反的功能，但是不同的是不足的可能是补1或者是补0，跟编译器有关系。
+其实跟数电里面的移位寄存器是一样的，当时自己思维局限了，给了个5， 是110，然后就以为总共只有三位，忘记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移位运算符和运算符重载">
+<meta property="og:url" content="http://yoursite.com/2013/01/18/移位运算符和运算符重载/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="上几天考了C++，发现自己连最基本的左移右移的位移运算符都没有搞清楚。脑子一热就写错了。
+左移运算符 &amp;lt;&amp;lt; 从二进制来看，是向左移动位数， 然后覆盖左边的位数，后面不足的补0.
+右移运算符 &amp;gt;&amp;gt; 实现相反的功能，但是不同的是不足的可能是补1或者是补0，跟编译器有关系。
+其实跟数电里面的移位寄存器是一样的，当时自己思维局限了，给了个5， 是110，然后就以为总共只有三位，忘记">
+<meta property="og:updated_time" content="2015-07-25T04:52:52.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移位运算符和运算符重载">
+<meta name="twitter:description" content="上几天考了C++，发现自己连最基本的左移右移的位移运算符都没有搞清楚。脑子一热就写错了。
+左移运算符 &amp;lt;&amp;lt; 从二进制来看，是向左移动位数， 然后覆盖左边的位数，后面不足的补0.
+右移运算符 &amp;gt;&amp;gt; 实现相反的功能，但是不同的是不足的可能是补1或者是补0，跟编译器有关系。
+其实跟数电里面的移位寄存器是一样的，当时自己思维局限了，给了个5， 是110，然后就以为总共只有三位，忘记">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 移位运算符和运算符重载 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              移位运算符和运算符重载
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-01-18T11:14:03+08:00" content="2013-01-18">
+            2013-01-18
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上几天考了C++，发现自己连最基本的左移右移的位移运算符都没有搞清楚。脑子一热就写错了。</p>
+<p>左移运算符 &lt;&lt; 从二进制来看，是向左移动位数， 然后覆盖左边的位数，后面不足的补0.</p>
+<p>右移运算符 &gt;&gt; 实现相反的功能，但是不同的是不足的可能是补1或者是补0，跟编译器有关系。</p>
+<p>其实跟数电里面的移位寄存器是一样的，当时自己思维局限了，给了个5， 是110，然后就以为总共只有三位，忘记了默认的unsigned int类型有32位，左边其实全部都是0&#8230;&#8230;然后自己就移着移着把1给移没了&#8230;&#8230;</p>
+<p>为了巩固一下，自己写了个程序利用运算符重载的方式把左移运算符给重载了，写运算符重载的时候又理解了一句话：运算符重载只能重载为友元函数或者成员函数的形式，而不能作为函数单独存在。也就是说运算符重载是跟类紧密相关的。</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Change</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line"></span><br><span class="line">	Change()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Default Con. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">		a = <span class="number">0</span>;</span><br><span class="line">		b = <span class="number">0</span>;</span><br><span class="line">	&#125;;</span><br><span class="line"></span><br><span class="line">	Change(unsigned <span class="keyword">int</span> <span class="keyword">x</span>, unsigned <span class="keyword">int</span> <span class="keyword">y</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Con. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">		a = <span class="keyword">x</span>;</span><br><span class="line">		b = <span class="keyword">y</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	~Change()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;Descon. called!&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	void <span class="keyword">print</span>()</span><br><span class="line">	&#123;</span><br><span class="line">		cout&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;a=&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;a&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;,&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;&amp;quot;b=&amp;quot;&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;b&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;endl;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	Change operator &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;(const <span class="keyword">int</span> n);</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">	unsigned <span class="keyword">int</span> a;</span><br><span class="line">	unsigned <span class="keyword">int</span> b;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Change Change::operator &amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;(const <span class="keyword">int</span> n)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">return</span> Change(this-&amp;<span class="keyword">gt</span>;a&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;n, this-&amp;<span class="keyword">gt</span>;b&amp;<span class="keyword">gt</span>;&amp;<span class="keyword">gt</span>;n);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void main()</span><br><span class="line">&#123;</span><br><span class="line">	Change c(<span class="number">8</span>, <span class="number">8</span>);</span><br><span class="line">	c = c&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">3</span>;</span><br><span class="line">	c.<span class="keyword">print</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个小程序把 &lt;&lt; 给重载了 Change类里面的a成员是左移后的数据，b成员是右移后的数据。</p>
+<p>这样一来就看得很清楚了。</p>
+<p>写这个程序的时候，又想起了当时考试的另一个运算符重载的地方自己想不明白的：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> Change(this<span class="subst">-&amp;</span><span class="literal">gt</span>;a<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;n, this<span class="subst">-&amp;</span><span class="literal">gt</span>;b<span class="subst">&amp;</span><span class="literal">gt</span>;<span class="subst">&amp;</span><span class="literal">gt</span>;n);</span><br></pre></td></tr></table></figure>
+<p>这里应该是调用了构造函数</p>
+<p>而下面的赋值语句</p>
+<figure class="highlight gcode"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c = c&amp;<span class="keyword">lt</span>;&amp;<span class="keyword">lt</span>;<span class="number">3</span>;</span><br></pre></td></tr></table></figure>
+<p>是首先创建了一个匿名对象。从运行的结果我们可以看到。</p>
+<p>这段程序的运行结果如下：</p>
+<p>Con. called!</p>
+<p>Con. called!          //这里看出创建了匿名对象</p>
+<p>Descon. called!       //这里看出创建了匿名对象</p>
+<p>a=64,b=1</p>
+<p>Descon. called!</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag">#c</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/01/20/多重继承–读松本行弘的程序世界/" rel="prev">多重继承–读松本行弘的程序世界</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/12/16/数据结构查找-2-–平衡的二叉查找树-AVL树/" rel="next">数据结构查找(2)–平衡的二叉查找树(AVL树)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

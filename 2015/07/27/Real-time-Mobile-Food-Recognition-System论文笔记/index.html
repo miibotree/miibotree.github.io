@@ -1,0 +1,652 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="CV," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="摘要论文设计了一个手机端的食物识别系统，用于卡路里的查询，培养用户的饮食习惯。大致流程如下：
+
+为了识别食物，用户首先通过触屏画出包含食物的边框，在选定的边框里面执行食物的识别算法。
+为了提高准确率，通过使用GrubCur算法来对每一种食物进行分割，提取出其中的color histogram特征和SURF-based bag-of-features特征
+最后使用线性SVM和fast 开方核进行分类">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Real-time Mobile Food Recognition System论文笔记">
+<meta property="og:url" content="http://yoursite.com/2015/07/27/Real-time-Mobile-Food-Recognition-System论文笔记/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="摘要论文设计了一个手机端的食物识别系统，用于卡路里的查询，培养用户的饮食习惯。大致流程如下：
+
+为了识别食物，用户首先通过触屏画出包含食物的边框，在选定的边框里面执行食物的识别算法。
+为了提高准确率，通过使用GrubCur算法来对每一种食物进行分割，提取出其中的color histogram特征和SURF-based bag-of-features特征
+最后使用线性SVM和fast 开方核进行分类">
+<meta property="og:image" content="http://yoursite.com/images/1437962591103.png">
+<meta property="og:image" content="http://yoursite.com/images/1437964631950.png">
+<meta property="og:image" content="http://yoursite.com/images/1437965804737.png">
+<meta property="og:image" content="http://yoursite.com/images/formula1.jpg">
+<meta property="og:updated_time" content="2015-07-28T01:02:30.638Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Real-time Mobile Food Recognition System论文笔记">
+<meta name="twitter:description" content="摘要论文设计了一个手机端的食物识别系统，用于卡路里的查询，培养用户的饮食习惯。大致流程如下：
+
+为了识别食物，用户首先通过触屏画出包含食物的边框，在选定的边框里面执行食物的识别算法。
+为了提高准确率，通过使用GrubCur算法来对每一种食物进行分割，提取出其中的color histogram特征和SURF-based bag-of-features特征
+最后使用线性SVM和fast 开方核进行分类">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Real-time Mobile Food Recognition System论文笔记 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Real-time Mobile Food Recognition System论文笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-27T15:26:37+08:00" content="2015-07-27">
+            2015-07-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="摘要">摘要</h2><p>论文设计了一个手机端的食物识别系统，用于卡路里的查询，培养用户的饮食习惯。<br>大致流程如下：</p>
+<ul>
+<li>为了识别食物，用户首先通过触屏画出包含食物的边框，在选定的边框里面执行食物的识别算法。</li>
+<li>为了提高准确率，通过使用<strong>GrubCur</strong>算法来对每一种食物进行分割，提取出其中的<strong>color histogram</strong>特征和<strong>SURF-based bag-of-features</strong>特征</li>
+<li>最后使用线性SVM和fast 开方核进行分类（总共有50类）。<a id="more"></a>
+</li>
+</ul>
+<h2 id="1-简介">1.简介</h2><p>首先讲述了现有的这些饮食记录app的缺陷，然后提出说现有的手机中，四核处理器变得越来越普通。之前的手机系统一般需要有服务端支持，上传资源到服务端会耗费很多时间，不能够达到实时的效果。因此，本文才提出了跑在手机上的实时的食物识别系统。<br><img src="/images/1437962591103.png" alt="Alt text"></p>
+<p>该文章实现了：</p>
+<ul>
+<li>一款基于手机端的交互实时食物识别和记录系统，可以达到实时效果，不用再上传到服务端。</li>
+<li>使用线性SVM利用开方核来快速准确做食物识别，使用多线程多CPU系统</li>
+<li>应用程序流程：首先对食物拍一张照片，通过手指拖动来划定一个区域，在这个区域里面进行food image recognition</li>
+<li>通过GrubCut可以进行划定区域的自动调整，通过ESS来进行区域框方向的变化</li>
+</ul>
+<h2 id="2-相关工作">2.相关工作</h2><h3 id="2-1食物识别">2.1食物识别</h3><p>食物识别困难的原因在于食物会发生形状的变化。食物识别属于细粒度的分类问题。<br>主要介绍了一些已有的成果。然后夸自己，说只有自己的系统才能达到实时交互的效果，但是也不忘谦虚的说自己的系统数据库太小，只有50种食物类别，需要用户帮忙。</p>
+<h3 id="2-2手机设备和计算机视觉">2.2手机设备和计算机视觉</h3><p>讲述了现有的一些利用手机实现的物体识别应用。</p>
+<h2 id="3-系统概述">3.系统概述</h2><p><img src="/images/1437964631950.png" alt="Alt text"></p>
+<ol>
+<li>用户用手机拍照，系统在后台连续的请求摄像头设备的图像帧（这里没有看明白）</li>
+<li>用户选定bounding box，而bounding box是可以利用算法自动调整的。可以选取超过两个bounding box</li>
+<li>每一个bounding box的区域里面做食物识别，bounding box的区域方向根据估值高的建立（这里也没有看明白）</li>
+<li>结果出来之后，把top five的候选结果和direction arrows显示在屏幕上。</li>
+<li>从食物候选列表中选取食物种类，食物体积的多少可以通过滑动条来大致说明(这方法也太扯蛋了一点吧- -|||)。如果候选列表中没有食物，把手机稍微移动一下，然后重新做<strong>第3步</strong></li>
+<li>把选中的卡路里结果显示在屏幕上</li>
+</ol>
+<p>总之呢，食物的卡路里和营养成分表将显示在手机屏幕上，该信息可以保存到服务端，在web端查看。<br><img src="/images/1437965804737.png" alt="Alt text"></p>
+<h2 id="4-食物识别的方法">4.食物识别的方法</h2><h3 id="4-1_Bounding_Box_Adjustment_边界框的调整">4.1 Bounding Box Adjustment 边界框的调整</h3><p>由于用户选取的bounding box不会特别准确，一般来说都会偏大的，所以使用GrabCut方法来调整。需要<strong>前景</strong>和<strong>背景区域</strong>作为种子。我们把bounding box里面的区域作为前景区域，两倍于bounding box，外面的区域作为背景区域。为了缩短时间，我们只做一次调整。<br>关于GrabCut算法（抠图算法）：</p>
+<ul>
+<li><a href="http://cvg.ethz.ch/teaching/cvl/2012/grabcut-siggraph04.pdf" target="_blank" rel="external">原文</a> </li>
+<li><a href="http://research.microsoft.com/en-us/um/cambridge/projects/visionimagevideoediting/segmentation/grabcut.htm" target="_blank" rel="external">相关资料</a></li>
+<li><a href="http://blog.csdn.net/zouxy09/article/details/8534954" target="_blank" rel="external">中文资料</a></li>
+</ul>
+<h3 id="4-2_Food_Recognition_食物识别">4.2 Food Recognition 食物识别</h3><ul>
+<li>首先在每个window里面提取特征</li>
+<li>根据提前计算好的codebook建立特征向量</li>
+<li>最后我们根据特征向量用线性SVM进行分类</li>
+</ul>
+<h3 id="4-3_Image_Features_图片特征">4.3 Image Features 图片特征</h3><p>本文选取了<strong>color histogram</strong>和<strong>Bag-of-SURF</strong>两个联合特征。对于bounding box长的那个边大于200，我们resize到200</p>
+<h4 id="Color_Histogram：">Color Histogram：</h4><p>把窗口分成了3×3的block，对于每一个block抽取64-bin的直RGB色彩方图。总共是576维的彩色直方图。</p>
+<h4 id="Bag-of-SURF">Bag-of-SURF</h4><p>这一块提到的算法比较多，应该算是难点部分了。原文如下：</p>
+<blockquote>
+<p>Bag-of-SURF: As local features, we use <strong>dense-sampled bag-of-SURF</strong>. <strong>SURF [1]</strong> is an invariant 64-dim local descriptor for scale, orientation and illumination change. We sample points by dense sampling in scale 12 and 16 with every 8 pixel with the window. To convert bag-of-features vectors, we prepared a <strong>codebook</strong> where the number of <strong>codeword</strong> was 500 by <strong>k-means clustering</strong> in advance. We apply <strong>soft assignment [11]</strong> by <strong>3 nearest-neighbor</strong> assigned reciprocal number of Euclid distance to the codeword, also we use <strong>fast approximated-nearest-neighbor search based kdtree</strong> to search the codebook for the corresponding codeword for each sampled point. Finally, we create a <strong>500-dim bagof-SURF vector</strong>.</p>
+</blockquote>
+<p>这里我们首先要了解<strong>SURF</strong>特征，然后在此基础上了解<strong>bag-of-features</strong>。下面这段引用较为清楚地阐释了bag-of-features：</p>
+<blockquote>
+<ol>
+<li>首先，我们用surf算法生成图像库中每幅图的特征点及描述符。</li>
+<li>再用k-means算法对图像库中的特征点进行训练，生成类心。</li>
+<li>生成每幅图像的BOF，具体方法为：判断图像的每个特征点与哪个类心最近，最近则放入该类心，最后将生成一列频数表，即初步的无权BOF。</li>
+<li>通过tf-idf对频数表加上权重，生成最终的bof。（因为每个类心对图像的影响不同。比如超市里条形码中的第一位总是6，它对辨别产品毫无作用，因此权重要减小）。</li>
+<li>对query进来的图像也进行3.4步操作，生成一列query图的BOF。</li>
+<li>将query的Bof向量与图像库中每幅图的Bof向量求夹角，夹角最小的即为匹配对象。</li>
+</ol>
+</blockquote>
+<p>当然当中一些细节的地方跟文献引用的流程有差异。但是bag-of-features的整个流程大致就是这样了。</p>
+<h3 id="4-4_Classification_分类">4.4 Classification 分类</h3><p>分类用线性SVM来做，多分类采用one-vs-rest。本文食物分为50类，故训练了50个线性SVM分类器。线性SVM如下所示：</p>
+<p><img src="/images/formula1.jpg" alt="Alt text"><br>where x is an input vector, f(x) is an output SVM score,<br>xi is support vector, yi ∈ {+1, −1} is a class label, αi is a<br>weight of the corresponding support vector, b is a bias vector, and M is the number of support vector. </p>
+<p>然后又说，尽管使用线性SVM可以节省内存，但是准确率肯定没有非线性分类器高。那怎么办呢？于是就使用了一种叫做<strong>explicit embedding technique</strong>的技术，采用了<strong>kernel feature maps</strong>。在使用了$\chi^2$核映射之后，特征向量的维度变成了原来的三倍。这个映射可以被用于<strong>L1-normalized histogram</strong>上，然后把它应用于<strong>L1-normalized color histograms</strong> 和<strong>Bag-of-SURF向量</strong>上。</p>
+<h3 id="4-5_Estimation_of_the_more_reliable_direction_建立更可靠的方向">4.5 Estimation of the more reliable direction 建立更可靠的方向</h3><p>由于SVM计算出来的最高分数对应的食物种类可能错误，这种情况下我们需要对原始输入的图像进行微调，从而计算出更可靠的SVM估值。为了鼓励用户移动摄像头，我们会在屏幕上显示一个箭头来提醒用户朝哪个方向移动。<br>为了更好的计算出SVM估值，我们采用了<strong>Efficient Sub-window Search(ESS)</strong>。<br>在上面那个公式中，权重向量<strong>w</strong>可以被分解成<strong>$w^+$</strong> 和<strong>$w^-$</strong>:<br>$$ w = w^+ + w^-$$<br>然后根据ESS方法，对<strong>$w^+$</strong> 和<strong>$w^-$</strong>采用积分图像的方法可以在o(1)时间内完成SVM估值计算。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CV/" rel="tag">#CV</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/07/28/Efficient Subwindow Search论文笔记/" rel="prev">Efficient Subwindow Search论文笔记</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/25/从WordPress搬到Hexo/" rel="next">从WordPress搬到Hexo</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-简介"><span class="nav-text">1.简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-text">2.相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1食物识别"><span class="nav-text">2.1食物识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2手机设备和计算机视觉"><span class="nav-text">2.2手机设备和计算机视觉</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-系统概述"><span class="nav-text">3.系统概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-食物识别的方法"><span class="nav-text">4.食物识别的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1_Bounding_Box_Adjustment_边界框的调整"><span class="nav-text">4.1 Bounding Box Adjustment 边界框的调整</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2_Food_Recognition_食物识别"><span class="nav-text">4.2 Food Recognition 食物识别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3_Image_Features_图片特征"><span class="nav-text">4.3 Image Features 图片特征</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Color_Histogram："><span class="nav-text">Color Histogram：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bag-of-SURF"><span class="nav-text">Bag-of-SURF</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4_Classification_分类"><span class="nav-text">4.4 Classification 分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5_Estimation_of_the_more_reliable_direction_建立更可靠的方向"><span class="nav-text">4.5 Estimation of the more reliable direction 建立更可靠的方向</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="高数考完了，终于可以轻松的写代码了。哈哈
+终于开始写输入表了。输入表是我们项目的重头戏。首先还是先介绍下输入表的基本知识。
+自己写的话有点麻烦，还是copy一下小甲鱼辛辛苦苦打出来的课件吧
+输入表结构
+PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE格式之千里追踪输入表">
+<meta property="og:url" content="http://yoursite.com/2012/04/15/PE格式之千里追踪输入表/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="高数考完了，终于可以轻松的写代码了。哈哈
+终于开始写输入表了。输入表是我们项目的重头戏。首先还是先介绍下输入表的基本知识。
+自己写的话有点麻烦，还是copy一下小甲鱼辛辛苦苦打出来的课件吧
+输入表结构
+PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIP">
+<meta property="og:updated_time" content="2015-07-25T05:08:21.819Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PE格式之千里追踪输入表">
+<meta name="twitter:description" content="高数考完了，终于可以轻松的写代码了。哈哈
+终于开始写输入表了。输入表是我们项目的重头戏。首先还是先介绍下输入表的基本知识。
+自己写的话有点麻烦，还是copy一下小甲鱼辛辛苦苦打出来的课件吧
+输入表结构
+PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIP">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> PE格式之千里追踪输入表 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              PE格式之千里追踪输入表
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-15T20:49:11+08:00" content="2012-04-15">
+            2012-04-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>高数考完了，终于可以轻松的写代码了。哈哈</p>
+<p>终于开始写输入表了。输入表是我们项目的重头戏。首先还是先介绍下输入表的基本知识。</p>
+<p>自己写的话有点麻烦，还是copy一下小甲鱼辛辛苦苦打出来的课件吧</p>
+<p>输入表结构</p>
+<p>PE文件头的 IMAGE_OPTIONAL_HEADER 结构中的 DataDirectory(数据目录表) 的第二个成员就是指向输入表的。而输入表是以一个 IMAGE_IMPORT_DESCRIPTOR(简称IID) 的数组开始。每个被 PE文件链接进来的 DLL文件都分别对应一个 IID数组结构。在这个 IID数组中，并没有指出有多少个项(就是没有明确指明有多少个链接文件)，但它最后是以一个全为NULL(0) 的 IID 作为结束的标志。</p>
+<p>我们首先来找到这个输入表的地址：还是首先附上上次的那张图片：</p>
+<p>如果看不清楚的话，这里给个链接，是我自己的博客里面的，放大应该就看的清楚了</p>
+<p><a href="http://miibotree.com/?p=226" target="_blank" rel="external">http://miibotree.com/?p=226</a></p>
+<p>在PE头那里我们可以看到数据目录表，(用红框框圈起来的那里) IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES]</p>
+<p>接着红色的箭头指向了我们的数据目录表的数据结构</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_EXPORT <span class="number">0</span> <span class="comment">// Export Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_IMPORT <span class="number">1</span> <span class="comment">// Import Directory （输入表，我们所需要的）</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_RESOURCE <span class="number">2</span> <span class="comment">// Resource Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_EXCEPTION <span class="number">3</span> <span class="comment">// Exception Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_SECURITY <span class="number">4</span> <span class="comment">// Security Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_BASERELOC <span class="number">5</span> <span class="comment">// Base Relocation Table</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_DEBUG <span class="number">6</span> <span class="comment">// Debug Directory</span></span><br><span class="line"><span class="comment">// IMAGE_DIRECTORY_ENTRY_COPYRIGHT 7 // (X86 usage)</span></span><br><span class="line"><span class="hexcolor">#def</span>i ne IMAGE_DIRECTORY_ENTRY_ARCHITECTURE <span class="number">7</span> <span class="comment">// Architecture Specific Data</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_GLOBALPTR <span class="number">8</span> <span class="comment">// RVA of GP</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_TLS <span class="number">9</span> <span class="comment">// TLS Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG <span class="number">10</span> <span class="comment">// Load Configuration Directory</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT <span class="number">11</span> <span class="comment">// Bound Import Directory in headers</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_IAT <span class="number">12</span> <span class="comment">// Import Address Table</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT <span class="number">13</span> <span class="comment">// Delay Load Import Descriptors</span></span><br><span class="line"><span class="hexcolor">#def</span>ine IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR <span class="number">14</span> <span class="comment">// COM Runtime descriptor</span></span><br></pre></td></tr></table></figure>
+<p>然后每个数据目录表的结构成员有两个</p>
+<p>typedef struct _IMAGE_DATA_DIRECTORY {</p>
+<p>DWORD VirtualAddress; //输入表的RVA</p>
+<p>DWORD Size;</p>
+<p>} IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;</p>
+<p>这里的VirtualAddress就是我们的输入表的RVA了</p>
+<p>得到RVA只是第一步，我们接下来要判断输入表在哪个区块里面。</p>
+<p>当然这个时候我们必须要做的就是读取区块的信息了。区块的数据结构如下（可以在图里面找到哦）</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _IMAGE_SECTION_HEADER &#123;</span><br><span class="line">BYTE Name[IMAGE_SIZEOF_SHORT_NAME]<span class="comment">;</span></span><br><span class="line">union &#123;</span><br><span class="line">DWORD PhysicalAddress<span class="comment">;</span></span><br><span class="line">DWORD VirtualSize<span class="comment">;</span></span><br><span class="line">&#125; Misc<span class="comment">;</span></span><br><span class="line">DWORD VirtualAddress<span class="comment">; //区块的RVA</span></span><br><span class="line">DWORD SizeOfRawData<span class="comment">;</span></span><br><span class="line">DWORD PointerToRawData<span class="comment">;</span></span><br><span class="line">DWORD PointerToRelocations<span class="comment">;</span></span><br><span class="line">DWORD PointerToLinenumbers<span class="comment">;</span></span><br><span class="line">WORD NumberOfRelocations<span class="comment">;</span></span><br><span class="line">WORD NumberOfLinenumbers<span class="comment">;</span></span><br><span class="line">DWORD Characteristics<span class="comment">;</span></span><br><span class="line">&#125; IMAGE_SECTION_HEADER, *PIMAGE_SECTION_HEADER<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>通过输入表的RVA与区块的RVA比较，我们就能知道输入表在哪个区块里面。</p>
+<p>好，第二步已经完成了。</p>
+<p>现在是最关键的第三步：</p>
+<p>这里必须明确掌握RVA， VA， offset。因为这个是PE文件的最重点。下面再引用一下小甲鱼的课件：</p>
+<p>RVA 和文件偏移的转换</p>
+<p>在前边我们探讨过RVA 这个词，但对于初次接触PE 文件的朋友来说，显得尤其陌生和无奈。中国人不喜欢老外的缩写，但总要**着接受……不过，在有了前边知识的铺垫之后，现在来谈这个概念大家伙应该能够得心应手了。起码不用显得那么的费解和无奈~</p>
+<p>RVA 是相对虚拟地址（Relative Virtual Address）的缩写，顾名思义，它是一个“相对地址”。PE 文件中的各种数据结构中涉及地址的字段大部分都是以 RVA 表示的，有木有？？</p>
+<p>更为准确的说，RVA 是当PE 文件被装载到内存中后，某个数据位置相对于文件头的偏移量。举个例子，如果 Windows 装载器将一个PE 文件装入到 00400000h 处的内存中，而某个区块中的某个数据被装入 0040<strong>xh 处，那么这个数据的 RVA 就是（0040</strong>xh &#8211; 00400000h ）= **xh，反过来说，将 RVA 的值加上文件被装载的基地址，就可以找到数据在内存中的实际地址。</p>
+<p>看图说话：</p>
+<p>很明显，我们发现，DOS 文件头、PE 文件头和区块表的偏移位置与大小均没有变化。而各个区块映射到内存后，其偏移位置就发生了变化。</p>
+<p>RVA 使得文件装入内存后的数据定位变得方便，然而却给我们要定位位于磁盘上的静态PE 文件带来了麻烦。举个例子说话：……由于例子在视频中，这里争取时间我就不写啦，大伙看参考视频演示吧。</p>
+<p>如何换算 RVA 和文件偏移呢？</p>
+<p>当处理PE 文件时候，任何的 RVA 必须经过到文件偏移的换算，才能用来定位并访问文件中的数据，但换算却无法用一个简单的公式来完成，事实上，唯一可用的方法就是最土最笨的方法：</p>
+<p>步骤一：循环扫描区块表得出每个区块在内存中的起始 RVA（根据IMAGE_SECTION_HEADER 中的VirtualAddress 字段），并根据区块的大小（根据IMAGE_SECTION_HEADER 中的SizeOfRawData 字段）算出区块的结束 RVA（两者相加即可），最后判断目标 RVA 是否落在该区块内。</p>
+<p>步骤二：通过步骤一定位了目标 RVA 处于具体的某个区块中后，那么用目标 RVA 减去该区块的起始 RVA ，这样就能得到目标 RVA 相对于起始地址的偏移量 RVA2.</p>
+<p>步骤三：在区块表中获取该区块在文件中所处的偏移地址（根据IMAGE_SECTION_HEADER 中的PointerToRawData 字段这个字段是物理偏移地址将这个偏移值加上步骤二得到的 RVA2 值，就得到了真正的文件偏移地址。</p>
+<p>当然这里理解起来可能比较困难，大家可以看看小甲鱼的视频然后看看加密与解密的那本书最后动手实践来慢慢理解的。</p>
+<p>将这个 真正的文件偏移地址加上基地址就是输入表的地址了。</p>
+<p>如此一来，我们千里迢迢终于追踪到了输入表的地址了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/15/PE格式之输入表/" rel="prev">PE格式之输入表</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/15/修改导入表HOOK-API（ring3-iat-exe-hook-Messagebox）/" rel="next">修改导入表HOOK API（ring3_iat_exe_hook_Messagebox）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

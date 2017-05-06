@@ -1,0 +1,1369 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/12/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/11/C-继承性和派生类-新手学习问题小结（二）/" itemprop="url">
+                C++继承性和派生类 新手学习问题小结（二）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-11T18:59:48+08:00" content="2012-10-11">
+            2012-10-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>由于对于继承性这节感觉要学的东西比较多，所以用代码实践的方式来巩固：</p>
+<p>1.私有继承</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ex1</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">class</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setx</span><span class="params">(<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">x = n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showx</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//私有派生</span></span><br><span class="line"><span class="keyword">class</span> derived:<span class="keyword">private</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setxy</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> m)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">setx(n);</span><br><span class="line">y = m;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showxy</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">derived obj;</span><br><span class="line"><span class="comment">//obj.setx(10);</span></span><br><span class="line">obj.setxy(<span class="number">10</span>, <span class="number">20</span>);</span><br><span class="line">obj.showxy();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><span id="more-443"></span></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ex2</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setx</span><span class="params">(<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">x = n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showx</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//私有派生</span></span><br><span class="line"><span class="keyword">class</span> derived:<span class="keyword">private</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sety</span><span class="params">(<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">y = n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showy</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">derived obj;</span><br><span class="line"><span class="comment">//obj.setx(10); 私有继承后基类的共有成员在派生类里面变成了私有故外部函数不能访问</span></span><br><span class="line">obj.sety(<span class="number">20</span>);</span><br><span class="line"><span class="comment">//obj.showx();</span></span><br><span class="line">obj.showy();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>总结下规律：1.如果使用私有继承，那么派生类的成员函数只能访问基类的共有变量，不能访问私有变量</p>
+<p>2.私有继承后基类的共有成员在派生类里面变成了私有，故外部函数不能访问</p>
+<p>2.公有派生</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">setx</span><span class="params">(<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">x = n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showx</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//共有派生</span></span><br><span class="line"><span class="keyword">class</span> derived:<span class="keyword">public</span> base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> y;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">sety</span><span class="params">(<span class="keyword">int</span> n)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">y = n;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">showy</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">derived obj;</span><br><span class="line">obj.setx(<span class="number">10</span>);</span><br><span class="line">obj.sety(<span class="number">20</span>);</span><br><span class="line">obj.showx();</span><br><span class="line">obj.showy();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>公有派生的规律：1.基类中的公有类在派生类中仍然是公有，在派生类和外部函数能直接访问</p>
+<p>2.基类中的私有成员还是私有，派生类和外部函数都不能访问</p>
+<p>公有派生和私有派生的不同之处就在于基类的公有成员的变化</p>
+<p>这两种派生方式，派生类都不能直接访问基类的公有成员，只能通过调用</p>
+<p>所以催生出了保护成员。</p>
+<p>对于外部函数，始终无法访问保护成员</p>
+<p>保护成员也分成两种：</p>
+<p>若为公有继承，那么基类中的保护成员还是保护成员</p>
+<p>若为私有继承，那么基类中的保护成员变成了私有成员</p>
+<p>多重继承的二义性</p>
+<p>调用不同基类D的相同成员时可能出现二义性</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//理解多重继承</span></span><br><span class="line"><span class="comment">//调用不同基类D的相同成员时可能出现二义性</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt;&amp;lt; <span class="string">"A.n"</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> B</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt;&amp;lt; <span class="string">"B.n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt;&amp;lt; <span class="string">"BB.n"</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> D:<span class="keyword">public</span> A, <span class="keyword">public</span> B</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">g</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt;&amp;lt; <span class="string">"DD.n"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">h</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">B::f();</span><br><span class="line">&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">D d;</span><br><span class="line">d.A::f();</span><br><span class="line"><span class="comment">//d.f(); 这里会出现二义性</span></span><br><span class="line">d.g();</span><br><span class="line">d.h();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问共同基类的成员时可能出现二义性</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//理解多重继承</span></span><br><span class="line"><span class="comment">//访问共同基类的成员时可能出现二义性</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">A(<span class="keyword">int</span> i)</span><br><span class="line">&#123;</span><br><span class="line">a = i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">int</span> a;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> B1:<span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">B1(<span class="keyword">int</span> i, <span class="keyword">int</span> j):A(i)</span><br><span class="line">&#123;</span><br><span class="line">b1 = j;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="keyword">int</span> b1;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> B2:<span class="keyword">public</span> A</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">B2(<span class="keyword">int</span> i, <span class="keyword">int</span> j):A(i)</span><br><span class="line">&#123;</span><br><span class="line">b2 = j;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="keyword">int</span> b2;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> D:<span class="keyword">public</span> B1, <span class="keyword">public</span> B2</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">D(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k):B1(i, j), B2(i, j), d(k)</span><br><span class="line">&#123;</span><br><span class="line">d = k;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="keyword">int</span> d;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="function">D <span class="title">d</span><span class="params">(11, 12, 13)</span></span>;</span><br><span class="line"><span class="built_in">cout</span>&amp;lt; <span class="comment">//cout&amp;lt; d.f();</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是课后几个题目的错误：</p>
+<p>判断题</p>
+<p>1.派生类只能继承基类中的公有成员，而不继承私有成员。</p>
+<p>明显是错的。如果是公有继承的情况，则继承了私有成员。</p>
+<p>2.派生类中成员的访问权限与基类的继承方式有关。</p>
+<p>这句话是对的。这里派生类的成员有两个部分组成：一部分是派生类自己的成员，这部分与基类的继承方式无关，另一部分是从基类继承的成员，那么这部分明显与基类的继承方式有关。这个句子明显是考语文的~~~~。</p>
+<p>3.继承反映了类之间“是”的关系，组合反映了类之间“有”的关系。</p>
+<p>不明白这里的  <strong>组合</strong>  是个什么概念。</p>
+<p>但是这里可以看看子对象和子类型的区别：</p>
+<p>子对象的定义：在一个类中使用另一个类的对象作其数据成员，这种对象的数据成员称为子对象。相当于类的嵌套定义。</p>
+<p>子类型的定义：当一个类型至少包含了另一个类型的所有行为，则称该类型是另一个类型的子类型。在公有继承下面，派生类是基类的子类型。</p>
+<p>现在我们来看看上面这个问题，继承算子类型，那么类之间是  “是”的关系；   组合应该是子对象，他们之间是“有”的关系。所以这句话是对的</p>
+<p>4.私有继承中基类的私有成员在派生类中还是私有的。</p>
+<p>明显是无法访问嘛。。。</p>
+<p>5.派生类的构造函数中包含了基类的构造函数。</p>
+<p>6.多重继承的派生类构造函数中执行基类构造函数的顺序取决于该派生类构造函数的成员初始化列表中出现基类初始化项的顺序。</p>
+<p>我们看看定义就知道这句话错误了：在多重继承派生类构造函数中，先执行基类的构造函数。多个基类构造函数的执行顺序取决于定义派生类时规定的先后顺序，与派生类的成员初始化列表中顺序无关。</p>
+<p>派生类构造函数的成员初始化列表中，不能包含的初始化项是（ B ）</p>
+<p>A 基类的构造函数   B 基类的子对象  C 派生类的子对象  D 派生类自身的数据成员</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/Scintilla控件在Win32环境下的使用（二）/" itemprop="url">
+                Scintilla控件在Win32环境下的使用（二）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:42:59+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这节的目标就是写出语法高亮，代码折叠这两个效果。</p>
+<p>还是首先给大家发个效果图看一下：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/09/QQ截图20120917165723.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/09/QQ截图20120917165723.png" alt="" title="QQ截图20120917165723"></a></p>
+<p>主要参考文档：</p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html</a></p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008636.html</a></p>
+<p><span id="more-417"></span></p>
+<p>当然官方文档是必不可少的。</p>
+<p>其实有了第一节的工作，如果你玩过vim，那么接下来的工作有点类似于配置.vimrc文件了。</p>
+<p>只不过比配置vimrc文件麻烦的是我们要自己确定发送消息的时机。</p>
+<p>让Scintilla支持语法高亮</p>
+<p>有了前面的SendEditor控制函数，我们就可以配置语法高亮了，下面这段代码可以使我们的Scintilla控件显示C++语法高亮代码：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">char</span>* g_szKeywords=</span><br><span class="line"><span class="string">"asm auto bool break case catch char class const "</span></span><br><span class="line"><span class="string">"const_cast continue default delete do double "</span></span><br><span class="line"><span class="string">"dynamic_cast else enum explicit extern false finally "</span></span><br><span class="line"><span class="string">"float for friend goto if inline int long mutable "</span></span><br><span class="line"><span class="string">"namespace new operator private protected public "</span></span><br><span class="line"><span class="string">"register reinterpret_cast register return short signed "</span></span><br><span class="line"><span class="string">"sizeof static static_cast struct switch template "</span></span><br><span class="line"><span class="string">"this throw true try typedef typeid typename "</span></span><br><span class="line"><span class="string">"union unsigned using virtual void volatile "</span></span><br><span class="line"><span class="string">"wchar_t while"</span>;</span><br><span class="line">...</span><br><span class="line">SendEditor(S<span class="built_in">CI_SETLEXER</span>, SCLEX_CPP); <span class="comment">//C++语法解析</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_SETKEYWORDS</span>, <span class="number">0</span>, (sptr_t)g_szKeywords);<span class="comment">//设置关键字// 下面设置各种语法元素前景色</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_WORD, <span class="number">0x00FF0000</span>); <span class="comment">//关键字</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_STRING, <span class="number">0x001515A3</span>); <span class="comment">//字符串</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_CHARACTER, <span class="number">0x001515A3</span>); <span class="comment">//字符</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_PREPROCESSOR, <span class="number">0x00808080</span>);<span class="comment">//预编译开关</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENT, <span class="number">0x00008000</span>);<span class="comment">//块注释</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENTLINE, <span class="number">0x00008000</span>);<span class="comment">//行注释</span></span><br><span class="line">SendEditor(S<span class="built_in">CI_STYLESETFORE</span>, SCE_C_COMMENTDOC, <span class="number">0x00008000</span>);<span class="comment">//文档注释（/**开头）</span></span><br></pre></td></tr></table></figure>
+<p>上面这段代码自己在c下面还得改一改。在第一篇里面自己定义的SendEditor函数是有四个参数的。所以我在传递参数的时候也必须满足4个参数。</p>
+<p>所以所有关于SendEditor的函数就变成了类似下面这样：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">ptr</span>,SCI_SETLEXER, SCLEX_CPP, <span class="number">0</span>)</span><span class="comment">; //C++语法解析</span></span><br></pre></td></tr></table></figure>
+<p>语法解析只负责把代码拆分开，至于哪些是关键字，还得我们来指定。</p>
+<p>要支持语法高亮，要做三件事：</p>
+<p>一、选定语法解析器设置关键字</p>
+<p>语法解析器用于把一大段代码分解成一个个的单词(token)，另外还用于代码折叠的控制（后面会说到）。</p>
+<p>选定语法解析器的命令是SCI_SETLEXER，如：</p>
+<p>SendEditor(SCI_SETLEXER, SCLEX_CPP);</p>
+<p>除了SCLEX_CPP以外，还有SCLEX_HTML、SCLEX_PERL、SCLEX_SQL、SCLEX_VB等一大堆，定 义在SciLexer.h里。现代的IDE应该可以定位SCLEX_CPP定义，它周围的SCLEX_XXX就是其它的语法解析器。</p>
+<p>另外，也可以用SCI_SETLEXERLANGUAGE命令，如：</p>
+<p>SendEditor(SCI_SETLEXERLANGUAGE, 0, (sptr_t)&#8221;cpp&#8221;);</p>
+<p>SCI_SETLEXERLANGUAGE接受的是一个字符串参数，这个字符串定义于代码解析器源代码（srclex*.cxx） 最后面LexerModule开头的那行代码，那里的第三个参数就是。</p>
+<p>二、设置关键字</p>
+<p>语法解析只负责把代码拆分开，至于哪些是关键字，还得我们来指定。</p>
+<p>这种方式带来了些许的灵活性，比如我们要高亮一种自定义的语言，这种语言的风格与C++类似（如Java、C#、php等），我们也 可以选定SCLEX_CPP作为语法解析器，然后定义自己的关键字。(所以不需要把各种解析器都编译进DLL文件里)</p>
+<p>设置关键字的命令是SCI_SETKEYWORDS。它的wParam用于指定关键字种类，可以是0~8即9种类型，这样我们可以做 更细致的区分，如把关键字for if和int bool区分显示。lParam指定关键字，以空格分隔。</p>
+<p>三、设置文本元素对应的字体风格</p>
+<p>即字体、前景色、背景色、斜体粗体等</p>
+<p>设置字体风格的命令以SCI_STYLE作为前缀，这组命令比较多，为了不浪费篇幅，偶这里只列举几个，其它的可以参考这里</p>
+<p>（<a href="http://scintilla.sourceforge.net/ScintillaDoc.html#StyleDefinition）" target="_blank" rel="external">http://scintilla.sourceforge.net/ScintillaDoc.html#StyleDefinition）</a></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">S<span class="built_in">CI_STYLESETBACK</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置背景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFORE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置前景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFONT</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">char</span> *fontName) <span class="comment">//设置字体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETSIZE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> sizeInPoints)<span class="comment">//设置字号</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBOLD</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">bool</span> bold) <span class="comment">//设置粗体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBACK</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置背景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFORE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> colour) <span class="comment">//设置前景色</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETFONT</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">char</span> *fontName) <span class="comment">//设置字体</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETSIZE</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">int</span> sizeInPoints)<span class="comment">//设置字号</span></span><br><span class="line"></span><br><span class="line">S<span class="built_in">CI_STYLESETBOLD</span>(<span class="keyword">int</span> styleNumber, <span class="keyword">bool</span> bold) <span class="comment">//设置粗体</span></span><br></pre></td></tr></table></figure>
+<p>这里的styleNumber是指文本元素，如关键字、行号、控制字串等。前面代码中的SCE_C_XXXX是C++解析器分解出的 语法相关的元素。另外还有</p>
+<p>STYLE_DEFAULT（默认）</p>
+<p>STYLE_LINENUMBER（行号）</p>
+<p>STYLE_BRACELIGHT（括号匹 配）</p>
+<p>STYLE_BRACEBAD（括号失配）</p>
+<p>STYLE_CONTROLCHAR（控制字符）</p>
+<p>STYLE_INDENTGUIDE（缩进线）</p>
+<p>STYLE_CALLTIP（调用提示）</p>
+<p>SCI_STYLECLEARALL //把所有文本元素设置成与STYLE_DEFAULT相同的风格</p>
+<p>Scintilla文档建议的顺序是先向STYLE_DEFAULT设置一些通用风格，然后再用SCI_STYLECLEARALL 把所有元素风格重置成与STYLE_DEFAULT一致，最后单独设置其它元素。</p>
+<p>加上当前行高亮功能：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETCARETLINEVISIBLE</span>, TRUE)</span><span class="comment">;</span></span><br><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETCARETLINEBACK</span>, <span class="number">0</span>xb0ffff)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>把TAB宽度由默认的8改为4（依个人习惯~~）</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendEditor<span class="list">(<span class="keyword">SCI_SETTABWIDTH</span>, <span class="number">4</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>让Scintilla实现代码折叠</p>
+<p>页边(Margins)和标记(Markers)</p>
+<p>代码折叠是现代IDE和代码编辑器的必备功能，如果现在推出一个不支持折叠的编辑器，那是要被BS地~~。为了不被BS，很有必要先“研究”一下Scintilla的页边(Margins)和标记(Markers)功能。</p>
+<p>页 边(Margins)：页边是位于文本显示区左边的一竖条区域，它可以用于显示行号、书签、断点标记等东东。Scintilla最多可以有5个页边（从左 到右的编号为0~4），每个页边可以使用SCI_SETMARGINTYPEN命令确定是用于显示行号还是符号。我们可以用 SCI_SETMARGINWIDTHN命令控制一个页边的宽度，如果设置为0，则表示不显示该页边。默认是只显示宽度为16的1号页边。</p>
+<p>标 记(Markers)：标记，不用说也知道是用来标记文本位置（确切地说，是文本行）的。我们可以使用32种标记（编号0~31），我们可以自由决定这 32种标记的意义，如标记0用来表示断点、标记1~10表示书签、标记20表示语法错误行等等。不过，如果编辑器要支持代码折叠功能，我们得把标记 25~31留出来，把这7个标记作为代码折叠专用标记（后面还会讲到）。</p>
+<p>告诉页边显示哪些标记</p>
+<p>当页边不是设定为显示行号时（由SCI_SETMARGINTYPEN命令设置），那么它就会显示标记。刚才说过Scintilla有32种标记，一般来说不会让一个页边来显示所有的标记，而是只显示部分标记。</p>
+<p>在一个页边里可以显示哪几种标记由SCI_SETMARGINMASKN命令设置，它的参数是一个32位掩码（mask）值，掩码值的第n位为1时表示该页边可显示n号标记。</p>
+<p>所有页边相关的命令以SCI_SETMARGIN或SCI_GETMARGIN作为前缀，如：</p>
+<p>SCI_SETMARGINTYPEN(int margin, int type) 设置页边显示行号还是符号，type可以是SC_MARGIN_SYMBOL或SC_MARGIN_NUMBER</p>
+<p>SCI_SETMARGINWIDTHN(int margin, int pixelWidth) 设置页边宽度</p>
+<p>SCI_SETMARGINMASKN(int margin, int mask) 设置页边掩码</p>
+<p>SCI_SETMARGINSENSITIVEN(int margin, bool sensitive) 设置页边是否接受鼠标点击事件</p>
+<p>所有标记相关的命令以SCI_MARKER作为前缀，如：</p>
+<p>SCI_MARKERADD(int line, int markerNumber) 在指定行加入一个markerNumber号标记</p>
+<p>SCI_MARKERDEFINE(int markerNumber, int markerSymbols) 定义markerNumber号标记的样式</p>
+<p>SCI_MARKERDELETE(int line, int markerNumber) 在指定行上的删除markerNumber号标记</p>
+<p>SCI_MARKERDELETEALL(int markerNumber) 删除文本中所有markerNumber号标记</p>
+<p>SCI_MARKERSETFORE(int markerNumber, int colour) 为markerNumber号标记指定前景色</p>
+<p>SCI_MARKERSETBACK(int markerNumber, int colour) 为markerNumber号标记指定背景色</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 先写10行文本上去</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i SendEditor(ptr,S<span class="built_in">CI_APPENDTEXT</span>, <span class="number">12</span>, (sptr_t)<span class="string">"hello worldn"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1号页边，宽度为20，显示行号</span></span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_SETMARGINTYPEN</span>,<span class="number">1</span>, SC_MARGIN_NUMBER);</span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_SETMARGINWIDTHN</span>,<span class="number">1</span>, <span class="number">20</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; ihwndFrom==hwndScintilla)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">switch</span>(lpnmhdr-&amp;gt;code)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> SCN_MARGINCLICK:</span><br><span class="line"><span class="keyword">if</span> (notify-&amp;gt;margin == MARGIN_FOLD_INDEX)</span><br><span class="line">&#123;</span><br><span class="line">line_number = SendEditor(ptr,S<span class="built_in">CI_LINEFROMPOSITION</span>,notify-&amp;gt;position,<span class="number">0</span>);</span><br><span class="line">SendEditor(ptr,S<span class="built_in">CI_TOGGLEFOLD</span>, line_number,<span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好啦。这样一来我们就实现了代码高亮和代码折叠这两个功能了。</p>
+<p>如果想继续深入学习更多scintilla的功能的话，就只能啃读官方文档了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/Scintilla控件在Win32环境下的使用（一）/" itemprop="url">
+                Scintilla控件在Win32环境下的使用（一）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:40:37+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原本想要学习一下语法高亮功能，做一个像Notepad++一样的编辑器。</p>
+<p>然后就兴冲冲的下载了Notepad++的开源代码准备开始看。</p>
+<p>但是整个框架比较复杂，看了一会之后突然发现Notepad++使用的是Scintilla这个很强大的控件，而且也是开源的。所以最后决定在分析Notepad++源代码之前先使用一下Scintilla，然后研究一下Scintilla的源码。</p>
+<p>下面是Scintilla 的官方网站：</p>
+<p><a href="http://www.scintilla.org/index.html" target="_blank" rel="external">http://www.scintilla.org/index.html</a></p>
+<p>我们下载源代码。</p>
+<p>然后准备编译。参考了下面这个博客：</p>
+<p><a href="http://blog.csdn.net/gnorth/article/details/7231513" target="_blank" rel="external">http://blog.csdn.net/gnorth/article/details/7231513</a></p>
+<p>我自己是win8 64位系统 vs2010</p>
+<p><span id="more-415"></span></p>
+<p>这里自己在编译makefile文件的时候出了一个错误：我使用了Visual Studio 命令提示（64位）下编译文件，结果编译出来之后的文件无法被vs识别。</p>
+<p>一开始一直找不到错误，LoadLibrary 的返回值一直为0，后来用GetLastError（）查看错误信息，才发现了原来是dll文件本身编译成了64位。</p>
+<p>而我的程序是32位的，所以dll无法识别64位的dll。</p>
+<p>后来用32位的 Visual Studio 命令提示重新编译出了32位的dll就对了。32位编译出来的dll是600多K， 而64位编译出来的是900多K。</p>
+<p>具体编译的步骤：</p>
+<p>打开Visual Studio 命令提示</p>
+<p>进到下载好的scintilla文件目录下面的win32目录下面，</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">nmake -f scintilla<span class="class">.mak</span> clean  <span class="comment">//清理工程</span></span><br><span class="line"></span><br><span class="line">nmake -f scintilla<span class="class">.mak</span>             <span class="comment">//编译</span></span><br></pre></td></tr></table></figure>
+<p>接下来主要学习下面两篇文章，一篇是参考官方的文档，另外一篇是国人写的一个翻译文档。</p>
+<p><a href="http://www.scintilla.org/ScintillaDoc.html" target="_blank" rel="external">http://www.scintilla.org/ScintillaDoc.html</a></p>
+<p><a href="http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html" target="_blank" rel="external">http://www.cnblogs.com/superanyi/archive/2011/04/07/2008632.html</a></p>
+<p>自己学习的时候是用Win32 SDK  C编写。</p>
+<p>首先随便拉个Win32下面的应用程序，用windows程序设计里面的第一个对话框程序就好了。</p>
+<p>我的目标是做出语法高亮，当然也不是限于这些，因为Scintilla是一个非常强大的库。</p>
+<p>首先我们将编译好的SciLexer.dll放入当前目录中， 引入动态链接库:这里特别注意别犯像我这样的新手错误。</p>
+<p>这个dll最大的功能就是进行语法解析 Lexer。</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">hmod = LoadLibrary<span class="params">(<span class="string">"SciLexer.DLL"</span>)</span>;</span><br><span class="line">	<span class="keyword">if</span> <span class="params">(hmod==NULL)</span></span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox<span class="params">(hwndParent,</span><br><span class="line">		<span class="string">"The Scintilla DLL could not be loaded."</span>,</span><br><span class="line">		<span class="string">"Error loading Scintilla"</span>,</span><br><span class="line">		MB_OK | MB_ICONERROR)</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>如果hmod不为0，那么说明我们成功引入了动态链接库。</p>
+<p>下载的源码文件里面有Include文件，包含了一些头文件。这里我们将下面两个头文件放到当前目录下。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "SciLexer.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Scintilla.h"</span></span><br></pre></td></tr></table></figure>
+<p>接下来我们可以开始使用这个库里面的Scintilla类。我们可以创建一个窗口子类。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HWND hwndScintilla<span class="comment">;</span></span><br><span class="line">       hwndScintilla = CreateWindowEx<span class="list">(<span class="number">0</span>,</span><br><span class="line">	<span class="string">"Scintilla"</span>,<span class="string">""</span>, WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_CLIPCHILDREN,</span><br><span class="line">	<span class="number">10</span>,<span class="number">10</span>,<span class="number">500</span>,<span class="number">400</span>,hwndParent,<span class="list">(<span class="keyword">HMENU</span>)</span>GuiID, hInstance,NULL)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>学过子窗口控件的同学对于创建上面的代码肯定都非常熟悉了。</p>
+<p>接下来就是发送消息了。这里发送消息有两种方式。第一个方式就是SendMessage的方式，这种方式通俗易懂。第二种方式有点复杂。下面一一来介绍下：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendMessage<span class="list">(<span class="keyword">hwndScintilla</span>,sci_command,wparam,lparam)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>like:</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendMessage<span class="list">(<span class="keyword">hwndScintilla</span>,SCI_CREATEDOCUMENT, <span class="number">0</span>, <span class="number">0</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这样就发送了窗口消息。我们可以在父窗口的窗口回调函数里面对消息进行处理：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">NMHDR *lpnmhdr;</span><br><span class="line"></span><br><span class="line">	[...]</span><br><span class="line"></span><br><span class="line">	<span class="keyword">case</span> WM_NOTIFY:</span><br><span class="line">		lpnmhdr = (LPNMHDR) lParam;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span>(lpnmhdr-&gt;hwndFrom==hwndScintilla)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">switch</span>(lpnmhdr-&gt;code)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="keyword">case</span> SCN_CHARADDED:</span><br><span class="line">					<span class="comment">/* Hey, Scintilla just told me that a new */</span></span><br><span class="line">					<span class="comment">/* character was added to the Edit Control.*/</span></span><br><span class="line">					<span class="comment">/* Now i do something cool with that char. */</span></span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	<span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<p>第二种方式有点复杂。我们首先看下官方文档给出的函数：</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> (*fn)(<span class="type">void</span>*,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>);</span><br><span class="line"><span class="type">void</span> * <span class="keyword">ptr</span>;</span><br><span class="line"><span class="type">int</span> canundo;</span><br><span class="line"></span><br><span class="line">fn = (<span class="type">int</span> (__cdecl *)(<span class="type">void</span> *,<span class="type">int</span>,<span class="type">int</span>,<span class="type">int</span>))<span class="type">SendMessage</span>(</span><br><span class="line">	hwndScintilla,<span class="type">SCI_GETDIRECTFUNCTION</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line"><span class="keyword">ptr</span> = (<span class="type">void</span> *)<span class="type">SendMessage</span>(hwndScintilla,<span class="type">SCI_GETDIRECTPOINTER</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">canundo = fn(<span class="keyword">ptr</span>,<span class="type">SCI_CANUNDO</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>自己也是新手，纯粹是为了觉得语法高亮好玩才玩的。自己的C语言功底不是很好，上面这段函数有点不太好理解。</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*<span class="function"><span class="keyword">fn</span>)</span>(void*,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
+<p>这里应该是定义了一个函数地址，这个函数有4个参数，返回值是int类型</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fn = <span class="list">(<span class="keyword">int</span> <span class="list">(<span class="keyword">__cdecl</span> <span class="variable">*)(void *</span>,int,int,int)</span>)</span>SendMessage<span class="list">(</span><br><span class="line">		<span class="keyword">hwndScintilla</span>,SCI_GETDIRECTFUNCTION,<span class="number">0</span>,<span class="number">0</span>)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这里定义了函数入口地址，相当于我们使用fn函数就是使用SendMessage函数。不知道这样讲对不对，还请大家指教。</p>
+<p>其实这里自己感觉也解释不太清楚，想请大家帮忙指正理解。</p>
+<p>比如我自己是这样定义的：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> (*SendEditor)(<span class="keyword">void</span>*,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//快速发送消息</span></span><br><span class="line">SendEditor = (<span class="keyword">int</span> (__cdecl *)(<span class="keyword">void</span> *,<span class="keyword">int</span>,<span class="keyword">int</span>,<span class="keyword">int</span>))SendMessage(</span><br><span class="line">    hwndScintilla,S<span class="built_in">CI_GETDIRECTFUNCTION</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">ptr = (<span class="keyword">void</span> *)SendMessage(hwndScintilla,S<span class="built_in">CI_GETDIRECTPOINTER</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">canundo = SendEditor(ptr,S<span class="built_in">CI_CANUNDO</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<p>以后自己就使用SendEditor，没有使用SendMessage了。</p>
+<p>但是自己不理解的是：c应该没有重载 多态这些概念，我在使用SendEditor的时候里面必须写4个参数。感觉用起来也没方便多少。</p>
+<p>自己C++没学多少。想请问下大家如何在C++下面实现该SendEditor的简洁方法？在此感谢大家。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/tf-idf算法/" itemprop="url">
+                tf-idf算法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:38:16+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原理</p>
+<p>TFIDF的主要思想是：如果某个词或短语在一篇文章中出现的频率TF高，并且在其他文章中很少出现，则认为此词或者短语具有很好的类别区分能力，适合用来分类。TFIDF实际上是：TF * IDF，TF词频(Term Frequency)，IDF反文档频率(Inverse Document Frequency)。TF表示词条在文档d中出现的频率。IDF的主要思想是：如果包含词条t的文档越少，也就是n越小，IDF越大，则说明词条t具有很好的类别区分能力。如果某一类文档C中包含词条t的文档数为m，而其它类包含t的文档总数为k，显然所有包含t的文档数n=m+k，当m大的时候，n也大，按照IDF公式得到的IDF的值会小，就说明该词条t类别区分能力不强。但是实际上，如果一个词条在一个类的文档中频繁出现，则说明该词条能够很好代表这个类的文本的特征，这样的词条应该给它们赋予较高的权重，并选来作为该类文本的特征词以区别与其它类文档。这就是IDF的不足之处. 在一份给定的文件里，词频（term frequency，TF）指的是某一个给定的词语在该文件中出现的频率。这个数字是对词数(term count)的归一化，以防止它偏向长的文件。（同一个词语在长文件里可能会比短文件有更高的词数，而不管该词语重要与否。）对于在某一特定文件里的词语  t_{i}  来说，它的重要性可表示为：</p>
+<pre><code>mathrm<span class="list">{tf_{i,j}</span>} = frac<span class="list">{n_{i,j}</span>}<span class="list">{sum_k n_{k,j}</span>}
+</code></pre><p>以上式子中 n_{i,j} 是该词在文件d_{j}中的出现次数，而分母则是在文件d_{j}中所有字词的出现次数之和。</p>
+<p><span id="more-413"></span></p>
+<p>逆向文件频率（inverse document frequency，IDF）是一个词语普遍重要性的度量。某一特定词语的IDF，可以由总文件数目除以包含该词语之文件的数目，再将得到的商取对数得到：</p>
+<pre><code>mathrm{idf_{i}} = log frac{|<span class="string">D</span>|<span class="string">}{</span>|<span class="string">{j: t_{i} in d_{j}}</span>|<span class="string">}</span>
+</code></pre><p>其中</p>
+<pre><code>|<span class="string">D</span>|<span class="string">：语料库中的文件总数
+
+</span>|<span class="string">{ j: t_{i} in d_{j}}</span>|<span class="string"> ：包含词语 t_{i} 的文件数目（即 n_{i,j} neq 0的文件数目）如果该词语不在语料库中，就会导致被除数为零，因此一般情况下使用1 + </span>|<span class="string">{j : t_{i} in d_{j}}</span>|
+</code></pre><p>然后</p>
+<pre><code>mathrm<span class="list">{tf{}</span>idf_<span class="list">{i,j}</span>} = mathrm<span class="list">{tf_{i,j}</span>} times mathrm<span class="list">{idf_{i}</span>} 
+</code></pre><p>某一特定文件内的高词语频率，以及该词语在整个文件集合中的低文件频率，可以产生出高权重的TF-IDF。因此，TF-IDF倾向于过滤掉常见的词语，保留重要的词语。</p>
+<p>例子：</p>
+<p>我们还是看上回的例子，查找关于“原子能的应用”的网页。我们第一步是在索引中找到包含这三个词的网页（详见关于布尔运算的系列）。现在任何一个搜索引擎都包含几十万甚至是上百万个多少有点关系的网页。那么哪个应该排在前面呢？显然我们应该根据网页和查询“原子能的应用”的相关性对这些网页进行排序。因此，这里的关键问题是如何度量网页和查询的相关性。</p>
+<p>我们知道，短语“原子能的应用”可以分成三个关键词：原子能、的、应用。根据我们的直觉，我们知道，包含这三个词多的网页应该比包含它们少的网页相关。当然，这个办法有一个明显的漏洞，就是长的网页比短的网页占便宜，因为长的网页总的来讲包含的关键词要多些。因此我们需要根据网页的长度，对关键词的次数进行归一化，也就是用关键词的次数除以网页的总字数。我们把这个商称为“关键词的频率”，或者“单文本词汇频率”（Term Frequency)，比如，在某个一共有一千词的网页中“原子能”、“的”和“应用”分别出现了 2 次、35 次 和 5 次，那么它们的词频就分别是 0.002、0.035 和 0.005。 我们将这三个数相加，其和 0.042 就是相应网页和查询“原子能的应用”</p>
+<p>相关性的一个简单的度量。概括地讲，如果一个查询包含关键词 w1,w2,&#8230;,wN, 它们在一篇特定网页中的词频分别是: TF1, TF2, &#8230;, TFN。 （TF: term frequency)。 那么，这个查询和该网页的相关性就是:</p>
+<p>TF1 + TF2 + &#8230; + TFN。</p>
+<p>读者可能已经发现了又一个漏洞。在上面的例子中，词“的”站了总词频的 80% 以上，而它对确定网页的主题几乎没有用。我们称这种词叫“应删除词”（Stopwords)，也就是说在度量相关性是不应考虑它们的频率。在汉语中，应删除词还有“是”、“和”、“中”、“地”、“得”等等几十个。忽略这些应删除词后，上述网页的相似度就变成了0.007，其中“原子能”贡献了0.002，“应用”贡献了 0.005。</p>
+<p>细心的读者可能还会发现另一个小的漏洞。在汉语中，“应用”是个很通用的词，而“原子能”是个很专业的词，后者在相关性排名中比前者重要。因此我们需要给汉语中的每一个词给一个权重，这个权重的设定必须满足下面两个条件：</p>
+<p>1. 一个词预测主题能力越强，权重就越大，反之，权重就越小。我们在网页中看到“原子能”这个词，或多或少地能了解网页的主题。我们看到“应用”一次，对主题基本上还是一无所知。因此，“原子能“的权重就应该比应用大。</p>
+<p>2. 应删除词的权重应该是零。</p>
+<p>我们很容易发现，如果一个关键词只在很少的网页中出现，我们通过它就容易锁定搜索目标，它的权重也就应该大。反之如果一个词在大量网页中出现，我们看到它仍然不很清楚要找什么内容，因此它应该小。概括地讲，假定一个关键词 ｗ 在 Ｄｗ 个网页中出现过，那么 Ｄｗ 越大，ｗ 的权重越小，反之亦然。在信息检索中，使用最多的权重是“逆文本频率指数” （Inverse document frequency 缩写为ＩＤＦ），它的公式为ｌｏｇ（Ｄ／Ｄｗ）其中Ｄ是全部网页数。比如，我们假定中文网页数是Ｄ＝１０亿，应删除词“的”在所有的网页中都出现，即Ｄｗ＝１０亿，那么它的ＩＤＦ＝log(10亿/10亿）= log (1) = ０。假如专用词“原子能”在两百万个网页中出现，即Ｄｗ＝２００万，则它的权重ＩＤＦ＝log(500) =6.2。又假定通用词“应用”，出现在五亿个网页中，它的权重ＩＤＦ = log(2)</p>
+<p>则只有 0.7。也就只说，在网页中找到一个“原子能”的比配相当于找到九个“应用”的匹配。利用 IDF，上述相关性计算个公式就由词频的简单求和变成了加权求和，即 TF1_IDF1 +　TF2_IDF2 ＋&#8230; + TFN*IDFN。在上面的例子中，该网页和“原子能的应用”的相关性为 0.0161，其中“原子能”贡献了 0.0126，而“应用”只贡献了0.0035。这个比例和我们的直觉比较一致了。</p>
+<p>ＴＦ／ＩＤＦ（term frequency/inverse document frequency) 的概念被公认为信息检索中最重要的发明。在搜索、文献分类和其他相关领域有广泛的应用。讲起 TF/IDF 的历史蛮有意思。IDF 的概念最早是剑桥大学的斯巴克－琼斯[注：她有两个姓］ (Karen Sparck Jones)提出来的。斯巴克－琼斯 １９７２ 年在一篇题为关键词特殊性的统计解释和她在文献检索中的应用的论文中提出ＩＤＦ。遗憾的是，她既没有从理论上解释为什么权重ＩＤＦ 应该是对数函数 ｌｏｇ（Ｄ／Ｄｗ）（而不是其它的函数，比如平方根），也没有在这个题目上作进一步深入研究，以至于在以后的很多文献中人们提到 ＴＦ／ＩＤＦ 时没有引用她的论文，绝大多数人甚至不知道斯巴克－琼斯的贡献。同年罗宾逊写了个两页纸的解释，解释得很不好。倒是后来康乃尔大学的萨尔顿（Salton)多次写文章、写书讨论 TF/IDF 在信息检索中的用途，加上萨尔顿本人的大名（信息检索的世界大奖就是以萨尔顿的名字命名的）。很多人都引用萨尔顿的书，甚至以为这个信息检索中最重要的概念是他提出的。当然，世界并没有忘记斯巴克－琼斯的贡献，2004年，在纪念文献学学报创刊 60 周年之际，该学报重印了斯巴克-琼斯的大作。罗宾逊在同期期刊上写了篇文章，用香农的信息论解释 IDF，这回的解释是对的，但文章写的并不好、非常冗长（足足十八页），把一个简单问题搞复杂了。其实，信息论的学者们已经发现并指出，其实 IDF 的概念就是一个特定条件下、关键词的概率分布的交叉熵（Kullback-Leibler Divergence)（详见上一系列）。这样，信息检索相关性的度量，又回到了信息论。</p>
+<p>以上摘自wiki</p>
+<p><a href="http://zh.wikipedia.org/wiki/TF-IDF" target="_blank" rel="external">http://zh.wikipedia.org/wiki/TF-IDF</a></p>
+<p>如果您想了解TF/IDF具体算法的详细数学方法，可以参考下面的链接</p>
+<p><a href="http://bbs.e3ol.com/blog-170225-6014.html" target="_blank" rel="external">http://bbs.e3ol.com/blog-170225-6014.html</a></p>
+<p>然后我们可以使用多维余弦向量算法比较余弦相似度来匹配文章相似度。</p>
+<p><a href="http://blog.sina.com.cn/s/blog_7bfd87650100vw1p.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_7bfd87650100vw1p.html</a></p>
+<p>了解了基本概念，可以尝试着写算法了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/ICTCLAS2012分词库在C环境下的使用/" itemprop="url">
+                ICTCLAS2012分词库在C环境下的使用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:37:27+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>最近帮同学做一个数据库搜索比较统计功能的项目。项目流程大概如下：</p>
+<p>（一）抓取信息源，生成数据库。</p>
+<p>（二）提取数据库中的中文信息。</p>
+<p>（三）将中文信息进行分词操作。</p>
+<p>（四）利用tf-idf算法统计对文本中得词进行加权统计。</p>
+<p>（五）利用加权统计结果 获得相似度高的文件组。</p>
+<p>（六）将相似度相关的文件组利用图形方式描述并且关联出来，看到直观的统计效果。</p>
+<p>这里顺便说一句。在做第二步的时候，本来想写个c语言的程序提取xml文件中特定标签中的信息。</p>
+<p>然后就一直苦恼要考虑字符分析和各种特殊情况。</p>
+<p>后来经大家点拨，明白了解决问题的方法不止一种。对于类似这样的操作，可以利用正则表达式轻松提取。</p>
+<p>除了c语言之外，利用php， python， shell脚本编写可能会更加效率的解决问题。</p>
+<p>后来在同学的帮助之下利用php解决了问题。</p>
+<p>这件事情让我明白了：有时候不要在一棵树上吊死。有时候换种方法，换种工具，换种思维，可能会更快的解决问题。</p>
+<p><span id="more-411"></span></p>
+<p>这篇文章主要说说第三步的操作。这里使用了ICTCLAS分词系统提供的API接口。</p>
+<p>直接下载ICTCLAS2012的链接：</p>
+<p><a href="http://www.nlpir.org/download/ICTCLAS2012-SDK-u0106.rar" target="_blank" rel="external">http://www.nlpir.org/download/ICTCLAS2012-SDK-u0106.rar</a></p>
+<p>ICTCLAS官网：</p>
+<p><a href="http://ictclas.org/" target="_blank" rel="external">http://ictclas.org/</a></p>
+<p>下面以2012版本为例子，简单说明一下。</p>
+<p>该版本提供了License.dll，貌似有效期只有1个月。一个月后证书会失效。大家如果有能力可以自己尝试破解。</p>
+<p>下载下来之后其实使用的头文件，dll还有lib文件都还是2011版本的。</p>
+<p>简单看了一下头文件中的API接口，发现提供了多种中文编码的API。GBK， UTF8， Big5等。</p>
+<p>然后有个example的例子，再简单看一下，发现使用还是很方便的。有什么问题可以看接口文档。</p>
+<p><a href="http://ictclas.org/ictclas_files.html" target="_blank" rel="external">http://ictclas.org/ictclas_files.html</a></p>
+<p>这里我们首先做下准备工作。下面文件放在运行目录下面</p>
+<p>ICTCLAS2011.h</p>
+<p>ICTCLAS2011.dll</p>
+<p>ICTCLAS2011.lib</p>
+<p>Configure.xml 这个是配置文件，也是必要的。</p>
+<p>License.dll证书文件，必要的。</p>
+<p>ICTCLAS2012.user 同样也是必要的。</p>
+<p>Data词典文件。</p>
+<p>下面以UTF8为例子。说下面三个函数（摘自2011版接口文档）：</p>
+<p>ICTCLAS_Init</p>
+<p>依据指定的路径初始化系统词典和配置信息。</p>
+<p>声明</p>
+<p>bool ICTCLAS_Init(const char* pszInitDir=NULL);</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_Init</p>
+<p>&nbsp;</p>
+<p>返回值</p>
+<p>如果初始化成功返回true, 否则返回false. 如初始化不成功,请查看ictclas.log文件了解详细错误原因.</p>
+<p>参数</p>
+<p>pszInitDir：初始化路径，应包含配置文件（Configure.xml）和词典目录(Data目录)以及授权文件(user.lic). 如果这些文件及目录在系统运行当前目录下，此参数可以为null。</p>
+<p>说明</p>
+<p>ICTCLAS_Init必须在调用系统其它任何操作前进行调用,以初始化系统的基本配置信息及加载词典文件。当停止使用ICTCLAS后，应调用ICTCLAS_Exit方法清理内存缓冲区。</p>
+<p>ICTCLAS_Init加载失败有可能是以下原因造成：</p>
+<p>1） 缺少系统加载所需的词典文件</p>
+<p>系统的词典都保存在Data目录下，请确保初始化路径下有Data目录，且词典文件完整。</p>
+<p>2） 缺少配置文件</p>
+<p>系统配置文件名为Configure.xml，用于保存系统所需的配置信息，请确保初始化路径下包含正确的Configure.xml文件。</p>
+<p>3） 缺少授权文件user.lic</p>
+<p>试用授权文件名为user.lic,缺少合法的授权文件将无法正常加载。</p>
+<p>4） 其他未知的加载错误，请查看ICTCLAS.log日志文件。</p>
+<p>当时自己老是初始化错误，后来发现没有包含以上文件。如果初始化失败，会自动生成以时间命名的txt文档日志，里面记录了错误信息。自己后来查看错误信息发现了错误。初始化以后支持遍历目录。</p>
+<p>CTCLAS_Exit</p>
+<p>退出ICTCLAS分词系统，释放词典占用的系统内存空间。</p>
+<p>声明</p>
+<p>bool ICTCLAS_Exit( );</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_Exit</p>
+<p>&nbsp;</p>
+<p>返回值</p>
+<p>成功返回true；否则返回false。</p>
+<p>说明</p>
+<p>ICTLCAS_Exit此方法应该在您的应用程序退出前调用，以便释放词典所占用的内存空间。此方法会清空ICTCLAS占用的词典内存空间，清除临时缓冲区及其他系统资源。</p>
+<p>如果您需要再次调用ICTCLAS进行分词，请重新调用ICTLCAS_Init()加载基本信息。</p>
+<p>ICTCLAS_FileProcess</p>
+<p>Process a text file</p>
+<p>bool ICTCLAS_FileProcess(const char _sSrcFilename,eCodeType eCt,const char _sDsnFilename,int bPOStagged);</p>
+<p>Routine</p>
+<p>Required Header</p>
+<p>ICTCLAS_FileProcess</p>
+<p>&nbsp;</p>
+<p>Return Value</p>
+<p>Return true if processing succeed. Otherwise return false.</p>
+<p>Parameters</p>
+<p>sSourceFilename: The source file path to be analysized;</p>
+<p>eCodeType: The character code type of the source file</p>
+<p>sDsnFilename: The result file name to store the results.</p>
+<p>bPOStagged: Judge whether need POS tagging, 0 for no tag; 1 for tagging; default:1.</p>
+<p>Remarks</p>
+<p>The ICTCLAS_FileProcess function works properly only if ICTCLAS_Init succeeds.</p>
+<p>The output format is customized in ICTCLAS configure.</p>
+<p>Example</p>
+<figure class="highlight ocaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> &amp;lt;<span class="built_in">string</span>.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;lt;stdlib.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;lt;<span class="built_in">string</span>.h&amp;gt;</span><br><span class="line"></span><br><span class="line">#<span class="keyword">include</span> &amp;quot;<span class="type">ICTCLAS50</span>.h&amp;quot;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main(<span class="built_in">int</span> argc, <span class="built_in">char</span>* argv<span class="literal">[]</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(!<span class="type">ICTCLAS_Init</span><span class="literal">()</span>) </span><br><span class="line">&#123;</span><br><span class="line">printf(&amp;quot;<span class="type">Init</span> failsn&amp;quot;);</span><br><span class="line">return -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">ICTCLAS_FileProcess</span>(&amp;quot;<span class="type">Test</span>.txt&amp;quot;, <span class="type">CODE_TYPE_GB</span>,&amp;quot;<span class="type">Test_result</span>.txt&amp;quot;,<span class="number">1</span>);</span><br><span class="line"><span class="type">ICTCLAS_Exit</span><span class="literal">()</span>;</span><br><span class="line">return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Output: Please check the “Test_result.txt”</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/算法与编程–信号初步处理/" itemprop="url">
+                算法与编程–信号初步处理
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:36:12+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这几天做简单的算法题目，在学校发的教材里面挑选了几道稍微难一点的题目做了一下。花了一天时间做了出来。如此一来稍微找回了一点编程的感觉。</p>
+<p>下面是题目：</p>
+<p><img src="http://img.my.csdn.net/uploads/201209/12/1347425952_9172.jpg" alt=""></p>
+<p><img src="http://img.my.csdn.net/uploads/201209/12/1347425971_9438.jpg" alt=""></p>
+<p>下面是我的代码：</p>
+<p><span id="more-409"></span></p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;stdio.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;math.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">typedef struct My_Plural&#123;												//定义复数结构体</span><br><span class="line">	double <span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">	double VP<span class="comment">;</span></span><br><span class="line">&#125;Plural<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">#define PI <span class="number">3.141592653</span>54</span><br><span class="line"></span><br><span class="line">void Initx2(double x[])<span class="comment">;												//初始化一维信号第一组</span></span><br><span class="line">void Inity1(double y[][15])<span class="comment">;											//初始化二维信号第一组</span></span><br><span class="line">void Inity3(double y[][15])<span class="comment">;											//初始化二维信号第一组</span></span><br><span class="line">void EulerFormula(double p, Plural * MP)<span class="comment">;								//欧拉公式</span></span><br><span class="line">void OneDimension(double x[], Plural y[], int N)<span class="comment">;						//一维信号处理从实数空间到复数空间</span></span><br><span class="line">void OneDimensionReverse(Plural x[], int N)<span class="comment">;							//一维信号处理从复数空间到实数空间</span></span><br><span class="line">void DoubleDimension(double x[][15], Plural y[][15], int M, int N)<span class="comment">;		//二维信号处理从实数空间到复数空间</span></span><br><span class="line">void DoubleDimensionReverse(Plural x[][15], int M, int N)<span class="comment">;				//二维信号处理从复数空间到实数空间</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	//一维信号处理1</span><br><span class="line">	double x1[4] = &#123;1, 1, -1, -1&#125;<span class="comment">;</span></span><br><span class="line">	Plural x2[4]<span class="comment">;</span></span><br><span class="line">	OneDimension(x1, x2, 4)<span class="comment">;</span></span><br><span class="line">	OneDimensionReverse(x2, 4)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	//一维信号处理2</span><br><span class="line">	double x3[12]<span class="comment">;</span></span><br><span class="line">	Plural x4[12]<span class="comment">;</span></span><br><span class="line">	Initx2(x3)<span class="comment">;</span></span><br><span class="line">	OneDimension(x3, x4, 12)<span class="comment">;</span></span><br><span class="line">	OneDimensionReverse(x4, 12)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	//二维信号处理1</span><br><span class="line">	double y1[15][15]<span class="comment">;</span></span><br><span class="line">	Plural y2[15][15]<span class="comment">;</span></span><br><span class="line">	Inity1(y1)<span class="comment">;</span></span><br><span class="line">	DoubleDimension(y1, y2, 15, 15)<span class="comment">;</span></span><br><span class="line">	DoubleDimensionReverse(y2, 15, 15)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	//二维信号处理2</span><br><span class="line">	double y3[15][15]<span class="comment">;</span></span><br><span class="line">	Plural y4[15][15]<span class="comment">;</span></span><br><span class="line">	Inity1(y3)<span class="comment">;</span></span><br><span class="line">	DoubleDimension(y3, y4, 14, 12)<span class="comment">;</span></span><br><span class="line">	DoubleDimensionReverse(y4, 14, 12)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Initx2(double x2[])</span><br><span class="line">&#123;</span><br><span class="line">	for (int i = 0<span class="comment">; i &amp;lt; 12; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		x2[i] = cos(PI / 6 * i)<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Inity1(double y[][15])</span><br><span class="line">&#123;</span><br><span class="line">	for (int i = 0<span class="comment">; i &amp;lt; 15; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 0 <span class="comment">; j &amp;lt; 15; j++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			if (i == 8 || j == 8)</span><br><span class="line">				y[i][j] = 1<span class="comment">;</span></span><br><span class="line">			else</span><br><span class="line">				y[i][j] = 0<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Inity3(double y[][15])</span><br><span class="line">&#123;</span><br><span class="line">	for (int i = 0<span class="comment">; i &amp;lt; 15; i++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 0 <span class="comment">; j &amp;lt; 15; j++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			y[i][j] = cos(PI / 6.0 * i) * cos(PI / 7 * j)<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void EulerFormula(double p, Plural * MP)</span><br><span class="line">&#123;</span><br><span class="line">	MP-&amp;gt<span class="comment">;RP = cos(p);</span></span><br><span class="line">	MP-&amp;gt<span class="comment">;VP = sin(p);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OneDimension(double x[], Plural y[], int N)</span><br><span class="line">&#123;</span><br><span class="line">	Plural sum<span class="comment">;</span></span><br><span class="line">	double sita = 0<span class="comment">;</span></span><br><span class="line">	Plural  MP<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	for (int k = 0<span class="comment">; k &amp;lt; N; k++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		sum.<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">		sum.VP = 0<span class="comment">;</span></span><br><span class="line">		for (int i = 0<span class="comment">; i &amp;lt; N; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			sita = 2 * PI / N * k * i * -1.0<span class="comment">;</span></span><br><span class="line">			EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line">			sum.<span class="keyword">RP</span> += x[i] * MP.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">			sum.VP += x[i] * MP.VP<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">		y[k].<span class="keyword">RP</span> = sum.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">		y[k].VP = sum.VP<span class="comment">;</span></span><br><span class="line">		printf(&amp;quot<span class="comment">;一维信号公式正向结果X(%d)实部%.2lf， 虚部%.2lfn&amp;quot;, k, sum.RP, sum.VP);</span></span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;n&amp;quot;);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void OneDimensionReverse(Plural x[], int N)</span><br><span class="line">&#123;</span><br><span class="line">	Plural sum<span class="comment">;</span></span><br><span class="line">	double sita = 0<span class="comment">;</span></span><br><span class="line">	Plural  MP<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	for (int k = 0<span class="comment">; k &amp;lt; N; k++)</span></span><br><span class="line">	&#123;</span><br><span class="line">		sum.<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">		sum.VP = 0<span class="comment">;</span></span><br><span class="line">		for (int i = 0<span class="comment">; i &amp;lt; N; i++)</span></span><br><span class="line">		&#123;</span><br><span class="line">			sita = 2.0 * PI / N * k * i<span class="comment">;</span></span><br><span class="line">			EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line">			sum.<span class="keyword">RP</span> += x[i].<span class="keyword">RP</span> * MP.<span class="keyword">RP</span> - x[i].VP * MP.VP<span class="comment">;</span></span><br><span class="line">			sum.VP += x[i].VP * MP.<span class="keyword">RP</span> + x[i].<span class="keyword">RP</span> * MP.VP<span class="comment">;</span></span><br><span class="line">		&#125;</span><br><span class="line">		sum.<span class="keyword">RP</span> /= N<span class="comment">;</span></span><br><span class="line">		sum.VP /= N<span class="comment">;</span></span><br><span class="line">		printf(&amp;quot<span class="comment">;一维信号公式反向结果X(%d)实部%.2lf， 虚部%.2lfn&amp;quot;, k, sum.RP, sum.VP);</span></span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;n&amp;quot;);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DoubleDimension(double x[][15], Plural y[][15], int M, int N)</span><br><span class="line">&#123;</span><br><span class="line">	Plural all[15]<span class="comment">;</span></span><br><span class="line">	Plural sum[15]<span class="comment">;</span></span><br><span class="line">	double sita = 0<span class="comment">;</span></span><br><span class="line">	Plural  MP<span class="comment">;</span></span><br><span class="line">	for (int s = 0<span class="comment">; s &amp;lt; N; s++)						//u</span></span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 0<span class="comment">; j &amp;lt; M; j++)					//v</span></span><br><span class="line">		&#123;</span><br><span class="line">			all[j].<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">			all[j].VP = 0<span class="comment">;</span></span><br><span class="line">			for (int k = 0<span class="comment">; k &amp;lt; N; k++)				//n</span></span><br><span class="line">			&#123;</span><br><span class="line">				sum[k].<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">				sum[k].VP = 0<span class="comment">;</span></span><br><span class="line">				for (int i = 0<span class="comment">; i &amp;lt; M; i++)			//m</span></span><br><span class="line">				&#123;</span><br><span class="line">					sita = 2 * PI / N * i * j * -1.0<span class="comment">;</span></span><br><span class="line">					EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line">					sum[k].<span class="keyword">RP</span> += x[k][i] * MP.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">					sum[k].VP += x[k][i] * MP.VP<span class="comment">;</span></span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				sita = 2 * PI / N * s * k * -1.0<span class="comment">;</span></span><br><span class="line">				EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line"></span><br><span class="line">				all[j].<span class="keyword">RP</span> += sum[k].<span class="keyword">RP</span> * MP.<span class="keyword">RP</span> - sum[k].VP * MP.VP<span class="comment">;				//all里面存放的是一维信号计算出来的值</span></span><br><span class="line">				all[j].VP += sum[k].<span class="keyword">RP</span> * MP.VP + sum[k].VP * MP.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">			&#125;	</span><br><span class="line">			y[s][j].<span class="keyword">RP</span> = all[j].<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">			y[s][j].VP = all[j].VP<span class="comment">;</span></span><br><span class="line">			printf(&amp;quot<span class="comment">;二维信号公式正向结果X(%d, %d)实部%.2lf， 虚部%.2lfn&amp;quot;, s, j, all[j].RP, all[j].VP);</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;n&amp;quot;);</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void DoubleDimensionReverse(Plural x[][15], int M, int N)</span><br><span class="line">&#123;</span><br><span class="line">	Plural all[15]<span class="comment">;</span></span><br><span class="line">	Plural sum[15]<span class="comment">;</span></span><br><span class="line">	double sita = 0<span class="comment">;</span></span><br><span class="line">	Plural  MP<span class="comment">;</span></span><br><span class="line">	for (int s = 0 <span class="comment">; s &amp;lt; N; s++)					//u</span></span><br><span class="line">	&#123;</span><br><span class="line">		for (int j = 0<span class="comment">; j &amp;lt; M; j++)					//v</span></span><br><span class="line">		&#123;</span><br><span class="line">			all[j].<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">			all[j].VP = 0<span class="comment">;</span></span><br><span class="line">			for (int k = 0<span class="comment">; k &amp;lt; N; k++)				//n</span></span><br><span class="line">			&#123;</span><br><span class="line">				sum[k].<span class="keyword">RP</span> = 0<span class="comment">;</span></span><br><span class="line">				sum[k].VP = 0<span class="comment">;</span></span><br><span class="line">				for (int i = 0<span class="comment">; i &amp;lt; M; i++)			//m</span></span><br><span class="line">				&#123;</span><br><span class="line">					sita = 2 * PI / N * i * j * 1.0<span class="comment">;</span></span><br><span class="line">					EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line">					sum[k].<span class="keyword">RP</span> += x[k][i].<span class="keyword">RP</span> * MP.<span class="keyword">RP</span> - x[k][i].VP * MP.VP<span class="comment">;</span></span><br><span class="line">					sum[k].VP += x[k][i].<span class="keyword">RP</span> * MP.VP + x[k][i].VP * MP.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				sita = 2 * PI / N * s * k * 1.0<span class="comment">;</span></span><br><span class="line">				EulerFormula(sita, &amp;amp<span class="comment">;MP);</span></span><br><span class="line"></span><br><span class="line">				all[j].<span class="keyword">RP</span> += sum[k].<span class="keyword">RP</span> * MP.<span class="keyword">RP</span> - sum[k].VP * MP.VP<span class="comment">;				//all里面存放的是一维信号计算出来的值</span></span><br><span class="line">				all[j].VP += sum[k].<span class="keyword">RP</span> * MP.VP + sum[k].VP * MP.<span class="keyword">RP</span><span class="comment">;</span></span><br><span class="line">			&#125;	</span><br><span class="line">			all[j].<span class="keyword">RP</span> = all[j].<span class="keyword">RP</span> / M / N<span class="comment">;</span></span><br><span class="line">			all[j].VP = all[j].VP / M / N<span class="comment">;</span></span><br><span class="line">			printf(&amp;quot<span class="comment">;二维信号公式反向结果X(%d, %d)实部%.2lf， 虚部%.2lfn&amp;quot;, s, j, all[j].RP, all[j].VP);</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	printf(&amp;quot<span class="comment">;n&amp;quot;);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/wordpress搬家到本地URL修改问题/" itemprop="url">
+                wordpress搬家到本地URL修改问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:34:49+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div><br><br>把原来服务器上面的WordPress的数据库和目录文件全部备份下来，在本地用xampp搭了一个服务器，然后将数据库和目录文件全部导入，更改conf文件中的数据库账号密码。没想到本地网站的所有CSS样式和模板甚至连后台都进不去了。<br><br>后来才发现了问题所在，<span style="color: #ff0000;">是URL都跳转到原来的域名下面去了</span>，没有跳转到我本地的127.0.0.1下面来。<br><br>首先我们第一步要做的就是能够进入后台。我们在phpmyadmin下面更改数据库。<br><br><span style="color: #ff0000;">在你自己的数据库下面的wp_options这张表里面找到 siteurl，将你的url改成本地的URL。</span><br><br>比如说，我原来的URL 是miibotree.com 现在改成127.0.0.1/miibotree 即改成我本地URL<br><br>这样一来我们就能够登陆后台了。<br><br>登进后台以后，<span style="color: #ff0000;">在后台，设置，常规里面将WordPress 地址（URL） 和 站点地址（URL）全部改成本地URL。</span><br><br>还是以我的例子说，将我原来的URL 是miibotree.com 现在改成127.0.0.1/miibotree<br><br>OK了。现在在登陆我本地WordPress主页，一切全部都回来了~~~<br><br>这里感谢廖师兄，醒哥，何少爷的帮助。最后是廖师兄帮我解决了问题。<br><br>宣传下他的新模板。<br><br>liaoshixiong.com<br><br></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/windows自带计算器模式切换的实现研究/" itemprop="url">
+                windows自带计算器模式切换的实现研究
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:34:00+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>本来说想写个跟windows一摸一样的计算器，一开始都不是什么大问题。但是到模式切换的时候却卡住了。</p>
+<p>windows自带的计算器是可以切换型号的，从标准型到科学型到程序员到统计信息共有很多种模式。</p>
+<p><img src="http://img.my.csdn.net/uploads/201209/04/1346727595_4195.png" alt=""></p>
+<p>标准型</p>
+<p><img src="http://img.my.csdn.net/uploads/201209/04/1346727610_2714.png" alt=""></p>
+<p>科学型</p>
+<p>仔细想想会发现，他们公用了一个菜单栏，标准型的所有功能在科学型里面都有。</p>
+<p>所以我做如下推测：整个大的计算器是一个窗口，下面还注册了很多子窗口，但是根据菜单选项选择模式，从而选择显示哪些子窗口，并且重绘整个窗口。</p>
+<p><span id="more-405"></span></p>
+<p>利用Spy++查看窗口句柄，结果如下：</p>
+<p><img src="http://img.my.csdn.net/uploads/201209/04/1346739324_4214.png" alt=""></p>
+<p>标准型</p>
+<p><img src="http://img.my.csdn.net/uploads/201209/04/1346739344_9255.png" alt=""></p>
+<p>科学型</p>
+<p>这里我们看到：唯一改变的窗口就是标准型的005007AA 和科学型的005107AA，这两个窗口就是不同的功能按钮（科学型比标准型多了一些数学函数功能）。</p>
+<p>然后我尝试着点击菜单选项进行计算器模式变化，捕捉了一下消息，看到下面几个消息比较奇怪：</p>
+<p>WM_NCPAINT</p>
+<p>处理非客户区</p>
+<p>&nbsp;</p>
+<p>WM_NCCALCSIZE</p>
+<p>在需要计算窗口客户区的大小和位置时发送该消息</p>
+<p><a href="http://blog.sina.com.cn/s/blog_4ca086fc01009v35.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_4ca086fc01009v35.html</a></p>
+<p><a href="http://dqzx.neuq.edu.cn/bbs/redirect.php?tid=17&#038;goto=lastpost" target="_blank" rel="external">http://dqzx.neuq.edu.cn/bbs/redirect.php?tid=17&#038;goto=lastpost</a></p>
+<p>&nbsp;</p>
+<p>WM_PSD_PAGESETUPDLG</p>
+<p><a href="http://technet.microsoft.com/zh-cn/library/ms646893" target="_blank" rel="external">http://technet.microsoft.com/zh-cn/library/ms646893</a></p>
+<p>于是想着能不能通过这几个函数推导出计算机模式变化使用的方法：</p>
+<p>&nbsp;</p>
+<p>最后在论坛上发帖子询问，才发现原来是利用了tab属性页面。只不过是采用了菜单的方式。</p>
+<p>至于在父窗口里面镶嵌子窗口，应该是利用了SetParent这个函数。</p>
+<p>不过归根结底，Tab以及父窗口镶嵌子窗口都是利用了属性页的形式。</p>
+<p>下面有篇文章来讲解</p>
+<p><a href="http://blog.sina.com.cn/s/blog_665b70ed0100hjc6.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_665b70ed0100hjc6.html</a></p>
+<p><a href="http://blog.csdn.net/lanmanck/article/details/3857896" target="_blank" rel="external">http://blog.csdn.net/lanmanck/article/details/3857896</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/09/17/修复引导双系统win8-fedora16/" itemprop="url">
+                修复引导双系统win8 + fedora16
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-09-17T18:33:13+08:00" content="2012-09-17">
+            2012-09-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原来我的电脑系统是win7+fedora16，由于很久没有使用fedora16了，所以也没有更新fedora16成17，一直用grub2引导的。</p>
+<p>最近做完项目空虚寂寞冷，就装了个win8玩玩，把原来的grub2给覆盖掉了。</p>
+<p>这样一来fedota16就进不去了。所以就想尝试着把fedora16的引导给搞回来。</p>
+<p>本来以为win8跟win7差不多，用fedora的liveCD修复grub2的引导。具体参考下面这篇文章：</p>
+<p><a href="http://blog.csdn.net/gaoxin1076/article/details/7208041" target="_blank" rel="external">http://blog.csdn.net/gaoxin1076/article/details/7208041</a></p>
+<p>但是grub2竟然没有识别win8，它竟然把win8错认成了win7！！</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>这个时候我点这个win7选项，出来下面的错误：</p>
+<p><span style="color: #ff0000;">windowssystem32winload.exe</span></p>
+<p><span style="color: #ff0000;">0xc0000428</span></p>
+<p><span style="color: #ff0000;">windows can&#8217;t verify the digital signature for this file.</span></p>
+<div id="trans-result-content"><br><br><span style="color: #ff0000;">无法验证这个文件的数字签名。</span><br><br></div>
+
+<p>于是自己开始百度。。。结果听说win8采用了UEFI机制代替了BIOS，启动了安全机制。</p>
+<p><span id="more-403"></span></p>
+<p>下面是对于UEFI的简单介绍：</p>
+<p><span style="color: #993399;"><span style="color: #000000;"><a href="http://bbs.bios.net.cn/thread-264822-1-1.html" target="_blank" rel="external">http://bbs.bios.net.cn/thread-264822-1-1.html</a></span></span></p>
+<p></p>
+<p><span style="color: #993399;">所有的Windows 8硬件设备都将默认采用UEFI(统一可扩展固件接口)的安全启动(Secure Boot)，防止未经授权的引导装载程序(OS Loader)在BIOS中启动，UEFI只启动通过认证的引导装载程序，而恶意软件则无法再利用这种方法攻击用户。</span></p>
+<p>所以个人认为fedora16的grub2无法识别win8，但是在高版本的grub2中说不定已经可以识别win8了。我没有尝试fedora17，不知道17的grub2能不能识别win8，但是听说ubuntu已经可以识别win8了。</p>
+<p><span style="color: #330099; font-size: small;">尝试方案一：win8自动修复</span></p>
+<p><span style="color: #330099; font-size: small;"><span style="color: #000000; font-size: x-small;">用win8的安装镜像的U盘来自动修复win8。在安装界面里面有个 修复计算机的选项，在里面选择自动修复。可是不管用，grub2仍然没有被覆盖。而且win8仍然不能被识别。</span></span></p>
+<p></p>
+<p>&nbsp;</p>
+<p><span style="color: #330099; font-size: small;">尝试方案二：重新安装grub2</span></p>
+<p>一开始想着grub2能不能识别win8，于是就进到fedora16里面重新安装了grub2.具体参考了下面这个链接：</p>
+<p><a href="http://blog.sina.com.cn/s/blog_6b59d3df01018l7x.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_6b59d3df01018l7x.html</a></p>
+<p>在fedora16的终端里面输入下面两条命令：</p>
+<p>&nbsp;</p>
+<div>sudo grub2-mkconfig -o /boot/grub2/grub.cfg</div><br><div></div><br><div>sudo grub2-install /dev/sda<p></p><br></div>
+
+<p>然后尝试着重启进入grub2</p>
+<p>重启之后进入grub2看到了有三个win7选项，分别是</p>
+<p>一  win7 /dev/sda1</p>
+<p>二 win7的recovery模式   在/dev/sda2里面。</p>
+<p>三 win7的recovery模式   在/dev/bda4里面。</p>
+<p>这里先说下我的硬盘情况。从windows的磁盘工具里面可以看到我的硬盘是这样的:</p>
+<p><img src="http://img.my.csdn.net/uploads/201208/31/1346405331_7761.png" alt=""></p>
+<p>刚才说的win7三个选项中，sda1对应的是我的H盘，也就是200MB的保留分区。 sda2是C盘，也就是我安装win8的盘。 bda4不知道是什么盘符，这里先暂时不去管它。</p>
+<p>我选择sda1对应选项，出现的错误跟一开始的时候是一样的：</p>
+<p><span style="color: #ff0000;">windowssystem32winload.exe</span></p>
+<p><span style="color: #ff0000;">0xc0000428</span></p>
+<p><span style="color: #ff0000;">windows can&#8217;t verify the digital signature for this file.</span></p>
+<div id="trans-result-content"><br><br><span style="color: #ff0000;">无法验证这个文件的数字签名。</span><br><br></div>
+
+<p>接着我选择  /dev/sda2对应的win7 recovery模式，<span style="color: #330099;"><strong>这下子可以进入win8了</strong></span>，但是里面的东西因为我第一次尝试的win8自动修复而被初始化了。而且最要命的是win store商店里面的所有应用都不能下载了。显示的错误是这样的：</p>
+<p><span style="color: #ff0000;">0x80073cf9</span></p>
+<p>搜索了一下网上似乎还没有解决方案。这样一来win8无法安装Metro应用了。</p>
+<p><span style="color: #330099; font-size: small;"></span></p>
+<p></p>
+<p><span style="color: #330099; font-size: small;">方案三（最终方案）：NTBOOTautofix 修复windows8引导   easyBCD引导grub2。</span></p>
+<p>在进入win8之后，下载NTBOOTautofix，成功恢复了windows8的引导。win8的引导重新覆盖了grub2.</p>
+<p><a href="http://www.win8mi.com/ntbootautofix.html" target="_blank" rel="external">http://www.win8mi.com/ntbootautofix.html</a></p>
+<p>&nbsp;</p>
+<p>再进入win8镜像的U盘重新修复 初始化win8。应用商店应用可以正常下载。</p>
+<p>&nbsp;</p>
+<p>然后下载easyBCD，最新版本的easyBCD支持fedora16的grub2的引导。正好可以引导我的fedora16.</p>
+<p>具体easyBCD的操作,请看下面这个链接。</p>
+<p><a href="http://benyouhui.it168.com/thread-2368303-1-1.html" target="_blank" rel="external">http://benyouhui.it168.com/thread-2368303-1-1.html</a></p>
+<p>好~现在我重新启动之后，首先出现的是windows的引导选项，如果我们选择win8，那么会直接进入win8.</p>
+<p>如果我们选择的是fedora16，就会进入grub2，然后选择fedora16就好了。</p>
+<p>至此，我的双系统问题就解决了。</p>
+<p><span style="color: #330099; font-size: small;">最后，来总结一下。</span></p>
+<p>如果是先安装的linux再安装win8，那么我们直接使用easyBC就可以了。</p>
+<p>如果是先安装win8再安装linux，那么我们必须先用NTBOOTautofix覆盖grub2的引导回到win8的引导，然后使用easyBCD可以选择进入grub2的引导。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/08/06/GitHub使用/" itemprop="url">
+                GitHub使用
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-08-06T22:29:34+08:00" content="2012-08-06">
+            2012-08-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>&nbsp;</p>
+<p>最近自己没什么事情做，于是想玩一下Github,一个分布式版本控制系统。</p>
+<p>原来自己玩过TortoiseSVN， 不知道两者那个更好玩，于是自己想先体验一下。</p>
+<p>由于是开源项目，提供了跨平台，自己现在只是比较熟悉windows，所以就先在windows上面玩一下了。</p>
+<p>GitHub的图标很可爱，界面也做的很好，所以自然而然地就对它有了好感了。<a href="http://miibotree.com/wp-content/uploads/2012/08/QQ截图20120806203112.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/08/QQ截图20120806203112.png" alt="" title="QQ截图20120806203112"></a></p>
+<p>第一步我们先下载个GitHub 的window版本<a href="https://help.github.com/articles/set-up-git" target="_blank" rel="external">      https://help.github.com/articles/set-up-git</a></p>
+<p>第二步我们要做的，就是注册一个Github账号了<a href="https://github.com/" target="_blank" rel="external">   https://github.com/</a></p>
+<p>然后大家按着教程来就好了。。。</p>
+<p>其实官方网站已经说的很清楚了，</p>
+<p>如果觉英文水平不好的话，可以参考下面这个中文教程</p>
+<p><a href="http://www.worldhello.net/gotgithub/" target="_blank" rel="external">http://www.worldhello.net/gotgithub/</a></p>
+<p>&nbsp;</p>
+<p>自己也是正在学习的过程。。。未完待续。。。</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/13/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

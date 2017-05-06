@@ -1,0 +1,629 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ONVIF," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="自己在开发的过程中也遇到了很多问题，这里记录下来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Onvif协议客户端开发【3.问题篇】">
+<meta property="og:url" content="http://yoursite.com/2015/04/29/Onvif协议客户端开发【3-问题篇】/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="自己在开发的过程中也遇到了很多问题，这里记录下来。">
+<meta property="og:updated_time" content="2015-07-25T11:27:56.165Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Onvif协议客户端开发【3.问题篇】">
+<meta name="twitter:description" content="自己在开发的过程中也遇到了很多问题，这里记录下来。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Onvif协议客户端开发【3.问题篇】 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Onvif协议客户端开发【3.问题篇】
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-04-29T14:23:37+08:00" content="2015-04-29">
+            2015-04-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>自己在开发的过程中也遇到了很多问题，这里记录下来。<br><a id="more"></a></p>
+<p>1.平台问题。</p>
+<p><span id="more-1036"></span></p>
+<p>一开始自己是在windows下面开发的，但是一者windows下面的make跟linux下的有些差异，二者在windows下面如果用VS来做开发的话在交叉编译的过程中可能也会碰到很多问题。大多数的资料上大家基本都采用在linux上进行开发，虽然官方的测试工具是C#写的所以估计是用vs开发的，但是既然linux平台上的资料多一点，那么自己也就在linux上开发好了。</p>
+<p>2.在搜索篇中碰到的问题。</p>
+<p>主要参考下面这篇文章：</p>
+<p><a href="http://blog.csdn.net/max_min_go/article/details/17591083http://" target="_blank" rel="external">Onvif开发之客户端搜索篇</a></p>
+<p>注意文章中代码96行：</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">req.<span class="constant">Types </span>= <span class="string">""</span>; <span class="regexp">//</span><span class="string">"dn:NetworkVideoTransmitter"</span>;</span><br></pre></td></tr></table></figure>
+<p>必须填写，我自己因为没有填写这个字段，导致出现了segment fault错误。应该是没有初始化结构体导致指针访问了错误的地址。</p>
+<p><span style="color: #ff0000;">/*设置所需设备的类型,ns1为命名空间前缀,为wsdd.nsmap文件中</span></p>
+<p><span style="color: #ff0000;"> {&#8220;tdn&#8221;,&#8221;<a href="http://www.onvif.org/ver10/network/wsdl&#8221;}的tdn,如果不是tdn,而是其它" target="_blank" rel="external">http://www.onvif.org/ver10/network/wsdl&#8221;}的tdn,如果不是tdn,而是其它</a>,</span></p>
+<p><span style="color: #ff0000;"> 例如ns1这里也要随之改为ns1 */ </span></p>
+<p><span style="color: #ff0000;">而到底改成什么可以查看自己的wedd.h（有wsdd.nsmap修改名称后得到）文件。</span></p>
+<p>3.在鉴权篇中遇到的问题</p>
+<p>鉴权篇主要参考下面两个博客：</p>
+<p><a href="http://blog.csdn.net/max_min_go/article/details/17617057" target="_blank" rel="external">Onvif开发之客户端鉴权获取参数篇 </a></p>
+<p><a href="http://blog.csdn.net/u012084827/article/details/19031969" target="_blank" rel="external">Linux设备上的Onvif实现16：实现Onvif鉴权 </a></p>
+<p>我采用的是第二篇博客中的方法，也就是使用soap_wsse_add_UsernameTokenDigest这个函数。</p>
+<p>当时为了使用这个函数，可是费了自己很大周折。需要的注意点很多：</p>
+<ol>
+<li>必须写makefile。由于soapC.c有11M，编译它在我的电脑上要花2分钟左右的时间，所以为了不必每次修改代码后都重新编译它，最好编写makefile。这也是我第一次认识到makefile如此重要的一个原因。</li>
+<li>仔细阅读第二篇文章里面的编译细节,2 实现一节好好看，一个细节出问题就会编译不了的，具体来说：</li>
+<li>修改onvif.h  #include&#8221;wsse.h&#8221;</li>
+<li>鉴权需要的那些文件：dom.c wsseapi.c smdevp.c mecevp.c threads.c wsaapi.c还有对应的头文件，<span style="color: #ff0000;">一个都不能少！</span></li>
+<li>makefile中必须添加编译开关-DWITH_DOM -DWITH_OPENSSL</li>
+<li>wsse系列函数必须链接标准的openssl库 我们先去openssl官网中下载源代码来编译，源代码里面有我们需要的头文件。在gcc编译的时候需要在gcc全局搜索路径 C_INCLUDE_PATH 里面加上头文件所在路径。</li>
+<li>由于编译的时候需要<span style="color: #ff0000;"> -lcrypto -lssl <span style="color: #000000;">链接openssl的这两个库，为了简单起见我们直接在linux里面安装openssl好了，这样应该就可以成功链接了。</span></span></li>
+</ol>
+<p>最后即使编译成功了，在运行的时候会出现soap-&gt;error 4的情况。仍然是不知道原因，但是找到如下的解决方法：</p>
+<p><a href="http://blog.csdn.net/bing87496988/article/details/38707829" target="_blank" rel="external">http://blog.csdn.net/bing87496988/article/details/38707829</a></p>
+<p>该方案注释了半行代码就好了。具体原因不明。</p>
+<p>至此如果能够成功使用鉴权函数soap_wsse_add_UsernameTokenDigest</p>
+<p>下面的事情就好办啦～～～～</p>
+<p>&nbsp;</p>
+<p>4.鉴权成功之后我基本上全程按照精华篇那份代码copy下来测试每一个步骤，包括能力获取，媒体配置文件获取和uri获取。</p>
+<p>这里需要注意两个问题：</p>
+<p>第一个是内存初始化的问题。比如我们有结构体E，我们做如下的初始化：</p>
+<p>struct E e;</p>
+<p>这样初始化不会出错。因为是在栈里面分配内存，系统自己会帮你做好初始化工作</p>
+<p>但是下面这个样子就有问题了：</p>
+<p>struct E *e;</p>
+<p>这个时候如果我们访问e的成员变量比如e-&gt;a就可能会出现由于没有初始化而造成segment fault错误。</p>
+<p>所以在开发的时候我们应该时刻记得初始化，加上：</p>
+<p>e = (E *)malloc(sizeof(struct E));</p>
+<p>这样我们再访问就不会出现错误了。</p>
+<p>这是个很基本的问题，但是自己还是犯错了，希望谨记。</p>
+<p>第二个问题是在读取媒体配置文件的时候，通过官方提供的工具发现media profile文件存在多个，那么如何读取多个媒体文件呢？</p>
+<p>一开始以为要调用soap_call<strong>_trt</strong>GetProfiles多次，后来看了官方文档，发现其实调用这个函数之后，在trt__GetProfilesResponse里面已经包含了多个profiles的信息了。也就是是这个结构体里面包含的是profile list。</p>
+<p>我们可以通过使用打印出trt_GetProfilesResponse.__sizeProfiles的值来印证我们的观点。</p>
+<p>而有多个media profiles并不妨碍我们后面获取media uri。</p>
+<p>&nbsp;</p>
+<p>基本上在直到获取uri的过程中碰到的大问题就是这个几个了。如果大家碰到了其他问题可以再看看资料篇里面的其他资料。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ONVIF/" rel="tag">#ONVIF</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/29/Onvif协议客户端开发【4-rtsp流用VLC播放-存储】/" rel="prev">Onvif协议客户端开发【4.rtsp流用VLC播放/存储】</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/29/Onvif协议客户端开发【2-资料篇】/" rel="next">Onvif协议客户端开发【2.资料篇】</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

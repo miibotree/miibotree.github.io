@@ -1,0 +1,612 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="AES加密算法,c/c++,信息安全," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="上几天大概了解了一下AES算法，具体的加密算法现在不想很清楚的了解，只是能够拿来用就好了。这里有份c++的AES。
+Aes.h
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用AES加密算法">
+<meta property="og:url" content="http://yoursite.com/2012/07/03/使用AES加密算法/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="上几天大概了解了一下AES算法，具体的加密算法现在不想很清楚的了解，只是能够拿来用就好了。这里有份c++的AES。
+Aes.h
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727">
+<meta property="og:updated_time" content="2015-07-25T04:56:38.052Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用AES加密算法">
+<meta name="twitter:description" content="上几天大概了解了一下AES算法，具体的加密算法现在不想很清楚的了解，只是能够拿来用就好了。这里有份c++的AES。
+Aes.h
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 使用AES加密算法 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用AES加密算法
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-03T22:07:49+08:00" content="2012-07-03">
+            2012-07-03
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上几天大概了解了一下AES算法，具体的加密算法现在不想很清楚的了解，只是能够拿来用就好了。这里有份c++的AES。</p>
+<p>Aes.h</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;Windows.h&amp;gt;</span></span><br><span class="line">//enum KeySize &#123; Bits128, Bits192, Bits256 &#125;<span class="comment">;  // key size, in bits, for construtor</span></span><br><span class="line">#define Bits128    <span class="number">16</span></span><br><span class="line">#define Bits192    <span class="number">24</span></span><br><span class="line">#define Bits256    <span class="number">32</span></span><br><span class="line"></span><br><span class="line">static unsigned char AesSbox[<span class="number">16</span>*<span class="number">16</span>]=</span><br><span class="line">&#123;// populate the Sbox matrix</span><br><span class="line">/* <span class="number">0</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">5</span>     <span class="number">6</span>     <span class="number">7</span>     <span class="number">8</span>     <span class="number">9</span>     a     b     c     d     e     f */</span><br><span class="line">/*<span class="number">0</span>*/  <span class="number">0x63</span>, <span class="number">0x7c</span>, <span class="number">0x77</span>, <span class="number">0x7b</span>, <span class="number">0xf2</span>, <span class="number">0x6b</span>, <span class="number">0x6f</span>, <span class="number">0xc5</span>, <span class="number">0x30</span>, <span class="number">0x01</span>, <span class="number">0x67</span>, <span class="number">0x2b</span>, <span class="number">0xfe</span>, <span class="number">0xd7</span>, <span class="number">0xab</span>, <span class="number">0x76</span>,</span><br><span class="line">/*<span class="number">1</span>*/  <span class="number">0xca</span>, <span class="number">0x82</span>, <span class="number">0xc9</span>, <span class="number">0x7d</span>, <span class="number">0xfa</span>, <span class="number">0x59</span>, <span class="number">0x47</span>, <span class="number">0xf0</span>, <span class="number">0xad</span>, <span class="number">0xd4</span>, <span class="number">0xa2</span>, <span class="number">0xaf</span>, <span class="number">0x9c</span>, <span class="number">0xa4</span>, <span class="number">0x72</span>, <span class="number">0xc0</span>,</span><br><span class="line">/*<span class="number">2</span>*/  <span class="number">0xb7</span>, <span class="number">0xfd</span>, <span class="number">0x93</span>, <span class="number">0x26</span>, <span class="number">0x36</span>, <span class="number">0x3f</span>, <span class="number">0xf7</span>, <span class="number">0xcc</span>, <span class="number">0x34</span>, <span class="number">0xa5</span>, <span class="number">0xe5</span>, <span class="number">0xf1</span>, <span class="number">0x71</span>, <span class="number">0xd8</span>, <span class="number">0x31</span>, <span class="number">0x15</span>,</span><br><span class="line">/*<span class="number">3</span>*/  <span class="number">0x04</span>, <span class="number">0xc7</span>, <span class="number">0x23</span>, <span class="number">0xc3</span>, <span class="number">0x18</span>, <span class="number">0x96</span>, <span class="number">0x05</span>, <span class="number">0x9a</span>, <span class="number">0x07</span>, <span class="number">0x12</span>, <span class="number">0x80</span>, <span class="number">0xe2</span>, <span class="number">0xeb</span>, <span class="number">0x27</span>, <span class="number">0xb2</span>, <span class="number">0x75</span>,</span><br><span class="line">/*<span class="number">4</span>*/  <span class="number">0x09</span>, <span class="number">0x83</span>, <span class="number">0x2c</span>, <span class="number">0x1a</span>, <span class="number">0x1b</span>, <span class="number">0x6e</span>, <span class="number">0x5a</span>, <span class="number">0xa0</span>, <span class="number">0x52</span>, <span class="number">0x3b</span>, <span class="number">0xd6</span>, <span class="number">0xb3</span>, <span class="number">0x29</span>, <span class="number">0xe3</span>, <span class="number">0x2f</span>, <span class="number">0x84</span>,</span><br><span class="line">/*<span class="number">5</span>*/  <span class="number">0x53</span>, <span class="number">0xd1</span>, <span class="number">0x00</span>, <span class="number">0xed</span>, <span class="number">0x20</span>, <span class="number">0xfc</span>, <span class="number">0xb1</span>, <span class="number">0x5b</span>, <span class="number">0x6a</span>, <span class="number">0xcb</span>, <span class="number">0xbe</span>, <span class="number">0x39</span>, <span class="number">0x4a</span>, <span class="number">0x4c</span>, <span class="number">0x58</span>, <span class="number">0xcf</span>,</span><br><span class="line">/*<span class="number">6</span>*/  <span class="number">0xd0</span>, <span class="number">0xef</span>, <span class="number">0xaa</span>, <span class="number">0xfb</span>, <span class="number">0x43</span>, <span class="number">0x4d</span>, <span class="number">0x33</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0xf9</span>, <span class="number">0x02</span>, <span class="number">0x7f</span>, <span class="number">0x50</span>, <span class="number">0x3c</span>, <span class="number">0x9f</span>, <span class="number">0xa8</span>,</span><br><span class="line">/*<span class="number">7</span>*/  <span class="number">0x51</span>, <span class="number">0xa3</span>, <span class="number">0x40</span>, <span class="number">0x8f</span>, <span class="number">0x92</span>, <span class="number">0x9d</span>, <span class="number">0x38</span>, <span class="number">0xf5</span>, <span class="number">0xbc</span>, <span class="number">0xb6</span>, <span class="number">0xda</span>, <span class="number">0x21</span>, <span class="number">0x10</span>, <span class="number">0xff</span>, <span class="number">0xf3</span>, <span class="number">0xd2</span>,</span><br><span class="line">/*<span class="number">8</span>*/  <span class="number">0xcd</span>, <span class="number">0x0c</span>, <span class="number">0x13</span>, <span class="number">0xec</span>, <span class="number">0x5f</span>, <span class="number">0x97</span>, <span class="number">0x44</span>, <span class="number">0x17</span>, <span class="number">0xc4</span>, <span class="number">0xa7</span>, <span class="number">0x7e</span>, <span class="number">0x3d</span>, <span class="number">0x64</span>, <span class="number">0x5d</span>, <span class="number">0x19</span>, <span class="number">0x73</span>,</span><br><span class="line">/*<span class="number">9</span>*/  <span class="number">0x60</span>, <span class="number">0x81</span>, <span class="number">0x4f</span>, <span class="number">0xdc</span>, <span class="number">0x22</span>, <span class="number">0x2a</span>, <span class="number">0x90</span>, <span class="number">0x88</span>, <span class="number">0x46</span>, <span class="number">0xee</span>, <span class="number">0xb8</span>, <span class="number">0x14</span>, <span class="number">0xde</span>, <span class="number">0x5e</span>, <span class="number">0x0b</span>, <span class="number">0xdb</span>,</span><br><span class="line">/*a*/  <span class="number">0xe0</span>, <span class="number">0x32</span>, <span class="number">0x3a</span>, <span class="number">0x0a</span>, <span class="number">0x49</span>, <span class="number">0x06</span>, <span class="number">0x24</span>, <span class="number">0x5c</span>, <span class="number">0xc2</span>, <span class="number">0xd3</span>, <span class="number">0xac</span>, <span class="number">0x62</span>, <span class="number">0x91</span>, <span class="number">0x95</span>, <span class="number">0xe4</span>, <span class="number">0x79</span>,</span><br><span class="line">/*b*/  <span class="number">0xe7</span>, <span class="number">0xc8</span>, <span class="number">0x37</span>, <span class="number">0x6d</span>, <span class="number">0x8d</span>, <span class="number">0xd5</span>, <span class="number">0x4e</span>, <span class="number">0xa9</span>, <span class="number">0x6c</span>, <span class="number">0x56</span>, <span class="number">0xf4</span>, <span class="number">0xea</span>, <span class="number">0x65</span>, <span class="number">0x7a</span>, <span class="number">0xae</span>, <span class="number">0x08</span>,</span><br><span class="line">/*c*/  <span class="number">0xba</span>, <span class="number">0x78</span>, <span class="number">0x25</span>, <span class="number">0x2e</span>, <span class="number">0x1c</span>, <span class="number">0xa6</span>, <span class="number">0xb4</span>, <span class="number">0xc6</span>, <span class="number">0xe8</span>, <span class="number">0xdd</span>, <span class="number">0x74</span>, <span class="number">0x1f</span>, <span class="number">0x4b</span>, <span class="number">0xbd</span>, <span class="number">0x8b</span>, <span class="number">0x8a</span>,</span><br><span class="line">/*d*/  <span class="number">0x70</span>, <span class="number">0x3e</span>, <span class="number">0xb5</span>, <span class="number">0x66</span>, <span class="number">0x48</span>, <span class="number">0x03</span>, <span class="number">0xf6</span>, <span class="number">0x0e</span>, <span class="number">0x61</span>, <span class="number">0x35</span>, <span class="number">0x57</span>, <span class="number">0xb9</span>, <span class="number">0x86</span>, <span class="number">0xc1</span>, <span class="number">0x1d</span>, <span class="number">0x9e</span>,</span><br><span class="line">/*e*/  <span class="number">0xe1</span>, <span class="number">0xf8</span>, <span class="number">0x98</span>, <span class="number">0x11</span>, <span class="number">0x69</span>, <span class="number">0xd9</span>, <span class="number">0x8e</span>, <span class="number">0x94</span>, <span class="number">0x9b</span>, <span class="number">0x1e</span>, <span class="number">0x87</span>, <span class="number">0xe9</span>, <span class="number">0xce</span>, <span class="number">0x55</span>, <span class="number">0x28</span>, <span class="number">0xdf</span>,</span><br><span class="line">/*f*/  <span class="number">0x8c</span>, <span class="number">0xa1</span>, <span class="number">0x89</span>, <span class="number">0x0d</span>, <span class="number">0xbf</span>, <span class="number">0xe6</span>, <span class="number">0x42</span>, <span class="number">0x68</span>, <span class="number">0x41</span>, <span class="number">0x99</span>, <span class="number">0x2d</span>, <span class="number">0x0f</span>, <span class="number">0xb0</span>, <span class="number">0x54</span>, <span class="number">0xbb</span>, <span class="number">0x16</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">static unsigned char AesiSbox[<span class="number">16</span>*<span class="number">16</span>]=</span><br><span class="line">&#123;</span><br><span class="line">// populate the iSbox matrix</span><br><span class="line">/* <span class="number">0</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">5</span>     <span class="number">6</span>     <span class="number">7</span>     <span class="number">8</span>     <span class="number">9</span>     a     b     c     d     e     f */</span><br><span class="line">/*<span class="number">0</span>*/  <span class="number">0x52</span>, <span class="number">0x09</span>, <span class="number">0x6a</span>, <span class="number">0xd5</span>, <span class="number">0x30</span>, <span class="number">0x36</span>, <span class="number">0xa5</span>, <span class="number">0x38</span>, <span class="number">0xbf</span>, <span class="number">0x40</span>, <span class="number">0xa3</span>, <span class="number">0x9e</span>, <span class="number">0x81</span>, <span class="number">0xf3</span>, <span class="number">0xd7</span>, <span class="number">0xfb</span>,</span><br><span class="line">/*<span class="number">1</span>*/  <span class="number">0x7c</span>, <span class="number">0xe3</span>, <span class="number">0x39</span>, <span class="number">0x82</span>, <span class="number">0x9b</span>, <span class="number">0x2f</span>, <span class="number">0xff</span>, <span class="number">0x87</span>, <span class="number">0x34</span>, <span class="number">0x8e</span>, <span class="number">0x43</span>, <span class="number">0x44</span>, <span class="number">0xc4</span>, <span class="number">0xde</span>, <span class="number">0xe9</span>, <span class="number">0xcb</span>,</span><br><span class="line">/*<span class="number">2</span>*/  <span class="number">0x54</span>, <span class="number">0x7b</span>, <span class="number">0x94</span>, <span class="number">0x32</span>, <span class="number">0xa6</span>, <span class="number">0xc2</span>, <span class="number">0x23</span>, <span class="number">0x3d</span>, <span class="number">0xee</span>, <span class="number">0x4c</span>, <span class="number">0x95</span>, <span class="number">0x0b</span>, <span class="number">0x42</span>, <span class="number">0xfa</span>, <span class="number">0xc3</span>, <span class="number">0x4e</span>,</span><br><span class="line">/*<span class="number">3</span>*/  <span class="number">0x08</span>, <span class="number">0x2e</span>, <span class="number">0xa1</span>, <span class="number">0x66</span>, <span class="number">0x28</span>, <span class="number">0xd9</span>, <span class="number">0x24</span>, <span class="number">0xb2</span>, <span class="number">0x76</span>, <span class="number">0x5b</span>, <span class="number">0xa2</span>, <span class="number">0x49</span>, <span class="number">0x6d</span>, <span class="number">0x8b</span>, <span class="number">0xd1</span>, <span class="number">0x25</span>,</span><br><span class="line">/*<span class="number">4</span>*/  <span class="number">0x72</span>, <span class="number">0xf8</span>, <span class="number">0xf6</span>, <span class="number">0x64</span>, <span class="number">0x86</span>, <span class="number">0x68</span>, <span class="number">0x98</span>, <span class="number">0x16</span>, <span class="number">0xd4</span>, <span class="number">0xa4</span>, <span class="number">0x5c</span>, <span class="number">0xcc</span>, <span class="number">0x5d</span>, <span class="number">0x65</span>, <span class="number">0xb6</span>, <span class="number">0x92</span>,</span><br><span class="line">/*<span class="number">5</span>*/  <span class="number">0x6c</span>, <span class="number">0x70</span>, <span class="number">0x48</span>, <span class="number">0x50</span>, <span class="number">0xfd</span>, <span class="number">0xed</span>, <span class="number">0xb9</span>, <span class="number">0xda</span>, <span class="number">0x5e</span>, <span class="number">0x15</span>, <span class="number">0x46</span>, <span class="number">0x57</span>, <span class="number">0xa7</span>, <span class="number">0x8d</span>, <span class="number">0x9d</span>, <span class="number">0x84</span>,</span><br><span class="line">/*<span class="number">6</span>*/  <span class="number">0x90</span>, <span class="number">0xd8</span>, <span class="number">0xab</span>, <span class="number">0x00</span>, <span class="number">0x8c</span>, <span class="number">0xbc</span>, <span class="number">0xd3</span>, <span class="number">0x0a</span>, <span class="number">0xf7</span>, <span class="number">0xe4</span>, <span class="number">0x58</span>, <span class="number">0x05</span>, <span class="number">0xb8</span>, <span class="number">0xb3</span>, <span class="number">0x45</span>, <span class="number">0x06</span>,</span><br><span class="line">/*<span class="number">7</span>*/  <span class="number">0xd0</span>, <span class="number">0x2c</span>, <span class="number">0x1e</span>, <span class="number">0x8f</span>, <span class="number">0xca</span>, <span class="number">0x3f</span>, <span class="number">0x0f</span>, <span class="number">0x02</span>, <span class="number">0xc1</span>, <span class="number">0xaf</span>, <span class="number">0xbd</span>, <span class="number">0x03</span>, <span class="number">0x01</span>, <span class="number">0x13</span>, <span class="number">0x8a</span>, <span class="number">0x6b</span>,</span><br><span class="line">/*<span class="number">8</span>*/  <span class="number">0x3a</span>, <span class="number">0x91</span>, <span class="number">0x11</span>, <span class="number">0x41</span>, <span class="number">0x4f</span>, <span class="number">0x67</span>, <span class="number">0xdc</span>, <span class="number">0xea</span>, <span class="number">0x97</span>, <span class="number">0xf2</span>, <span class="number">0xcf</span>, <span class="number">0xce</span>, <span class="number">0xf0</span>, <span class="number">0xb4</span>, <span class="number">0xe6</span>, <span class="number">0x73</span>,</span><br><span class="line">/*<span class="number">9</span>*/  <span class="number">0x96</span>, <span class="number">0xac</span>, <span class="number">0x74</span>, <span class="number">0x22</span>, <span class="number">0xe7</span>, <span class="number">0xad</span>, <span class="number">0x35</span>, <span class="number">0x85</span>, <span class="number">0xe2</span>, <span class="number">0xf9</span>, <span class="number">0x37</span>, <span class="number">0xe8</span>, <span class="number">0x1c</span>, <span class="number">0x75</span>, <span class="number">0xdf</span>, <span class="number">0x6e</span>,</span><br><span class="line">/*a*/  <span class="number">0x47</span>, <span class="number">0xf1</span>, <span class="number">0x1a</span>, <span class="number">0x71</span>, <span class="number">0x1d</span>, <span class="number">0x29</span>, <span class="number">0xc5</span>, <span class="number">0x89</span>, <span class="number">0x6f</span>, <span class="number">0xb7</span>, <span class="number">0x62</span>, <span class="number">0x0e</span>, <span class="number">0xaa</span>, <span class="number">0x18</span>, <span class="number">0xbe</span>, <span class="number">0x1b</span>,</span><br><span class="line">/*b*/  <span class="number">0xfc</span>, <span class="number">0x56</span>, <span class="number">0x3e</span>, <span class="number">0x4b</span>, <span class="number">0xc6</span>, <span class="number">0xd2</span>, <span class="number">0x79</span>, <span class="number">0x20</span>, <span class="number">0x9a</span>, <span class="number">0xdb</span>, <span class="number">0xc0</span>, <span class="number">0xfe</span>, <span class="number">0x78</span>, <span class="number">0xcd</span>, <span class="number">0x5a</span>, <span class="number">0xf4</span>,</span><br><span class="line">/*c*/  <span class="number">0x1f</span>, <span class="number">0xdd</span>, <span class="number">0xa8</span>, <span class="number">0x33</span>, <span class="number">0x88</span>, <span class="number">0x07</span>, <span class="number">0xc7</span>, <span class="number">0x31</span>, <span class="number">0xb1</span>, <span class="number">0x12</span>, <span class="number">0x10</span>, <span class="number">0x59</span>, <span class="number">0x27</span>, <span class="number">0x80</span>, <span class="number">0xec</span>, <span class="number">0x5f</span>,</span><br><span class="line">/*d*/  <span class="number">0x60</span>, <span class="number">0x51</span>, <span class="number">0x7f</span>, <span class="number">0xa9</span>, <span class="number">0x19</span>, <span class="number">0xb5</span>, <span class="number">0x4a</span>, <span class="number">0x0d</span>, <span class="number">0x2d</span>, <span class="number">0xe5</span>, <span class="number">0x7a</span>, <span class="number">0x9f</span>, <span class="number">0x93</span>, <span class="number">0xc9</span>, <span class="number">0x9c</span>, <span class="number">0xef</span>,</span><br><span class="line">/*e*/  <span class="number">0xa0</span>, <span class="number">0xe0</span>, <span class="number">0x3b</span>, <span class="number">0x4d</span>, <span class="number">0xae</span>, <span class="number">0x2a</span>, <span class="number">0xf5</span>, <span class="number">0xb0</span>, <span class="number">0xc8</span>, <span class="number">0xeb</span>, <span class="number">0xbb</span>, <span class="number">0x3c</span>, <span class="number">0x83</span>, <span class="number">0x53</span>, <span class="number">0x99</span>, <span class="number">0x61</span>,</span><br><span class="line">/*f*/  <span class="number">0x17</span>, <span class="number">0x2b</span>, <span class="number">0x04</span>, <span class="number">0x7e</span>, <span class="number">0xba</span>, <span class="number">0x77</span>, <span class="number">0xd6</span>, <span class="number">0x26</span>, <span class="number">0xe1</span>, <span class="number">0x69</span>, <span class="number">0x14</span>, <span class="number">0x63</span>, <span class="number">0x55</span>, <span class="number">0x21</span>, <span class="number">0x0c</span>, <span class="number">0x7d</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line">static unsigned char AesRcon[<span class="number">11</span>*<span class="number">4</span>]=</span><br><span class="line">&#123;</span><br><span class="line"><span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x02</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x04</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x08</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x10</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x20</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x80</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x1b</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x36</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">class Aes  // Advanced Encryption Standard</span><br><span class="line">&#123;</span><br><span class="line"><span class="label">public:</span></span><br><span class="line">~Aes()<span class="comment">;</span></span><br><span class="line">Aes()<span class="comment">;</span></span><br><span class="line">Aes(<span class="keyword">int</span> keySize, unsigned char* keyBytes)<span class="comment">;</span></span><br><span class="line">unsigned char State[<span class="number">4</span>][<span class="number">4</span>]<span class="comment">;</span></span><br><span class="line">void Cipher(unsigned char* input, unsigned char* output)<span class="comment">;  // encipher 16-bit input</span></span><br><span class="line">void InvCipher(unsigned char* input, unsigned char* output)<span class="comment">;  // decipher 16-bit input</span></span><br><span class="line"><span class="label">private:</span></span><br><span class="line"><span class="keyword">int</span> Nb<span class="comment">;         // block size in 32-bit words.  Always 4 for AES.  (128 bits).</span></span><br><span class="line"><span class="keyword">int</span> Nk<span class="comment">;         // key size in 32-bit words.  4, 6, 8.  (128, 192, 256 bits).</span></span><br><span class="line"><span class="keyword">int</span> Nr<span class="comment">;         // number of rounds. 10, 12, 14.</span></span><br><span class="line"></span><br><span class="line">unsigned char key[<span class="number">32</span>]<span class="comment">;</span></span><br><span class="line">unsigned char w[<span class="number">16</span>*<span class="number">15</span>]<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">void SetNbNkNr(<span class="keyword">int</span> keySize)<span class="comment">;</span></span><br><span class="line">void AddRoundKey(<span class="keyword">int</span> round)<span class="comment">;      //轮密钥加</span></span><br><span class="line">void SubBytes()<span class="comment">;                  //S盒字节代换</span></span><br><span class="line">void InvSubBytes()<span class="comment">;               //逆S盒字节代换</span></span><br><span class="line">void ShiftRows()<span class="comment">;                 //行移位</span></span><br><span class="line">void InvShiftRows()<span class="comment">;</span></span><br><span class="line">void MixColumns()<span class="comment">;                //列混淆</span></span><br><span class="line">void InvMixColumns()<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby01(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby02(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby03(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby09(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0b(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0d(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0e(unsigned char b)<span class="comment">;</span></span><br><span class="line">void KeyExpansion()<span class="comment">;              //密钥扩展</span></span><br><span class="line">unsigned char* SubWord(unsigned char* <span class="preprocessor">word</span>)<span class="comment">;         //密钥S盒字代换</span></span><br><span class="line">unsigned char* RotWord(unsigned char* <span class="preprocessor">word</span>)<span class="comment">;         //密钥移位</span></span><br><span class="line">//Dump()<span class="comment">;</span></span><br><span class="line">//DumpKey()<span class="comment">;</span></span><br><span class="line">//    DumpTwoByTwo(char* a)<span class="comment">;</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">&amp;nbsp<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>然后是Aes.cpp文件</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br></pre></td><td class="code"><pre><span class="line">//#include "StdAfx.h"    //注意在此 #include "Aes.h"不可以放在前面，否则出错，</span><br><span class="line"><span class="header">#include "Aes.h"</span></span><br><span class="line">Aes::~Aes()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Aes::Aes()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//构造函数</span><br><span class="line">Aes::Aes(int keysize,unsigned char* keyBytes)</span><br><span class="line">&#123;</span><br><span class="line">SetNbNkNr(keysize);                         //设置密钥块数，轮数</span><br><span class="line">memcpy(key,keyBytes,keysize);                //字符串拷贝函数，把keyBytes的keysize个字符复制到key中</span><br><span class="line">KeyExpansion();                                //密钥扩展，必须提前做的初始化</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::SetNbNkNr(int keySize)</span><br><span class="line">&#123;</span><br><span class="line">Nb=4;</span><br><span class="line">if(keySize=Bits128)</span><br><span class="line">&#123;</span><br><span class="line">Nk=4;    //4*4字节，128位密钥，10轮加密</span><br><span class="line">Nr=10;</span><br><span class="line">&#125;</span><br><span class="line">else if(keySize=Bits192)</span><br><span class="line">&#123;</span><br><span class="line">Nk=6;    //6*4字节，192位密钥，12轮加密</span><br><span class="line">Nr=12;</span><br><span class="line">&#125;</span><br><span class="line">else if(keySize=Bits256)</span><br><span class="line">&#123;</span><br><span class="line">Nk=8;    //8*4字节，256位密钥，14轮加密</span><br><span class="line">Nr=14;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::KeyExpansion()</span><br><span class="line">&#123;</span><br><span class="line">int row;</span><br><span class="line">memset(w,0,16*15);</span><br><span class="line">for(row=0;row&amp;lt;Nk;row++)       //拷贝seed 密钥</span><br><span class="line">&#123;</span><br><span class="line">w[4<span class="emphasis">*row+0] =  key[4*</span>row];</span><br><span class="line">w[4<span class="emphasis">*row+1] =  key[4*</span>row+1];</span><br><span class="line">w[4<span class="emphasis">*row+2] =  key[4*</span>row+2];</span><br><span class="line">w[4<span class="emphasis">*row+3] =  key[4*</span>row+3];</span><br><span class="line">&#125;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">for(row=Nk;row&amp;lt;4*(Nr+1);row++)</span><br><span class="line">&#123;</span><br><span class="line">temp[0]=w[4*row-4];     //当前列的前一列</span><br><span class="line">temp[1]=w[4*row-3];</span><br><span class="line">temp[2]=w[4*row-2];</span><br><span class="line">temp[3]=w[4*row-1];</span><br><span class="line">if(row%Nk==0)           //逢nk时，对当前列的前一列作特殊处理</span><br><span class="line">&#123;</span><br><span class="line">temp=SubWord(RotWord(temp));   //先移位，再代换，最后和轮常量异或</span><br><span class="line">temp[0] = (byte)( (int)temp[0] ^ (int) AesRcon[4*(row/Nk)+0] );</span><br><span class="line">temp[1] = (byte)( (int)temp[1] ^ (int) AesRcon[4*(row/Nk)+1] );</span><br><span class="line">temp[2] = (byte)( (int)temp[2] ^ (int) AesRcon[4*(row/Nk)+2] );</span><br><span class="line">temp[3] = (byte)( (int)temp[3] ^ (int) AesRcon[4*(row/Nk)+3] );</span><br><span class="line">&#125;</span><br><span class="line">else if ( Nk &amp;gt; 6 &amp;amp;&amp;amp; (row % Nk == 4) )  //这个还没有搞清楚</span><br><span class="line">&#123;</span><br><span class="line">temp = SubWord(temp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// w[row] = w[row-Nk] xor temp</span><br><span class="line">w[4<span class="emphasis">*row+0] = (byte) ( (int) w[4*</span>(row-Nk)+0] ^ (int)temp[0] );</span><br><span class="line">w[4<span class="emphasis">*row+1] = (byte) ( (int) w[4*</span>(row-Nk)+1] ^ (int)temp[1] );</span><br><span class="line">w[4<span class="emphasis">*row+2] = (byte) ( (int) w[4*</span>(row-Nk)+2] ^ (int)temp[2] );</span><br><span class="line">w[4<span class="emphasis">*row+3] = (byte) ( (int) w[4*</span>(row-Nk)+3] ^ (int)temp[3] );</span><br><span class="line">&#125;  // for loop</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//密钥移位函数</span><br><span class="line">unsigned char<span class="bullet">* Aes::RotWord(unsigned char*</span> word)</span><br><span class="line">&#123;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">temp[0] = word[1];</span><br><span class="line">temp[1] = word[2];</span><br><span class="line">temp[2] = word[3];</span><br><span class="line">temp[3] = word[0];</span><br><span class="line">return temp;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//密钥字代换函数</span><br><span class="line">unsigned char<span class="bullet">* Aes::SubWord(unsigned char*</span> word)</span><br><span class="line">&#123;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">for(int j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">temp[j] = AesSbox[16*(word[j] &amp;gt;&amp;gt; 4)+(word[j] &amp;amp; 0x0f)];  //实际上也可以写成AesSbox[[j]];因为两者相等</span><br><span class="line">&#125;</span><br><span class="line">return temp;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//Aes加密函数</span><br><span class="line">void Aes::Cipher(unsigned char<span class="bullet">* input, unsigned char*</span> output)</span><br><span class="line">&#123;</span><br><span class="line">int i;</span><br><span class="line">memset(&amp;amp;State[<span class="link_label">0</span>][<span class="link_reference">0</span>],0,16);</span><br><span class="line">for(i=0;i&amp;lt;4*Nb;i++)                        //这里是先写列后写行的，即输入是一列一列的进来的</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i%4</span>][<span class="link_reference">i/4</span>]=input[i];                    //换成先写行后写列也是可以的，只要在输出时也是这样就可以了</span><br><span class="line">&#125;</span><br><span class="line">AddRoundKey(0);                                    //轮密钥加</span><br><span class="line"></span><br><span class="line">for (int round = 1; round &amp;lt;= (Nr - 1); round++)  // main round loop</span><br><span class="line">&#123;</span><br><span class="line">SubBytes();                                    //字节代换</span><br><span class="line">ShiftRows();                                //行移位</span><br><span class="line">MixColumns();                                //列混淆</span><br><span class="line">AddRoundKey(round);                            //轮密钥加</span><br><span class="line">&#125;  // main round loop</span><br><span class="line"></span><br><span class="line">SubBytes();                                        //字节代换</span><br><span class="line">ShiftRows();                                    //行移位</span><br><span class="line">AddRoundKey(Nr);                                //轮密钥加</span><br><span class="line"></span><br><span class="line">// output = state</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">output[<span class="link_label">i</span>] =  State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//Aes解密函数</span><br><span class="line">void Aes::InvCipher(unsigned char<span class="bullet">* input,unsigned char*</span> output)</span><br><span class="line">&#123;</span><br><span class="line">int i;</span><br><span class="line">memset(&amp;amp;State[<span class="link_label">0</span>][<span class="link_reference">0</span>],0,16);</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>] = input[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AddRoundKey(Nr);</span><br><span class="line"></span><br><span class="line">for (int round = Nr-1; round &amp;gt;= 1; round--)  // main round loop</span><br><span class="line">&#123;</span><br><span class="line">InvShiftRows();</span><br><span class="line">InvSubBytes();</span><br><span class="line">AddRoundKey(round);</span><br><span class="line">InvMixColumns();</span><br><span class="line">&#125;  // end main round loop for InvCipher</span><br><span class="line"></span><br><span class="line">InvShiftRows();</span><br><span class="line">InvSubBytes();</span><br><span class="line">AddRoundKey(0);</span><br><span class="line"></span><br><span class="line">// output = state</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">output[<span class="link_label">i</span>] =  State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//轮密钥加</span><br><span class="line">void Aes::AddRoundKey(int round)</span><br><span class="line">&#123;</span><br><span class="line">int i,j;  //i行 j列           //因为密钥w是一列一列排列的，即 k0 k4 k8 k12</span><br><span class="line">for(j=0;j&amp;lt;4;j++)              //                              k1 k5 k9 k13</span><br><span class="line">&#123;                              //                              k2 k6 k10k14</span><br><span class="line">for(i=0;i&amp;lt;4;i++)          //                              k3 k7 k11k15</span><br><span class="line">&#123;                          // 所以i行j列的下标是4<span class="emphasis">*((round*</span>4)+j)+i即16<span class="emphasis">*round+4*</span>j+i</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=(unsigned char)((int)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]^(int)w[4<span class="emphasis">*((round*</span>4)+j)+i]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//字节代换函数</span><br><span class="line">void Aes::SubBytes()                              //Page 103</span><br><span class="line">&#123;</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=AesSbox[<span class="link_label">State[i</span>][<span class="link_reference">j</span>]];</span><br><span class="line">//因为 16*(State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;gt;&amp;gt;4)+State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;amp;0x0f=State[<span class="link_label">i</span>][<span class="link_reference">j</span>]</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvSubBytes()</span><br><span class="line">&#123;</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=AesiSbox[<span class="link_label">State[i</span>][<span class="link_reference">j</span>]]; //因为 16*(State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;gt;&amp;gt;4)+State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;amp;0x0f=State[<span class="link_label">i</span>][<span class="link_reference">j</span>]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::ShiftRows()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];                                        //Page105</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(i=1;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+1)%4];                    //第一行左移1位</span><br><span class="line">else if(i==2)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+2)%4];                //第二行左移2位</span><br><span class="line">else if(i==3)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+3)%4];                //第三行左移3位</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvShiftRows()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(i=1;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">//if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j-1)%4];    在此犯了一个错误 -1%4=-1 而不是3，所以采用了下面再加一个4的做法</span><br><span class="line">if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+3)%4];            //第一行右移1位 j-1+4=j+3</span><br><span class="line">else if(i==2)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+2)%4];        //第二行右移2位 j-2+4=j+2</span><br><span class="line">else if(i==3)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+1)%4];        //第三行右移3位 j-3+4=j+2</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::MixColumns()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)                                    //2 3 1 1  列混淆矩阵  Page107</span><br><span class="line">&#123;                                                    //1 2 3 1</span><br><span class="line">for(i=0;i&amp;lt;4;i++)                                //1 1 2 3</span><br><span class="line">&#123;                                                //3 1 1 2</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">0</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby02(temp[0+j]) ^ (int)gfmultby03(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby01(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby01(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">1</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby01(temp[0+j]) ^ (int)gfmultby02(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby03(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby01(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">2</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby01(temp[0+j]) ^ (int)gfmultby01(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby02(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby03(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">3</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby03(temp[0+j]) ^ (int)gfmultby01(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby01(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby02(temp[4*</span>3+j]) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvMixColumns()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for (i = 0; i &amp;lt; 4; i++)  // copy State into temp[]</span><br><span class="line">&#123;</span><br><span class="line">for (j = 0; j &amp;lt; 4; j++)                         //0e 0b 0d 09   逆变换矩阵 Page108</span><br><span class="line">&#123;                                                //09 0e 0b 0d</span><br><span class="line">temp[<span class="link_label">4*i+j</span>] =  State[<span class="link_label">i</span>][<span class="link_reference">j</span>];                    //0d 09 0e 0b</span><br><span class="line">&#125;                                                //0b 0d 09 0e</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (j = 0; j &amp;lt; 4; j++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">0</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0e(temp[j]) ^ (int)gfmultby0b(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0d(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby09(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">1</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby09(temp[j]) ^ (int)gfmultby0e(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0b(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0d(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">2</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0d(temp[j]) ^ (int)gfmultby09(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0e(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0b(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">3</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0b(temp[j]) ^ (int)gfmultby0d(temp[4+j]) ^</span><br><span class="line">(int)gfmultby09(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0e(temp[4*</span>3+j]) );</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">unsigned char Aes::gfmultby01(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return b;</span><br><span class="line">&#125;</span><br><span class="line">unsigned char Aes::gfmultby02(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">if (b &amp;lt; 0x80)</span><br><span class="line">return (unsigned char)(int)(b &amp;lt;&amp;lt;1);</span><br><span class="line">else</span><br><span class="line">return (unsigned char)( (int)(b &amp;lt;&amp;lt; 1) ^ (int)(0x1b) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby03(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char) ( (int)gfmultby02(b) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby09(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0b(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(b) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0d(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(gfmultby02(b)) ^ (int)(b) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0e(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(gfmultby02(b)) ^(int)gfmultby02(b) );</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br></pre></td></tr></table></figure>
+<p>这里想说下Aes加密需要注意的地方。我们上面代码的时候，首先要传入密钥。</p>
+<p>Aes(int keySize, unsigned char* keyBytes);</p>
+<p>密钥的长度可以是128位， 192位， 256位。对应分别是16个字节， 24个字节和32个字节。</p>
+<p>然后在加密和解密的时候，我们传入两个指针。</p>
+<p>void Cipher(unsigned char_ input, unsigned char_ output);  // encipher 16-bit input</p>
+<p>void InvCipher(unsigned char_ input, unsigned char_ output);  // decipher 16-bit input</p>
+<p>注意每次都是传16位的。也就是说，如果你的数据字节很大，你必须把数据拆开来，拆成16个字节16个字节的进行加密。</p>
+<p>这里就产生一个问题：如果我们的数据是17个字节，那该怎么办呢？</p>
+<p>这里我百度了一下采用以下这个方法：</p>
+<p>&nbsp;</p>
+<p>如果要加密的字符串不够16位，输入字符串就要补位，比方说：</p>
+<p>源输入：</p>
+<p>abcdefg</p>
+<p>补位后:</p>
+<p>abcdefg999999999</p>
+<p>源输入：</p>
+<p>123456789</p>
+<p>补位后：</p>
+<p>1234567897777777</p>
+<p>也就是说差几个字节补几个字节，补的字节就是ascii值从1 到 15。</p>
+<p>下面自己写了个测试程序来测试AES加密。在D盘目录下建立一个1.txt文件。输入17个字节的数据。运行下面的程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Aes.h"</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对文件的AES加密操作</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileCrypt</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//对文件的AES解密操作</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileDeCrypt</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">FileCrypt();</span><br><span class="line">FileDeCrypt();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileCrypt</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//CreateFile获得文件内核句柄</span></span><br><span class="line">DWORD FileSize;</span><br><span class="line">HANDLE hFile = CreateFile(<span class="string">L"D:\1.txt"</span>, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"无效的句柄，尝试重新打开n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取文件大小</span></span><br><span class="line">FileSize = GetFileSize(hFile, NULL);</span><br><span class="line"><span class="keyword">if</span> (FileSize == INVALID_FILE_SIZE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"获取文件大小出错，请重新尝试n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配待加密字符串</span></span><br><span class="line"><span class="keyword">char</span> * Buff1 = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line"><span class="built_in">memset</span>(Buff1, <span class="number">0</span>, <span class="keyword">sizeof</span>(Buff1));</span><br><span class="line">BOOL b;</span><br><span class="line">DWORD dwSizeOfRead = <span class="number">0</span>;</span><br><span class="line">b = ReadFile(hFile, Buff1, FileSize, &amp;amp;dwSizeOfRead, NULL);</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取文件内容</span></span><br><span class="line"><span class="keyword">if</span> ((dwSizeOfRead != FileSize) || (!b))</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"读取文件出错n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//字符串补位操作</span></span><br><span class="line"><span class="keyword">int</span> add;</span><br><span class="line"><span class="keyword">if</span> (FileSize / <span class="number">16</span> == <span class="number">0</span>)</span><br><span class="line">add = <span class="number">16</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">add = <span class="number">16</span> - FileSize % <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配补位后待加密字符串</span></span><br><span class="line"><span class="keyword">char</span> * Buff2 = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (FileSize + add));</span><br><span class="line"><span class="built_in">memset</span>(Buff2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Buff2));</span><br><span class="line"><span class="comment">//进行补齐</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; FileSize + add; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(i &amp;lt; FileSize)</span><br><span class="line">Buff2[i] = Buff1[i];</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">Buff2[i] = (<span class="keyword">char</span>)add;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//加密操作</span></span><br><span class="line"><span class="function">Aes <span class="title">aes</span><span class="params">(16, (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)</span>"1234567812345678")</span>;</span><br><span class="line"><span class="comment">//将缓存区里面的数据加密,放入新的缓存区里面</span></span><br><span class="line">HANDLE hNewFile = CreateFile(<span class="string">L"D:\1(加密).txt"</span>, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line">DWORD count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> Temp1[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">char</span> Temp2[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">while</span> (count &amp;lt;= FileSize)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">memset</span>(Temp1, <span class="number">0</span> ,<span class="keyword">sizeof</span>(Temp1));</span><br><span class="line"><span class="built_in">memset</span>(Temp2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Temp2));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt;=<span class="number">15</span>; i++)</span><br><span class="line">Temp1[i] = Buff2[i + count];</span><br><span class="line">aes.Cipher((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp1, (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp2);</span><br><span class="line"><span class="comment">//将新缓存区的数据写入新的文件里面</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(Temp2), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">count +=<span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">CloseHandle(hFile);</span><br><span class="line">CloseHandle(hNewFile);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileDeCrypt</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//CreateFile获得文件内核句柄</span></span><br><span class="line">DWORD FileSize;</span><br><span class="line">HANDLE hFile = CreateFile(<span class="string">L"D:\1(加密).txt"</span>, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"无效的句柄，尝试重新打开n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取文件大小</span></span><br><span class="line">FileSize = GetFileSize(hFile, NULL);</span><br><span class="line"><span class="keyword">if</span> (FileSize == INVALID_FILE_SIZE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"获取文件大小出错，请重新尝试n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (FileSize % <span class="number">16</span> != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"加密文件大小有误，请检查加密文件"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配内存</span></span><br><span class="line"><span class="keyword">char</span>* Buff1 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line"><span class="keyword">char</span>* Buff2 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line">BOOL b;</span><br><span class="line">DWORD dwSizeOfRead = <span class="number">0</span>;</span><br><span class="line">b = ReadFile(hFile, Buff1, FileSize, &amp;amp;dwSizeOfRead, NULL);</span><br><span class="line"><span class="comment">//读取文件内容</span></span><br><span class="line"><span class="keyword">if</span> ((dwSizeOfRead != FileSize) || (!b))</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"读取文件出错n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//解密操作</span></span><br><span class="line"><span class="function">Aes <span class="title">aes</span><span class="params">(16, (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)</span>"1234567812345678")</span>;</span><br><span class="line"><span class="comment">//将缓存区里面的数据加密,放入新的缓存区里面</span></span><br><span class="line">HANDLE hNewFile = CreateFile(<span class="string">L"D:\1(解密).txt"</span>, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line">DWORD count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> Temp1[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">char</span> Temp2[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; FileSize / <span class="number">16</span>; j++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">memset</span>(Temp1, <span class="number">0</span> ,<span class="keyword">sizeof</span>(Temp1));</span><br><span class="line"><span class="built_in">memset</span>(Temp2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Temp2));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt;=<span class="number">15</span>; i++)</span><br><span class="line">Temp1[i] = Buff1[i + count];</span><br><span class="line">aes.InvCipher((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp1, (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp2);</span><br><span class="line"><span class="keyword">if</span> (j == FileSize / <span class="number">16</span> - <span class="number">1</span>) <span class="comment">//最后一次写文件</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> add = (<span class="keyword">int</span>)Temp2[<span class="number">15</span>];<span class="comment">//获得最后一次要写入的16-add个字节</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (<span class="number">16</span> - add), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//将新缓存区的数据写入新的文件里面</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(Temp2), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">count +=<span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CloseHandle(hFile);</span><br><span class="line">CloseHandle(hNewFile);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AES加密算法/" rel="tag">#AES加密算法</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+            <a href="/tags/信息安全/" rel="tag">#信息安全</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/07/08/Wickr：军事级防泄密App，设有信息自我毁灭功能/" rel="prev">Wickr：军事级防泄密App，设有信息自我毁灭功能</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/07/03/VS2010给MFC工程添加图标/" rel="next">VS2010给MFC工程添加图标</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

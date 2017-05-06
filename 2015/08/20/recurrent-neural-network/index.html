@@ -1,0 +1,654 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="rnn," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Chapter 10Sequence Modeling: Recurrent and Recursive Nets文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and">
+<meta property="og:type" content="article">
+<meta property="og:title" content="recurrent neural network">
+<meta property="og:url" content="http://yoursite.com/2015/08/20/recurrent-neural-network/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Chapter 10Sequence Modeling: Recurrent and Recursive Nets文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and">
+<meta property="og:image" content="http://yoursite.com/images/1439968612592.png">
+<meta property="og:image" content="http://yoursite.com/images/1439968854245.png">
+<meta property="og:image" content="http://yoursite.com/images/1439969468300.png">
+<meta property="og:image" content="http://yoursite.com/images/1439982919875.png">
+<meta property="og:image" content="http://yoursite.com/images/1439983172882.png">
+<meta property="og:image" content="http://yoursite.com/images/1439983375087.png">
+<meta property="og:image" content="http://yoursite.com/images/1439983463670.png">
+<meta property="og:image" content="http://yoursite.com/images/1440049893308.png">
+<meta property="og:image" content="http://yoursite.com/images/1440056349092.png">
+<meta property="og:image" content="http://yoursite.com/images/1440056503099.png">
+<meta property="og:image" content="http://yoursite.com/images/1440056927193.png">
+<meta property="og:image" content="http://yoursite.com/images/1440056960670.png">
+<meta property="og:image" content="http://yoursite.com/images/1440057203430.png">
+<meta property="og:image" content="http://yoursite.com/images/1440122827902.png">
+<meta property="og:image" content="http://yoursite.com/images/1440124060309.png">
+<meta property="og:image" content="http://yoursite.com/images/1440126665120.png">
+<meta property="og:image" content="http://yoursite.com/images/1440136869773.png">
+<meta property="og:updated_time" content="2015-08-21T06:08:55.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="recurrent neural network">
+<meta name="twitter:description" content="Chapter 10Sequence Modeling: Recurrent and Recursive Nets文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> recurrent neural network // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              recurrent neural network
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-20T19:32:19+08:00" content="2015-08-20">
+            2015-08-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="Chapter_10">Chapter 10</h1><h2 id="Sequence_Modeling:_Recurrent_and_Recursive_Nets">Sequence Modeling: Recurrent and Recursive Nets</h2><p>文章来自MIT的Deep Learning未出版版本:</p>
+<blockquote>
+<p>@unpublished{Bengio-et-al-2015-Book,<br>    title={Deep Learning},<br>    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},<br>    note={Book in preparation for MIT Press},<br>    url={<a href="http://www.iro.umontreal.ca/~bengioy/dlbook}" target="_blank" rel="external">http://www.iro.umontreal.ca/~bengioy/dlbook}</a>,<br>    year={2015}<br>}<br><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/rnn.html" target="_blank" rel="external">Deep learning Book: Chapter 10 Sequence Modeling: Recurrentand Recursive Nets</a></p>
+</blockquote>
+<a id="more"></a>
+<p>引言讲了为什么要提出RNN这种结构。首先讲了隐马尔可夫模型HMM（我之前看了一下统计学习方法里面的相关章节），我们知道HMM基于两个假设：</p>
+<ul>
+<li>任一时刻t的状态只与前一时刻t-1有关，而与再之前时刻无关，相当于一阶马尔可夫链</li>
+<li>任一时刻的观测只依赖于该时刻马尔可夫链的状态</li>
+</ul>
+<p>但是对于语音识别这样的问题来说，由于声音可以延续，那么当前时刻t的状态可能跟t-2,t-3甚至更之前的时刻都有关系，如此一来如果我们单单像HMM那样只考虑前一时刻t-1，可能效果会变差。</p>
+<p>所以我们自然而然地把研究目光放在了RNN上。这里的R是指recurrent，跟时间有关，也就是<strong>时序</strong>的神经网络。我们知道HMM也是基于时序的，所以直观上我们可以认为RNN是在HMM的基础上，放宽HMM第一个假设，使得某个时刻的状态跟之前所有时刻的状态都有关系。<br>注意RNN中的R有两种，一个是刚才提到的recurrent，还有一个是recursive。文中提到recursive的结构比recurrent更通用，也就是说我们可以认为recurrent是recursive的一种特例。一般来说我们的RNN指的都是时序的recurrent-Nets。</p>
+<h2 id="10-1_Unfolding_Flow_Graphs_and_Sharing_Parameters">10.1 Unfolding Flow Graphs and Sharing Parameters</h2><p>注：这里文章是先讲unfold flow graph，再引出RNN的。而Hinton的lecture和<a href="http://dataunion.org/9822.html" target="_blank" rel="external">这份入门资料</a>都是先提出RNN模型，再展开到unfold flow graph的。感觉前者更加深入，而后者更加直观。</p>
+<p>首先来看看flow graph，也就是流图（6.4节中有更多介绍）。这节只讲述把recursive（循环）部分转化为unfold flow graph（展开为流图）结构的思想。<br>首先举个最简单的例子，有下面的式子：<br>$$s_t = f_\theta(s_{t-1}) \quad(10.1)$$<br>这是一个时序的函数。式子的意思很简单，时刻t的状态s跟前一个时刻t-1的状态s有关，具体的关系是函数f，函数的参数是$\theta$。这个式子可以对应下面这张图：<br><img src="/images/1439968612592.png" alt="Alt text"></p>
+<p>接下来在第一个例子的基础上稍微加点东西，引入第二个例子：<br>$$s_t = f_\theta(s_{t-1}, x_t)\quad(10.2)$$<br>这个式子加了$x_t$，也就是说当前时刻t的状态s除了跟前一时刻t-1的状态有关之外，还跟当前状态的输入$x_t$有关，也可以用一张图来表示：<br><img src="/images/1439968854245.png" alt="Alt text"><br>但是我们注意到，由于是时序的，其实上面这个等式可以改写：<br>$$s_t = g_t(x_t, x_{t-1}, x_{t-2}, … , x_2, x_1)\quad(10.3)$$<br>也就是其实$s_{t-1}, s_{t-2}$这些都是中间状态，最终都可以用$x_i$来表示的。</p>
+<ul>
+<li>参数共享<br>10.3这个式子其实不太好，因为对于不同长度t的输入，$g_t$函数都不同，那么对于不同长度的输入都需要训练才能都到不同的$g_t$函数，这既麻烦又浪费参数存储空间。所以其实还是10.2式更好，因为它们共享了参数$\theta$</li>
+<li>展开为流图<br><img src="/images/1439969468300.png" alt="Alt text"><br>上图的左边和右边都可以用来表示公式10.2, 左图就是一个简单的基于时序的RNN了，但是不太好理解。而右图就是把这个RNN模型展开成流图，这样就可以方便我们理解了！右图有三列，分别表示时刻t-1, t, t+1时的情况，直观地反映了时序的概念。<br>注：左图循环边上面的那个<strong>黑色方框</strong>表示就表示这条边是有一个时间的延时，体现了时序的意思。</li>
+</ul>
+<h2 id="10-2_Recurrent_Neural_Networks">10.2 Recurrent Neural Networks</h2><p>下图显示了一个vanilla recurrent network：<br><img src="/images/1439982919875.png" alt="Alt text"><br>其中U，V，W这三个权重矩阵分别表示输入层到隐藏层、隐藏层到输出层、隐藏层到隐藏层的权重矩阵。<br>下面的公式可以表示vanilla recurrent network：<br><img src="/images/1439983172882.png" alt="Alt text"> （10.4）<br>损失函数是把所有时间序列上的损失加起来：<br><img src="/images/1439983375087.png" alt="Alt text"> （10.5）</p>
+<p>下面这个图是另外一个RNN的例子：<br><img src="/images/1439983463670.png" alt="Alt text"><br>这个模型比刚才那个模型要差一点。因为我们看到，这个模型每次是把当前的$o_t$也就是预测值传到下一时刻，而刚才那个vanilla recurrent network是把$s_t$(相当于这个模型中的$h_t$)传递到下一时刻,这样一来其实是会损失一些重要信息的。<br>总之呢，RNN需要存储足够时长的序列，才能保证预测下一时刻的准确性。</p>
+<p> 下面这个图为例子，说我们需要把输出也传递到时序中去（上面两个例子都没有这么做）：<br><img src="/images/1440049893308.png" alt="Alt text"><br>在训练时，由于我们有标记$y_t$，所以我们把标记$y_t$进行时序的反馈(点线标出)；在做预测时，我们是没有标记的，而只有估计值$\widehat{y}_t$,那么我们就把估计值进行时序反馈（虚线表示）。<br>我们把前面一种叫做<strong>teaching forcing</strong>(非常形象，因为训练的过程就是teaching的过程)，这个阶段我们是把target，也就是$y_t$进行反馈的，而不是我们的预测值(这可能就是forcing的意思)。后面一种叫做<strong>generate</strong>（认知），测试的过程就是预测的过程，认知的过程。</p>
+<p>但是在teaching forcing的时候有一个缺点，就是当网络如果使用了open-loop模式的时候（网络的输出作为下一时刻的输入)，那么训练时和测试时网络的输入将会非常不同，这将导致认知的过程变得很差。<br>有两种解决这个问题的办法：</p>
+<ul>
+<li>第一种办法就是同时训练teacher-forced inputs 和free-running inputs。这样子的话网络可以把训练中没有学习到的情况也综合进来，使得认知的过程更准确。</li>
+<li>另外一种方法是Bengio在2015年中提出来的，就是尽量减小训练过程和测试（认知）过程的差距。具体来说，在训练过程中随机地挑选<strong>预测出来的值</strong>或者<strong>实际的标记值</strong>两者中的一个作为下一时刻的输入，然后通过一个学习策略逐渐地多使用预测出来的值作为输入。</li>
+</ul>
+<h3 id="10-2-1_RNN中梯度的计算">10.2.1 RNN中梯度的计算</h3><p>使用 <strong>Back-Propagation ThroughTime (BPTT) algorithm</strong>算法来计算RNN中的梯度。理论上，当我们知道了如何计算梯度，我们就可以用一般的方法来训练RNN了。<br>这里的公式推导自己看不懂。希望以后能回过头来再看一下。</p>
+<h3 id="10-2-2_把RN看成认知的有向无环图模式">10.2.2 把RN看成认知的有向无环图模式</h3><p>讲到目前为止，我们还没有说明跟输出$o_t$相关的损失函数$L_t$是怎样的。因为RNN在具体应用上是多种多样的。在本节中，我们把RNN模型表示为观测序列的概率分布。<br>如果像公式10.5那样，用log近似预测训练目标，那么我们其实就是建立了一个条件概率分布用过去时刻s的$x_s$和$y_s$来预测当前时刻t的输出$y_t$(跟HMM很像，不过放宽了第一个条件，前文有提到的)。我们可以把RNN模型看成是一个有向图模型。我们要建立$x_t$和$y_t$的联合概率。</p>
+<p>为了初学者更好理解，我们把模型弄的简单一点（就是10.1中的第一个图而不是第二个图），每个时刻的输出当作下一个时刻的输入，这样一来就没有额外的输入了。<br>通过下面这个式子来计算：<br><img src="/images/1440056349092.png" alt="Alt text"><br>上面这个式子就是马尔可夫链嘛，可以从前到后递推地计算出来。<br>然后损失函数也就相应地可以具体来表示了（这里有点像熵的意思）：<br><img src="/images/1440056503099.png" alt="Alt text"><br>在一般的有向图模型中，$x_t$可以用它前面时刻的一部分来表示（不用到前面的所有时刻），但是在RNN中，我们必须用到前面所有的时刻。在有向图中通过去掉弧可以做到刚才说的，但是在RNN中，我们通过引入状态变量，这个状态变量可以用来表示之前所有时刻的输入信息（其实就是上文的公式10.2和10.3嘛），这样引入$s_t$之后，条件概率里面的参数就跟时间t没有关系了，而$s_t$是只跟维度有关的。这样做的代价就是优化参数的时候会比较困难。<br>总之，用公式表达就是：<br><img src="/images/1440056927193.png" alt="Alt text"><br>把后面那个条件用$s_t$来替代：<br><img src="/images/1440056960670.png" alt="Alt text"><br>注意这样一来，函数$f_\theta$会忽略$x_{t-k}$之前的那些x。这样做其实是很合理的。<br>我们用图来好好理解一下上面的东西：<br><img src="/images/1440057203430.png" alt="Alt text"><br>上面这个图显示了一个感知时候的RNN网络模型，每个$x_t$即作为输入，又作为标记。输出$o_t$通过条件概率$P(x_{t+1} | x_1, …, x_t) = P(x_{t+1} | o_t)$来编码生成$x_{t+1}$。损失函数$L_t$跟预测输出$o_t$有关。在训练模式的时候，通过观测序列x，最小化损失函数之和来训练模型。在预测模式时，加入了虚线箭头，也就是把当前时刻的输出作为下一时刻的输入。</p>
+<p>最后一个比较重要的事情就是模型要知道什么时候结束（之前Hinton讲从wiki上训练数据来让模型自动预测句子的例子，模型不能让句子一直造下去吧，肯定要在适当地方结束这个句子）。有很多种方法可以来实现。</p>
+<ul>
+<li>有一种方法是添加一个特殊的符号标志来标记序列的结束。当这个符号标记生成出来的时候，表示一个完整的序列就生成了（一个句子结束了）。这个特殊符号在一个序列中当然只能出现一次了，而且只能在最后作为$x_T$出现。我们可以通过训练一个二项分布的输出来实现。举例来说可以使用非线性的sigmoid输出和交叉熵损失（不明白具体怎么实现）。</li>
+<li>另外一种方法是单独给T建模，使用还剩多少时间t的方式。这样我们就把$P(x_1, …, x_T)$分解成了$P(T)$和$Px_1, …, x_T | T)$。总之呢我们在生成一个完整的序列的时候不仅仅要考虑$x_t$,还要考虑序列的长度T，不管是隐式的还是显式的。</li>
+</ul>
+<h3 id="10-2-3_用RNN来表示条件概率分布">10.2.3 用RNN来表示条件概率分布</h3><p>这一部分自己也不是能够深刻地理解。</p>
+<h2 id="10-3_双向RNN">10.3 双向RNN</h2><p>前面的讨论中，RNN时刻t的状态只跟$x_1, …, x_{t-1}$有关，然而在很多情况下，我们需要当前时刻的状态跟整个序列的状态有关（也就是说要看未来的状态）。例如在语音识别中，由于语法之间是有上下文关联和依赖的，所以对于当前状态的预测我们可能希望通过未来的状态来更好地预测。这在手写识别这个问题中也同样存在。<br>为了解决这个问题，提出了Bidirectional recurrent neural networks（双向RNN）。这个模型在语音识别，手写识别和生物信息学中获得了成功。<br><img src="/images/1440122827902.png" alt="Alt text"><br>双向RNN把前向RNN和后向RNN结合了起来，这就使得输出$o_t$可以把过去的信息和未来的信息都结合起来，而不需要指定关于t的固定窗口大小。<br>这个想法可以应用到2D的图像中来，通过建立四个不同方向的RNN（上下左右）来计算最能捕捉局部信息的表示，通过也可以考虑到周边输入的影响。</p>
+<h2 id="10-4_编码-解码_序列到序列架构">10.4 编码-解码 序列到序列架构</h2><p>这节我们讲讲如何用RNN来实现输入和输出序列不等长的情况。比如在语音识别，机器翻译，自动问答中就会出现这样的情况。<br>有两个人几乎同时在2014年各自独立地提出了类似的架构，看下面这个图：<br><img src="/images/1440124060309.png" alt="Alt text"><br>下面这个RNN叫做编码RNN，用来处理输入；上面那个是解码RNN，用来处理输出。注意到编码RNN的最后一个隐藏状态会计算出一个固定大小（应该是向量维度的大小）的变量C，这个C里面表示了整个输入序列的信息，然后交给解码RNN进行计算。<br>这其中蕴含的思想很简单：</p>
+<ol>
+<li>编码RNN处理输入序列，从最后一个隐藏状态中产生C来表示这个输入序列</li>
+<li>解码RNN受限于这个C，然后产生输出序列。</li>
+</ol>
+<p>这两个RNN联合起来训练，通过所有的训练样本$(X,Y)$,使得平均的$P(Y=Y|X=X)$最大化。通过这种架构的方式，输入序列和输出序列就不用等长了。<br>但是这样做有一个缺陷，就是当编码RNN的输出C的维度太小的时候，它不足以表示一个很长的输入序列X。那么一个改进的方法就是让C的维度可变，而不是固定大小。</p>
+<h2 id="10-5_Deep_RNN">10.5 Deep RNN</h2><p>在计算大多数的RNN时，参数都可以分解成为三个部分，进行相互联系的转换：</p>
+<ol>
+<li>从输入状态到隐藏状态</li>
+<li>从前一个隐藏状态到下一个隐藏状态</li>
+<li>从隐藏状态到输出状态<br>前两条是输入和先前状态到下一个状态的转换。在之前讲的那个vanilla RNN架构中，这三个部分的每一个部分都各自有一个单独的权重矩阵（之前那个图的U、V、W）。<br>那么我们自然就想到，能不能把这三个部分的一个或几个多做几层变成Deep的呢？很多实验证明，这样做的效果是显著的。<br>上图：<br><img src="/images/1440126665120.png" alt="Alt text"></li>
+</ol>
+<ul>
+<li>左图是把隐藏状态多了多层，这里有两个隐藏层，也就是h 和z。两层之间是相互连通的。（但是这里要把连接做一些限制，就像CNN一样，不然复杂度太大了）。跟CNN类似，我们可以认为底层的隐藏层进行了一些底层输入的转换，而高层的隐藏层进行了更加抽象，更加近似的转换。</li>
+<li>中图在对上面每一个部分都做了deep（但是这个图看不太懂）。但是这样做有一个很大的缺点：就是最短的那条路径从时间$t$变到了时间$t’$,而时间$t’$远远大于$t$。在依赖关系很大的模型上，计算就变得困难了。</li>
+<li>右图是中图的改进，通过隐藏层之间的跳跃连接(skip connections)来改善中图中出现的缺点。</li>
+</ul>
+<h2 id="10-6_Recursive_Neural_Networks">10.6 Recursive Neural Networks</h2><p>前面已经提到了，recursive NN 是比recurrent NN更加通用的一种模型结构。一言以蔽之，就是之前的recurrent是链表形状的结构，现在我们把结构扩展了一下，recursive就是一种树形的结构。这种结构在自然语言处理和计算机视觉上也获得了成功。<br><img src="/images/1440136869773.png" alt="Alt text"><br>上面这个图就是一个树形结构的recursive NN模型了。输入是可变长的，而输出是固定长度的。上图是一个有监督学习的例子，对于整个序列x有一个标签y。<br>recursive nets有一个好处就是对于同样长度的输入序列，深度从N变成了o(logN),这就跟树的形态有关了。一种方案是用平衡二叉树，另外一种方案是使用其它方法，例如自然语言语法分析器。最理想的情况是我们想让模型自己去推断，对于不同的输入，构建不同的树形。<br>下面就介绍了不同的人提出的不同的recursive网络的想法。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rnn/" rel="tag">#rnn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/24/Hopfield-and-BM/" rel="prev">从Hopfiled网络到BM(玻尔兹曼机)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/17/convolutional-network-1/" rel="next">convolutional network</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Chapter_10"><span class="nav-text">Chapter 10</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sequence_Modeling:_Recurrent_and_Recursive_Nets"><span class="nav-text">Sequence Modeling: Recurrent and Recursive Nets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-1_Unfolding_Flow_Graphs_and_Sharing_Parameters"><span class="nav-text">10.1 Unfolding Flow Graphs and Sharing Parameters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-2_Recurrent_Neural_Networks"><span class="nav-text">10.2 Recurrent Neural Networks</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-1_RNN中梯度的计算"><span class="nav-text">10.2.1 RNN中梯度的计算</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-2_把RN看成认知的有向无环图模式"><span class="nav-text">10.2.2 把RN看成认知的有向无环图模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-2-3_用RNN来表示条件概率分布"><span class="nav-text">10.2.3 用RNN来表示条件概率分布</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-3_双向RNN"><span class="nav-text">10.3 双向RNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-4_编码-解码_序列到序列架构"><span class="nav-text">10.4 编码-解码 序列到序列架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-5_Deep_RNN"><span class="nav-text">10.5 Deep RNN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#10-6_Recursive_Neural_Networks"><span class="nav-text">10.6 Recursive Neural Networks</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

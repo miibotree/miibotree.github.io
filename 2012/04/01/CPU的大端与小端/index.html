@@ -1,0 +1,610 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="汇编," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Big-endian和little-endian(转载)
+Big-endian和little-endian是描述排列存储在计算机内存里的字节序列的术语。
+Big- endian是一种大值的一端（序列中更典型值）存在前面（在最小的存储地址）的顺序。Little-endian是一种小值的一端（序列中较不典型的 值）存储在前的顺序。比如，在Big-endian的电脑中，需要两个字节把十六位数4F52当作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CPU的大端与小端">
+<meta property="og:url" content="http://yoursite.com/2012/04/01/CPU的大端与小端/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Big-endian和little-endian(转载)
+Big-endian和little-endian是描述排列存储在计算机内存里的字节序列的术语。
+Big- endian是一种大值的一端（序列中更典型值）存在前面（在最小的存储地址）的顺序。Little-endian是一种小值的一端（序列中较不典型的 值）存储在前的顺序。比如，在Big-endian的电脑中，需要两个字节把十六位数4F52当作">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CPU的大端与小端">
+<meta name="twitter:description" content="Big-endian和little-endian(转载)
+Big-endian和little-endian是描述排列存储在计算机内存里的字节序列的术语。
+Big- endian是一种大值的一端（序列中更典型值）存在前面（在最小的存储地址）的顺序。Little-endian是一种小值的一端（序列中较不典型的 值）存储在前的顺序。比如，在Big-endian的电脑中，需要两个字节把十六位数4F52当作">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> CPU的大端与小端 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              CPU的大端与小端
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-01T20:51:25+08:00" content="2012-04-01">
+            2012-04-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Big-endian和little-endian(转载)</p>
+<p>Big-endian和little-endian是描述排列存储在计算机内存里的字节序列的术语。</p>
+<p>Big- endian是一种大值的一端（序列中更典型值）存在前面（在最小的存储地址）的顺序。Little-endian是一种小值的一端（序列中较不典型的 值）存储在前的顺序。比如，在Big-endian的电脑中，需要两个字节把十六位数4F52当作4F52存在存储器中（如果4F存在存储地址1000 中，比如说，52将存在1001中）。在little-endian系统里，将被存为524F（52存在存储地址1000中，比如说，4F将存在1001 中）。</p>
+<p>IBM的370主机，多数基于RISC计算机，和Motorola的微处理器使用big-endian方法。TCP/IP也使用 big-endian方法（因此big-endian方法也叫做网络编码）。对于人来说我们的语言都是从左到右的习惯方式。这看上去似乎被认为是自然的存 储字符和数字方式-你同样也希望以同样的方式出现在你面前。我们总的许多人因此也会认为big-endian是流行的存储方式，正如我们平时所读到的。另 一个方面说，Intel处理器（CPUs）和DEC Alphas和至少一些在他们的平台的其他程序都是little-endian的。</p>
+<p>有 个关于little-endian的争议是如果你增加数字的值，你可能在左边增加数字（高位非指数函数需要更多的数字）。因此，经常需要增加两位数字并移 动存储器里所有Big-endian顺序的数字，把所有数向右移。使用little-endian的存储器中不重要的字节可以存在它原来的位置，新的数可 以存在它的右边的高位地址里。这就意味着有些计算机的运作可以变得简单和快速。</p>
+<p>语言编译器比如说Java或FORTRAN必须明确他们开发的目标代码使用的是什么存储方式。有必要的话可以使用转换器可以用来转换存储顺序。</p>
+<p>注 意在使用big-endian和little-endian字节顺序中，一个位里面都是使用big-endian。也就是说，在存储的字节里一个位串代表 的给定数没有big-endian和little-endian之分。比如说，有个十六位数4F放在一个给定的字节地质前面或者后面，在这个字节的这一位 的里的顺序是:</p>
+<p>01001111</p>
+<p>从这一位的顺序来看有可能是big-endian也可能是little-endian，但是CPUs和程序几乎都是设计成big-endian位序的。尽管如此在数据的交换中它有可能其中的一种顺序。</p>
+<p>Eric Raymond评述说Internet域名地址和e-mail地址是little-endian的。比如我们的网址用big-endian来表述是com.whatis.www。</p>
+<p>Big- endian和little-endian来自于Jonathan Swift的Gulliver&#8217;s Travels ，Big-endian是那个大鸡蛋是打破大头的那个政治派别，而反对派Lilliputian King要求他的国民打鸡蛋的时候用小的那一头。</p>
+<p>目 前的存储器，多以byte为访问的最小单元，当一个逻辑上的整理必须分割为物理上的若干单元时就存在了先放谁后放谁的问题，于是endian的问题应运而 生了。对于不同的存储方法，就有Big-endian和Little-endian两个描述。(这两个术语来自于 Jonathan Swift 的《《格利佛游记》其中交战的两个派别无法就应该从哪一端－－小端还是大端－－打开一个半熟的鸡蛋达成一致。在那个时代，Swift是在讽刺英国和法国之 间的持续冲突，Danny Cohen，一位网络协议的早期开创者，第一次使用这两个术语来指代字节顺序，后来这个术语被广泛接纳了。)</p>
+<p>存 在“如果说&#8221;跟word或者说字长根本就没关系&#8221;，假设有一数据文件里面有N多数顺序排布，如果想以Little-Endian format 读入内存某区域，那么应该怎么读？怎么排？”这样的问题是由于对于endian的实质理解的偏差，endian指的是当物理上的最小单元比逻辑上的最小单 元小时，逻辑到物理的单元排布关系。这里的“有一数据文件里面有N多数顺序排布”，这个“有一数据”显然不是逻辑上的最小单元，而其中的“N多数”的一个 才是逻辑最小单元，于是可应用楼主表格中的原则排列，而“N多数”之间的顺序则是由这“N多数”的宿主决定的，比如是你写的程序，这个顺序由你决定。</p>
+<p>刚才谈到了，endian指的是当物理上的最小单元比逻辑上的最小单元小时，逻辑到物理的单元排布关系。咱们接触到的物理单元最小都是byte，在通信领域中，这里往往是bit，不过原理也是类似的。</p>
+<p>实践可以给你更多的经验，比如在一个嵌入式系统的通信协议中，从底层射频驱动到上层的协议栈全部需要实现，那么很可能遇到多个endian的问题，底层的bit序、协议层的byte序、应用层的byte序，这些都是不同的概念。</p>
+<p>Big-Endian 和 Little-Endian 字节排序</p>
+<p>字节排序                  含义</p>
+<p>Big-Endian    一个Word中的高位的Byte放在内存中这个Word区域的低地址处。</p>
+<p>Little-Endian  一个Word中的低位的Byte放在内存中这个Word区域的低地址处。</p>
+<p>必须注意的是：表中一个Word的长度是16位，一个Byte的长度是8位。如果一个数超过一个Word的长度，必须先按Word分成若干部分，然后每一部分(即每个Word内部)按Big-Endian或者Little-Endian的不同操作来处理字节。</p>
+<p>一个例子：</p>
+<p>如果我们将0x1234abcd写入到以0&#215;0000开始的内存中，则结果为</p>
+<p>big-endian   little-endian</p>
+<p>0&#215;0000      0&#215;12        0xcd</p>
+<p>0&#215;0001      0&#215;34        0xab</p>
+<p>0&#215;0002      0xab        0&#215;34</p>
+<p>0&#215;0003      0xcd        0&#215;12</p>
+<p>除了moto的68K系列和dec的sparc是big endian外，常见的cpu都是little endian。ARM同时支持 big和little，实际应用中通常使用little endian。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/汇编/" rel="tag">#汇编</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/03/关于miibotree的由来/" rel="prev">关于miibotree的由来</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/03/31/开始学习汇编-PE/" rel="next">开始学习汇编+PE</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,630 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="注册表," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="遇到一位朋友紧急求助：系统是windows7，这位朋友因为桌面没有OFFICE图标，又急着要用WORD，就把一个桌面图标右击，选择打开方式 中选择了Word，而且没有把“始终使用这种程序打开同类型文件”前的勾去掉。这一改之后，结果所有的快捷方式全变成了word文档了。可以再改成别的， 比如再改为记事本方式打开，但就是没有办法恢复原状。
+这是一个文件关联的问题。这样的问题在xp下根本就不可能发生，看">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Win7文件关联 文件与程序“联姻”">
+<meta property="og:url" content="http://yoursite.com/2012/05/11/Win7文件关联-文件与程序“联姻”/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="遇到一位朋友紧急求助：系统是windows7，这位朋友因为桌面没有OFFICE图标，又急着要用WORD，就把一个桌面图标右击，选择打开方式 中选择了Word，而且没有把“始终使用这种程序打开同类型文件”前的勾去掉。这一改之后，结果所有的快捷方式全变成了word文档了。可以再改成别的， 比如再改为记事本方式打开，但就是没有办法恢复原状。
+这是一个文件关联的问题。这样的问题在xp下根本就不可能发生，看">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Win7文件关联 文件与程序“联姻”">
+<meta name="twitter:description" content="遇到一位朋友紧急求助：系统是windows7，这位朋友因为桌面没有OFFICE图标，又急着要用WORD，就把一个桌面图标右击，选择打开方式 中选择了Word，而且没有把“始终使用这种程序打开同类型文件”前的勾去掉。这一改之后，结果所有的快捷方式全变成了word文档了。可以再改成别的， 比如再改为记事本方式打开，但就是没有办法恢复原状。
+这是一个文件关联的问题。这样的问题在xp下根本就不可能发生，看">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Win7文件关联 文件与程序“联姻” // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Win7文件关联 文件与程序“联姻”
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-11T21:05:34+08:00" content="2012-05-11">
+            2012-05-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>遇到一位朋友紧急求助：系统是windows7，这位朋友因为桌面没有OFFICE图标，又急着要用WORD，就把一个桌面图标右击，选择打开方式 中选择了Word，而且没有把“始终使用这种程序打开同类型文件”前的勾去掉。这一改之后，结果所有的快捷方式全变成了word文档了。可以再改成别的， 比如再改为记事本方式打开，但就是没有办法恢复原状。</p>
+<p>这是一个文件关联的问题。这样的问题在xp下根本就不可能发生，看来这个具体问题是Win7下的新问题。网上大致搜了一下，发现出现这样问题的决不只是这位朋友，看来有解决的必要。</p>
+<p>为了解决这个问题，我们需要先谈一下文件关联的一些基本的知识，这样才能使朋友们做到知其然而知其所以然。</p>
+<p>文件关联，主要的是把文件类型与开放式命令关联起来。而windows是通过文件的扩展名来识别文件类型的，这就首先需要把扩展名与文件类型关联起来。</p>
+<p>assoc命令</p>
+<p>要修改扩展名与文件类型的关联，我们需要用到一个命令：assoc</p>
+<p>点开始，搜索，输入cmd，打开cmd,在cmd中输入：assoc /? 回车。我们可以得到关于这个命令的帮助。</p>
+<p>assoc命令的作用有两个，一是显示扩展名与文件类型的关联，一是改写扩展名与文件类型的关联。</p>
+<p>让我们以快捷方式的关联为例来讲述这个问题。</p>
+<p>快捷方式的扩展名是.lnk，在windows下，这个扩展名一般是不会显现出来的，如果出现了，必是它的文件关联出问题了。</p>
+<p>我们在cmd中输入：assoc .lnk ，回车后我们可以得到的命令结果是： .lnk=lnkfile 。这个命令结果显示了：扩展名.lnk与文件类型lnkfile是相关联的。凡是扩展名为.lnk的文件，都属于lnkfile这个文件类型。</p>
+<p>现在让我们输入命令： assoc .lnk=lnk ，按下回车键，lnk这个扩展名与文件类型的关联就被改写了。然后我们再输入命令： assoc .lnk ，按下回车键，我们得到的命令结果将是: .lnk=lnk ，这个结果显示了，扩展名.lnk已经是与文件类型lnk相关联，而不再是与lnkfile相关联。</p>
+<p>这个时候你去桌面上去看一下吧，你桌面上所有的快捷方式的后缀名.lnk全部显示出来了，所有的快捷方式都不再可用。双击时会提示：windows无法打开此文件。</p>
+<p>现在再让我们输入： assoc .lnk=lnkfile ，按下回车键，我们将会发现，一切又恢复了原状。</p>
+<p>总之，如果是快捷方式的扩展名与文件类型之间的关联出现了问题，我们只需要输入： assoc .lnk=lnkfile，回车后即可以解决问题。</p>
+<p>这样，如果我们知道一种扩展名所属的正确的文件类型，当这种扩展名与文件类型之间的关联出现问题的时候，我们只需要输入： assoc .ext=filetype ，按下回车键即可。 这个.ext代表的是文件扩展名，比如.lnk，这个filetype代表的是文件类型，比如lnkfile。如果我们不知道一种扩展名所关联的文件类型 是什么，我们只需要在cmd中输入：assoc .ext回车。我们就能得到它所关联的文件类型是什么。</p>
+<p>每一个注册了的扩展名都会在注册表中存在着一个对应的注册表项： HKEY_CLASSES_ROOT.ext ，</p>
+<p>这里的.ext代表的是扩展名，比如快捷方式对应的项就是： HKEY_CLASSES_ROOT.lnk ，这个项有一个默认的值，这个默认的值的数据，就是这个快捷方式所关联的文件类型。因而assoc命令，主要的就是修改这个项的默认值的数据。但需要注意 的是，assoc命令所修改的内容，并不仅仅是这个项的默认值的数据，它还会要修改其它的一些方面。所以我们直接在注册表中改这个值的数据，并不能完全代 替assoc命令。</p>
+<p>ftype命令</p>
+<p>我们现在知道了如何把扩展名与文件类型关联起来了，进一步地需要知道的是如何把文件类型与开放式命令关联起来。比如.txt扩展名所关联的文件 类型是txtfile,而txtfile正常的情形下，总是用notepad.exe（记事本）来打开的，这个notepad.exe就是打开 txtfile文件类型的开放式命令。</p>
+<p>如何来修改这种文件类型与开放式命令之间的关联呢？这需要用到另外的一个重要的命令：ftype</p>
+<p>让我们在cmd中输入： ftype /? 回车。我们可以得到这个命令的帮助。</p>
+<p>ftype命令有两个作用，一是显示文件类型与开放式命令之间的关联，一是改写文件类型与开放式命令之间的关联。</p>
+<p>如果我们想知道一种文件类型与什么样的开放式命令相关联，我们只需要在cmd中输入： ftype fileType ，按下回车键，我们就能够得到我们想要得到的结果。</p>
+<p>这个fileType代表的是指定的文件类型，比如lnkfile，我们输入：ftype lnkfile ，按下回车键，正常情形下我们得到的命令结果是： 没有找到文件类型“lnkfile”或者与其相关的开放式命令，这个结果表明正常的情形下，lnkfile是没有与任何开放式命令相关联的。</p>
+<p>让我们输入：ftype lnkfile=notepad.exe ，按下回车键，再输入：ftype lnkfile ，按下回车键，我们将得到的命令结果是： lnkfile=notepad.exe 这个结果表明了：文件类型lnkfile就与开放式命令notepad.exe关联上了。</p>
+<p>这种情形下，仍然并不会影响快捷方式的打开。 那么，如何来清除这个关联，并且不与其它的开放式命令关联呢？我们只要输入： ftype lnkfile= ，然后回车即可。</p>
+<p>在xp下，这个命令无效，但是，我们可以在xp下输入：ftype lnkfile= ，按下回车键，这个命令与前一个命令在外表上几乎看不出区别，区别就在于，前一个命令在＝后面没有空格，而后一个命令在＝后有一个空格。</p>
+<p>让我们输入：ftype txtfile ，按下回车键，正常情形下，我们可以得到的命令结果是： txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1 ，这个结果表明了：文件类型txtfile与开放式命令txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1相关联。</p>
+<p>如果一种文件类型与开放式命令之间的关联出现了问题，而我们知道正确的开放式命令是什么，这时我们只需要在cmd中输入如下命令并回车即可修 复： ftype fileType=openCommandString ，这里fileType代表的是指定的文件类型，比如txtfile,这里openCommandString代表的是开放式命令，比如 notepad.exe</p>
+<p>如果我们的txtfile与开放式命令之间的关联出了问题，我们只需要在cmd中输入： ftype txtfile=&#8221;%SystemRoot%system32NOTEPAD.EXE&#8221; %1 ，按下回车键，这样我们也就修复了txtfile文件类型与它的开放式命令之间的关联。</p>
+<p>所谓开放式命令，其实就是对这种文件类型的打开方式。每一种注册了的文件类型，在注册表中都会存在着它的一个对应的注册表项，这个注册表项就 是： HKEY_CLASSES_ROOTfiletype ，这个filetype代表的是文件类型，比如batfile文件类型所对应的注册表项就是： HKEY_CLASSES_ROOTbatfile ，ftype命令所修改的注册表项主要就是&#8212;HKEY_CLASSES_ROOTfiletypeshellopencommand&#8212;这 个项的默认值的数据。</p>
+<p>但需要注意的是，ftype命令所修改的并不仅仅是这个默认值的数据。因而直接在注册表中修改这个数据，并不能代替ftype命令的修改。</p>
+<p>当然，ftype命令所修改的全部的东西都可以在注册表中找到，但是，我们那样一一地去找，远不如用ftype命令简单修改来得爽。</p>
+<p>右键打开方式</p>
+<p>前面我们谈到了扩展名与文件类型的关联，文件类型与开放式命令的关联（也就是文件的打开方式），看起来好象我们关于文件关联的问题就谈完了，实 则不然，还有另外的一个重要的方面我们没有谈到。这就是我们右击一个文件，选择打开方式（并不是所有文件右键都有打开方式这个选项的），然后我们选择一个 程序，并把“始终使用这种程序打开同类型文件”前的勾选上，点确认。比如本文开头的那位朋友，把所有快捷方式都选择以word程序打开一样。这样之后，这 个文件类型也就与这个开放式命令关联起来了。</p>
+<p>ftype命令是修改文件类型与开放式命令的关联的，而右键打开方式也可以修改文件类型与开放式命令的关联，这二者的关系是什么呢？</p>
+<p>我们发现，ftype命令和右键打开方式，这二者所修改的注册表项是不同的。Ftype命令所修改的注册表项是： HKEY_CLASSES_ROOTfiletype ，这个filetype代表的是文件类型，比如HKEY_CLASSES_ROOTlnkfile ，而右键打开方式所修改的主要注册表项是： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.ext ，这个.ext代表的是文件扩展名，比如： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.lnk ，按照我的理解，ftype命令所修改的内容属于系统设置，而右键打开方式所修改的内容则属于用户设置，这二者所设置的实际对象是一样的，当二者不一致的 时候，用户设置优先于系统设置。</p>
+<p>三个注册表项</p>
+<p>总之，文件关联所涉及到的注册表项主要是三个：</p>
+<p>HKEY_CLASSES_ROOT.ext</p>
+<p>HKEY_CLASSES_ROOTfiletype</p>
+<p>HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.ext</p>
+<p>问题解决</p>
+<p>现在要回到我们在开头所说到的问题了。我教那位朋友首先输入：assoc .lnk ，返回的命令结果是： .lnk=lnkfile 中，这表明，扩展名.lnk与文件类型lnkfile之间的关联没有问题。 我再要他输入：ftype lnkfile ，返回的命令结果是：没有找到文件类型“lnkfile”或者与其相关的开放式命令，而这个结果是正常的，这表明，系统设置中的lnkfile与开放式命 令之间的关联也没有问题。</p>
+<p>那么，问题只能出在用户设置中的lnkfile与开放式命令之间的关联出现了问题。 一般的情形下，右键打开方式的设置优先于ftype命令对文件关联的设置，这在xp和win7下都是一样的，但对于扩展名为.lnk的快捷方式，二者却具 有不同。在win7下，即便是对于.lnk快捷方式，也是右键打开方式的设置优先于ftype命令的设置。</p>
+<p>找到了问题所在，我们就可以知道，对于这种快捷方式的文件关联错误，我们用assoc和ftype命令都是无法解决的。解决的办法就是：</p>
+<p>在注册表中右键删除下面这个注册表项： HKEY_CURRENT_USERSoftwareMicrosoftWindowsCurrentVersionExplorerFileExts.lnkUserChoice 这个注册表项下的值和数据（具体就是名为progid的值和它的数据），是对应右键打开方式所设置的默认打开程序的。</p>
+<p>在删除后，重启电脑，或者重启explorer，问题完美得到解决。 除了这种解决办法，其它的解决办法暂时没有找到。</p>
+<p>顺便说一下，在XP下，UserChoice这个注册表项是没有的。</p>
+<p>由于一些文件右键没有打开方式选项，在xp下，我们可以在我的电脑里面点工具&#8212;-查看&#8212;-文件夹选项&#8212;文件类型，这里我们可以进行 同样的设置，而在Win7下，我们可以在&#8212;-控制面板&#8212;程序&#8212;默认程序&#8212;-始终使用指定的程序打开此文类型&#8212;里面进行设置，xp下设 置的可选项要多得多，而Win7下则的设置则极为简明。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/注册表/" rel="tag">#注册表</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/05/13/win7下的UAC机制与提升管理员权限/" rel="prev">win7下的UAC机制与提升管理员权限</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/05/11/修改office关联—–批量修改注册表关联assoc与ftype命令/" rel="next">修改office关联—–批量修改注册表关联assoc与ftype命令</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

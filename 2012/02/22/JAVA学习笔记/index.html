@@ -1,0 +1,803 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="JAVA," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这个学期报了一门android的课程，可是自己连java都没有学习过，所以自己借了本java的书本看了起来。也看了大概一个礼拜了，感觉java里面的一些关于对象，继承的东西比较抽象，不知道是不是我借的这本书太难了，很多专业术语记住就忘记了。所以还是自己在这里做个笔记，免得忘记。
+&amp;nbsp;
+首先java与c的大致语法是一样的，只不过有一些区别：
+1.java里面是没有指针的概念的
+2.java里">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA学习笔记">
+<meta property="og:url" content="http://yoursite.com/2012/02/22/JAVA学习笔记/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这个学期报了一门android的课程，可是自己连java都没有学习过，所以自己借了本java的书本看了起来。也看了大概一个礼拜了，感觉java里面的一些关于对象，继承的东西比较抽象，不知道是不是我借的这本书太难了，很多专业术语记住就忘记了。所以还是自己在这里做个笔记，免得忘记。
+&amp;nbsp;
+首先java与c的大致语法是一样的，只不过有一些区别：
+1.java里面是没有指针的概念的
+2.java里">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/21/0_1329809138elsP.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/struggle.gif">
+<meta property="og:updated_time" content="2015-07-25T04:48:33.236Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JAVA学习笔记">
+<meta name="twitter:description" content="这个学期报了一门android的课程，可是自己连java都没有学习过，所以自己借了本java的书本看了起来。也看了大概一个礼拜了，感觉java里面的一些关于对象，继承的东西比较抽象，不知道是不是我借的这本书太难了，很多专业术语记住就忘记了。所以还是自己在这里做个笔记，免得忘记。
+&amp;nbsp;
+首先java与c的大致语法是一样的，只不过有一些区别：
+1.java里面是没有指针的概念的
+2.java里">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> JAVA学习笔记 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              JAVA学习笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-22T20:55:00+08:00" content="2012-02-22">
+            2012-02-22
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这个学期报了一门android的课程，可是自己连java都没有学习过，所以自己借了本java的书本看了起来。也看了大概一个礼拜了，感觉java里面的一些关于对象，继承的东西比较抽象，不知道是不是我借的这本书太难了，很多专业术语记住就忘记了。所以还是自己在这里做个笔记，免得忘记。</p>
+<p>&nbsp;</p>
+<p>首先java与c的大致语法是一样的，只不过有一些区别：</p>
+<p>1.java里面是没有指针的概念的</p>
+<p>2.java里面的方法对应c里面的函数</p>
+<p>3.java里面的状态对应c里面的变量</p>
+<p>4.自己以前写c是从main函数开始的，而java的话是从类开始的</p>
+<p>5.java多了以下概念：</p>
+<p>&nbsp;</p>
+<p>这里重点记录的是一些关于面向对象的知识点</p>
+<p><strong><span style="color: #3366ff;">1.对象</span></strong></p>
+<p>软件对象是现实世界对象的模式化产物，他们也有状态</p>
+<p>和行为。软件对象把状态用数据表示并存放在变量里，而行为则用方法实现。实际上，软件</p>
+<p>对象还包括了数据结构和使用这些数据结构的代码。因此也可以说：软件对象是现实世界客</p>
+<p>观事务的软件化模拟，是变量（数据和数据结构）和相关方法（对数据操作和对象管理的程</p>
+<p>序）的软件组合。</p>
+<p>&nbsp;</p>
+<p>创建对象包括声明、实例化和初始化三方面的内容。通常的格式为  :</p>
+<p><span style="color: #993399;"><span style="background-color: #ffffff;">1.  声明对象</span></span></p>
+<p>对象声明实际上是给对象命名，也称定义一个实例变量。对象声明的一般格式为：</p>
+<p>type name</p>
+<p>其中，type是一个类的类名，用它声明的对象将属于改类；name 是对象名。</p>
+<p>例如：</p>
+<p>Date today；</p>
+<p>Rectangle myRectangle;</p>
+<p>第一条语句说明了对象today属于Date类，第二条语句说明了对象 myRectangle</p>
+<p>属于 Rectangle 类。对象说明并没有体现一个具体的对象，只有通过实例化后的对</p>
+<p>象才能被使用。</p>
+<p><span style="color: #993399;">2.  实例化对象 </span></p>
+<p>实例化对象就是创建一个对象。<span style="color: #ff0000;">实例化对象意味着给对象分配必要的存储空间</span>，用</p>
+<p>来保存对象的数据和代码。实例化后的每个对象均占有自己的一块内存区域，实例</p>
+<p>化时，每个对象分配有一个“引用” （reference）保存到一个实例变量中。“引用”</p>
+<p>实际上是一个指针，此指针指向对象所占有的内存区域。</p>
+<p>因此，对象名（变量）实际上存放的是一个被实例化之后的对象所占有的内存区域</p>
+<p>的指针。</p>
+<p>例如：</p>
+<p>type objectName = new type ( [paramlist] );</p>
+<p>运算符 new 为对象分配内存空间 ,实例化一个对象  。new 调用对象的构造方法,返</p>
+<p>回对该对象的一个引用(即该对象所在的内存地址)。用 new 可以为一个类实例化，</p>
+<p>多个不同的对象。这些对象分别占用不同的内存空间，因此改变其中一个对象的状</p>
+<p>态不会影响其它对象的状态  。</p>
+<p><span style="color: #993399;">3．初始化对象</span></p>
+<p>生成对象的最后一步是执行构造方法,进行初始化。由于对构造方法可以进行重写</p>
+<p>，所以通过给出不同个数或类型的参数会分别调用不同的构造方法。</p>
+<p>例子：以类 Rectangle 为例,我们生成类 Rectangle的对象:</p>
+<p>Rectangle  p1=new Rectangle ();</p>
+<p>Rectangle  p2=new Rectangle (30，40);</p>
+<p><span style="color: #ff0000;">关于对象的引用</span></p>
+<p>这个概念自己一开始没有想明白，查找了相关的资料：</p>
+<p>&nbsp;</p>
+<p>1. 引用类型（reference type）：引用类型是用在对象上的。一个对象可以被多个引用所指向，但同一时刻，每个引用只能指向唯一的一个对象。如果一个对象被多个引用所指向，那么无论哪个引用对对象的属性进行了修改，都会反映到其他的引用当中。</p>
+<p>2.在java里，永远无法直接操作对象，对对象的所有操作都是通过对象的引用来间接完成的。</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">People</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> age = <span class="number">20</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">change</span>(<span class="params">People people</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">people = <span class="keyword">new</span> People();</span><br><span class="line">people.age = <span class="number">30</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(<span class="params">String[] args</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">People people = <span class="keyword">new</span> People();</span><br><span class="line"><span class="keyword">int</span> age = people.age;</span><br><span class="line">System.<span class="keyword">out</span>.println(age); <span class="comment">//输出 20</span></span><br><span class="line">people.change(people);</span><br><span class="line"><span class="keyword">int</span> age2 = people.age;</span><br><span class="line">System.<span class="keyword">out</span>.println(age2); <span class="comment">//还是输出20</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>People people=new People(); //这句话在内存的堆中生成了一个 People类型的对象，并且在内存的栈中生成了一个 People类型的引用，这个引用指向了堆中生成的People类型的对象</p>
+<p>people.change(people); //传到方法的时候创建了一个新的引用，也指向刚才在堆中生成的People类型的对象</p>
+<p>public void change(People people)</p>
+<p>{</p>
+<p>people = new People(); //在内存的堆中又生成了一个 People类型的对象，并将方法中的那个引用从指向旧的People对象改成指向这个新的对象</p>
+<p>&nbsp;</p>
+<p>people.age = 30; //这里通过新的引用修改的是方法中新产生的对象的age属性，而不是外面那个对象的age属性</p>
+<p>}</p>
+<p>3. 如果一个类包含了属性与方法，那么该类的每一个对象都具有自己的属性，但无论一个类有多少个对象，这些对象共享同一个方法（引用同一个方法）。</p>
+<p>4. 关于方法参数传递的总结：对于Java中的方法参数传递，无论传递的是原生数据类型还是引用类型，统一是传值（pass by value），而不是传递内存地址。C#里面有ref可以传递内存地址</p>
+<p>5. 什么类型的引用就能指向什么类型的对象，不能指向其他类型的对象，比如People类型的引用就能指向People类型的对象，但不能指向Student类型的对象。比如：</p>
+<p>People people = new People(); // 正确</p>
+<p>People people = new Student(); //错误</p>
+<p>6. 构造方法（Constructor）：构造方法用于完成对象属性的初始化工作，构造方法的特点：</p>
+<p>a) 构造方法的名字必须与类名完全一致（包含大小写）</p>
+<p>b) 构造方法没有返回值，连void也不能出现。</p>
+<p>c) 如果在定义一个类的时候，没有为类声明构造方法，那么Java编译器会自动为类添加一个没有参数且方法体为空的构造方法（默认的构造方法）</p>
+<p>d) 如果在定义一个类的时候，为类声明了构造方法，那么Java编译器就不会再为类添加构造方法了。</p>
+<p>e) 不能显式调用类的构造方法，构造方法通常是通过new关键字隐式调用。</p>
+<p>7. 默认的构造方法：构造方法没有参数且方法体为空。</p>
+<p>8. new关键字在生成对象时完成了三件事情：</p>
+<p>a) 为对象开辟内存空间。</p>
+<p>b) 调用类的构造方法进行对象的一系列的初始化。</p>
+<p>c) 将生成的对象的地址返回。</p>
+<p>9. 使用new来生成对象的时候，后面的小括号()表示构造方法的参数列表，如果构造方法不接收参数，那么小括号中的内容为空；如果构造方法接收参数，那么小括号中的实际参数就需要与构造方法定义中的形式参数保持一致（参数数量一致、参数类型一致、按照顺序逐一赋值）。</p>
+<p>&nbsp;</p>
+<p><strong><span style="color: #3366ff;">2.封装</span></strong></p>
+<p>“封装”是 OOP 语言的优点之一。把一个对象的数据加以包装并置于其方法的保护之下</p>
+<p>称为封装。所谓封装就是对数据的隐藏。封装实现了把数据和操作这些数据的代码包装成为</p>
+<p>一个对象（即离散的部件），而数据和操作细节（方法）隐藏起来。如果增加某些限制，使</p>
+<p>得对数据的访问可按照统一的方式进行，那些能比较容易地产生更为强壮的代码。</p>
+<p>OOP 语言提出一种（或称为协议），以保证对数据进行统一的操作。通常的做法是：程</p>
+<p>序和对象数据的交互作用通过一个公开的接口进行，而不直接进行操作。由于把数据封装在</p>
+<p>对象中，所以，访问对象中的数据只有一种途径，那就是利用一个公开的接口。</p>
+<p>实际上，封装在程序和数据之间设置了一道栅栏，它可以阻止一部分的设计错误，不至</p>
+<p>于涉足应用程序其他部分的数据。</p>
+<p><strong><span style="color: #3366ff;">3.消息</span></strong></p>
+<p>一个单独的对象一般不十分有用，而作为一员出现在包含有许多其他对象的大程序或应</p>
+<p>程序之中，通过这些对象的相互作用，程序员可实现高层次的操作和更负责的功能。某此</p>
+<p>象通过向其他对象发送消息与其他对象进行交互作用和通信。</p>
+<p>消息是以参数的形式传递给某方法的。一个消息通常由三部分组成：</p>
+<ol>
+<li><p>消息传送到对象的名称。</p>
+</li>
+<li><p>要执行的方法的名称。</p>
+</li>
+<li><p>方法需要的任意参数。</p>
+</li>
+</ol>
+<p>&nbsp;</p>
+<p><strong><span style="color: #3366ff;">4.类</span></strong></p>
+<p>类是一个蓝图或样板，定义了某种类型的所有对象的变量和方法。</p>
+<p>在 java 语言中，Java  程序的基本单位是类，也就是说：一个 Java 程序是由多个类组成</p>
+<p>的。定义一个类与定义一个数据类型是有区别的。在程序设计语言中，把定义数据类型的能</p>
+<p>力作为一种很重要的能力来对待。在面向对象的语言中，类的功能更强大，这是因为类不仅</p>
+<p>含有定义数据类型的功能，而且还包含了对方法的定义。</p>
+<p>对象实际是类中的一个实例。生成实例的过程叫做把“一个对象实例化”。一个实例化</p>
+<p>的对象实际上是由若干个实例变量和实例方法组成的。当你创建出一个类的实例时，系统将</p>
+<p>为实例变量指定内存，然后你就可以利用实例方法去做某些事情。</p>
+<p>&nbsp;</p>
+<p>类是组成 Java 程序的基本要素。它封装了一类对象的<span style="color: #ff0000;">状态和方法</span>，是这一类对象的</p>
+<p>原型。定义一个类，实际上就是指定该类所包含的数据和对数据进行操作的代码。</p>
+<p>类通过关键字 class 来定义，一般格式为：</p>
+<p>【类说明修饰符】class类名【extends  子句】【implements子句】</p>
+<p>type instance-varable;</p>
+<p>the methodname(parameter-list){method-body;}</p>
+<p>（1）  class 是类说明关键字。</p>
+<p>（2） 类名是由程序员自己定义的 Java 标识符，每个类说明必须有 class 和类名。</p>
+<p>（3） 类说明修饰符包括：</p>
+<p>abstract  说明一个类为抽象类，抽象类是指不能直接实例化对象的类。</p>
+<p>final  说明一个类为最终类，即改类不能再有子类。</p>
+<p>public  说明类为公共类，该类可以被当前包以外的类和对象使用。</p>
+<p>private  说明类为私有类。</p>
+<p>（4）  extends 子句用于说明类的直接超类。</p>
+<p>（5）  implements子句用于说明类中将实现哪些<span style="color: #ff0000;">接口</span>，接口是 Java 的一种引用类</p>
+<p>型。</p>
+<p>（6） 类体包含了<span style="color: #ff0000;">变量和方法</span>。在类体中定义的数据、变量和方法称为类的成员，</p>
+<p>或称为实例变量和实例方法。</p>
+<p><img src="http://hi.csdn.net/attachment/201202/21/0_1329809138elsP.gif" alt=""></p>
+<p>5.继承</p>
+<p>继承是指建立子类的能力。子类继承了父亲的特征和功能。类的层次结构类似于一棵数</p>
+<p>结构，也像一个家庭谱系。它显示了根和它的导出类之间的关系。</p>
+<p>子类从它先辈类那里继承了代码和数据，这样，它就可以执行先辈类的功能和访问先辈</p>
+<p>的数据。一个纯面向对象程序设计的语言将具有严格的继承性。</p>
+<p>通过对象、类，我们实现了封装，通过子类我们可以实现继承。例如，公共汽车、出租</p>
+<p>、货车等都是汽车，但它们是不同的汽车，除了具有汽车的共性外，它们还具有自己的特</p>
+<p>如不同的操作方法，不同的用途等)。这时我们可以把它们作为汽车的子类来实现，它们</p>
+<p>承父类(汽车)的所有状态和行为，同时增加自己的状态和行为。通过父类和子类，我们实</p>
+<p>了类的的层次，可以从最一般的类开始，逐步特殊化，定义一系列的子类。同时，通过继</p>
+<p>也实现了代码的复用，使程序的复杂性线性地增长，而不是呈几何级数增长。</p>
+<p>&nbsp;</p>
+<p>6.抽象</p>
+<p>面向对象的程序设计系统鼓励充分利用“抽象”。在现实世界中，人们正是通过抽象来</p>
+<p>理解复杂的事务。例如：人们并没有把汽车当作成百上千的零件组成来认识，而是把它当作</p>
+<p>具有自己特定行为的对象。人们可以忽略发动机、液压传输、刹车系统等如何工作的细节，</p>
+<p>而习惯于把汽车当作一个整体来认识。</p>
+<p>包含通用对象类的库叫作类库。</p>
+<p>7.多态性</p>
+<p>面向对象程序的最后一个概念是多态性。凭借多态性，你可以创建一个新的对象，它具</p>
+<p>有与基对象相同的功能，但是这些功能中的一个或多个是通过不同的方式完成的。例如：在</p>
+<p>Java 中你可以凭借多态性，通过一个画圆的对象，来创建一个画椭圆或矩形的对象。不管是</p>
+<p>画圆，画椭圆还是画矩形的方法，它们都有一个相同的方法名，但以不同的方式完成他们的</p>
+<p>画圆的功能</p>
+<p>&nbsp;</p>
+<p>8.包</p>
+<p>包是一种命名和可视控制的机制，用户可以把某些类定义在一个包</p>
+<p>中，也可以对定义在这个包中的类施加访问权限，以限定包外或包</p>
+<p>内的程序对其中的某些类进行访问。</p>
+<p>定义包的格式：</p>
+<p>package pkg；</p>
+<p>Java 的文件系统将存储和管理这个包。例如：属于 pkg 包中的.class</p>
+<p>文件将存储到目录 pkg。注意：目录与包的名字完全一样。</p>
+<p>package 语句可以创建包的层次结构，通过使用逗号，把每个包分开。</p>
+<p>多级包层次结构的一般格式为：</p>
+<p>package pkg1[.pkg2[.pkg3]]</p>
+<p>包层次结构必须反映 Java 开发系统的文件系统。比如：pacakge</p>
+<p>java.awt.Image;</p>
+<p>9.接口</p>
+<p>接口与类存在着本质的差别，类有它的成员变量和方法，而接口只<span style="color: #ff0000;">有</span></p>
+<p>常量和方法协议，从概念来讲，接口是一组方法协议和常量的集合。</p>
+<p>接口在方法协议与方法体实体之间只起到一种称之为界面的作用，这</p>
+<p>种界面限定了方法实体中的参数类型一定要与方法协议中所规定的</p>
+<p>参数类型保持一致，除此以外，这种界面还限定了方法名、参数个数</p>
+<p>及方法返回类型的一致性。因此，在使用接口时，类与接口之间并不</p>
+<p>存在子类与父类的那种继承关系，在实现接口所规定的某些操作时只</p>
+<p>存在类中的方法与接口之间保持一致的关系，而且一个类可以和多个</p>
+<p>接口之间保持这种关系，即一个类可以实现多个接口。</p>
+<p>当初看接口这个概念并不是很理解，所以又看了一遍，下面是自己对接口的理解：</p>
+<p><span style="color: #3333ff;">1.由于java中的类不支持</span><span style="color: #3333ff;"><span style="color: #ff0000;">多重继承</span>，也就是说一个类只能有一个直接父类。但是接口就不一样了，接口可以连接多个类</span></p>
+<p><span style="color: #3333ff;">，这样就弥补了java不支持多重继承的缺点。</span></p>
+<p><span style="color: #3333ff;"><span style="background-color: #ffffff;">2.接口中的各个类是没有关联的，这样用起来肯定比较简便嘛。</span></span></p>
+<p>&nbsp;</p>
+<p>1.14.2.2  接口的定义</p>
+<p>格式：</p>
+<p>access interface name</p>
+<p>{</p>
+<p>return method-name(parameter-list);</p>
+<p>type final-varname=value;</p>
+<p>}</p>
+<p>其中，access是访问修饰符。它只有 public 和未指定访问修饰符</p>
+<p>两种情况。当未指定访问修饰符时，该接口只能为同一个包中的</p>
+<p>其他成员所用；当 public修饰符说明时，该接口可以被其他任何</p>
+<p>代码使用。name 是接口的名字，可以是任何有效的标识符。接</p>
+<p>口体包括方法协议和常量，它们都用分号结束。在接口中定义的</p>
+<p>常量必须用变量名标识。他们隐式为 final 和 static，不能被实现</p>
+<p>类所改变。</p>
+<p>例：interface Back</p>
+<p>{</p>
+<p>void c_back(int param);</p>
+<p>int SOON=4;</p>
+<p>}</p>
+<p>该接口定义了一个方法协议，其参数为整数类型；还定义了一整</p>
+<p>数常量，其变量名为 SOON。该接口只能为同一个包中其他成员</p>
+<p>所用。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div align="left"><span style="font-size: 10pt;">　<span style="color: #3366ff;">　</span></span><span style="color: #3366ff;"><span style="font-size: 10pt;">java</span><span style="font-size: 10pt;">的接口到底起什么作用</span><span style="font-size: 10pt;">？</span></span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">1、从书中看到的是java程序的接口中只定义了常量及空方法，空的方法有什么用呢？还要在类中写方法体，那还要接口干什么？</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">2、一个程序中写了2个接口，并在同一个类中写方法体，这与多继承有什么关系。</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">3、包中那些已定义的接口，怎么知道那里面定义了什么方法。</span></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">说到底，接口有什么实际意义，哪本书都不讲，一味的讲是多继承，不结合实际实在不好懂。</span></div><br><div align="left"></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">Madai</span><span style="font-size: 10pt;">的理解是</span><span style="font-size: 10pt;">：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">java接口的用处主要体现在下面几个方面：</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（1）通过接口可以实现不相关类的相同行为，而不需要了解对象所对应的类。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（2）通过接口可以指明多个类需要实现的方法。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">（3）通过接口可以了解对象的交互界面，而不需了解对象所对应的类。</span></div><br><div align="left"></div><br><div align="left"></div><br><div align="left"><span style="font-size: 10pt;">　　</span><span style="font-size: 10pt;">Clkrst给出了更详细的解释：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">类描述了一个实体，包括实体的状态，也包括实体可能发出的动作。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">接口定义了一个实体可能发出的动作。但是只是定义了这些动作的原型，没有实现，也没有任何状态信息。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">所以接口有点象一个规范、一个协议，是一个抽象的概念；而类则是实现了这个协议，满足了这个规范的具体实体，是一个具体的概念。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">从程序角度，简单理解，接口就是函数声明，类就是函数实现。需要注意的是同一个声明可能有很多种实现。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">所以就你的问题：</span></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">1、接口中定义类方法的原型，但是不能说是空方法，因为空方法的意思是有实现体，只不过实现体是空操作。实际上接口没有定义任何实现体。具体的实现体都是在实现接口的类中，接口只是定义了这些方法的调用方式。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">你当然也可以不用接口，直接在类里面写方法，但是如果你的一组方法需要在很多类里实现，那么把它们抽象出来，做成一个接口规范，不是更好么？</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">2、一个类描述了一个实体，这个实体可能是一个复杂的对象，它的动作很多，如果把这些动作分类，用接口a定义其中的某一组动作，接口b定义其中的另外一组动作，这样的结构，比较清楚。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">这种方式具备了多继承的优点，避免了多继承的缺陷。实际上在历史上，接口在很大程度上，是为了解决多继承带来的种种问题而设计出来的。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">3、包中那些已定义的接口，怎么知道那里面定义了什么方法。</span></div><br><div align="left"></div><br><div align="left"><span style="color: blue; font-size: 10pt;">　　</span><span style="color: blue; font-size: 10pt;">接口里定义了方法的输入输出，这些都是协议，具体的实现都在每个类中。对于很多只需要抽象接口的地方，不需要知道具体的类是什么，只要这个类实现了这个接口就可以了。</span></div>
+
+<p>&nbsp;</p>
+<p><span style="color: #330099;"><strong>由于以前没java基础，看这部分抽象东西的时候真的是很头疼，所以做做笔记还是很必要的。</strong></span><img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/struggle.gif" alt="奋斗"></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/02/29/windowsSDK移位加密算法实现/" rel="prev">windowsSDK移位加密算法实现</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/02/20/口令登陆创新的一些想法/" rel="next">口令登陆创新的一些想法</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

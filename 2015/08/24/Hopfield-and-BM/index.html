@@ -1,0 +1,703 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="BM," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="参考Hinton的课程和CSDN上某位同学的课程记录（相当于是全中文字幕）。上Hinton的课极其吃力，如果不是有上面那位同学的中文翻译字幕，肯定不会去听。虽然老头子讲的很罗嗦，但是满满都是信息量啊，而且玻尔兹曼机就是他发明的！这个系列的路线是按照Hopfield网络-&amp;gt;玻尔兹曼机BM -&amp;gt;受限玻尔兹曼机RBM来的。那么自己也就按照这个顺序来讲述好了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从Hopfiled网络到BM(玻尔兹曼机)">
+<meta property="og:url" content="http://yoursite.com/2015/08/24/Hopfield-and-BM/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="参考Hinton的课程和CSDN上某位同学的课程记录（相当于是全中文字幕）。上Hinton的课极其吃力，如果不是有上面那位同学的中文翻译字幕，肯定不会去听。虽然老头子讲的很罗嗦，但是满满都是信息量啊，而且玻尔兹曼机就是他发明的！这个系列的路线是按照Hopfield网络-&amp;gt;玻尔兹曼机BM -&amp;gt;受限玻尔兹曼机RBM来的。那么自己也就按照这个顺序来讲述好了。">
+<meta property="og:image" content="http://yoursite.com/images/1440329506311.png">
+<meta property="og:image" content="http://yoursite.com/images/1440330592422.png">
+<meta property="og:image" content="http://yoursite.com/images/1440338301013.png">
+<meta property="og:image" content="http://yoursite.com/images/1440380617934.png">
+<meta property="og:image" content="http://yoursite.com/images/1440380911725.png">
+<meta property="og:image" content="http://yoursite.com/images/1440381408536.png">
+<meta property="og:image" content="http://yoursite.com/images/1440383561290.png">
+<meta property="og:image" content="http://yoursite.com/images/1440384060442.png">
+<meta property="og:image" content="http://yoursite.com/images/1440386198619.png">
+<meta property="og:image" content="http://yoursite.com/images/1440397069531.png">
+<meta property="og:image" content="http://yoursite.com/images/1440397172427.png">
+<meta property="og:image" content="http://yoursite.com/images/1440397595522.png">
+<meta property="og:image" content="http://yoursite.com/images/1440397686012.png">
+<meta property="og:image" content="http://yoursite.com/images/1440397714170.png">
+<meta property="og:updated_time" content="2015-08-24T06:49:38.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从Hopfiled网络到BM(玻尔兹曼机)">
+<meta name="twitter:description" content="参考Hinton的课程和CSDN上某位同学的课程记录（相当于是全中文字幕）。上Hinton的课极其吃力，如果不是有上面那位同学的中文翻译字幕，肯定不会去听。虽然老头子讲的很罗嗦，但是满满都是信息量啊，而且玻尔兹曼机就是他发明的！这个系列的路线是按照Hopfield网络-&amp;gt;玻尔兹曼机BM -&amp;gt;受限玻尔兹曼机RBM来的。那么自己也就按照这个顺序来讲述好了。">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 从Hopfiled网络到BM(玻尔兹曼机) // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              从Hopfiled网络到BM(玻尔兹曼机)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-24T14:33:22+08:00" content="2015-08-24">
+            2015-08-24
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>参考<a href="https://class.coursera.org/neuralnets-2012-001/lecture" target="_blank" rel="external">Hinton的课程</a>和CSDN上<a href="http://blog.csdn.net/shouhuxianjian/article/details/42079583" target="_blank" rel="external">某位同学的课程记录</a>（相当于是全中文字幕）。<br>上Hinton的课极其吃力，如果不是有上面那位同学的中文翻译字幕，肯定不会去听。虽然老头子讲的很罗嗦，但是满满都是信息量啊，而且玻尔兹曼机就是他发明的！<br>这个系列的路线是按照<strong>Hopfield网络-&gt;玻尔兹曼机BM -&gt;受限玻尔兹曼机RBM</strong>来的。那么自己也就按照这个顺序来讲述好了。<br><a id="more"></a></p>
+<h2 id="1-_Hopfield网络">1. Hopfield网络</h2><h3 id="1-1_Energy_Based_Model基于能量的模型">1.1 Energy Based Model基于能量的模型</h3><p><a href="http://yann.lecun.com/exdb/publis/pdf/lecun-06.pdf" target="_blank" rel="external">这里</a>有一份关于能量函数的教程，下面摘录了几段能量模型的概念：</p>
+<blockquote>
+<p>很多统计学和机器学习模型的目的就是建立变量之间的依赖关系。通过捕捉这些变量之间的依赖关系，那么一个模型就可以利用已知的变量来解决那些有未知变量的问题。而Energy-Based Models（EMBS）通过对每一个变量建立一个能量公式，然后把这些能量公式连立起来来捕捉变量之间的依赖关系。</p>
+<p>我们要做的就是找到这么一个能量函数，对于正样本，它有较低的能量值；对于负样本，它有较高的能量值。我们还需要建立一个损失函数，通过最小化这个损失函数，来衡量我们选取的这个能量函数的好坏。</p>
+</blockquote>
+<h3 id="1-2_Hopfield网络的对称性">1.2 Hopfield网络的对称性</h3><p>Hopfield网络是基于能量模型中最简单的一种。我们首先来看看一个简单的Hopfield模型：<br><img src="/images/1440329506311.png" alt="Alt text"></p>
+<p>对于每一个节点单元，它只有两种状态：0或者1，代表闭或开。节点之间有很多具有权值的边（由于模型简单，边的设置比较随意），于是允许整个网络可以是非线性的、允许是递归连接的（应该是可以有回路，重边这些）。于是问题来了，这样的网络是很难分析的。<br>但是有人研究发现：如果模型是<strong>对称</strong>的，那么整个网络就会存在一个全局能量函数，也就是说整个模型就可以度量了。所以我们研究的Hopfield网络都是对称的网络。</p>
+<h3 id="1-3_Hopfield能量函数">1.3 Hopfield能量函数</h3><p>模型的能量函数其实很简单：<br>$$E = -\sum_i s_ib_i - \sum_{i&lt;j}s_is_j w_{ij}$$</p>
+<ul>
+<li>si或者sj就是节点的状态，0或者是1</li>
+<li>bi是bias</li>
+<li>wij表示边的权值</li>
+</ul>
+<p>这个公式由两部分组成，第一个部分是bias项，主要看第二部分：我们知道si或者sj的值是0或者1，那么<strong>只有当两个结点都是打开状态为1的时候，wij才会被累加</strong>。<br>前面讲到了能量最小化，那么我们在公式前面加负号，就相当于让E最大（为了计算方便）</p>
+<p>然后又定义了Energy gap函数：表示某个单元开或者闭的改变对于整个能量函数会引起多大的改变（做差）：<br>$$Energy gap = \Delta E_i = E(s_i = 0) - E(s_i = 1) = b_i + \sum_j s_j w_{ij}$$<br>最后推导出来的结果就是对能量函数求导，但是没有负数。</p>
+<p>整个能量最小化的过程非常简单：</p>
+<blockquote>
+<p>以一个随机状态作为开始，然后以随机的顺序每次更新一次这些单元。</p>
+</blockquote>
+<p>公式讲了这么多，来看个实际的例子：<br><img src="/images/1440330592422.png" alt="Alt text"><br>首先我们随机给每个节点单元初始化了0或者1，现在我们随机选取了右上角的那个节点单元（问号表示），我们要判断这个单元的值应该是0还是1会让整个能量函数最小。<br>之前讲了，计算能量的时候只有两个节点的值都是1的时候对应边的权值才会被计算进去（公式si*sj*wij）,所以：</p>
+<ul>
+<li>如果问号单元为0，那么E = -3（左边两个单元对应的边，注意能量函数有负号）</li>
+<li>如果问号单元为1，那么E = - （3 + （-4））= 1 </li>
+<li>因为1 &gt; -3 所以问号单元的值应该为1，于是更新</li>
+</ul>
+<p>这样随机选取遍所有的单元，最后每个单元都有了稳定的状态，不再改变。（整个过程可以看Hinton的视频）<br>但是其实，这样简单的算法虽然保证最后可以达到稳定状态，但是用这种方法<strong>能量函数却只是局部最小，而不是全局最小！</strong>（这个问题在后面会解决）</p>
+<h3 id="1-4_Hopfield网络来获得记忆">1.4 Hopfield网络来获得记忆</h3><p>讲了这么多，Hopfield网络有什么用呢？hopfield本人说：</p>
+<blockquote>
+<p>记忆可以是一个具有对称权重的nn的能量最小状态。二值阈值决策规则可以获得部分记忆，并在完整记忆中清除它们。</p>
+</blockquote>
+<p>另一个Hopfield网络的特性是: 你可以移除网络中的一些单元，整个网络还是能正常工作。生物学家认为这跟化石很像，你可以仅仅化石这个局部信息就能恢复出整个恐龙！（写到这里，突然感觉Hopfield网络好高端！）<br>来看看存储记忆的思想：</p>
+<blockquote>
+<p>If we use activities of 1 and -1, we can store a binary state vector by incrementing the weight between any two units by the product of their activities.<br>也就是说记忆是用由0或者1组成的向量构成的，通过计算$\Delta w_{ij}$，我们可以获得这个向量：<br>$$\Delta w_{ij} = s_i s_j$$</p>
+</blockquote>
+<p>从上面这个公式我们可以看到，我们只穿过了这个网络一次，就得到了整个记忆序列。这是真正的线性复杂度。Hinton认为这是非常天才的规则，没有误差驱动。</p>
+<h2 id="2-_在Hopfield网络中处理Spurious(伪最小)">2. 在Hopfield网络中处理Spurious(伪最小)</h2><h3 id="2-1_Hopfield网络记忆容量">2.1 Hopfield网络记忆容量</h3><p>对于一个完全连接的Hopfield网络来说，如果节点个数为N，那么网络存储记忆的容量是0.15N。</p>
+<h3 id="2-2_Spurious_minima伪最小">2.2 Spurious minima伪最小</h3><p><img src="/images/1440338301013.png" alt="Alt text"><br>我们在做能量最小化的时候，假如有蓝色的能量和绿色的能量两项。</p>
+<ul>
+<li>当两者不重叠的时候，不会产生问题</li>
+<li>但是当两者重叠的时候，重叠部分会产生叠加，导致最后的能量变成了红色线的情况，使得红色线的最小点比之前两个能量都要低。但是这并不是实际的情况，所以把这种情况称为Spurious minima(伪最小)。</li>
+</ul>
+<p><strong>伪最小是限制Hopfield网络能力的原因</strong>。</p>
+<h3 id="2-3_Unlearning(遗忘)解决伪最小">2.3 Unlearning(遗忘)解决伪最小</h3><p>那么我们怎么来解决伪最小这个问题呢？答案是通过unlearning(遗忘)。策略如下：</p>
+<blockquote>
+<p>通过一个随机初始状态来设置一个网络，然后进行遗忘，也就是不管二值状态会怎样，你需要使用<strong>相反</strong>的存储规则。</p>
+</blockquote>
+<p>提出这个策略的人虽然从实验上证明了这是有效的，但无法从根本上说明原因。为此Hinton讲了一个人们遗忘梦境的例子:</p>
+<blockquote>
+<p>Francis Crick，DNA结构的发现者之一，和Graham Micherson 提出了遗忘有可能是在REM沉睡的时候发生的事情，也就是快速眼睛移动沉睡（rapid eye movement sleep）。所以这个想法的意思就是说在一天中，你存储了很多东西，然后得到了一个伪最小，然后在晚上的时候，你将这个网络放置在一个随机状态，你会稳定在一个最小值状态，并且你遗忘了你稳定的状态。这事实上解释了一个很大的困惑，不过也没有疑惑住那些研究睡眠的人们。每到晚上，你去睡觉，然后做几个小时的梦。当你早上醒来的时候，这些梦就消失了。不过他们却不是全都消失了。在你醒来之前的梦，你可以有个短期的记忆，并且你可以记住一段时间。如果你想想它们的话，你也许会记住很长一段时间。但是我们知道，如果我们在晚上的另一个时间上醒来的话，你会有其他的梦，而在早上它们就不在那里了。所以简单的说这就像你没有存储你梦到的东西，那么问题来了，为什么？事实上，为什么你完全不会被梦所干扰（个人：这里的意思就是晚上做的梦完全不影响正常的想法）。梦是自相矛盾的，而且你大脑存储的状态看上去极度的像你醒来的时候存储的状态，它不是被真正的输入所推动，它是被一个实际输入之后被称之为丘脑的继电器所推动。。所以Crick和Mitchisoin的理论至少功能上的解释了梦是什么，如何避免伪最小。</p>
+</blockquote>
+<p>物理学家们对这个模型很感兴趣，做了很多让Hopfield网络提升能力的方法。最终，一个叫Elizabeth Gardner的学生指出有更好的存储规则，可以使用权重的全部能力：</p>
+<blockquote>
+<p>使用<strong>感知机收敛过程</strong>去训练每个单元，使得在给定所有其他单元的存储状态情况下有正确的状态，这样就得到了存储的全局向量。虽然这样做不像之前那样可以一次线性解决，而是变成了循环通过训练集多次，但是得到了更多的有效存储。</p>
+</blockquote>
+<p>统计学家也提出了一个方法,叫做<strong>pseudo-likehood伪似然</strong>，想法是在给定所有其他事物的情况下得到一个正确的事物。也就是说在建立模型的时候，在给定所有其他维度的基础上让这个维度上的数据正确。</p>
+<h2 id="3-_带隐藏层的Hopfield网络">3. 带隐藏层的Hopfield网络</h2><h3 id="3-1_带隐藏层的Hopfield网络中来重新解释输入层">3.1 带隐藏层的Hopfield网络中来重新解释输入层</h3><p>之前我们是用Hopfield网络来存储记忆的。现在我们<strong>通过给网络加入隐藏层，让Hopfield网络中的隐藏层来重新解释输入层（就是说隐藏层是输入层的另外一种表示）。</strong><br><img src="/images/1440380617934.png" alt="Alt text"></p>
+<ul>
+<li>input用visible units来表示</li>
+<li>interpretation(解释)用hidden units的状态来表示</li>
+<li>该interpretation的好坏用energy来衡量</li>
+</ul>
+<p>那么现在我们为了找到一个好的interpretation，我们要让energy最小。</p>
+<h3 id="3-2_一个形象的例子">3.2 一个形象的例子</h3><p>为了让这个很抽象的例子可视化便于理解，Hinton举了一个例子：<br><img src="/images/1440380911725.png" alt="Alt text"><br>在上面这张图中，假如蓝色代表你的眼球，红色线代表你的视野范围的边界，你只能看到红色线之间的视野。<br>要知道空间是三维的，但是映射到我们眼球的视网膜却是二维的！<br>所以像上图中有四条黑色的线，很明显这四条黑线在空间中是位于不同的位置，有不同的长短的，但是当这四条三维空间中的线映射到我们二维的视网膜中的时候，我们的眼睛会认为这四条黑线是同一条！（需要一些空间想象能力）<br>这是因为当映射到视网膜的时候，三维中的深度这一维丢失了。</p>
+<p><strong>所以视网膜上的一条二维的线，对应在空间中就不是一条了，而是一个线的cluster(簇)。</strong><br>在理解了上面这个例子之后，我们来看看具体是怎么做的：<br><img src="/images/1440381408536.png" alt="Alt text"><br>图从下往上看，最下面的picture是一个立方体，有很多边。中间一行的节点(2-D lines)，每个节点就表示了立方体中的一条边（黑色的两个节点对应了立方体左上的那条边和后上的那条边），最上面的两列表示对于这两个2D黑色节点，用3D表示其实是一个簇，所以每个2D黑色节点都对应一列3D节点。</p>
+<ul>
+<li>从2D节点出发到3D节点的单向绿色箭头表示该2D节点可以对应很多3D节点</li>
+<li>3D节点之间的红色线表示这些簇中的节点是相互排斥的，也就是说实际在三维空间中只存在一个3D节点。</li>
+<li>两列3D节点之间的双向绿色箭头（下面那个未加粗的）表示两个节点在3D平面中有相交</li>
+<li>两列3D节点之间的加粗双向绿色箭头表示两个节点在3D平面中的特定角度相交。</li>
+</ul>
+<p>通过上述的定义，我们就获得了下图中这个立方体的两种不同解释方法：从2D平面来解释和从3D维度来解释。如果2D节点是我们的输入，那么通过构建Hopfiled网络，我们可以获得3D维度的解释。</p>
+<p>上图其实的立方体叫做Necker立方图，如果我们一直盯着这个立方体看，我们会发现它有两种状态(前后面的深度变换了)。这种现象用Hopfield网络来解释的话，我们会发现它有两个能量最小值。<br>现在我们理解了通过加入隐藏层，用Hopfield网络来重新解释输入，现在的问题是：</p>
+<ol>
+<li>搜索方法。就是让隐藏单元不陷入局部的能量最小</li>
+<li>上图中那些双向的绿色箭头如何获得？权重如何设置？要知道我们的输入是只有二维信息的，构建这些双向绿色箭头，学习边的权值是非常困难的。</li>
+</ol>
+<h2 id="4-_使用随机单元来改善搜索">4. 使用随机单元来改善搜索</h2><h3 id="4-1_利用噪声来摆脱局部最小">4.1 利用噪声来摆脱局部最小</h3><p>之前我们将Hopfield网络的时候提到，网络中每个节点的改变决策都会让全局能量变地更小（或者不变），这样得到的能量是局部最小的：<br><img src="/images/1440383561290.png" alt="Alt text"><br>如果我们在A附近，那么就永远不会到达能量最低点B。</p>
+<p>解决办法就是使用噪声来逃离局部的能量最小点，下面的方法叫做模拟退火法：</p>
+<blockquote>
+<ul>
+<li>Start with a lot of noise so its easy to cross energy barriers.</li>
+<li>Slowly reduce the noise so that the system ends up in a deep minimum. This is “simulated annealing” (Kirkpatrick et.al. 1981)</li>
+</ul>
+</blockquote>
+<h3 id="4-2_simulated_annealing_模拟退火算法">4.2 simulated annealing 模拟退火算法</h3><p>模拟退火算法其实很形象，它与温度密切相关。我们想象一下水的三态，冰是固态，组成冰的分子的运动被束缚在很小的范围里面；水蒸汽是气态，组成水蒸气的分子的运动相对冰的范围就扩大了很多。所以温度越高，分子转移到其他位置的概率越大。<br>所以， <strong>温度影响着转移概率</strong>。看看下面这个例子：<br><img src="/images/1440384060442.png" alt="Alt text"></p>
+<ul>
+<li>上面是高温下的转移概率，我们看到从A转移到B的概率和从B转移到A的概率相对于下面那副低温的图都要高，而且从A转移到B比B到A更加容易。</li>
+<li>下面是低温下的转移概率。我们看到在低温下，黑子的例子几乎全部处于B状态，从B转移到A的概率相对从A转移到B的概率差了1000倍。所以系统运行足够长的时间，例子可能最后都会稳定在B上。</li>
+</ul>
+<p>从上面这个例子中我们看到，先用高温初始化，让例子尽量摆脱局部最小区域，然后减小温度，最后让例子稳定在能量最小处。这就是模拟退火算法的思想。</p>
+<h3 id="4-3_如何在网络中表现噪声和温度">4.3 如何在网络中表现噪声和温度</h3><p>在Hopfield网络中拥有噪音的方法是通过二值随机单元来替换这些二值阈值单元，然后让偏置随机决策。<br><img src="/images/1440386198619.png" alt="Alt text"><br>也就是说本来每个节点的0或者1的状态是确定的，现在通过引入概率的方法来随机决定某个节点的状态，这就相当于引入了噪声。<br>温度是用公式中的T来控制的，如果温度很高，那么sigmoid函数中的指数部分就是0，那么$p(s_i = 1) = 0.5$,也就是开和关的概率几乎是相等的。当温度T降低时，根据$\Delta E_i$的符号，概率会趋向于0或者趋向于1，就慢慢地从随机单元又变成二值阈值单元了。</p>
+<h3 id="4-4_thermal_equilibrium_热平衡">4.4 thermal equilibrium 热平衡</h3><p>在上面的公式中，我们把温度T设置为1,来看看固定温度下热平衡的概念。</p>
+<blockquote>
+<p>当系统处于热平衡的时候，趋于稳定的是基于组态的概率分布，而不是独立单元的状态（独立单元仍然处在热平衡周围）。概率分布会稳定到一个被称之为Stationary Distribution(稳定分布)。</p>
+</blockquote>
+<p>这里Hinton举了一个赌场洗牌的例子，但是自己还是没有能够看明白。</p>
+<h2 id="5-_玻尔兹曼机对数据进行建模">5. 玻尔兹曼机对数据进行建模</h2><p>首先定义BM(玻尔兹曼机)：</p>
+<blockquote>
+<p>有着隐藏单元的随机Hopfield网络，被称之为玻尔兹曼机。</p>
+</blockquote>
+<p>那么玻尔兹曼机有什么用呢？<strong>它擅长对二值数据向量进行建模。这里我们用概率来表现模型。</strong>这里我们直接通过举例子来说明问题：<br><img src="/images/1440397069531.png" alt="Alt text"><br>假如现在我们有这样一个玻尔兹曼机，下面我们将来说明如何运用边的权重来建模（就是算出v1、v2出现某种状态的概率）：<br><img src="/images/1440397172427.png" alt="Alt text"></p>
+<ul>
+<li>我们有两个可视层节点v1、v2，两个隐藏层节点h1、h2，每个节点的取值是0或者1，那么这4个节点共有16种状态，如上表所示</li>
+<li>分别计算这16种状态下的能量。（这里跟前文算能量的方法是一样的，两个节点都是1，边权重才算进去）</li>
+<li>计算出-E之后，再计算$e^{-E}$值，并且得到总的$e^{-E}$值，用红色数字表示</li>
+<li>计算p(v, h)，相当于做了归一化，把前面的每一项都除以红色的39.70</li>
+<li>把可视层状态相同的p(v, h)概率加起来，就得到p(v)，例如可视层出现11的概率为0.466</li>
+</ul>
+<p>看明白了这个例子之后，我们来归纳一下:<br>能量函数的定义如下：<br><img src="/images/1440397595522.png" alt="Alt text"></p>
+<p>p(v, h)的定义公式：<br><img src="/images/1440397686012.png" alt="Alt text"></p>
+<p>p(v)的定义公式：<br><img src="/images/1440397714170.png" alt="Alt text"></p>
+<p>当网络很大的时候，我们需要用马尔可夫链蒙特卡罗方法进行模型的采样和学习。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/BM/" rel="tag">#BM</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/25/from-BM-to-RBM/" rel="prev">BM(玻尔兹曼机)和RBM(受限玻尔兹曼机)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/20/recurrent-neural-network/" rel="next">recurrent neural network</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-_Hopfield网络"><span class="nav-text">1. Hopfield网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1_Energy_Based_Model基于能量的模型"><span class="nav-text">1.1 Energy Based Model基于能量的模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2_Hopfield网络的对称性"><span class="nav-text">1.2 Hopfield网络的对称性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3_Hopfield能量函数"><span class="nav-text">1.3 Hopfield能量函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4_Hopfield网络来获得记忆"><span class="nav-text">1.4 Hopfield网络来获得记忆</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-_在Hopfield网络中处理Spurious(伪最小)"><span class="nav-text">2. 在Hopfield网络中处理Spurious(伪最小)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1_Hopfield网络记忆容量"><span class="nav-text">2.1 Hopfield网络记忆容量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2_Spurious_minima伪最小"><span class="nav-text">2.2 Spurious minima伪最小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3_Unlearning(遗忘)解决伪最小"><span class="nav-text">2.3 Unlearning(遗忘)解决伪最小</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-_带隐藏层的Hopfield网络"><span class="nav-text">3. 带隐藏层的Hopfield网络</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1_带隐藏层的Hopfield网络中来重新解释输入层"><span class="nav-text">3.1 带隐藏层的Hopfield网络中来重新解释输入层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2_一个形象的例子"><span class="nav-text">3.2 一个形象的例子</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-_使用随机单元来改善搜索"><span class="nav-text">4. 使用随机单元来改善搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1_利用噪声来摆脱局部最小"><span class="nav-text">4.1 利用噪声来摆脱局部最小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2_simulated_annealing_模拟退火算法"><span class="nav-text">4.2 simulated annealing 模拟退火算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3_如何在网络中表现噪声和温度"><span class="nav-text">4.3 如何在网络中表现噪声和温度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4_thermal_equilibrium_热平衡"><span class="nav-text">4.4 thermal equilibrium 热平衡</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-_玻尔兹曼机对数据进行建模"><span class="nav-text">5. 玻尔兹曼机对数据进行建模</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

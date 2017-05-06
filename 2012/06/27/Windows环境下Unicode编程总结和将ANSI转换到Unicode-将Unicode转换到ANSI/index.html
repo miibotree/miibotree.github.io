@@ -1,0 +1,608 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="ANSI,UNICODE,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Windows环境下Unicode编程总结&amp;nbsp;UNICODE环境设置在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。UNICODE编译设置：C/C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE在ProjectSetting/link/output 中设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows环境下Unicode编程总结和将ANSI转换到Unicode 将Unicode转换到ANSI">
+<meta property="og:url" content="http://yoursite.com/2012/06/27/Windows环境下Unicode编程总结和将ANSI转换到Unicode-将Unicode转换到ANSI/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Windows环境下Unicode编程总结&amp;nbsp;UNICODE环境设置在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。UNICODE编译设置：C/C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE在ProjectSetting/link/output 中设">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Windows环境下Unicode编程总结和将ANSI转换到Unicode 将Unicode转换到ANSI">
+<meta name="twitter:description" content="Windows环境下Unicode编程总结&amp;nbsp;UNICODE环境设置在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。UNICODE编译设置：C/C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE在ProjectSetting/link/output 中设">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Windows环境下Unicode编程总结和将ANSI转换到Unicode 将Unicode转换到ANSI // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Windows环境下Unicode编程总结和将ANSI转换到Unicode 将Unicode转换到ANSI
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-06-27T16:53:16+08:00" content="2012-06-27">
+            2012-06-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><div id="article_content"><br><br><strong>Windows环境下Unicode编程总结</strong><br><br>&nbsp;<br><br><strong>UNICODE环境设置</strong><br><br>在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。<br><br><strong>UNICODE编译设置：</strong><br><br>C/C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE<br><br>在ProjectSetting/link/output 中设置Entry为wWinMainCRTStartup<br><br>反之为MBCS（ANSI）编译。<br><br><strong>Unicode ：宽字节字符集</strong><br><br><strong>1. 如何取得一个既包含单字节字符又包含双字节字符的字符串的字符个数？</strong><br><br>可以调用Microsoft Visual C++的运行期库包含函数_mbslen来操作多字节（既包括单字节也包括双字节）字符串。<br><br>调用strlen函数，无法真正了解字符串中究竟有多少字符，它只能告诉你到达结尾的0之前有多少个字节。<br><br><strong>2. 如何对DBCS（双字节字符集）字符串进行操作？</strong><br><br>函数 描述<br><br>PTSTR CharNext （ LPCTSTR ）; 返回字符串中下一个字符的地址<br><br>PTSTR CharPrev （ LPCTSTR, LPCTSTR ）； 返回字符串中上一个字符的地址<br><br>BOOL IsDBCSLeadByte( BYTE )； 如果该字节是DBCS字符的第一个字节，则返回非0值<br><br><strong>3. 为什幺要使用Unicode？</strong><br><br>（1） 可以很容易地在不同语言之间进行数据交换。<br><br>（2） 使你能够分配支持所有语言的单个二进制.exe文件或DLL文件。<br><br>（3） 提高应用程序的运行效率。<br><br>Windows 2000是使用Unicode从头进行开发的，如果调用任何一个Windows函数并给它传递一个ANSI字符串，那幺系统首先要将字符串转换成 Unicode，然后将Unicode字符串传递给操作系统。如果希望函数返回ANSI字符串，系统就会首先将Unicode字符串转换成ANSI字符 串，然后将结果返回给你的应用程序。进行这些字符串的转换需要占用系统的时间和内存。通过从头开始用Unicode来开发应用程序，就能够使你的应用程序 更加有效地运行。<br><br>Windows CE 本身就是使用Unicode的一种操作系统，完全不支持ANSI Windows函数<br><br>Windows 98 只支持ANSI，只能为ANSI开发应用程序。<br><br>Microsoft公司将COM从16位Windows转换成Win32时，公司决定需要字符串的所有COM接口方法都只能接受Unicode字符串。<br><br><strong>4. 如何编写Unicode源代码？</strong><br><br>Microsoft公司为Unicode设计了WindowsAPI，这样，可以尽量减少代码的影响。实际上，可以编写单个源代码文件，以便使用或者不使 用Unicode来对它进行编译。只需要定义两个宏（UNICODE和_UNICODE），就可以修改然后重新编译该源文件。<br><br>_UNICODE宏用于C运行期头文件，而UNICODE宏则用于Windows头文件。当编译源代码模块时，通常必须同时定义这两个宏。<br><br><strong>5. Windows定义的Unicode数据类型有哪些？</strong><br><br>数据类型 说明<br><br>WCHAR Unicode字符<br><br>PWSTR 指向Unicode字符串的指针<br><br>PCWSTR 指向一个恒定的Unicode字符串的指针<br><br>对应的ANSI数据类型为CHAR，LPSTR和LPCSTR。<br><br>ANSI/Unicode通用数据类型为TCHAR，PTSTR,LPCTSTR。<br><br><strong><br><br>**</strong>6. 如何对Unicode进行操作？<strong><br><br>字符集 特性 实例<br><br>ANSI 操作函数以str开头 strcpy<br><br>Unicode 操作函数以wcs开头 wcscpy<br><br>MBCS 操作函数以_mbs开头 _mbscpy<br><br>ANSI/Unicode 操作函数以_tcs开头 _tcscpy（C运行期库）<br><br>ANSI/Unicode 操作函数以lstr开头 lstrcpy（Windows函数）<br><br>所有新的和未过时的函数在Windows2000中都同时拥有ANSI和Unicode两个版本。ANSI版本函数结尾以A表示；Unicode版本函数结尾以W表示。Windows会如下定义：<br><br>#ifdef UNICODE<br><br>#define CreateWindowEx CreateWindowExW<br><br>#else<br><br>#define CreateWindowEx CreateWindowExA<br><br>#endif // !UNICODE
+
+</strong>7. 如何表示Unicode字符串常量？<strong><br><br>字符集 实例<br><br>ANSI “string”<br><br>Unicode L“string”<br><br>ANSI/Unicode T(“string”)或_TEXT(“string”)if( szError[0] == _TEXT(‘J’) ){ }
+
+</strong>8. 为什幺应当尽量使用操作系统函数？<strong><br><br>这将有助于稍稍提高应用程序的运行性能，因为操作系统字符串函数常常被大型应用程序比如操作系统的外壳进程Explorer.exe所使用。由于这些函数使用得很多，因此，在应用程序运行时，它们可能已经被装入RAM。<br><br>如：StrCat，StrChr，StrCmp和StrCpy等。
+
+</strong>9. 如何编写符合ANSI和Unicode的应用程序？<strong><br><br>（1） 将文本串视为字符数组，而不是chars数组或字节数组。<br><br>（2） 将通用数据类型（如TCHAR和PTSTR）用于文本字符和字符串。<br><br>（3） 将显式数据类型（如BYTE和PBYTE）用于字节、字节指针和数据缓存。<br><br>（4） 将TEXT宏用于原义字符和字符串。<br><br>（5） 执行全局性替换（例如用PTSTR替换PSTR）。<br><br>（6） 修改字符串运算问题。例如函数通常希望在字符中传递一个缓存的大小，而不是字节。这意味着不应该传递sizeof(szBuffer),而应该传递 （sizeof(szBuffer)/sizeof(TCHAR)。另外，如果需要为字符串分配一个内存块，并且拥有该字符串中的字符数目，那幺请记住要 按字节来分配内存。这就是说，应该调用<br><br>malloc(nCharacters *sizeof(TCHAR)),而不是调用malloc(nCharacters)。
+
+</strong>10. 如何对字符串进行有选择的比较？<strong><br><br>通过调用CompareString来实现。<br><br>标志 含义<br><br>NORM_IGNORECASE 忽略字母的大小写<br><br>NORM_IGNOREKANATYPE 不区分平假名与片假名字符<br><br>NORM_IGNORENONSPACE 忽略无间隔字符<br><br>NORM_IGNORESYMBOLS 忽略符号<br><br>NORM_IGNOREWIDTH 不区分单字节字符与作为双字节字符的同一个字符<br><br>SORT_STRINGSORT 将标点符号作为普通符号来处理
+
+</strong>11. 如何判断一个文本文件是ANSI还是Unicode？<strong><br><br>判断如果文本文件的开头两个字节是0xFF和0xFE，那幺就是Unicode，否则是ANSI。
+
+</strong>12. 如何判断一段字符串是ANSI还是Unicode？<strong><br><br>用IsTextUnicode进行判断。IsTextUnicode使用一系列统计方法和定性方法，以便猜测缓存的内容。由于这不是一种确切的科学方法，因此 IsTextUnicode有可能返回不正确的结果。
+
+</strong>13. 如何在Unicode与ANSI之间转换字符串？<strong><br><br>Windows函数MultiByteToWideChar用于将多字节字符串转换成宽字符串；函数WideCharToMultiByte将宽字符串转换成等价的多字节字符串。
+
+</strong>14. Unicode和DBCS之间的区别<strong><br><br>Unicode使用（特别在C程序设计语言环境里）“宽字符集”。「Unicode中的每个字符都是16位宽而不是8位宽。」在Unicode中，没有单 单使用8位数值的意义存在。相比之下，在“双位组字符集”中我们仍然处理8位数值。有些位组自身定义字符，而某些位组则显示需要和另一个位组共同定义一个 字符。<br><br>处理DBCS字符串非常杂乱，但是处理Unicode文字则像处理有秩序的文字。您也许会高兴地知道前128个Unicode字符（16位代码从 0&#215;0000到0x007F）就是ASCII字符，而接下来的128个Unicode字符（代码从0&#215;0080到0x00FF）是ISO 8859-1对ASCII的扩展。Unicode中不同部分的字符都同样基于现有的标准。这是为了便于转换。希腊字母表使用从0&#215;0370到0x03FF 的代码，斯拉夫语使用从0&#215;0400到0x04FF的代码，美国使用从0&#215;0530到0x058F的代码，希伯来语使用从0&#215;0590到0x05FF的代 码。中国、日本和韩国的象形文字（总称为CJK）占用了从0&#215;3000到0x9FFF的代码。Unicode的最大好处是这里只有一个字符集，没有一点含 糊。
+
+</strong>15.衍生标准<strong><br><br>Unicode是一个标准。UTF-8是其概念上的子集，UTF-8是具体的编码标准。而ＵＮＩＣＯＤＥ是所有想达到世界统一编码标准的标准。UTF-8标准就是Unicode（ISO10646）标准的一种变形方式，<br><br>UTF的全称是：Unicode/UCS Transformation Format，其实有两种UTF，一种是UTF-8，一种是UTF-16，<br><br>不过UTF-16使用较少，其对应关系如下：<br><br>在Unicode中编码为 0000 &#8211; 007F 的 UTF-8 中编码形式为: 0xxxxxxx<br><br>在Unicode中编码为 0080 &#8211; 07FF 的 UTF-8 中编码形式为: 110xxxxx 10xxxxxx<br><br>在Unicode中编码为 0000 &#8211; 007F 的 UTF-8 中编码形式为: 1110xxxx 10xxxxxx 10xxxxxx
+
+</strong>utf-8 <strong>是unicode的 一个新的编码标准,其实unicode有过好几个标准.我们知道一直以来使用的unicode字符内码都是16位,它实际上还不能把全世界的所有字符编在 一个平面系统,比如中国的藏文等小语种,所以utf-8扩展到了32位,也就是说理论在utf-8中可容纳二的三十二次方个字符. UNICODE的思想就是想把所有的字符统一编码,实现一个统一的标准.big5、gb都是独立的字符集,这也叫做远东字符集,把它拿到德文版的 WINDOWS上可能将会引起字符编码的冲突&#8230;.早期的WINDOWS默认的字符集是ANSI.notepad中输入的汉字是本地编码,但在 NT/2000内部是可以直接支持UNICODE的。notepad.exe在WIN95和98中都是ANSI字符,在NT中则是 UNICODE.ANSI和UNICODE可以方便的实现对应映射,也就是转换 ASCII是8位范围内的字符集，对于范围之外的字符如汉字它是无法表达的。unicode是16位范围内的字符集，对于不同地区的字符分区分 配，unicode是多个IT巨头共同制定的字符编码标准。如果在unicode环境下比如WINDOWS NT上，一个字符占两字节16位，而在ANSI环境下如WINDOWS98下一个字符占一个字节8位.Unicode字符是16位宽，最多允许 65,535字符，数据类型被称为WCHAR。<br><br>对于已有的ANSI字符，unicode简单的将其扩展为16位：比如ANSI&#8221;A&#8221;=0&#215;43,则对应的UNICODE为<br><br>&#8220;A&#8221;= 0&#215;0043<br><br>而ASCII用七存放128个字符,ASCII是一个真正的美国标准,所以它不能满足其他国家的需要,例如斯拉夫语的字母和汉字于是出现了Windows ANSI字符集,是一种扩展的ASCII码,用8位存放字符,低128位仍然存放原来的ASCII码,<br><br>而高128位加入了希腊字母等<br><br>if def UNICODE<br><br>TCHAR = wchar<br><br>else<br><br>TCHAR = char<br><br>你需要在Project/Settings/C/C++/Preprocesser definitions中添加UNICODE和_UNICODE<br><br>UINCODE,_UNICODE都要定义。不定义_UNICODE的话，用SetText(HWND,LPCTSTR),将被解释为 SetTextA(HWND,LPTSTR),这时API将把你给的Unicode字符串看作ANSI字符串，显示乱码。因为windows API是已经编译好存在于dll中的，由于不管UNICODE还是ANSI字符串，都被看作一段buffer,如&#8221;0B A3 00 35 24 3C 00 00&#8243;如果按ANSI读，因为ANSI字串是以&#8217;/0&#8242;结束的，所以只能读到两字节&#8221;0B A3 /0&#8243;，如果按UNICODE读，将完整的读到&#8217;/0/0&#8242;结束。<br><br>由于UNICODE没有额外的指示位，所以系统必须知道你提供的字串是哪种格式。此外，UNICODE好象是ANSI C++规定的，_UNICODE是windows SDK提供的。如果不编写windows程序，可以只定义UNICODE。<br><br>开发过程：
+
+</strong>围绕着文件读写、字符串处理展开。文件主要有两种：.txt和.ini文件<strong><br><br>1.    在unicode和非unicode环境下字符串做不同处理的，那么需要参考以上9，10两条，以适应不同环境得字符串处理要求。<br><br>对文件读写也一样。只要调用相关接口函数时，参数中的字符串前都加上_TEXT等相关宏。如果写成的那个文件需要是unicode格式保存的，那么在创建文件时需要加入一个字节头。<br><br>CFile file;<br><br>WCHAR szwBuffer[128];<br><br>WCHAR _pszUnicode = L&#8221;Unicode string/n&#8221;; // unicode string<br><br>CHAR _pszAnsi = &#8220;Ansi string/n&#8221;;                  // ansi string<br><br>WORD wSignature = 0xFEFF;<br><br>file.Open(TEXT(&#8220;Test.txt&#8221;), CFile::modeCreate|CFile::modeWrite);<br><br>file.Write(&amp;wSignature, 2);<br><br>file.Write(pszUnicode, lstrlenW(pszUnicode) _ sizeof(WCHAR));<br><br>// explicitly use lstrlenW function<br><br>MultiByteToWideChar(CP_ACP, 0, pszAnsi, -1, szwBuffer, 128);<br><br>file.Write(szwBuffer, lstrlenW(szwBuffer) _ sizeof(WCHAR));<br><br>file.Close();<br><br>//以上这段代码在unicode和非unicode环境下都有效。这里显式的指明用Unicode来进行操作。<br><br>2.    在非unicode环境下，缺省调用的都是ANSI格式的字符串，此时TCHAR转换为CHAR类型的，除非显式定义WCHAR。所以在这个环境下，如果 读取unicode文件，那么首先需要移动2个字节，然后读取得字符串需要用MultiByteToWideChar来转换，转换后字符串信息才代表 unicode数据。<br><br>3.    在unicode环境下，缺省调用得都是unicode格式得字符串，也就是宽字符，此时TCHAR转换为WCHAR，相关得API函数也都调用宽字符类 型的函数。此时读取unicode文件也和上面一样，但是读取得数据是WCHAR的，如果要转换成ANSI格式，需要调用 WideCharToMultiByte。如果读取ANSI的，则不用移动两个字节，直接读取然后视需要转换即可。<br><br>某些语言（如韩语）必须在unicode环境下才能显示，这种情况下，在非unicode环境下开发，就算用字符串函数转换也不能达到显示文字的目的，因 为此时调用得API函数是用ANSI的（虽然底层都是用UNICODE处理但是处理结果是按照程序员调用的API来显示的）。所以必须用unicode来 开发。<br><br>本文来自CSDN博客，转载请标明出处：<a href="http://blog.csdn.net/Augusdi/archive/2009/10/15/4677533.aspx" target="_blank" rel="external">http://blog.csdn.net/Augusdi/archive/2009/10/15/4677533.aspx</a><br><br>=============================================================================<br><br>&nbsp;
+
+</strong>将ANSI转换到Unicode 将Unicode转换到ANSI <strong>
+
+</strong>将ANSI转换到Unicode   <strong><br><br>(1)通过L这个宏来实现，例如:   CLSIDFromProgID(   L&#8221;MAPI.Folder&#8221;,&amp;clsid);<br><br>(2)通过MultiByteToWideChar函数实现转换,例如:<br><br>char   *szProgID   =   &#8220;MAPI.Folder&#8221;;<br><br>WCHAR   szWideProgID[128];<br><br>CLSID   clsid;<br><br>long   lLen   =   MultiByteToWideChar(CP_ACP,0,szProgID,strlen(szProgID),szWideProgID,sizeof(szWideProgID));<br><br>szWideProgID[lLen]   =   &#8216;/0&#8242;;<br><br>(3)通过A2W宏来实现,例如:<br><br>USES_CONVERSION;<br><br>CLSIDFromProgID(   A2W(szProgID),&amp;clsid);
+
+</strong>  将Unicode转换到ANSI<br><br>**  (1)使用WideCharToMultiByte,例如:<br><br>//   假设已经有了一个Unicode   串   wszSomeString&#8230;<br><br>char   szANSIString   [MAX_PATH];<br><br>WideCharToMultiByte   (   CP_ACP,   WC_COMPOSITECHECK,   wszSomeString,   -1,   szANSIString,   sizeof(szANSIString),   NULL,   NULL   );<br><br>(2)使用W2A宏来实现,例如:<br><br>USES_CONVERSION;<br><br>pTemp=W2A(wszSomeString);<br><br>本文来自CSDN博客，转载请标明出处：<a href="http://blog.csdn.net/Augusdi/archive/2009/10/15/4677487.aspx" target="_blank" rel="external">http://blog.csdn.net/Augusdi/archive/2009/10/15/4677487.aspx</a><br><br></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ANSI/" rel="tag">#ANSI</a>
+          
+            <a href="/tags/UNICODE/" rel="tag">#UNICODE</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/07/03/VS2010给MFC工程添加图标/" rel="prev">VS2010给MFC工程添加图标</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/06/25/关于-预编译头/" rel="next">关于 预编译头</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

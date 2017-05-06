@@ -1,0 +1,632 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="RaspberryPI,RaspberryPi," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="First, let&amp;#8217;s see the GPIO ports in the raspberry,as shows in the figure below:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RaspberryPi — GPIO control LED">
+<meta property="og:url" content="http://yoursite.com/2014/02/06/RaspberryPi-—-GPIO-control-LED/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="First, let&amp;#8217;s see the GPIO ports in the raspberry,as shows in the figure below:">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2014/02/raspberry_pi_gpio_pinouts_1.jpg">
+<meta property="og:updated_time" content="2015-07-25T11:38:10.674Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RaspberryPi — GPIO control LED">
+<meta name="twitter:description" content="First, let&amp;#8217;s see the GPIO ports in the raspberry,as shows in the figure below:">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> RaspberryPi — GPIO control LED // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              RaspberryPi — GPIO control LED
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-02-06T20:52:09+08:00" content="2014-02-06">
+            2014-02-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>First, let&#8217;s see the GPIO ports in the raspberry,as shows in the figure below:</p>
+<p><a href="http://miibotree.com/?attachment_id=897" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2014/02/raspberry_pi_gpio_pinouts_1.jpg" alt="raspberry_pi_gpio_pinouts_1"></a><br><a id="more"></a></p>
+<p>more info, please see:<a href="http://www.codelast.com/?p=5155" target="_blank" rel="external"> http://www.codelast.com/?p=5155</a></p>
+<p>and I get a small LED and two wires from the science and technology association, and right away I immediately start my work!</p>
+<p>My aim is to use my phone to control the LED &#8216;s state  on/off.</p>
+<p><span id="more-892"></span></p>
+<p><strong>1.Test the GPIO ports</strong></p>
+<p>Notice that the small LED has directions:  long pin is  positive, and the short one is connected to the ground.</p>
+<p>link the positive pin to GPIO 25, and the negative pin links to Ground.</p>
+<p>then start RaspberryPi, open terminal:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">sudo su</span><br><span class="line">#<span class="operator"><span class="keyword">use</span> root</span><br><span class="line">echo <span class="number">25</span> &amp;gt;</span> /sys/class/gpio/export</span><br><span class="line">#export the gpio25 pin's operation interface from kernel into user space</span><br><span class="line">cd /sys/class/gpio/gpio25  #<span class="operator"><span class="keyword">change</span> directory</span><br><span class="line">#you can <span class="keyword">use</span> command ls,what we need <span class="keyword">to</span> alert <span class="keyword">are</span> <span class="keyword">only</span> two files: direction <span class="keyword">and</span> <span class="keyword">value</span></span><br><span class="line">echo out &amp;gt;</span> direction</span><br><span class="line">#<span class="operator"><span class="keyword">set</span> direction out</span><br><span class="line">echo <span class="number">1</span> &amp;gt;</span> value</span><br><span class="line">#<span class="operator"><span class="keyword">set</span> <span class="keyword">value</span> <span class="number">1</span></span></span><br></pre></td></tr></table></figure>
+<p>If no error occurs, we could see the LED on!!!</p>
+<p>and turn off the LED by:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="number">0</span> &amp;gt; value</span><br></pre></td></tr></table></figure>
+<p><strong>2.using Shell </strong></p>
+<p>we write two shell scripts: on.sh and off.sh</p>
+<p>on.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> Exporting pin <span class="variable">$1</span>.</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$1</span> &amp;gt; /sys/class/gpio/<span class="built_in">export</span></span><br><span class="line"><span class="built_in">echo</span> Setting direction to out.</span><br><span class="line"><span class="built_in">echo</span> out &amp;gt; /sys/class/gpio/gpio<span class="variable">$1</span>/direction</span><br><span class="line"><span class="built_in">echo</span> setting pin high.</span><br><span class="line"><span class="built_in">echo</span> <span class="number">1</span> &amp;gt; /sys/class/gpio/gpio<span class="variable">$1</span>/value</span><br></pre></td></tr></table></figure>
+<p>and add the execute permission and execute it</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x <span class="function_start"><span class="keyword">on</span>.<span class="title">sh</span></span></span><br><span class="line">./<span class="function_start"><span class="keyword">on</span>.<span class="title">sh</span></span> <span class="number">25</span></span><br></pre></td></tr></table></figure>
+<p>we can see the LED on!</p>
+<p>and another shell to off the LED:</p>
+<p>off.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="shebang">#!/bin/bash</span></span><br><span class="line"><span class="built_in">echo</span> Setting pin low.</span><br><span class="line"><span class="built_in">echo</span> <span class="number">0</span> &amp;gt; /sys/class/gpio/gpio<span class="variable">$1</span>/value</span><br><span class="line"><span class="built_in">echo</span> Unexpected pin <span class="variable">$1</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$1</span> &amp;gt; /sys/class/gpio/unexport</span><br></pre></td></tr></table></figure>
+<p>and add the execute permission and execute it</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod +x off<span class="class">.sh</span></span><br><span class="line">./off<span class="class">.sh</span> <span class="number">25</span></span><br></pre></td></tr></table></figure>
+<p>we can see the LED off!~</p>
+<p><strong>3.using YeeLink </strong></p>
+<p>you can regard YeeLink as an online server.In order to control the LED, we use our phone to provide the value into the server. And raspberryPi read the value from the server in every two seconds.</p>
+<p>Here is the YeeLink:</p>
+<p><a href="http://www.yeelink.net/user/devices" target="_blank" rel="external">http://www.yeelink.net/user/devices</a></p>
+<p>&nbsp;</p>
+<p><strong>4.using python library requests to read the data from yeelink server.</strong></p>
+<p><a href="http://docs.python-requests.org/en/latest/" target="_blank" rel="external">http://docs.python-requests.org/en/latest/</a></p>
+<p>download the source and install the requests library:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/kennethreitz/requests.git</span><br><span class="line"><span class="keyword">python</span> setup.<span class="keyword">py</span> install</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>write a python program to get the value and using the value to control the LED:</p>
+<p>led.py:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">import json</span><br><span class="line">import os</span><br><span class="line">while True:</span><br><span class="line">r = requests.<span class="function"><span class="title">get</span><span class="params">(<span class="string">'http://api.yeelink.net/v1.0/device//sensor//datapoints'</span>)</span></span></span><br><span class="line">print r<span class="class">.text</span></span><br><span class="line">decode = json.<span class="function"><span class="title">loads</span><span class="params">(r.text)</span></span></span><br><span class="line">switch = decode[<span class="string">'value'</span>]</span><br><span class="line"><span class="keyword">if</span> (switch == <span class="number">1</span>):</span><br><span class="line">os.<span class="function"><span class="title">system</span><span class="params">(<span class="string">'./on.sh 25'</span>)</span></span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">os.<span class="function"><span class="title">system</span><span class="params">(<span class="string">'./off.sh 25'</span>)</span></span></span><br><span class="line">os.<span class="function"><span class="title">system</span><span class="params">(<span class="string">'sleep 2'</span>)</span></span></span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>run the python program:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">python</span> LED.<span class="keyword">py</span></span><br></pre></td></tr></table></figure>
+<p>and test it by using your YeeLink App on your Iphone or Android devices.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>references:</p>
+<p><a href="http://blog.csdn.net/qigenhuochai/article/details/17661845" target="_blank" rel="external">http://blog.csdn.net/qigenhuochai/article/details/17661845</a></p>
+<p>《爱上RaspberryPi》</p>
+<p>Any questions, please leave a message.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/RaspberryPI/" rel="tag">#RaspberryPI</a>
+          
+            <a href="/tags/RaspberryPi/" rel="tag">#RaspberryPi</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/02/22/Fedora-19更新内核导致VirtualBox无法启动/" rel="prev">Fedora 19更新内核导致VirtualBox无法启动</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/01/29/A-udp-holing-example/" rel="next">A udp holing example</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,745 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="上几天帮同学搞了一个随机数生成器，首先在网上搜索了一下，发现网上有的做的也比较的简单，但是功能还是比较全的。
+而且发现自己学的东西刚好可以写一个随机数生成器。当然还有些预备知识没有学，所以现学现用了。
+计时器的有关知识我已经了解了，首先要用到创建字体，然后是创建父窗口控件，然后就是利用RGB的颜色的变化了。
+看了几天的书，终于写出来了。下面是代码：
+include &amp;lt;windows.h&amp;gt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SDK编写简单的随机数生成器">
+<meta property="og:url" content="http://yoursite.com/2011/12/31/SDK编写简单的随机数生成器/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="上几天帮同学搞了一个随机数生成器，首先在网上搜索了一下，发现网上有的做的也比较的简单，但是功能还是比较全的。
+而且发现自己学的东西刚好可以写一个随机数生成器。当然还有些预备知识没有学，所以现学现用了。
+计时器的有关知识我已经了解了，首先要用到创建字体，然后是创建父窗口控件，然后就是利用RGB的颜色的变化了。
+看了几天的书，终于写出来了。下面是代码：
+include &amp;lt;windows.h&amp;gt">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SDK编写简单的随机数生成器">
+<meta name="twitter:description" content="上几天帮同学搞了一个随机数生成器，首先在网上搜索了一下，发现网上有的做的也比较的简单，但是功能还是比较全的。
+而且发现自己学的东西刚好可以写一个随机数生成器。当然还有些预备知识没有学，所以现学现用了。
+计时器的有关知识我已经了解了，首先要用到创建字体，然后是创建父窗口控件，然后就是利用RGB的颜色的变化了。
+看了几天的书，终于写出来了。下面是代码：
+include &amp;lt;windows.h&amp;gt">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> SDK编写简单的随机数生成器 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              SDK编写简单的随机数生成器
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2011-12-31T15:50:00+08:00" content="2011-12-31">
+            2011-12-31
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>上几天帮同学搞了一个随机数生成器，首先在网上搜索了一下，发现网上有的做的也比较的简单，但是功能还是比较全的。</p>
+<p>而且发现自己学的东西刚好可以写一个随机数生成器。当然还有些预备知识没有学，所以现学现用了。</p>
+<p>计时器的有关知识我已经了解了，首先要用到创建字体，然后是创建父窗口控件，然后就是利用RGB的颜色的变化了。</p>
+<p>看了几天的书，终于写出来了。下面是代码：</p>
+<h1 id="include_&lt;windows-h&gt;">include &lt;windows.h&gt;</h1><h1 id="include_&lt;stdio-h&gt;">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;">include &lt;stdlib.h&gt;</h1><h1 id="include_&lt;time-h&gt;">include &lt;time.h&gt;</h1><h1 id="include_&lt;string-h&gt;">include &lt;string.h&gt;</h1><h1 id="define_ID_TIMER&nbsp;&nbsp;&nbsp;_1">define ID_TIMER&nbsp;&nbsp;&nbsp; 1</h1><p>LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;</p>
+<p>int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PSTR szCmdLine, int iCmdShow)</p>
+<p>{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; static TCHAR szAppName[] = TEXT (&quot;Beeper1&quot;) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HWND&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; MSG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; msg ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; WNDCLASS&nbsp;&nbsp;&nbsp;&nbsp; wndclass ;</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.style&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = CS_HREDRAW | CS_VREDRAW ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpfnWndProc&nbsp;&nbsp; = WndProc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.cbClsExtra&nbsp;&nbsp;&nbsp; = 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.cbWndExtra&nbsp;&nbsp;&nbsp; = 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hInstance&nbsp;&nbsp;&nbsp;&nbsp; = hInstance ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hIcon&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = LoadIcon (NULL, IDI_APPLICATION) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hCursor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = LoadCursor (NULL, IDC_ARROW) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpszMenuName&nbsp; = NULL ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; wndclass.lpszClassName = szAppName ;</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; if (!RegisterClass (&amp;wndclass))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MessageBox (NULL, TEXT (&quot;Program requires Windows NT!&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; szAppName, MB_ICONERROR) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; hwnd = CreateWindow (szAppName, TEXT (&quot;随机数生成器1.00版本&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_OVERLAPPEDWINDOW,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CW_USEDEFAULT, CW_USEDEFAULT,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; CW_USEDEFAULT, CW_USEDEFAULT,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NULL, NULL, hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; ShowWindow (hwnd, iCmdShow) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; UpdateWindow (hwnd) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; while (GetMessage (&amp;msg, NULL, 0, 0))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TranslateMessage (&amp;msg) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DispatchMessage (&amp;msg) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; return msg.wParam ;</p>
+<p>}</p>
+<p>LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</p>
+<p>{</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; static BOOL fFlipFlop = FALSE ;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_green = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_blue = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; static DWORD color_red = 255;</p>
+<p>&nbsp;&nbsp; &nbsp; LOGFONT lf;</p>
+<p>&nbsp;&nbsp; &nbsp; HFONT&nbsp;&nbsp; hFont ;</p>
+<p>&nbsp;&nbsp; &nbsp; TEXTMETRIC tm ;</p>
+<p>&nbsp;&nbsp; &nbsp; TCHAR szBuffer [40];</p>
+<p>&nbsp;&nbsp; &nbsp; static int cxChar, cyChar, sum;</p>
+<p>&nbsp;&nbsp; &nbsp; DWORD a, iLength;</p>
+<p>&nbsp;&nbsp; &nbsp; DWORD ownrand[40] = {31,24,17,11,5,22,4,7,1,32,15,39,29,3,27,21,38,25,12,33,9,23,36,2,13,18,30,16,26,34,37,10,8,28,19,6,14,20,35};</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; TCHAR str[256], type_height[10], type_width[10];</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HBRUSH&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hBrush ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HDC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hdc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; PAINTSTRUCT ps ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; RECT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rc ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; HWND hwndButton;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; switch (message)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_CREATE:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; SetTimer (hwnd, ID_TIMER, 50, NULL) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; cxChar = LOWORD (GetDialogBaseUnits ()) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cyChar = HIWORD (GetDialogBaseUnits ()) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwndButton = CreateWindow ( TEXT(&quot;button&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT(&quot;开始&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cxChar &#43; 420, cyChar _ (1 &#43; 2 _ 1)&#43;300,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 _ cxChar, 7 _ cyChar / 4,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd, (HMENU) 1,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ((LPCREATESTRUCT) lParam)-&gt;hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwndButton = CreateWindow ( TEXT(&quot;button&quot;), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; TEXT(&quot;暂停&quot;),</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cxChar &#43; 420 , cyChar _ (1 &#43; 2 _ 1)&#43;350,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 20 _ cxChar, 7 _ cyChar / 4,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hwnd, (HMENU) 2,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ((LPCREATESTRUCT) lParam)-&gt;hInstance, NULL) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_TIMER :</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; sum&#43;&#43;; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; InvalidateRect (hwnd, NULL, FALSE) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp; &nbsp; case WM_PAINT:</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hdc = BeginPaint (hwnd, &amp;ps) ; </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GetClientRect (hwnd, &amp;rc) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; hBrush = CreateSolidBrush (RGB(color_red,color_green,color_blue));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; if (sum&lt;=39)</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; _itow(ownrand[sum],str,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; else{</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;sum=0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;_itow(ownrand[sum],str,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_red -= 10;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //颜色变化的实现</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_green -= 5;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; color_blue -= 1;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sum&#43;&#43;;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FillRect (hdc, &amp;rc, hBrush) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; hdc = GetDC(hwnd);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; GetTextMetrics(hdc,&amp;tm);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; cxChar = tm.tmAveCharWidth;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; cyChar = tm.tmHeight &#43; tm.tmExternalLeading;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; iLength = wcslen(str);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SetTextColor(hdc,RGB(255-color_red,255-color_green,255-color_blue));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //SetTextColor(hdc,RGB(250,0,0));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; //设置字体</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfHeight = 200;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfWeight = 170;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfWeight = 700;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfUnderline = 0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; lf.lfStrikeOut = 0;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; hFont = CreateFontIndirect(&amp;lf);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SelectObject(hdc, hFont);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //GetTextMetrics (hdc, &amp;tm);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //_itow(tm.tmHeight,type_height,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //_itow(tm.tmAscent,type_width,10);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //TextOut(hdc, 0, 0, type_height, wcslen(type_height));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; //TextOut(hdc, 50, 0, type_width, wcslen(type_width));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; DeleteObject (hFont);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; SetBkColor (hdc, GetSysColor(COLOR_WINDOW));</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; TextOut(hdc, cxChar&#43;400, cyChar&#43;100, str, iLength);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; </p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; ReleaseDC(hwnd, hdc);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EndPaint (hwnd, &amp;ps) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; DeleteObject (hBrush) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp; &nbsp; case WM_COMMAND:</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; if (2 == wParam){</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; KillTimer (hwnd, ID_TIMER) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; //MessageBox(hwnd, TEXT(&quot;恭喜您&quot;),TEXT(&quot;congratulations&quot;),MB_OK);</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; if (1 == wParam){</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;SetTimer (hwnd, ID_TIMER, 50, NULL) ;</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; }</p>
+<p>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; break;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; case WM_DESTROY :</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KillTimer (hwnd, ID_TIMER) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; PostQuitMessage (0) ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0 ;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; return DefWindowProc (hwnd, message, wParam, lParam) ;</p>
+<p>}</p>
+<p>关于随机数产生的问题，本来想用rand(time(0))来实现的，但是通过测试发现精度不够高，当timer调用每100毫秒更新一次的时候就已经显现出伪随机特性了。</p>
+<p>本来想自己写一个随机数生成算法的，但是由于滚动的总数量不是很多，所以请教了华哥，自己开了一个数组，在里面随机写了30个数字。</p>
+<p>关于颜色的变化的实现，关键代码其实也比较简单的，每次调用计时器的时候改变RGB的&#20540;，但是改变的&#20540;不一样，这样就加长了循环周期。</p>
+<p>整个代码只是基本实现了效果，没有过多的功能，自己如果以后学了·鼠标键盘等一些其他东西的话还能把这些东西也加进去，做一个改进版本。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/01/windows-SDK模拟游戏钢琴的实现-一/" rel="prev">windows SDK模拟游戏钢琴的实现(一)</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2011/12/09/置顶-fedora-16-gnome更换主题/" rel="next">[置顶]        fedora 16   gnome更换主题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<windows-h>"><span class="nav-text">include <windows.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdio-h>"><span class="nav-text">include <stdio.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdlib-h>"><span class="nav-text">include <stdlib.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<time-h>"><span class="nav-text">include <time.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<string-h>"><span class="nav-text">include <string.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_ID_TIMER   _1"><span class="nav-text">define ID_TIMER    1</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

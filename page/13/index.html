@@ -1,0 +1,1243 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/13/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/24/关于socket中recv的返回值/" itemprop="url">
+                关于socket中recv的返回值
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-24T09:19:27+08:00" content="2012-07-24">
+            2012-07-24
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>最近在做一个利用socket下载图片的小程序。基本思路就是建立socket以后自己组包然后发送过去，然后recv接收里面的数据里面就包含了图片数据信息。</p>
+<p>一开始自己在写的时候，一直会遇到问题。关键代码如下：</p>
+<figure class="highlight"><figcaption><span>WriteBuffer = (char *)malloc(1024 * 1024 * 2);</span><a href="//创建足够大的Buffer">link</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;hPhoto = CreateFileA(FilePath, // &#25171;&#24320;&#25991;&#20214;&#10;GENERIC_WRITE,&#10;FILE_SHARE_WRITE,&#10;NULL,&#10;CREATE_ALWAYS,&#10;FILE_ATTRIBUTE_NORMAL,&#10;NULL);&#10;&#10;memset(WriteBuffer, 0, Length); //&#28165;&#31354;Buffer&#10;&#10;if (Length % 1024 == 0) //&#26681;&#25454;&#38271;&#24230;&#35745;&#31639;for&#24490;&#29615;&#30340;&#35835;&#21462;&#27425;&#25968;&#10;Lun = Length / 1024 - 1;&#10;else&#10;Lun = Length / 1024;&#10;&#10;for (i = 0; i &#38;lt;= Lun; i++)&#10;&#123;&#10;&#10;recv(LinkSocket, (char*)recvbuffer, 1024, 0); //&#25509;&#25910;&#25968;&#25454;&#10;CopyMemory(WriteBuffer, recvbuffer, 1024); //&#23558;&#25968;&#25454;&#23384;&#20837;Buffer&#10;//Sleep(1); //&#36825;&#37324;&#19968;&#23450;&#35201;&#30561;&#19978;&#19968;&#20250;&#12290;&#12290;&#12290;&#10;memset(recvbuffer, 0, 1024); //&#28165;&#31354;&#20020;&#26102;Buffer&#10;WriteBuffer += 1024;&#10;&#125;&#10;WriteBuffer -= 1024 * i;&#10;WriteFile(hPhoto, WriteBuffer, Length, &#38;amp;dwWritten,0); //&#20889;&#20837;&#25991;&#20214;&#25805;&#20316;&#10;SetFilePointer(hPhoto, 0, NULL, FILE_END);&#10;&#10;CloseHandle(hPhoto);</span><br></pre></td></tr></table></figure>
+<p>每次都必须sleep睡一会儿才可以。如果是不写sleep的话，程序直接崩溃掉了。</p>
+<p>&nbsp;</p>
+<p>由于百思不得其解，只好在CSDN上面请教大牛了。</p>
+<p>下面是我错误的地方：</p>
+<p><span id="more-381"></span></p>
+<p><span style="color: #cc0000;">recv本身是阻塞模式的，这部分可以这样写：</span></p>
+<p>&nbsp;</p>
+<figure class="highlight"><figcaption><span>style="color: #0000ff;">int</span><span style="color: #000000;"> nRecvLen </span><span style="color: #000000;">=</span><span style="color: #800080;">0</span><span style="color: #000000;">; </span><span style="color: #0000ff;"></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">while&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; ( nRecvLen &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#38;lt;&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; Length ) &#10;&#123; &#60;/span&#62;&#60;span style=&#34;color: #0000ff;&#34;&#62;&#10; int&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; len &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;=&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; recv(LinkSocket, WriteBuffer &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;+&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; nRecvLen, &#60;/span&#62;&#60;span style=&#34;color: #800080;&#34;&#62;1024&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;, &#60;/span&#62;&#60;span style=&#34;color: #800080;&#34;&#62;0&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;);&#10;&#60;/span&#62;&#60;span style=&#34;color: #0000ff;&#34;&#62; if&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; ( len &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;==&#60;/span&#62;&#60;span style=&#34;color: #800080;&#34;&#62;0&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; ) &#60;/span&#62;&#60;span style=&#34;color: #0000ff;&#34;&#62;&#10; break&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;; &#10; nRecvLen &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;+=&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62; len; &#10;&#125; &#10;WriteFile(hPhoto, WriteBuffer, nRecvLen, &#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;&#38;amp;&#60;/span&#62;&#60;span style=&#34;color: #000000;&#34;&#62;dwWritten, NULL); &#10;CloseHandle(hPhoto);&#60;/span&#62;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><span style="color: #990000;">recv(LinkSocket, (char*)recvbuffer, 1024, 0);</span></p>
+<p>请注意，recv的返回值的意义，你期望读取1024，实际返回可能只有1000，所以，你必须根据recv的返回值来确定，实际读取了多少数据</p>
+<p>你的问题就出在这里了</p>
+<p>给你写个大致的模板</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">bmplen=2000<span class="comment">;//假设已经接受到图片的长度，假设为2000</span></span><br><span class="line">int recvlen=0<span class="comment">;</span></span><br><span class="line">while(recv&amp;lt<span class="comment">;2000)</span></span><br><span class="line">&#123;</span><br><span class="line">int ret=recv(......)<span class="comment">;</span></span><br><span class="line">memcpy(WriteBuffer+recvlen,buffer,ret)<span class="comment">;</span></span><br><span class="line">recvlen=recvlen+ret<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致就是这样了</p>
+<p>}</p>
+<p>每次写socket都有各种各样的错误，然后有各种各样的收获。</p>
+<p>再次谢谢大家了。</p>
+<p>下面附上论坛地址。</p>
+<p><a href="http://topic.csdn.net/u/20120721/17/a480efe0-15e3-44fb-a18c-ea9cf4909057.html?seed=291447330&#038;r=79203312#r_79203312" target="_blank" rel="external">http://topic.csdn.net/u/20120721/17/a480efe0-15e3-44fb-a18c-ea9cf4909057.html?seed=291447330&#038;r=79203312#r_79203312</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/20/内联函数与宏定义的区别/" itemprop="url">
+                内联函数与宏定义的区别
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-20T18:23:17+08:00" content="2012-07-20">
+            2012-07-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>昨天在看C++书的时候对内联函数和宏定义的区别不是很清楚，故百度了一把。</p>
+<p>&nbsp;</p>
+<p>（1）什么是内联函数？</p>
+<p>内联函数是指那些定义在类体内的成员函数，即该函数的函数体放在类体内。</p>
+<p>（2）为什么要引入内联函数？</p>
+<p>当然，引入内联函数的主要目的是：解决程序中函数调用的效率问题。另外，前面我们讲到了宏，里面有这么一个例子：</p>
+<h1 id="define_ABS(x)_((x)&gt;0?_(x):-(x))">define ABS(x) ((x)&gt;0? (x):-(x))</h1><p>当++i出现时，宏就会歪曲我们的意思，换句话说就是：宏的定义很容易产生二意性。</p>
+<p>我们可以看到宏有一些难以避免的问题，怎么解决呢？前面我们已经尽力替换了。</p>
+<p>下面我们用内联函数来解决这些问题。</p>
+<p>（3）为什么inline能取代宏？</p>
+<p>1、 inline 定义的类的内联函数，函数的代码被放入符号表中，在使用时直接进行替换，（像宏一样展开），没有了调用的开销，效率也很高。</p>
+<p>2、 很明显，类的内联函数也是一个真正的函数，编译器在调用一个内联函数时，会首先检查它的参数的类型，保证调用正确。然后进行一系列的相关检查，就像对待任何一个真正的函数一样。这样就消除了它的隐患和局限性。</p>
+<p>3、 inline 可以作为某个类的成员函数，当然就可以在其中使用所在类的保护成员及私有成员。</p>
+<p>（4）内联函数和宏的区别？</p>
+<p>内联函数和宏的区别在于，宏是由预处理器对宏进行替代，而内联函数是通过编译器控制来实现的。而且内联函数是真正的函数，只是在需要用到的时候，内联函数 像宏一样的展开，所以取消了函数的参数压栈，减少了调用的开销。你可以象调用函数一样来调用内联函数，而不必担心会产生于处理宏的一些问题。内联函数与带 参数的宏定义进行下比较，它们的代码效率是一样，但是内联欢函数要优于宏定义，因为内联函数遵循的类型和作用域规则，它与一般函数更相近，在一些编译器 中，一旦关上内联扩展，将与一般函数一样进行调用，比较方便。</p>
+<p><span id="more-377"></span></p>
+<p>（5）什么时候用内联函数？</p>
+<p>内联函数在C++类中，应用最广的，应该是用来定义存取函数。我们定义的类中一般会把数据成员定义成私有的或者保护的，这样，外界就不能直接读写我们类成员的数据了。对于私有或者保护成员的读写就必须使用成员接口函数来进行。如果我们把这些读写成</p>
+<p>员函数定义成内联函数的话，将会获得比较好的效率。</p>
+<p>Class A</p>
+<p>{</p>
+<p>Private:</p>
+<p>int nTest;</p>
+<p>Public:</p>
+<p>int readtest() { return nTest;}</p>
+<p>void settest(int I) { nTest=I; }</p>
+<p>}</p>
+<p>（6）如何使用内联函数?</p>
+<p>我们可以用inline来定义内联函数。</p>
+<p>inline int A (int x) { return 2*x; }</p>
+<p>不过，任何在类的说明部分定义的函数都会被自动的认为是内联函数。</p>
+<p>（7）内联函数的优缺点？</p>
+<p>我们可以把它作为一般的函数一样调用，但是由于内联函数在需要的时候，会像宏一样展开，所以执行速度确比一般函数的执行速度要快。当然，内联函数也有一定 的局限性。就是函数中的执行代码不能太多了，如果，内联函数的函数体过大，一般的编译器会放弃内联方式，而采用普通的方式调用函数。(换句话说就是，你使 用内联函数，只不过是向编译器提出一个申请，编译器可以拒绝你的申请）这样，内联函数就和普通函数执行效率一样了。</p>
+<p>（8）如何禁止函数进行内联？</p>
+<p>如果使用VC++，可以使用/Ob命令行参数。当然，也可以在程序中使用 #pragma auto_inline达到相同的目的。</p>
+<p>（9）注意事项：</p>
+<p>1.在内联函数内不允许用循环语句和开关语句。</p>
+<p>2.内联函数的定义必须出现在内联函数第一次被调用之前。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/19/关于用户态和内核态的初步理解/" itemprop="url">
+                关于用户态和内核态的初步理解
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-19T21:42:05+08:00" content="2012-07-19">
+            2012-07-19
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天在测试socket的内核缓冲区大小的时候，初步了解了内核态与用户态的切换过程。</p>
+<p>我的测试是这样的：首先建立c/s模型，建立socket连接，然后让服务器端不断的发送消息，每次发送1024个字节，而客户端不接收数据。这样当服务器端发送了24K左右以后，就会阻塞在send处，无法再发送数据了。</p>
+<p>同理，客户端发送消息的时候也是一样的。测试结果显示缓冲区大小也是25K左右。</p>
+<p>这样我们就初步证明了内核缓冲区的存在性。</p>
+<p>也 就是说，如果我们只是发送数据而没有接收数据的话，那么我们使用send函数发送数据的时候，最终会调用内核态ring0级的send函数（究竟是哪个内 核API自己现在还不是很清楚）。在内核态应该有一块缓冲区专门用来存放发送的数据，而且类似管道机制，如果数据没有存满，那么允许一直存放，直到到达缓 冲区最大容许存放的大小。</p>
+<p>从应用层转换到内核层这整个过程是很繁琐的，中间会调用很多API。</p>
+<p>关于应用层到内核层的切换问题，下面这个链接举了一个最常见的fork函数的例子。以及在哪些情况下会使操作系统运行在ring0级别上。</p>
+<p><span id="more-374"></span></p>
+<p><a href="http://rf.eefocus.com/article/09-12/1628861261320722.html?sort=899_939_950_0" target="_blank" rel="external">http://rf.eefocus.com/article/09-12/1628861261320722.html?sort=899_939_950_0</a></p>
+<p><span style="color: #6600cc;">用户态切换到内核态的3种方式</span></p>
+<p><span style="color: #6600cc;">a. 系统调用</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> 这是用户态进程主动要求切换到内核态的一种方式，用户态进程通过系统调用申请使用操作系统提供的服务程序完成工作，比如前例中fork()实际上就是执行 了一个创建新进程的系统调用。而系统调用的机制其核心还是使用了操作系统为用户特别开放的一个中断来实现，例如Linux的int80h中断。</span></p>
+<p><span style="color: #6600cc;">b. 异常</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;">  </span><wbr><span style="color: #6600cc;">当CPU在执行运行在用户态下的程序时，发生了某些事先不可知的异常，这时会触发由当前运行进程切换到处理此异常的内核相关程序中，也就转到了内核态，比如缺页异常。</span></p>
+<p><span style="color: #6600cc;">c. 外围设备的中断</span></p>
+<p><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;"> </span><wbr><span style="color: #6600cc;">  </span><wbr><span style="color: #6600cc;">当 外围设备完成用户请求的操作后，会向CPU发出相应的中断信号，这时CPU会暂停执行下一条即将要执行的指令转而去执行与中断信号对应的处理程序，如果先 前执行的指令是用户态下的程序，那么这个转换的过程自然也就发生了由用户态到内核态的切换。比如硬盘读写操作完成，系统会切换到硬盘读写的中断处理程序中 执行后续操作等。</span></p>
+<p><span style="color: #6600cc;"> </span><wbr></p>
+<p><span style="color: #6600cc;">这3种方式是系统在运行时由用户态转到内核态的最主要方式，其中系统调用可以认为是用户进程主动发起的，异常和外围设备中断则是被动的。</span></p>
+<p>&nbsp;</p>
+<p>那么看了上面的概念之后，自然而然就产生了这样一个疑惑：<span style="color: #cc0000;">我们怎么样可以主动进入到ring0呢？</span></p>
+<p>&nbsp;</p>
+<p>今天初步看了《寒江独钓 windows内核安全编程》这本书，自己只是想把基础概念了解一下。</p>
+<p>简单的说，我们自己写一个内核模块，或者说是驱动程序，当然不是说我们真正开发驱动，而是我们通过这种方法可以进入ring0层。可以任意修改内核。</p>
+<p>我们知道，用户空间是各个进程隔离的，但是内核空间是共享的。编写的内核模块运行在内核空间，成为操作系统的一个模块，最终被所有需要该模块提供功能的应用程序调用。</p>
+<p>那么这个内核模块是被哪个进程拥有的呢？实际上，内核模块位于任何一个进程空间中。这取决于请求的来源、处理的过程等。</p>
+<p>还有几个基本概念需要我们了解的：</p>
+<p><a href="http://blog.csdn.net/vangoals/article/details/4359612" target="_blank" rel="external">http://blog.csdn.net/vangoals/article/details/4359612</a></p>
+<p><a href="http://blog.csdn.net/yangbostar/article/details/5774774" target="_blank" rel="external">http://blog.csdn.net/yangbostar/article/details/5774774</a></p>
+<p>驱动对象       设备对象    请求（IRP）<span style="color: #000000;">  分发函数</span></p>
+<p><span style="color: #993399;">    首先，谈谈驱动对象（DRIVER_OBJECT），可以说驱动对象代表的是一个驱动程序（或者叫内核模块）。在写内核程序时，必须要填写这样一种结构， 来告诉Windows程序提供的功能。内核程序并不生成进程，它们有系统的System进程加载，可以存在于任何的进程。</span></p>
+<p><span style="color: #993399;">      设备对象（DEVICE_OBJECT）可以是一个具体的物理设备，如：键盘、硬盘等；也可以是一个虚拟的“设备”，如：用于进程间通信的管道。设备对象 由驱动对象创建，一个驱动对象可以创建很多个设备对象。这些设备对象储存在一个设备栈中，这些设备对象是用链表连接在一起的，当新的设备对象产生时应该是 用的尾插入（和人理解）。</span></p>
+<p><span style="color: #993399;">      对于请求，我们可以理解为Windows SDK程序设计里的消息。一般都是以IRP方式传递的。而设备对象是唯一可以接受请求的实体。然而一个驱动对象中可能会有很多个设备对象，那么是由哪一个设备对象来处理呢？</span></p>
+<p><span style="color: #993399;">我的理解是：就像MFC中的消息传递机制一样，会有一个消息的接收顺序；IRP请求也是这样，它先发送到设备栈中最上面的一个设备（最新加入），没有被处理就继续向下发送，如果到最后都还是没有被处理，我认为会有一个默认的处理。</span></p>
+<p><span style="color: #993399;">    请求是有各种各样的类型，有的要求读，有的要求写，那么它们就要被分类后，分发到对应的自己编写的处理函数，这些函数叫做“分发函数”，也有翻译为“派遣函数”</span></p>
+<p>&nbsp;</p>
+<p>以上内容只是自己初步学习的笔迹总结，可能有很多错误的地方，还请大家指正。谢谢</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/11/windowsSDK实现-屏幕实时监控-热键截图-功能/" itemprop="url">
+                windowsSDK实现 屏幕实时监控 热键截图 功能
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-11T19:39:05+08:00" content="2012-07-11">
+            2012-07-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>为了自己做出一个远控程序，自己花了点时间学习了有关绘图方面的知识点。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">一.基本概念的了解</span></p>
+<p>为了实现实时屏幕显示的功能，首先学习了下《windows程序设计》的第14章，位图和位块的传输。</p>
+<p>理解了下位图和位块的区别，基本概念。</p>
+<p><span style="color: #ff6600; font-size: small;">概念一：位图与图元的区别：</span></p>
+<p><span style="color: #3366ff;">位图                  图元</span></p>
+<p></p>
+<p><span style="color: #3366ff;">点阵                  矢量      （位图与图元的主要区别就在这里了）</span></p>
+<p></p>
+<p><span style="color: #3366ff;">容易失真          不失真</span></p>
+<p><span style="color: #3366ff;">较大                  较小</span></p>
+<p><span style="color: #3366ff;">传输速度快      传输速度慢</span></p>
+<p><span style="color: #ff6600; font-size: small;">概念二：与设备无关的位图</span></p>
+<p><span style="color: #ff6600; font-size: small;">DDB   设备相关位图</span></p>
+<p><span style="color: #ff6600; font-size: small;">DIB     设备无关位图</span></p>
+<p><span style="color: #ff6600; font-size: small;"><span style="color: #3333ff; font-size: x-small;">windows编程里面提到，这两个概念有时候是很难区分的。所以我在这里就不具体讲解两者的区别了，对我们的功能实现应该没什么关系。但是因为这是个经常出现的字眼，所以这里先提一下。</span></span></p>
+<p><span style="color: #993399; font-size: medium;">二.BitBlt函数</span></p>
+<p>接下来我们来看BitBlt 函数，这个函数是我们这次功能实现的最关键的一个函数了~~~~</p>
+<p><span id="more-370"></span></p>
+<blockquote>
+<p>BOOL BitBlt(</p>
+<p>__in  HDC hdcDest,</p>
+<p>__in  <span style="color: blue;">int</span> nXDest,</p>
+<p>__in  <span style="color: blue;">int</span> nYDest,</p>
+<p>__in  <span style="color: blue;">int</span> nWidth,</p>
+<p>__in  <span style="color: blue;">int</span> nHeight,</p>
+<p>__in  HDC hdcSrc,</p>
+<p>__in  <span style="color: blue;">int</span> nXSrc,</p>
+<p>__in  <span style="color: blue;">int</span> nYSrc,</p>
+<p>__in  DWORD dwRop</p>
+<p>);</p>
+</blockquote>
+<p>参数虽然多，但是用起来不难</p>
+<p>hdcDest 目标设备描述表</p>
+<p>nXDest   目标起始x坐标位置</p>
+<p>nYDest   目标起始y坐标位置</p>
+<p>nWidth   宽度</p>
+<p>nHeight 高度</p>
+<p>hdcSrc   源设备描述表</p>
+<p>nXSrc     源起始x坐标</p>
+<p>nYSrc     源起始y坐标</p>
+<p>dwRop   这个参数比较复杂，我们这里就是简单的原封不动的复制，所以使用了 SRCCOPY</p>
+<p>更多关于这个函数的用法，参照MSDN</p>
+<p>当然了，如果你想缩放图片，你还可以使用函数StretchBlt  这个函数比BitBlt多了两个参数。</p>
+<p>在我的程序中，将屏幕的图像传输到我自己的程序中：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hdcClient = BeginPaint <span class="list">(<span class="keyword">hwnd</span>, <span class="keyword">&amp;amp</span><span class="comment">;ps); //获得目标（本程序）设备描述符</span></span><br><span class="line">hdcWindow = GetWindowDC <span class="list">(<span class="keyword">NULL</span>)</span><span class="comment">; //获得源目标（屏幕）设备描述符</span></span><br><span class="line">BitBlt <span class="list">(<span class="keyword">hdcClient</span>, <span class="number">0</span>, <span class="number">0</span>, cxClient, cyClient, hdcWindow , <span class="number">0</span>, <span class="number">0</span>, SRCCOPY)</span><span class="comment">;</span></span></span><br></pre></td></tr></table></figure>
+<p><span style="color: #6600cc; font-size: medium;">三.实时显示</span></p>
+<p>我通过设置定时器，每隔1ms刷新一次软件的客户区。当然发消息没有这么快。但是至少这样能保证已经达到了最快的更新速度。</p>
+<p>&nbsp;</p>
+<p>程序开始时触发定时器</p>
+<figure class="highlight"><figcaption><span>WM_CREATE:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SetTimer (hwnd, ID_TIMER, 100, TimerProc) ;&#10;return 0 ;</span><br></pre></td></tr></table></figure>
+<p>定时器函数</p>
+<figure class="highlight"><figcaption><span>CALLBACK TimerProc (HWND hwnd, UINT message, UINT iTimerID, DWORD dwTime)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;InvalidateRect(hwnd, NULL, NULL); //&#26080;&#25928;&#25972;&#20010;&#23631;&#24149;&#23458;&#25143;&#21306;&#65292;&#37325;&#32472;&#23458;&#25143;&#21306;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>当这个功能实现的时候，出现了一个很奇怪的问题~~~。给大家截个图看看当前效果：</p>
+<p><img src="http://my.csdn.net/uploads/201207/11/1342005222_2994.png" alt=""></p>
+<p>有很多镜像！~~~这样的结果是正确的。我如果把我的程序放到我的另一个显示器上面（我有两个显示屏），那么程序显示就正常了，显示的是我原来那个屏幕上的图像。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">四：保存bmp图片</span></p>
+<p>这里直接贴代码了：</p>
+<figure class="highlight"><figcaption><span>ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;HBITMAP hBitmap;&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;DC&#10;HDC hScreenDC = CreateDC(L&#34;DISPLAY&#34;, NULL, NULL, NULL);&#10;HDC hmemDC = CreateCompatibleDC(hScreenDC);&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;&#30340;&#23485;&#21644;&#39640;&#10;int ScreenWidth = GetDeviceCaps(hScreenDC, HORZRES);&#10;int ScreenHeight = GetDeviceCaps(hScreenDC, VERTRES);&#10;// &#26087;&#30340;BITMAP&#65292;&#29992;&#20110;&#19982;&#25152;&#38656;&#25130;&#21462;&#30340;&#20301;&#32622;&#20132;&#25442;&#10;HBITMAP hOldBM;&#10;// &#20445;&#23384;&#20301;&#22270;&#25968;&#25454;&#10;PVOID lpvpxldata;&#10;// &#25130;&#23631;&#33719;&#21462;&#30340;&#38271;&#23485;&#21450;&#36215;&#28857;&#10;INT ixStart;&#10;INT iyStart;&#10;INT iX;&#10;INT iY;&#10;// &#20301;&#22270;&#25968;&#25454;&#22823;&#23567;&#10;DWORD dwBitmapArraySize;&#10;// &#20960;&#20010;&#22823;&#23567;&#10;DWORD nBitsOffset;&#10;DWORD lImageSize ;&#10;DWORD lFileSize ;&#10;// &#20301;&#22270;&#20449;&#24687;&#22836;&#10;BITMAPINFO bmInfo;&#10;// &#20301;&#22270;&#25991;&#20214;&#22836;&#10;BITMAPFILEHEADER bmFileHeader;&#10;// &#20889;&#25991;&#20214;&#29992;&#10;HANDLE hbmfile;&#10;DWORD dwWritten;&#10;&#10;// &#22914;&#26524;LPRECT &#20026;NULL &#25130;&#21462;&#25972;&#20010;&#23631;&#24149;&#10;ixStart = iyStart = 0;&#10;iX = ScreenWidth;&#10;iY = ScreenHeight;&#10;&#10;// &#21019;&#24314;BTIMAP&#10;hBitmap = CreateCompatibleBitmap(hScreenDC, iX, iY);&#10;// &#23558;BITMAP&#36873;&#25321;&#20837;&#20869;&#23384;DC&#12290;&#10;hOldBM = (HBITMAP)SelectObject(hmemDC, hBitmap);&#10;// BitBlt&#23631;&#24149;DC&#21040;&#20869;&#23384;DC&#65292;&#26681;&#25454;&#25152;&#38656;&#25130;&#21462;&#30340;&#33719;&#21462;&#35774;&#32622;&#21442;&#25968;&#10;BitBlt(hmemDC, 0, 0, iX, iY, hScreenDC, ixStart, iyStart, SRCCOPY);&#10;// &#23558;&#26087;&#30340;BITMAP&#23545;&#35937;&#36873;&#25321;&#22238;&#20869;&#23384;DC&#65292;&#36820;&#22238;&#20540;&#20026;&#34987;&#26367;&#25442;&#30340;&#23545;&#35937;&#65292;&#26082;&#25152;&#25130;&#21462;&#30340;&#20301;&#22270;&#10;hBitmap = (HBITMAP)SelectObject(hmemDC, hOldBM);&#10;if(filename == NULL)&#10;&#123;&#10;DeleteDC( hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;// &#20026;&#20301;&#22270;&#25968;&#25454;&#30003;&#35831;&#20869;&#23384;&#31354;&#38388;&#10;dwBitmapArraySize = ((((iX*32) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)* iY;&#10;lpvpxldata = HeapAlloc(GetProcessHeap(),HEAP_NO_SERIALIZE,dwBitmapArraySize);&#10;ZeroMemory(lpvpxldata,dwBitmapArraySize);&#10;&#10;// &#28155;&#20805; BITMAPINFO &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmInfo,sizeof(BITMAPINFO));&#10;bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);&#10;bmInfo.bmiHeader.biWidth = iX;&#10;bmInfo.bmiHeader.biHeight = iY;&#10;bmInfo.bmiHeader.biPlanes = 1;&#10;bmInfo.bmiHeader.biBitCount = BitCount;&#10;bmInfo.bmiHeader.biCompression = BI_RGB;&#10;&#10;// &#28155;&#20805; BITMAPFILEHEADER &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER));&#10;nBitsOffset = sizeof(BITMAPFILEHEADER) + bmInfo.bmiHeader.biSize;&#10;lImageSize =&#10;((((bmInfo.bmiHeader.biWidth * bmInfo.bmiHeader.biBitCount) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)&#10;* bmInfo.bmiHeader.biHeight;&#10;lFileSize = nBitsOffset + lImageSize;&#10;bmFileHeader.bfType = &#39;B&#39;+(&#39;M&#39;&#38;lt;&#38;lt;8);&#10;bmFileHeader.bfSize = lFileSize;&#10;bmFileHeader.bfOffBits = nBitsOffset;&#10;&#10;// &#33719;&#21462;DIB&#29992;&#20110;&#20889;&#20837;&#21040;&#25991;&#20214;&#10;GetDIBits(hmemDC, hBitmap, 0, bmInfo.bmiHeader.biHeight,&#10;lpvpxldata, &#38;amp;bmInfo, DIB_RGB_COLORS);&#10;// &#20889;&#25991;&#20214;&#10;hbmfile = CreateFile(filename,&#10;GENERIC_WRITE,&#10;FILE_SHARE_WRITE,&#10;NULL,&#10;CREATE_ALWAYS,&#10;FILE_ATTRIBUTE_NORMAL,&#10;NULL);&#10;&#10;WriteFile(hbmfile,&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,&#38;amp;bmInfo,sizeof(BITMAPINFO),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,lpvpxldata,lImageSize,&#38;amp;dwWritten,NULL);&#10;CloseHandle(hbmfile);&#10;&#10;// &#37322;&#25918;&#20869;&#23384;&#65292;&#28165;&#38500;&#19981;&#21516;&#30340;DC&#12290;&#10;// &#36825;&#37324;&#27809;&#26377;&#21024;&#38500;BITMAP&#23545;&#35937;&#65292;&#38656;&#22312;&#26174;&#31034;&#23436;&#25104;&#21518;&#21024;&#38500;&#10;HeapFree(GetProcessHeap(),HEAP_NO_SERIALIZE,lpvpxldata);&#10;ReleaseDC(0, hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码基本上不加修改就能直接用了。</p>
+<p>&nbsp;</p>
+<p><span style="color: #993399; font-size: medium;">五.格式转换</span></p>
+<p>一般远控在传输图像的时候都是把图片进行了压缩的。所以我想把bmp格式的图片转换成png。这里使用了GDI+的库。很方便就实现了。</p>
+<p>windowsSDK程序需要的注意点：</p>
+<p>1.保证是.cpp格式  .c格式的话就不能 因为这个库只有c++下面才能使用。</p>
+<p>2.使用前引入头文件 和 库</p>
+<figure class="highlight"><figcaption><span>&lt;GdiPlus.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">using namespace Gdiplus;&#10;#pragma comment(lib, &#34;gdiplus.lib&#34;)</span><br></pre></td></tr></table></figure>
+<p>3.实例代码</p>
+<p>参考下面这篇文章，将的非常好：<a href="http://blog.csdn.net/yuzl32/article/details/5389919" target="_blank" rel="external">http://blog.csdn.net/yuzl32/article/details/5389919</a></p>
+<figure class="highlight"><figcaption><span>&lt;windows.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;gdiplus.h&#38;gt;&#10;#include &#38;lt;stdio.h&#38;gt;&#10;using namespace Gdiplus;&#10;&#10;#pragma comment(lib,&#34;gdiplus&#34;)&#10;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)&#10;&#123;&#10;UINT num = 0; // number of image encoders&#10;UINT size = 0; // size of the image encoder array in bytes&#10;&#10;ImageCodecInfo* pImageCodecInfo = NULL;&#10;&#10;//2.&#33719;&#21462;GDI+&#25903;&#25345;&#30340;&#22270;&#20687;&#26684;&#24335;&#32534;&#30721;&#22120;&#31181;&#31867;&#25968;&#20197;&#21450;ImageCodecInfo&#25968;&#32452;&#30340;&#23384;&#25918;&#22823;&#23567;&#10;GetImageEncodersSize(&#38;amp;num, &#38;amp;size);&#10;if(size == 0)&#10;return -1; // Failure&#10;&#10;//3.&#20026;ImageCodecInfo&#25968;&#32452;&#20998;&#37197;&#36275;&#39069;&#31354;&#38388;&#10;pImageCodecInfo = (ImageCodecInfo*)(malloc(size));&#10;if(pImageCodecInfo == NULL)&#10;return -1; // Failure&#10;&#10;//4.&#33719;&#21462;&#25152;&#26377;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#20449;&#24687;&#10;GetImageEncoders(num, size, pImageCodecInfo);&#10;&#10;//5.&#26597;&#25214;&#31526;&#21512;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#30340;Clsid&#10;for(UINT j = 0; j &#38;lt; num; ++j)&#10;&#123;&#10;if( wcscmp(pImageCodecInfo[j].MimeType, format) == 0 )&#10;&#123;&#10;*pClsid = pImageCodecInfo[j].Clsid;&#10;free(pImageCodecInfo);&#10;return j; // Success&#10;&#125;&#10;&#125;&#10;&#10;//6.&#37322;&#25918;&#27493;&#39588;3&#20998;&#37197;&#30340;&#20869;&#23384;&#10;free(pImageCodecInfo);&#10;return -1; // Failure&#10;&#125;&#10;&#10;INT main()&#10;&#123;&#10;GdiplusStartupInput gdiplusStartupInput;&#10;ULONG_PTR gdiplusToken;&#10;&#10;//1.&#21021;&#22987;&#21270;GDI+&#65292;&#20197;&#20415;&#21518;&#32493;&#30340;GDI+&#20989;&#25968;&#21487;&#20197;&#25104;&#21151;&#35843;&#29992;&#10;GdiplusStartup(&#38;amp;gdiplusToken, &#38;amp;gdiplusStartupInput, NULL);&#10;&#10;CLSID encoderClsid;&#10;Status stat;&#10;&#10;//7.&#21019;&#24314;Image&#23545;&#35937;&#24182;&#21152;&#36733;&#22270;&#29255;&#10;Image* image = new Image(L&#34;f://11.bmp&#34;);&#10;&#10;// Get the CLSID of the PNG encoder.&#10;GetEncoderClsid(L&#34;image/png&#34;, &#38;amp;encoderClsid);&#10;&#10;//8.&#35843;&#29992;Image.Save&#26041;&#27861;&#36827;&#34892;&#22270;&#29255;&#26684;&#24335;&#36716;&#25442;&#65292;&#24182;&#25226;&#27493;&#39588;3)&#24471;&#21040;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;Clsid&#20256;&#36882;&#32473;&#23427;&#10;stat = image-&#38;gt;Save(L&#34;11.png&#34;, &#38;amp;encoderClsid, NULL);&#10;&#10;if(stat == Ok)&#10;printf(&#34;Bird.png was saved successfully/n&#34;);&#10;else&#10;printf(&#34;Failure: stat = %d/n&#34;, stat);&#10;&#10;//9.&#37322;&#25918;Image&#23545;&#35937;&#10;delete image;&#10;//10.&#28165;&#29702;&#25152;&#26377;GDI+&#36164;&#28304;&#10;GdiplusShutdown(gdiplusToken);&#10;return 0;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>六.键盘热键实现截图。</p>
+<p>按下空格实现截图。其实这里还可以改进，焦点必须在程序里面才能进行截图。其实可以Hook键盘消息来进行截图操作。</p>
+<p>&nbsp;</p>
+<p>最后发一个不完善的版本：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#23631;&#24149;&#23454;&#26102;&#30417;&#25511; &#28909;&#38190;&#25130;&#22270;&#36719;&#20214;&#10;&#20316;&#32773;:Miibotree&#10;---------------------------------------*/&#10;&#10;#include &#38;lt;windows.h&#38;gt;&#10;#include &#38;lt;GdiPlus.h&#38;gt;&#10;&#10;using namespace Gdiplus;&#10;&#10;#pragma comment(lib, &#34;gdiplus.lib&#34;)&#10;&#10;#define ID_TIMER 1&#10;&#10;HBITMAP ghBitmap = NULL;&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;VOID CALLBACK TimerProc (HWND, UINT, UINT, DWORD );&#10;&#10;HBITMAP ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect); //&#20840;&#23631;&#25130;&#22270;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid); // Get the CLSID of the PNG encoder.&#10;BOOL Bmp2Png(); //&#36827;&#34892;&#26684;&#24335;&#36716;&#21270;&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;static TCHAR szAppName [] = TEXT (&#34;BitBlt&#34;) ;&#10;HWND hwnd ;&#10;MSG msg ;&#10;WNDCLASS wndclass ;&#10;&#10;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;wndclass.lpfnWndProc = WndProc ;&#10;wndclass.cbClsExtra = 0 ;&#10;wndclass.cbWndExtra = 0 ;&#10;wndclass.hInstance = hInstance ;&#10;wndclass.hIcon = LoadIcon (NULL, IDI_INFORMATION) ;&#10;wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;&#10;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;wndclass.lpszMenuName = NULL ;&#10;wndclass.lpszClassName = szAppName ;&#10;&#10;if (!RegisterClass (&#38;amp;wndclass))&#10;&#123;&#10;MessageBox (NULL, TEXT (&#34;This program requires Windows NT!&#34;),&#10;szAppName, MB_ICONERROR) ;&#10;return 0 ;&#10;&#125;&#10;&#10;hwnd = CreateWindow (szAppName, TEXT (&#34;BitBlt Demo&#34;),&#10;WS_OVERLAPPEDWINDOW,&#10;CW_USEDEFAULT, CW_USEDEFAULT,&#10;CW_USEDEFAULT, CW_USEDEFAULT,&#10;NULL, NULL, hInstance, NULL) ;&#10;&#10;ShowWindow (hwnd, iCmdShow) ;&#10;UpdateWindow (hwnd) ;&#10;&#10;while (GetMessage (&#38;amp;msg, NULL, 0, 0))&#10;&#123;&#10;TranslateMessage (&#38;amp;msg) ;&#10;DispatchMessage (&#38;amp;msg) ;&#10;&#125;&#10;return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;static int cxClient, cyClient, cxSource, cySource ;&#10;HDC hdcClient, hdcWindow ;&#10;int x, y ;&#10;PAINTSTRUCT ps ;&#10;&#10;HDC hMemDC; // &#20869;&#23384;&#35774;&#22791;&#25551;&#36848;&#34920;&#10;HBITMAP hBitmap, hOldBitmap; // &#20301;&#22270;&#21477;&#26564;&#65292;&#29992;&#20110;&#26367;&#25442;&#20869;&#23384;&#20013;&#22270;&#20687;&#10;RECT rect; //&#30697;&#24418;&#21306;&#22495;&#10;&#10;switch (message)&#10;&#123;&#10;case WM_CREATE:&#10;SetTimer (hwnd, ID_TIMER, 100, TimerProc) ;&#10;return 0 ;&#10;&#10;case WM_SIZE:&#10;cxClient = LOWORD (lParam) ; //&#26412;&#31243;&#24207;&#31383;&#21475;&#23485;&#24230;&#10;cyClient = HIWORD (lParam) ; //&#26412;&#31243;&#24207;&#31383;&#21475;&#38271;&#24230;&#10;return 0 ;&#10;&#10;case WM_KEYDOWN:&#10;switch(wParam)&#10;&#123;&#10;case VK_SPACE:&#10;//&#25130;&#22270;&#20989;&#25968;&#10;ghBitmap = ScreenCapture(L&#34;D:\taskmgr.bmp&#34; ,32, NULL);&#10;//&#26684;&#24335;&#36716;&#25442;&#10;Bmp2Png();&#10;return 0;&#10;&#125;&#10;return 0;&#10;&#10;case WM_PAINT:&#10;hdcClient = BeginPaint (hwnd, &#38;amp;ps); //&#33719;&#24471;&#30446;&#26631;&#65288;&#26412;&#31243;&#24207;&#65289;&#35774;&#22791;&#25551;&#36848;&#31526;&#10;hdcWindow = GetWindowDC (NULL); //&#33719;&#24471;&#28304;&#30446;&#26631;&#65288;&#23631;&#24149;&#65289;&#35774;&#22791;&#25551;&#36848;&#31526;&#10;BitBlt (hdcClient, 0, 0, cxClient, cyClient, hdcWindow , 0, 0, SRCCOPY);&#10;//&#30446;&#26631;&#35774;&#22791; &#28304;&#35774;&#22791;&#10;&#10;cxSource = GetSystemMetrics (SM_CXSCREEN); //&#33719;&#24471;&#23631;&#24149;&#20998;&#36776;&#29575;&#10;cySource = GetSystemMetrics (SM_CYSCREEN);&#10;rect.left = 0; rect.right = cxSource; rect.top = 0; rect.bottom = cySource;&#10;&#10;ReleaseDC (hwnd, hdcWindow) ;&#10;EndPaint (hwnd, &#38;amp;ps) ;&#10;return 0 ;&#10;&#10;case WM_DESTROY:&#10;PostQuitMessage (0) ;&#10;return 0 ;&#10;&#125;&#10;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;&#10;&#10;VOID CALLBACK TimerProc (HWND hwnd, UINT message, UINT iTimerID, DWORD dwTime)&#10;&#123;&#10;InvalidateRect(hwnd, NULL, NULL);&#10;&#125;&#10;&#10;HBITMAP ScreenCapture(LPWSTR filename ,WORD BitCount,LPRECT lpRect)&#10;&#123;&#10;HBITMAP hBitmap;&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;DC&#10;HDC hScreenDC = CreateDC(L&#34;DISPLAY&#34;, NULL, NULL, NULL);&#10;HDC hmemDC = CreateCompatibleDC(hScreenDC);&#10;// &#26174;&#31034;&#22120;&#23631;&#24149;&#30340;&#23485;&#21644;&#39640;&#10;int ScreenWidth = GetDeviceCaps(hScreenDC, HORZRES);&#10;int ScreenHeight = GetDeviceCaps(hScreenDC, VERTRES);&#10;// &#26087;&#30340;BITMAP&#65292;&#29992;&#20110;&#19982;&#25152;&#38656;&#25130;&#21462;&#30340;&#20301;&#32622;&#20132;&#25442;&#10;HBITMAP hOldBM;&#10;// &#20445;&#23384;&#20301;&#22270;&#25968;&#25454;&#10;PVOID lpvpxldata;&#10;// &#25130;&#23631;&#33719;&#21462;&#30340;&#38271;&#23485;&#21450;&#36215;&#28857;&#10;INT ixStart;&#10;INT iyStart;&#10;INT iX;&#10;INT iY;&#10;// &#20301;&#22270;&#25968;&#25454;&#22823;&#23567;&#10;DWORD dwBitmapArraySize;&#10;// &#20960;&#20010;&#22823;&#23567;&#10;DWORD nBitsOffset;&#10;DWORD lImageSize ;&#10;DWORD lFileSize ;&#10;// &#20301;&#22270;&#20449;&#24687;&#22836;&#10;BITMAPINFO bmInfo;&#10;// &#20301;&#22270;&#25991;&#20214;&#22836;&#10;BITMAPFILEHEADER bmFileHeader;&#10;// &#20889;&#25991;&#20214;&#29992;&#10;HANDLE hbmfile;&#10;DWORD dwWritten;&#10;&#10;// &#22914;&#26524;LPRECT &#20026;NULL &#25130;&#21462;&#25972;&#20010;&#23631;&#24149;&#10;ixStart = iyStart = 0;&#10;iX = ScreenWidth;&#10;iY = ScreenHeight;&#10;&#10;// &#21019;&#24314;BTIMAP&#10;hBitmap = CreateCompatibleBitmap(hScreenDC, iX, iY);&#10;// &#23558;BITMAP&#36873;&#25321;&#20837;&#20869;&#23384;DC&#12290;&#10;hOldBM = (HBITMAP)SelectObject(hmemDC, hBitmap);&#10;// BitBlt&#23631;&#24149;DC&#21040;&#20869;&#23384;DC&#65292;&#26681;&#25454;&#25152;&#38656;&#25130;&#21462;&#30340;&#33719;&#21462;&#35774;&#32622;&#21442;&#25968;&#10;BitBlt(hmemDC, 0, 0, iX, iY, hScreenDC, ixStart, iyStart, SRCCOPY);&#10;// &#23558;&#26087;&#30340;BITMAP&#23545;&#35937;&#36873;&#25321;&#22238;&#20869;&#23384;DC&#65292;&#36820;&#22238;&#20540;&#20026;&#34987;&#26367;&#25442;&#30340;&#23545;&#35937;&#65292;&#26082;&#25152;&#25130;&#21462;&#30340;&#20301;&#22270;&#10;hBitmap = (HBITMAP)SelectObject(hmemDC, hOldBM);&#10;if(filename == NULL)&#10;&#123;&#10;DeleteDC( hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;// &#20026;&#20301;&#22270;&#25968;&#25454;&#30003;&#35831;&#20869;&#23384;&#31354;&#38388;&#10;dwBitmapArraySize = ((((iX*32) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)* iY;&#10;lpvpxldata = HeapAlloc(GetProcessHeap(),HEAP_NO_SERIALIZE,dwBitmapArraySize);&#10;ZeroMemory(lpvpxldata,dwBitmapArraySize);&#10;&#10;// &#28155;&#20805; BITMAPINFO &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmInfo,sizeof(BITMAPINFO));&#10;bmInfo.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);&#10;bmInfo.bmiHeader.biWidth = iX;&#10;bmInfo.bmiHeader.biHeight = iY;&#10;bmInfo.bmiHeader.biPlanes = 1;&#10;bmInfo.bmiHeader.biBitCount = BitCount;&#10;bmInfo.bmiHeader.biCompression = BI_RGB;&#10;&#10;// &#28155;&#20805; BITMAPFILEHEADER &#32467;&#26500;&#10;ZeroMemory(&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER));&#10;nBitsOffset = sizeof(BITMAPFILEHEADER) + bmInfo.bmiHeader.biSize;&#10;lImageSize =&#10;((((bmInfo.bmiHeader.biWidth * bmInfo.bmiHeader.biBitCount) + 31) &#38;amp; ~31)&#38;gt;&#38;gt; 3)&#10;* bmInfo.bmiHeader.biHeight;&#10;lFileSize = nBitsOffset + lImageSize;&#10;bmFileHeader.bfType = &#39;B&#39;+(&#39;M&#39;&#38;lt;&#38;lt;8);&#10;bmFileHeader.bfSize = lFileSize;&#10;bmFileHeader.bfOffBits = nBitsOffset;&#10;&#10;// &#33719;&#21462;DIB&#29992;&#20110;&#20889;&#20837;&#21040;&#25991;&#20214;&#10;GetDIBits(hmemDC, hBitmap, 0, bmInfo.bmiHeader.biHeight,&#10;lpvpxldata, &#38;amp;bmInfo, DIB_RGB_COLORS);&#10;// &#20889;&#25991;&#20214;&#10;hbmfile = CreateFile(filename,&#10;GENERIC_WRITE,&#10;FILE_SHARE_WRITE,&#10;NULL,&#10;CREATE_ALWAYS,&#10;FILE_ATTRIBUTE_NORMAL,&#10;NULL);&#10;&#10;WriteFile(hbmfile,&#38;amp;bmFileHeader,sizeof(BITMAPFILEHEADER),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,&#38;amp;bmInfo,sizeof(BITMAPINFO),&#38;amp;dwWritten,NULL);&#10;WriteFile(hbmfile,lpvpxldata,lImageSize,&#38;amp;dwWritten,NULL);&#10;CloseHandle(hbmfile);&#10;&#10;// &#37322;&#25918;&#20869;&#23384;&#65292;&#28165;&#38500;&#19981;&#21516;&#30340;DC&#12290;&#10;// &#36825;&#37324;&#27809;&#26377;&#21024;&#38500;BITMAP&#23545;&#35937;&#65292;&#38656;&#22312;&#26174;&#31034;&#23436;&#25104;&#21518;&#21024;&#38500;&#10;HeapFree(GetProcessHeap(),HEAP_NO_SERIALIZE,lpvpxldata);&#10;ReleaseDC(0, hScreenDC);&#10;DeleteDC(hmemDC);&#10;return hBitmap;&#10;&#125;&#10;&#10;int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)&#10;&#123;&#10;UINT num = 0; // number of image encoders&#10;UINT size = 0; // size of the image encoder array in bytes&#10;&#10;ImageCodecInfo* pImageCodecInfo = NULL;&#10;&#10;//2.&#33719;&#21462;GDI+&#25903;&#25345;&#30340;&#22270;&#20687;&#26684;&#24335;&#32534;&#30721;&#22120;&#31181;&#31867;&#25968;&#20197;&#21450;ImageCodecInfo&#25968;&#32452;&#30340;&#23384;&#25918;&#22823;&#23567;&#10;GetImageEncodersSize(&#38;amp;num, &#38;amp;size);&#10;if(size == 0)&#10;return -1; // Failure&#10;&#10;//3.&#20026;ImageCodecInfo&#25968;&#32452;&#20998;&#37197;&#36275;&#39069;&#31354;&#38388;&#10;pImageCodecInfo = (ImageCodecInfo*)(malloc(size));&#10;if(pImageCodecInfo == NULL)&#10;return -1; // Failure&#10;&#10;//4.&#33719;&#21462;&#25152;&#26377;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#20449;&#24687;&#10;GetImageEncoders(num, size, pImageCodecInfo);&#10;&#10;//5.&#26597;&#25214;&#31526;&#21512;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;&#30340;Clsid&#10;for(UINT j = 0; j &#38;lt; num; ++j)&#10;&#123;&#10;if( wcscmp(pImageCodecInfo[j].MimeType, format) == 0 )&#10;&#123;&#10;*pClsid = pImageCodecInfo[j].Clsid;&#10;free(pImageCodecInfo);&#10;return j; // Success&#10;&#125;&#10;&#125;&#10;&#10;//6.&#37322;&#25918;&#27493;&#39588;3&#20998;&#37197;&#30340;&#20869;&#23384;&#10;free(pImageCodecInfo);&#10;return -1; // Failure&#10;&#125;&#10;&#10;BOOL Bmp2Png()&#10;&#123;&#10;GdiplusStartupInput gdiplusStartupInput;&#10;ULONG_PTR gdiplusToken;&#10;&#10;//1.&#21021;&#22987;&#21270;GDI+&#65292;&#20197;&#20415;&#21518;&#32493;&#30340;GDI+&#20989;&#25968;&#21487;&#20197;&#25104;&#21151;&#35843;&#29992;&#10;GdiplusStartup(&#38;amp;gdiplusToken, &#38;amp;gdiplusStartupInput, NULL);&#10;&#10;CLSID encoderClsid;&#10;Status stat;&#10;&#10;//7.&#21019;&#24314;Image&#23545;&#35937;&#24182;&#21152;&#36733;&#22270;&#29255;&#10;Image* image = new Image(L&#34;D:\taskmgr.bmp&#34;);&#10;&#10;// Get the CLSID of the PNG encoder.&#10;GetEncoderClsid(L&#34;image/png&#34;, &#38;amp;encoderClsid);&#10;&#10;//8.&#35843;&#29992;Image.Save&#26041;&#27861;&#36827;&#34892;&#22270;&#29255;&#26684;&#24335;&#36716;&#25442;&#65292;&#24182;&#25226;&#27493;&#39588;3)&#24471;&#21040;&#30340;&#22270;&#20687;&#32534;&#30721;&#22120;Clsid&#20256;&#36882;&#32473;&#23427;&#10;stat = image-&#38;gt;Save(L&#34;D:\taskmgr.png&#34;, &#38;amp;encoderClsid, NULL);&#10;&#10;if(stat == Ok)&#10;MessageBoxA(NULL, &#34;&#26684;&#24335;&#36716;&#25442;&#25104;&#21151;&#34;, &#34;&#25104;&#21151;&#34;, MB_OK);&#10;else&#10;MessageBoxA(NULL, &#34;&#26684;&#24335;&#36716;&#25442;&#22833;&#36133;&#34;, &#34;&#22833;&#36133;&#34;, MB_OK | MB_ICONERROR);&#10;&#10;//9.&#37322;&#25918;Image&#23545;&#35937;&#10;delete image;&#10;//10.&#28165;&#29702;&#25152;&#26377;GDI+&#36164;&#28304;&#10;GdiplusShutdown(gdiplusToken);&#10;return TRUE;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><span style="color: #6600cc; font-size: medium;">七.改进之处</span></p>
+<p>可以自动根据时间戳创建文件以及文件夹，加上键盘Hook功能。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/09/远程控制程序的实现/" itemprop="url">
+                远程控制程序的实现
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-09T19:07:28+08:00" content="2012-07-09">
+            2012-07-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>接下来自己想在空余时间写个远程控制软件。</p>
+<p>一.想写个这样的软件，首先得用用人家的软件把。以前那些灰鸽子啊，冰河啊，teamviewer， anywhere， VNC 先玩一下。看看人家是怎么写的。</p>
+<p>二.自己借了几本远程控制编程的书本。有一本是比较老的 张某某的书本。今天自己简单看了一下，书里面的基础概念自己没有学习的很深入。但是有一部分知识自己已经学习过了。</p>
+<p>三.自己已经掌握的部分:socket编程，注册表编程，鼠标键盘消息。 还需要掌握的知识：屏幕截图，协议分析。</p>
+<p>四.加上自己的创意。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/08/内存泄露，缓冲区溢出，堆破坏-的问题/" itemprop="url">
+                内存泄露，缓冲区溢出，堆破坏 的问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-08T13:54:19+08:00" content="2012-07-08">
+            2012-07-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>今天在用c语言写socket的AES加解密的时候，由于是直接操作内存，错误百出，调了整整三天才把加解密的问题给搞出来。。。。整死我了。。。</p>
+<p>总结一下，是自己使用malloc动态分配内存不当，没有掌握sizeof 的用法， 还有没有深刻理解strcpy， strcat函数导致的。</p>
+<p>1.使用malloc动态分配内存之后，一定要把内存free掉，然后指向NULL，不然会造成内存泄露</p>
+<p><span style="color: #3333ff;">一 般我们常说的内存泄漏是指堆内存的泄漏。堆内存是指程序从堆中分配的，大小任意的（内存块的大小可以在程序运行期决定），使用完后必须显式释放的内存。应 用程序一般使用malloc，calloc，realloc，new等函数从堆中分配到一块内存，使用完后，程序必须负责相应的调用free或 delete释放该内存块，否则，这块内存就不能被再次使用，我们就说这块内存泄漏了。</span></p>
+<p>关于内存泄露，这里介绍了一个有趣的关于电梯程序中内存泄露的真实例子：</p>
+<p><a href="http://baike.baidu.com/view/714962.htm" target="_blank" rel="external">http://baike.baidu.com/view/714962.htm</a></p>
+<p>&nbsp;</p>
+<p>2.有下面这样的例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span>* str1 = (<span class="keyword">char</span> *) <span class="built_in">malloc</span>(<span class="number">10</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> size1 = <span class="keyword">sizeof</span>(str1);</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> str2[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> size2 = <span class="keyword">sizeof</span>(str2);</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>这里的size1 = 4    size2 = 10</p>
+<p>因为sizeof(str1)是把 str1当成是指针类型的，由于指针是一个32位的整数（win32下面），所欲size1 = 4；</p>
+<p>而sizeof(str2)传入的是整个字符串，所以size2 是字符串的长度</p>
+<p>&nbsp;</p>
+<p>3.关于strcpy 的函数原型：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">char</span> *<span class="built_in">strcpy</span>(</span><br><span class="line">   <span class="keyword">char</span> *strDestination,</span><br><span class="line">   <span class="keyword">const</span> <span class="keyword">char</span> *strSource </span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>把后者的字符串copy到前者。那么怎么判断结束了呢？strSource 如果读到  的时候，标志着字符串的结束，这个时候把 也复制到strDestination里。</p>
+<p>如果不想把最后的 复制到前者，可以使用CopyMemory函数。但是使用这个函数的时候要注意内存越界的问题。</p>
+<p>&nbsp;</p>
+<p>4.堆的结构与堆破坏</p>
+<p>简单的可以这样理解吧 。你malloc申请一块内存的时候，有头结点，你的内存块，尾结点。当你写入堆的大小大于你申请内存块的大小事，尾结点的指针被覆盖了，这个时候堆就被破坏了。</p>
+<p><a href="http://www.cnblogs.com/gesenkof99/archive/2009/04/14/1435642.html" target="_blank" rel="external">http://www.cnblogs.com/gesenkof99/archive/2009/04/14/1435642.html</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>上面这些错误会导致像内存泄露，缓冲区溢出，堆破坏等情况。使用的时候应该小心</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/08/Wickr：军事级防泄密App，设有信息自我毁灭功能/" itemprop="url">
+                Wickr：军事级防泄密App，设有信息自我毁灭功能
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-08T13:51:52+08:00" content="2012-07-08">
+            2012-07-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>人手机泄密丑闻时有发生，启发美国因特网保安公司Wickr研发新应用程序(app)(见图)，让苹果产品客户的网上通讯内容，能受到“军事级保 护”，信息并设有自我毁灭功能，犹如电影《职业特工队》中看后自动毁灭的任务介绍片段。该app周三上市，至今已录得数千次下载。</p>
+<p>位于旧金山的Wickr也正研发适用于Google <a href="http://www.ithome.com/android/" target="_blank" rel="external">Android</a>操作系统的app。公司共同创办人塞勒，同时是每年拉斯维加斯黑客大会幕后主要人物，其他创办人还有军事网络保安专家Kara Coppa及计算机犯罪调查专家霍威尔。塞勒表示，当前的计算机系统设置，个人和商务通讯都可被追查。</p>
+<p><img src="http://img.ithome.com/NewsUploadFiles/2012/7/20120701_164340_421.jpg" alt=""></p>
+<p>新app跟一般电邮服务不同，它会提供档案<span style="color: #3366ff;">端对端加密技术</span>，所以不会在计算机服务器留下用来发送讯息的复本，发送者可决定档案开启后自动删除的时间。另一创办人斯特蒂克为新泽西理工学院工程学教授，专长保安技术，他表示，如果有人想用资料鉴证技术修复已不存在的资料，他们将会一无所得。</p>
+<p>Wickr指，律师及医生等涉及较多敏感通讯的行业，已表示对其产品有兴趣。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>APP STORE 下载地址  <a href="http://itunes.apple.com/us/app/wickr-secure-im-multimedia/id528962154?mt=8" target="_blank" rel="external">http://itunes.apple.com/us/app/wickr-secure-im-multimedia/id528962154?mt=8</a></p>
+<p>官方网站:</p>
+<p><a href="https://www.mywickr.com/support.php" target="_blank" rel="external">https://www.mywickr.com/support.php</a></p>
+<p><a href="https://www.mywickr.com/" target="_blank" rel="external">https://www.mywickr.com/</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/03/使用AES加密算法/" itemprop="url">
+                使用AES加密算法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-03T22:07:49+08:00" content="2012-07-03">
+            2012-07-03
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>上几天大概了解了一下AES算法，具体的加密算法现在不想很清楚的了解，只是能够拿来用就好了。这里有份c++的AES。</p>
+<p>Aes.h</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;Windows.h&amp;gt;</span></span><br><span class="line">//enum KeySize &#123; Bits128, Bits192, Bits256 &#125;<span class="comment">;  // key size, in bits, for construtor</span></span><br><span class="line">#define Bits128    <span class="number">16</span></span><br><span class="line">#define Bits192    <span class="number">24</span></span><br><span class="line">#define Bits256    <span class="number">32</span></span><br><span class="line"></span><br><span class="line">static unsigned char AesSbox[<span class="number">16</span>*<span class="number">16</span>]=</span><br><span class="line">&#123;// populate the Sbox matrix</span><br><span class="line">/* <span class="number">0</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">5</span>     <span class="number">6</span>     <span class="number">7</span>     <span class="number">8</span>     <span class="number">9</span>     a     b     c     d     e     f */</span><br><span class="line">/*<span class="number">0</span>*/  <span class="number">0x63</span>, <span class="number">0x7c</span>, <span class="number">0x77</span>, <span class="number">0x7b</span>, <span class="number">0xf2</span>, <span class="number">0x6b</span>, <span class="number">0x6f</span>, <span class="number">0xc5</span>, <span class="number">0x30</span>, <span class="number">0x01</span>, <span class="number">0x67</span>, <span class="number">0x2b</span>, <span class="number">0xfe</span>, <span class="number">0xd7</span>, <span class="number">0xab</span>, <span class="number">0x76</span>,</span><br><span class="line">/*<span class="number">1</span>*/  <span class="number">0xca</span>, <span class="number">0x82</span>, <span class="number">0xc9</span>, <span class="number">0x7d</span>, <span class="number">0xfa</span>, <span class="number">0x59</span>, <span class="number">0x47</span>, <span class="number">0xf0</span>, <span class="number">0xad</span>, <span class="number">0xd4</span>, <span class="number">0xa2</span>, <span class="number">0xaf</span>, <span class="number">0x9c</span>, <span class="number">0xa4</span>, <span class="number">0x72</span>, <span class="number">0xc0</span>,</span><br><span class="line">/*<span class="number">2</span>*/  <span class="number">0xb7</span>, <span class="number">0xfd</span>, <span class="number">0x93</span>, <span class="number">0x26</span>, <span class="number">0x36</span>, <span class="number">0x3f</span>, <span class="number">0xf7</span>, <span class="number">0xcc</span>, <span class="number">0x34</span>, <span class="number">0xa5</span>, <span class="number">0xe5</span>, <span class="number">0xf1</span>, <span class="number">0x71</span>, <span class="number">0xd8</span>, <span class="number">0x31</span>, <span class="number">0x15</span>,</span><br><span class="line">/*<span class="number">3</span>*/  <span class="number">0x04</span>, <span class="number">0xc7</span>, <span class="number">0x23</span>, <span class="number">0xc3</span>, <span class="number">0x18</span>, <span class="number">0x96</span>, <span class="number">0x05</span>, <span class="number">0x9a</span>, <span class="number">0x07</span>, <span class="number">0x12</span>, <span class="number">0x80</span>, <span class="number">0xe2</span>, <span class="number">0xeb</span>, <span class="number">0x27</span>, <span class="number">0xb2</span>, <span class="number">0x75</span>,</span><br><span class="line">/*<span class="number">4</span>*/  <span class="number">0x09</span>, <span class="number">0x83</span>, <span class="number">0x2c</span>, <span class="number">0x1a</span>, <span class="number">0x1b</span>, <span class="number">0x6e</span>, <span class="number">0x5a</span>, <span class="number">0xa0</span>, <span class="number">0x52</span>, <span class="number">0x3b</span>, <span class="number">0xd6</span>, <span class="number">0xb3</span>, <span class="number">0x29</span>, <span class="number">0xe3</span>, <span class="number">0x2f</span>, <span class="number">0x84</span>,</span><br><span class="line">/*<span class="number">5</span>*/  <span class="number">0x53</span>, <span class="number">0xd1</span>, <span class="number">0x00</span>, <span class="number">0xed</span>, <span class="number">0x20</span>, <span class="number">0xfc</span>, <span class="number">0xb1</span>, <span class="number">0x5b</span>, <span class="number">0x6a</span>, <span class="number">0xcb</span>, <span class="number">0xbe</span>, <span class="number">0x39</span>, <span class="number">0x4a</span>, <span class="number">0x4c</span>, <span class="number">0x58</span>, <span class="number">0xcf</span>,</span><br><span class="line">/*<span class="number">6</span>*/  <span class="number">0xd0</span>, <span class="number">0xef</span>, <span class="number">0xaa</span>, <span class="number">0xfb</span>, <span class="number">0x43</span>, <span class="number">0x4d</span>, <span class="number">0x33</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0xf9</span>, <span class="number">0x02</span>, <span class="number">0x7f</span>, <span class="number">0x50</span>, <span class="number">0x3c</span>, <span class="number">0x9f</span>, <span class="number">0xa8</span>,</span><br><span class="line">/*<span class="number">7</span>*/  <span class="number">0x51</span>, <span class="number">0xa3</span>, <span class="number">0x40</span>, <span class="number">0x8f</span>, <span class="number">0x92</span>, <span class="number">0x9d</span>, <span class="number">0x38</span>, <span class="number">0xf5</span>, <span class="number">0xbc</span>, <span class="number">0xb6</span>, <span class="number">0xda</span>, <span class="number">0x21</span>, <span class="number">0x10</span>, <span class="number">0xff</span>, <span class="number">0xf3</span>, <span class="number">0xd2</span>,</span><br><span class="line">/*<span class="number">8</span>*/  <span class="number">0xcd</span>, <span class="number">0x0c</span>, <span class="number">0x13</span>, <span class="number">0xec</span>, <span class="number">0x5f</span>, <span class="number">0x97</span>, <span class="number">0x44</span>, <span class="number">0x17</span>, <span class="number">0xc4</span>, <span class="number">0xa7</span>, <span class="number">0x7e</span>, <span class="number">0x3d</span>, <span class="number">0x64</span>, <span class="number">0x5d</span>, <span class="number">0x19</span>, <span class="number">0x73</span>,</span><br><span class="line">/*<span class="number">9</span>*/  <span class="number">0x60</span>, <span class="number">0x81</span>, <span class="number">0x4f</span>, <span class="number">0xdc</span>, <span class="number">0x22</span>, <span class="number">0x2a</span>, <span class="number">0x90</span>, <span class="number">0x88</span>, <span class="number">0x46</span>, <span class="number">0xee</span>, <span class="number">0xb8</span>, <span class="number">0x14</span>, <span class="number">0xde</span>, <span class="number">0x5e</span>, <span class="number">0x0b</span>, <span class="number">0xdb</span>,</span><br><span class="line">/*a*/  <span class="number">0xe0</span>, <span class="number">0x32</span>, <span class="number">0x3a</span>, <span class="number">0x0a</span>, <span class="number">0x49</span>, <span class="number">0x06</span>, <span class="number">0x24</span>, <span class="number">0x5c</span>, <span class="number">0xc2</span>, <span class="number">0xd3</span>, <span class="number">0xac</span>, <span class="number">0x62</span>, <span class="number">0x91</span>, <span class="number">0x95</span>, <span class="number">0xe4</span>, <span class="number">0x79</span>,</span><br><span class="line">/*b*/  <span class="number">0xe7</span>, <span class="number">0xc8</span>, <span class="number">0x37</span>, <span class="number">0x6d</span>, <span class="number">0x8d</span>, <span class="number">0xd5</span>, <span class="number">0x4e</span>, <span class="number">0xa9</span>, <span class="number">0x6c</span>, <span class="number">0x56</span>, <span class="number">0xf4</span>, <span class="number">0xea</span>, <span class="number">0x65</span>, <span class="number">0x7a</span>, <span class="number">0xae</span>, <span class="number">0x08</span>,</span><br><span class="line">/*c*/  <span class="number">0xba</span>, <span class="number">0x78</span>, <span class="number">0x25</span>, <span class="number">0x2e</span>, <span class="number">0x1c</span>, <span class="number">0xa6</span>, <span class="number">0xb4</span>, <span class="number">0xc6</span>, <span class="number">0xe8</span>, <span class="number">0xdd</span>, <span class="number">0x74</span>, <span class="number">0x1f</span>, <span class="number">0x4b</span>, <span class="number">0xbd</span>, <span class="number">0x8b</span>, <span class="number">0x8a</span>,</span><br><span class="line">/*d*/  <span class="number">0x70</span>, <span class="number">0x3e</span>, <span class="number">0xb5</span>, <span class="number">0x66</span>, <span class="number">0x48</span>, <span class="number">0x03</span>, <span class="number">0xf6</span>, <span class="number">0x0e</span>, <span class="number">0x61</span>, <span class="number">0x35</span>, <span class="number">0x57</span>, <span class="number">0xb9</span>, <span class="number">0x86</span>, <span class="number">0xc1</span>, <span class="number">0x1d</span>, <span class="number">0x9e</span>,</span><br><span class="line">/*e*/  <span class="number">0xe1</span>, <span class="number">0xf8</span>, <span class="number">0x98</span>, <span class="number">0x11</span>, <span class="number">0x69</span>, <span class="number">0xd9</span>, <span class="number">0x8e</span>, <span class="number">0x94</span>, <span class="number">0x9b</span>, <span class="number">0x1e</span>, <span class="number">0x87</span>, <span class="number">0xe9</span>, <span class="number">0xce</span>, <span class="number">0x55</span>, <span class="number">0x28</span>, <span class="number">0xdf</span>,</span><br><span class="line">/*f*/  <span class="number">0x8c</span>, <span class="number">0xa1</span>, <span class="number">0x89</span>, <span class="number">0x0d</span>, <span class="number">0xbf</span>, <span class="number">0xe6</span>, <span class="number">0x42</span>, <span class="number">0x68</span>, <span class="number">0x41</span>, <span class="number">0x99</span>, <span class="number">0x2d</span>, <span class="number">0x0f</span>, <span class="number">0xb0</span>, <span class="number">0x54</span>, <span class="number">0xbb</span>, <span class="number">0x16</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">static unsigned char AesiSbox[<span class="number">16</span>*<span class="number">16</span>]=</span><br><span class="line">&#123;</span><br><span class="line">// populate the iSbox matrix</span><br><span class="line">/* <span class="number">0</span>     <span class="number">1</span>     <span class="number">2</span>     <span class="number">3</span>     <span class="number">4</span>     <span class="number">5</span>     <span class="number">6</span>     <span class="number">7</span>     <span class="number">8</span>     <span class="number">9</span>     a     b     c     d     e     f */</span><br><span class="line">/*<span class="number">0</span>*/  <span class="number">0x52</span>, <span class="number">0x09</span>, <span class="number">0x6a</span>, <span class="number">0xd5</span>, <span class="number">0x30</span>, <span class="number">0x36</span>, <span class="number">0xa5</span>, <span class="number">0x38</span>, <span class="number">0xbf</span>, <span class="number">0x40</span>, <span class="number">0xa3</span>, <span class="number">0x9e</span>, <span class="number">0x81</span>, <span class="number">0xf3</span>, <span class="number">0xd7</span>, <span class="number">0xfb</span>,</span><br><span class="line">/*<span class="number">1</span>*/  <span class="number">0x7c</span>, <span class="number">0xe3</span>, <span class="number">0x39</span>, <span class="number">0x82</span>, <span class="number">0x9b</span>, <span class="number">0x2f</span>, <span class="number">0xff</span>, <span class="number">0x87</span>, <span class="number">0x34</span>, <span class="number">0x8e</span>, <span class="number">0x43</span>, <span class="number">0x44</span>, <span class="number">0xc4</span>, <span class="number">0xde</span>, <span class="number">0xe9</span>, <span class="number">0xcb</span>,</span><br><span class="line">/*<span class="number">2</span>*/  <span class="number">0x54</span>, <span class="number">0x7b</span>, <span class="number">0x94</span>, <span class="number">0x32</span>, <span class="number">0xa6</span>, <span class="number">0xc2</span>, <span class="number">0x23</span>, <span class="number">0x3d</span>, <span class="number">0xee</span>, <span class="number">0x4c</span>, <span class="number">0x95</span>, <span class="number">0x0b</span>, <span class="number">0x42</span>, <span class="number">0xfa</span>, <span class="number">0xc3</span>, <span class="number">0x4e</span>,</span><br><span class="line">/*<span class="number">3</span>*/  <span class="number">0x08</span>, <span class="number">0x2e</span>, <span class="number">0xa1</span>, <span class="number">0x66</span>, <span class="number">0x28</span>, <span class="number">0xd9</span>, <span class="number">0x24</span>, <span class="number">0xb2</span>, <span class="number">0x76</span>, <span class="number">0x5b</span>, <span class="number">0xa2</span>, <span class="number">0x49</span>, <span class="number">0x6d</span>, <span class="number">0x8b</span>, <span class="number">0xd1</span>, <span class="number">0x25</span>,</span><br><span class="line">/*<span class="number">4</span>*/  <span class="number">0x72</span>, <span class="number">0xf8</span>, <span class="number">0xf6</span>, <span class="number">0x64</span>, <span class="number">0x86</span>, <span class="number">0x68</span>, <span class="number">0x98</span>, <span class="number">0x16</span>, <span class="number">0xd4</span>, <span class="number">0xa4</span>, <span class="number">0x5c</span>, <span class="number">0xcc</span>, <span class="number">0x5d</span>, <span class="number">0x65</span>, <span class="number">0xb6</span>, <span class="number">0x92</span>,</span><br><span class="line">/*<span class="number">5</span>*/  <span class="number">0x6c</span>, <span class="number">0x70</span>, <span class="number">0x48</span>, <span class="number">0x50</span>, <span class="number">0xfd</span>, <span class="number">0xed</span>, <span class="number">0xb9</span>, <span class="number">0xda</span>, <span class="number">0x5e</span>, <span class="number">0x15</span>, <span class="number">0x46</span>, <span class="number">0x57</span>, <span class="number">0xa7</span>, <span class="number">0x8d</span>, <span class="number">0x9d</span>, <span class="number">0x84</span>,</span><br><span class="line">/*<span class="number">6</span>*/  <span class="number">0x90</span>, <span class="number">0xd8</span>, <span class="number">0xab</span>, <span class="number">0x00</span>, <span class="number">0x8c</span>, <span class="number">0xbc</span>, <span class="number">0xd3</span>, <span class="number">0x0a</span>, <span class="number">0xf7</span>, <span class="number">0xe4</span>, <span class="number">0x58</span>, <span class="number">0x05</span>, <span class="number">0xb8</span>, <span class="number">0xb3</span>, <span class="number">0x45</span>, <span class="number">0x06</span>,</span><br><span class="line">/*<span class="number">7</span>*/  <span class="number">0xd0</span>, <span class="number">0x2c</span>, <span class="number">0x1e</span>, <span class="number">0x8f</span>, <span class="number">0xca</span>, <span class="number">0x3f</span>, <span class="number">0x0f</span>, <span class="number">0x02</span>, <span class="number">0xc1</span>, <span class="number">0xaf</span>, <span class="number">0xbd</span>, <span class="number">0x03</span>, <span class="number">0x01</span>, <span class="number">0x13</span>, <span class="number">0x8a</span>, <span class="number">0x6b</span>,</span><br><span class="line">/*<span class="number">8</span>*/  <span class="number">0x3a</span>, <span class="number">0x91</span>, <span class="number">0x11</span>, <span class="number">0x41</span>, <span class="number">0x4f</span>, <span class="number">0x67</span>, <span class="number">0xdc</span>, <span class="number">0xea</span>, <span class="number">0x97</span>, <span class="number">0xf2</span>, <span class="number">0xcf</span>, <span class="number">0xce</span>, <span class="number">0xf0</span>, <span class="number">0xb4</span>, <span class="number">0xe6</span>, <span class="number">0x73</span>,</span><br><span class="line">/*<span class="number">9</span>*/  <span class="number">0x96</span>, <span class="number">0xac</span>, <span class="number">0x74</span>, <span class="number">0x22</span>, <span class="number">0xe7</span>, <span class="number">0xad</span>, <span class="number">0x35</span>, <span class="number">0x85</span>, <span class="number">0xe2</span>, <span class="number">0xf9</span>, <span class="number">0x37</span>, <span class="number">0xe8</span>, <span class="number">0x1c</span>, <span class="number">0x75</span>, <span class="number">0xdf</span>, <span class="number">0x6e</span>,</span><br><span class="line">/*a*/  <span class="number">0x47</span>, <span class="number">0xf1</span>, <span class="number">0x1a</span>, <span class="number">0x71</span>, <span class="number">0x1d</span>, <span class="number">0x29</span>, <span class="number">0xc5</span>, <span class="number">0x89</span>, <span class="number">0x6f</span>, <span class="number">0xb7</span>, <span class="number">0x62</span>, <span class="number">0x0e</span>, <span class="number">0xaa</span>, <span class="number">0x18</span>, <span class="number">0xbe</span>, <span class="number">0x1b</span>,</span><br><span class="line">/*b*/  <span class="number">0xfc</span>, <span class="number">0x56</span>, <span class="number">0x3e</span>, <span class="number">0x4b</span>, <span class="number">0xc6</span>, <span class="number">0xd2</span>, <span class="number">0x79</span>, <span class="number">0x20</span>, <span class="number">0x9a</span>, <span class="number">0xdb</span>, <span class="number">0xc0</span>, <span class="number">0xfe</span>, <span class="number">0x78</span>, <span class="number">0xcd</span>, <span class="number">0x5a</span>, <span class="number">0xf4</span>,</span><br><span class="line">/*c*/  <span class="number">0x1f</span>, <span class="number">0xdd</span>, <span class="number">0xa8</span>, <span class="number">0x33</span>, <span class="number">0x88</span>, <span class="number">0x07</span>, <span class="number">0xc7</span>, <span class="number">0x31</span>, <span class="number">0xb1</span>, <span class="number">0x12</span>, <span class="number">0x10</span>, <span class="number">0x59</span>, <span class="number">0x27</span>, <span class="number">0x80</span>, <span class="number">0xec</span>, <span class="number">0x5f</span>,</span><br><span class="line">/*d*/  <span class="number">0x60</span>, <span class="number">0x51</span>, <span class="number">0x7f</span>, <span class="number">0xa9</span>, <span class="number">0x19</span>, <span class="number">0xb5</span>, <span class="number">0x4a</span>, <span class="number">0x0d</span>, <span class="number">0x2d</span>, <span class="number">0xe5</span>, <span class="number">0x7a</span>, <span class="number">0x9f</span>, <span class="number">0x93</span>, <span class="number">0xc9</span>, <span class="number">0x9c</span>, <span class="number">0xef</span>,</span><br><span class="line">/*e*/  <span class="number">0xa0</span>, <span class="number">0xe0</span>, <span class="number">0x3b</span>, <span class="number">0x4d</span>, <span class="number">0xae</span>, <span class="number">0x2a</span>, <span class="number">0xf5</span>, <span class="number">0xb0</span>, <span class="number">0xc8</span>, <span class="number">0xeb</span>, <span class="number">0xbb</span>, <span class="number">0x3c</span>, <span class="number">0x83</span>, <span class="number">0x53</span>, <span class="number">0x99</span>, <span class="number">0x61</span>,</span><br><span class="line">/*f*/  <span class="number">0x17</span>, <span class="number">0x2b</span>, <span class="number">0x04</span>, <span class="number">0x7e</span>, <span class="number">0xba</span>, <span class="number">0x77</span>, <span class="number">0xd6</span>, <span class="number">0x26</span>, <span class="number">0xe1</span>, <span class="number">0x69</span>, <span class="number">0x14</span>, <span class="number">0x63</span>, <span class="number">0x55</span>, <span class="number">0x21</span>, <span class="number">0x0c</span>, <span class="number">0x7d</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line">static unsigned char AesRcon[<span class="number">11</span>*<span class="number">4</span>]=</span><br><span class="line">&#123;</span><br><span class="line"><span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x02</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x04</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x08</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x10</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x20</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x80</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x1b</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x36</span>, <span class="number">0x00</span>, <span class="number">0x00</span>, <span class="number">0x00</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">class Aes  // Advanced Encryption Standard</span><br><span class="line">&#123;</span><br><span class="line"><span class="label">public:</span></span><br><span class="line">~Aes()<span class="comment">;</span></span><br><span class="line">Aes()<span class="comment">;</span></span><br><span class="line">Aes(<span class="keyword">int</span> keySize, unsigned char* keyBytes)<span class="comment">;</span></span><br><span class="line">unsigned char State[<span class="number">4</span>][<span class="number">4</span>]<span class="comment">;</span></span><br><span class="line">void Cipher(unsigned char* input, unsigned char* output)<span class="comment">;  // encipher 16-bit input</span></span><br><span class="line">void InvCipher(unsigned char* input, unsigned char* output)<span class="comment">;  // decipher 16-bit input</span></span><br><span class="line"><span class="label">private:</span></span><br><span class="line"><span class="keyword">int</span> Nb<span class="comment">;         // block size in 32-bit words.  Always 4 for AES.  (128 bits).</span></span><br><span class="line"><span class="keyword">int</span> Nk<span class="comment">;         // key size in 32-bit words.  4, 6, 8.  (128, 192, 256 bits).</span></span><br><span class="line"><span class="keyword">int</span> Nr<span class="comment">;         // number of rounds. 10, 12, 14.</span></span><br><span class="line"></span><br><span class="line">unsigned char key[<span class="number">32</span>]<span class="comment">;</span></span><br><span class="line">unsigned char w[<span class="number">16</span>*<span class="number">15</span>]<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">void SetNbNkNr(<span class="keyword">int</span> keySize)<span class="comment">;</span></span><br><span class="line">void AddRoundKey(<span class="keyword">int</span> round)<span class="comment">;      //轮密钥加</span></span><br><span class="line">void SubBytes()<span class="comment">;                  //S盒字节代换</span></span><br><span class="line">void InvSubBytes()<span class="comment">;               //逆S盒字节代换</span></span><br><span class="line">void ShiftRows()<span class="comment">;                 //行移位</span></span><br><span class="line">void InvShiftRows()<span class="comment">;</span></span><br><span class="line">void MixColumns()<span class="comment">;                //列混淆</span></span><br><span class="line">void InvMixColumns()<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby01(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby02(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby03(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby09(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0b(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0d(unsigned char b)<span class="comment">;</span></span><br><span class="line">unsigned char gfmultby0e(unsigned char b)<span class="comment">;</span></span><br><span class="line">void KeyExpansion()<span class="comment">;              //密钥扩展</span></span><br><span class="line">unsigned char* SubWord(unsigned char* <span class="preprocessor">word</span>)<span class="comment">;         //密钥S盒字代换</span></span><br><span class="line">unsigned char* RotWord(unsigned char* <span class="preprocessor">word</span>)<span class="comment">;         //密钥移位</span></span><br><span class="line">//Dump()<span class="comment">;</span></span><br><span class="line">//DumpKey()<span class="comment">;</span></span><br><span class="line">//    DumpTwoByTwo(char* a)<span class="comment">;</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">&amp;nbsp<span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>然后是Aes.cpp文件</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br></pre></td><td class="code"><pre><span class="line">//#include "StdAfx.h"    //注意在此 #include "Aes.h"不可以放在前面，否则出错，</span><br><span class="line"><span class="header">#include "Aes.h"</span></span><br><span class="line">Aes::~Aes()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Aes::Aes()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//构造函数</span><br><span class="line">Aes::Aes(int keysize,unsigned char* keyBytes)</span><br><span class="line">&#123;</span><br><span class="line">SetNbNkNr(keysize);                         //设置密钥块数，轮数</span><br><span class="line">memcpy(key,keyBytes,keysize);                //字符串拷贝函数，把keyBytes的keysize个字符复制到key中</span><br><span class="line">KeyExpansion();                                //密钥扩展，必须提前做的初始化</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::SetNbNkNr(int keySize)</span><br><span class="line">&#123;</span><br><span class="line">Nb=4;</span><br><span class="line">if(keySize=Bits128)</span><br><span class="line">&#123;</span><br><span class="line">Nk=4;    //4*4字节，128位密钥，10轮加密</span><br><span class="line">Nr=10;</span><br><span class="line">&#125;</span><br><span class="line">else if(keySize=Bits192)</span><br><span class="line">&#123;</span><br><span class="line">Nk=6;    //6*4字节，192位密钥，12轮加密</span><br><span class="line">Nr=12;</span><br><span class="line">&#125;</span><br><span class="line">else if(keySize=Bits256)</span><br><span class="line">&#123;</span><br><span class="line">Nk=8;    //8*4字节，256位密钥，14轮加密</span><br><span class="line">Nr=14;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::KeyExpansion()</span><br><span class="line">&#123;</span><br><span class="line">int row;</span><br><span class="line">memset(w,0,16*15);</span><br><span class="line">for(row=0;row&amp;lt;Nk;row++)       //拷贝seed 密钥</span><br><span class="line">&#123;</span><br><span class="line">w[4<span class="emphasis">*row+0] =  key[4*</span>row];</span><br><span class="line">w[4<span class="emphasis">*row+1] =  key[4*</span>row+1];</span><br><span class="line">w[4<span class="emphasis">*row+2] =  key[4*</span>row+2];</span><br><span class="line">w[4<span class="emphasis">*row+3] =  key[4*</span>row+3];</span><br><span class="line">&#125;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">for(row=Nk;row&amp;lt;4*(Nr+1);row++)</span><br><span class="line">&#123;</span><br><span class="line">temp[0]=w[4*row-4];     //当前列的前一列</span><br><span class="line">temp[1]=w[4*row-3];</span><br><span class="line">temp[2]=w[4*row-2];</span><br><span class="line">temp[3]=w[4*row-1];</span><br><span class="line">if(row%Nk==0)           //逢nk时，对当前列的前一列作特殊处理</span><br><span class="line">&#123;</span><br><span class="line">temp=SubWord(RotWord(temp));   //先移位，再代换，最后和轮常量异或</span><br><span class="line">temp[0] = (byte)( (int)temp[0] ^ (int) AesRcon[4*(row/Nk)+0] );</span><br><span class="line">temp[1] = (byte)( (int)temp[1] ^ (int) AesRcon[4*(row/Nk)+1] );</span><br><span class="line">temp[2] = (byte)( (int)temp[2] ^ (int) AesRcon[4*(row/Nk)+2] );</span><br><span class="line">temp[3] = (byte)( (int)temp[3] ^ (int) AesRcon[4*(row/Nk)+3] );</span><br><span class="line">&#125;</span><br><span class="line">else if ( Nk &amp;gt; 6 &amp;amp;&amp;amp; (row % Nk == 4) )  //这个还没有搞清楚</span><br><span class="line">&#123;</span><br><span class="line">temp = SubWord(temp);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// w[row] = w[row-Nk] xor temp</span><br><span class="line">w[4<span class="emphasis">*row+0] = (byte) ( (int) w[4*</span>(row-Nk)+0] ^ (int)temp[0] );</span><br><span class="line">w[4<span class="emphasis">*row+1] = (byte) ( (int) w[4*</span>(row-Nk)+1] ^ (int)temp[1] );</span><br><span class="line">w[4<span class="emphasis">*row+2] = (byte) ( (int) w[4*</span>(row-Nk)+2] ^ (int)temp[2] );</span><br><span class="line">w[4<span class="emphasis">*row+3] = (byte) ( (int) w[4*</span>(row-Nk)+3] ^ (int)temp[3] );</span><br><span class="line">&#125;  // for loop</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//密钥移位函数</span><br><span class="line">unsigned char<span class="bullet">* Aes::RotWord(unsigned char*</span> word)</span><br><span class="line">&#123;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">temp[0] = word[1];</span><br><span class="line">temp[1] = word[2];</span><br><span class="line">temp[2] = word[3];</span><br><span class="line">temp[3] = word[0];</span><br><span class="line">return temp;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//密钥字代换函数</span><br><span class="line">unsigned char<span class="bullet">* Aes::SubWord(unsigned char*</span> word)</span><br><span class="line">&#123;</span><br><span class="line">byte* temp = new byte[4];</span><br><span class="line">for(int j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">temp[j] = AesSbox[16*(word[j] &amp;gt;&amp;gt; 4)+(word[j] &amp;amp; 0x0f)];  //实际上也可以写成AesSbox[[j]];因为两者相等</span><br><span class="line">&#125;</span><br><span class="line">return temp;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//Aes加密函数</span><br><span class="line">void Aes::Cipher(unsigned char<span class="bullet">* input, unsigned char*</span> output)</span><br><span class="line">&#123;</span><br><span class="line">int i;</span><br><span class="line">memset(&amp;amp;State[<span class="link_label">0</span>][<span class="link_reference">0</span>],0,16);</span><br><span class="line">for(i=0;i&amp;lt;4*Nb;i++)                        //这里是先写列后写行的，即输入是一列一列的进来的</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i%4</span>][<span class="link_reference">i/4</span>]=input[i];                    //换成先写行后写列也是可以的，只要在输出时也是这样就可以了</span><br><span class="line">&#125;</span><br><span class="line">AddRoundKey(0);                                    //轮密钥加</span><br><span class="line"></span><br><span class="line">for (int round = 1; round &amp;lt;= (Nr - 1); round++)  // main round loop</span><br><span class="line">&#123;</span><br><span class="line">SubBytes();                                    //字节代换</span><br><span class="line">ShiftRows();                                //行移位</span><br><span class="line">MixColumns();                                //列混淆</span><br><span class="line">AddRoundKey(round);                            //轮密钥加</span><br><span class="line">&#125;  // main round loop</span><br><span class="line"></span><br><span class="line">SubBytes();                                        //字节代换</span><br><span class="line">ShiftRows();                                    //行移位</span><br><span class="line">AddRoundKey(Nr);                                //轮密钥加</span><br><span class="line"></span><br><span class="line">// output = state</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">output[<span class="link_label">i</span>] =  State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//Aes解密函数</span><br><span class="line">void Aes::InvCipher(unsigned char<span class="bullet">* input,unsigned char*</span> output)</span><br><span class="line">&#123;</span><br><span class="line">int i;</span><br><span class="line">memset(&amp;amp;State[<span class="link_label">0</span>][<span class="link_reference">0</span>],0,16);</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>] = input[i];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AddRoundKey(Nr);</span><br><span class="line"></span><br><span class="line">for (int round = Nr-1; round &amp;gt;= 1; round--)  // main round loop</span><br><span class="line">&#123;</span><br><span class="line">InvShiftRows();</span><br><span class="line">InvSubBytes();</span><br><span class="line">AddRoundKey(round);</span><br><span class="line">InvMixColumns();</span><br><span class="line">&#125;  // end main round loop for InvCipher</span><br><span class="line"></span><br><span class="line">InvShiftRows();</span><br><span class="line">InvSubBytes();</span><br><span class="line">AddRoundKey(0);</span><br><span class="line"></span><br><span class="line">// output = state</span><br><span class="line">for (i = 0; i &amp;lt; (4 * Nb); i++)</span><br><span class="line">&#123;</span><br><span class="line">output[<span class="link_label">i</span>] =  State[<span class="link_label">i % 4</span>][<span class="link_reference"> i / 4</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//轮密钥加</span><br><span class="line">void Aes::AddRoundKey(int round)</span><br><span class="line">&#123;</span><br><span class="line">int i,j;  //i行 j列           //因为密钥w是一列一列排列的，即 k0 k4 k8 k12</span><br><span class="line">for(j=0;j&amp;lt;4;j++)              //                              k1 k5 k9 k13</span><br><span class="line">&#123;                              //                              k2 k6 k10k14</span><br><span class="line">for(i=0;i&amp;lt;4;i++)          //                              k3 k7 k11k15</span><br><span class="line">&#123;                          // 所以i行j列的下标是4<span class="emphasis">*((round*</span>4)+j)+i即16<span class="emphasis">*round+4*</span>j+i</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=(unsigned char)((int)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]^(int)w[4<span class="emphasis">*((round*</span>4)+j)+i]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">//字节代换函数</span><br><span class="line">void Aes::SubBytes()                              //Page 103</span><br><span class="line">&#123;</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=AesSbox[<span class="link_label">State[i</span>][<span class="link_reference">j</span>]];</span><br><span class="line">//因为 16*(State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;gt;&amp;gt;4)+State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;amp;0x0f=State[<span class="link_label">i</span>][<span class="link_reference">j</span>]</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvSubBytes()</span><br><span class="line">&#123;</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=AesiSbox[<span class="link_label">State[i</span>][<span class="link_reference">j</span>]]; //因为 16*(State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;gt;&amp;gt;4)+State[<span class="link_label">i</span>][<span class="link_reference">j</span>]&amp;amp;0x0f=State[<span class="link_label">i</span>][<span class="link_reference">j</span>]</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::ShiftRows()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];                                        //Page105</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(i=1;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+1)%4];                    //第一行左移1位</span><br><span class="line">else if(i==2)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+2)%4];                //第二行左移2位</span><br><span class="line">else if(i==3)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+3)%4];                //第三行左移3位</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvShiftRows()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">for(i=0;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(i=1;i&amp;lt;4;i++)</span><br><span class="line">&#123;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">//if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j-1)%4];    在此犯了一个错误 -1%4=-1 而不是3，所以采用了下面再加一个4的做法</span><br><span class="line">if(i==1)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+3)%4];            //第一行右移1位 j-1+4=j+3</span><br><span class="line">else if(i==2)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+2)%4];        //第二行右移2位 j-2+4=j+2</span><br><span class="line">else if(i==3)State[<span class="link_label">i</span>][<span class="link_reference">j</span>]=temp[4*i+(j+1)%4];        //第三行右移3位 j-3+4=j+2</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">void Aes::MixColumns()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)                                    //2 3 1 1  列混淆矩阵  Page107</span><br><span class="line">&#123;                                                    //1 2 3 1</span><br><span class="line">for(i=0;i&amp;lt;4;i++)                                //1 1 2 3</span><br><span class="line">&#123;                                                //3 1 1 2</span><br><span class="line">temp[<span class="link_label">4*i+j</span>]=State[<span class="link_label">i</span>][<span class="link_reference">j</span>];</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">for(j=0;j&amp;lt;4;j++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">0</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby02(temp[0+j]) ^ (int)gfmultby03(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby01(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby01(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">1</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby01(temp[0+j]) ^ (int)gfmultby02(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby03(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby01(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">2</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby01(temp[0+j]) ^ (int)gfmultby01(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby02(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby03(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">3</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby03(temp[0+j]) ^ (int)gfmultby01(temp[4*1+j]) ^</span><br><span class="line">(int)gfmultby01(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby02(temp[4*</span>3+j]) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">void Aes::InvMixColumns()</span><br><span class="line">&#123;</span><br><span class="line">unsigned char temp[4*4];</span><br><span class="line">int i,j;</span><br><span class="line">for (i = 0; i &amp;lt; 4; i++)  // copy State into temp[]</span><br><span class="line">&#123;</span><br><span class="line">for (j = 0; j &amp;lt; 4; j++)                         //0e 0b 0d 09   逆变换矩阵 Page108</span><br><span class="line">&#123;                                                //09 0e 0b 0d</span><br><span class="line">temp[<span class="link_label">4*i+j</span>] =  State[<span class="link_label">i</span>][<span class="link_reference">j</span>];                    //0d 09 0e 0b</span><br><span class="line">&#125;                                                //0b 0d 09 0e</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">for (j = 0; j &amp;lt; 4; j++)</span><br><span class="line">&#123;</span><br><span class="line">State[<span class="link_label">0</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0e(temp[j]) ^ (int)gfmultby0b(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0d(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby09(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">1</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby09(temp[j]) ^ (int)gfmultby0e(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0b(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0d(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">2</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0d(temp[j]) ^ (int)gfmultby09(temp[4+j]) ^</span><br><span class="line">(int)gfmultby0e(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0b(temp[4*</span>3+j]) );</span><br><span class="line">State[<span class="link_label">3</span>][<span class="link_reference">j</span>] = (unsigned char) ( (int)gfmultby0b(temp[j]) ^ (int)gfmultby0d(temp[4+j]) ^</span><br><span class="line">(int)gfmultby09(temp[4<span class="emphasis">*2+j]) ^ (int)gfmultby0e(temp[4*</span>3+j]) );</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br><span class="line">unsigned char Aes::gfmultby01(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return b;</span><br><span class="line">&#125;</span><br><span class="line">unsigned char Aes::gfmultby02(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">if (b &amp;lt; 0x80)</span><br><span class="line">return (unsigned char)(int)(b &amp;lt;&amp;lt;1);</span><br><span class="line">else</span><br><span class="line">return (unsigned char)( (int)(b &amp;lt;&amp;lt; 1) ^ (int)(0x1b) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby03(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char) ( (int)gfmultby02(b) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby09(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0b(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(b) ^ (int)b );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0d(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(gfmultby02(b)) ^ (int)(b) );</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">unsigned char Aes::gfmultby0e(unsigned char b)</span><br><span class="line">&#123;</span><br><span class="line">return (unsigned char)( (int)gfmultby02(gfmultby02(gfmultby02(b))) ^</span><br><span class="line">(int)gfmultby02(gfmultby02(b)) ^(int)gfmultby02(b) );</span><br><span class="line">&#125;</span><br><span class="line">////////////////////////////////////////////////////////////////////////////////////////////////</span><br></pre></td></tr></table></figure>
+<p>这里想说下Aes加密需要注意的地方。我们上面代码的时候，首先要传入密钥。</p>
+<p>Aes(int keySize, unsigned char* keyBytes);</p>
+<p>密钥的长度可以是128位， 192位， 256位。对应分别是16个字节， 24个字节和32个字节。</p>
+<p>然后在加密和解密的时候，我们传入两个指针。</p>
+<p>void Cipher(unsigned char_ input, unsigned char_ output);  // encipher 16-bit input</p>
+<p>void InvCipher(unsigned char_ input, unsigned char_ output);  // decipher 16-bit input</p>
+<p>注意每次都是传16位的。也就是说，如果你的数据字节很大，你必须把数据拆开来，拆成16个字节16个字节的进行加密。</p>
+<p>这里就产生一个问题：如果我们的数据是17个字节，那该怎么办呢？</p>
+<p>这里我百度了一下采用以下这个方法：</p>
+<p>&nbsp;</p>
+<p>如果要加密的字符串不够16位，输入字符串就要补位，比方说：</p>
+<p>源输入：</p>
+<p>abcdefg</p>
+<p>补位后:</p>
+<p>abcdefg999999999</p>
+<p>源输入：</p>
+<p>123456789</p>
+<p>补位后：</p>
+<p>1234567897777777</p>
+<p>也就是说差几个字节补几个字节，补的字节就是ascii值从1 到 15。</p>
+<p>下面自己写了个测试程序来测试AES加密。在D盘目录下建立一个1.txt文件。输入17个字节的数据。运行下面的程序：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Aes.h"</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//对文件的AES加密操作</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileCrypt</span><span class="params">()</span></span>;</span><br><span class="line"><span class="comment">//对文件的AES解密操作</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileDeCrypt</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">FileCrypt();</span><br><span class="line">FileDeCrypt();</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileCrypt</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//CreateFile获得文件内核句柄</span></span><br><span class="line">DWORD FileSize;</span><br><span class="line">HANDLE hFile = CreateFile(<span class="string">L"D:\1.txt"</span>, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"无效的句柄，尝试重新打开n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取文件大小</span></span><br><span class="line">FileSize = GetFileSize(hFile, NULL);</span><br><span class="line"><span class="keyword">if</span> (FileSize == INVALID_FILE_SIZE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"获取文件大小出错，请重新尝试n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配待加密字符串</span></span><br><span class="line"><span class="keyword">char</span> * Buff1 = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line"><span class="built_in">memset</span>(Buff1, <span class="number">0</span>, <span class="keyword">sizeof</span>(Buff1));</span><br><span class="line">BOOL b;</span><br><span class="line">DWORD dwSizeOfRead = <span class="number">0</span>;</span><br><span class="line">b = ReadFile(hFile, Buff1, FileSize, &amp;amp;dwSizeOfRead, NULL);</span><br><span class="line"></span><br><span class="line"><span class="comment">//读取文件内容</span></span><br><span class="line"><span class="keyword">if</span> ((dwSizeOfRead != FileSize) || (!b))</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"读取文件出错n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//字符串补位操作</span></span><br><span class="line"><span class="keyword">int</span> add;</span><br><span class="line"><span class="keyword">if</span> (FileSize / <span class="number">16</span> == <span class="number">0</span>)</span><br><span class="line">add = <span class="number">16</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">add = <span class="number">16</span> - FileSize % <span class="number">16</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配补位后待加密字符串</span></span><br><span class="line"><span class="keyword">char</span> * Buff2 = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (FileSize + add));</span><br><span class="line"><span class="built_in">memset</span>(Buff2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Buff2));</span><br><span class="line"><span class="comment">//进行补齐</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; FileSize + add; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span>(i &amp;lt; FileSize)</span><br><span class="line">Buff2[i] = Buff1[i];</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">Buff2[i] = (<span class="keyword">char</span>)add;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//加密操作</span></span><br><span class="line"><span class="function">Aes <span class="title">aes</span><span class="params">(16, (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)</span>"1234567812345678")</span>;</span><br><span class="line"><span class="comment">//将缓存区里面的数据加密,放入新的缓存区里面</span></span><br><span class="line">HANDLE hNewFile = CreateFile(<span class="string">L"D:\1(加密).txt"</span>, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line">DWORD count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> Temp1[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">char</span> Temp2[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">while</span> (count &amp;lt;= FileSize)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">memset</span>(Temp1, <span class="number">0</span> ,<span class="keyword">sizeof</span>(Temp1));</span><br><span class="line"><span class="built_in">memset</span>(Temp2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Temp2));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt;=<span class="number">15</span>; i++)</span><br><span class="line">Temp1[i] = Buff2[i + count];</span><br><span class="line">aes.Cipher((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp1, (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp2);</span><br><span class="line"><span class="comment">//将新缓存区的数据写入新的文件里面</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(Temp2), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">count +=<span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">CloseHandle(hFile);</span><br><span class="line">CloseHandle(hNewFile);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">FileDeCrypt</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//CreateFile获得文件内核句柄</span></span><br><span class="line">DWORD FileSize;</span><br><span class="line">HANDLE hFile = CreateFile(<span class="string">L"D:\1(加密).txt"</span>, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"无效的句柄，尝试重新打开n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//获取文件大小</span></span><br><span class="line">FileSize = GetFileSize(hFile, NULL);</span><br><span class="line"><span class="keyword">if</span> (FileSize == INVALID_FILE_SIZE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"获取文件大小出错，请重新尝试n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (FileSize % <span class="number">16</span> != <span class="number">0</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"加密文件大小有误，请检查加密文件"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//动态分配内存</span></span><br><span class="line"><span class="keyword">char</span>* Buff1 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line"><span class="keyword">char</span>* Buff2 = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * FileSize);</span><br><span class="line">BOOL b;</span><br><span class="line">DWORD dwSizeOfRead = <span class="number">0</span>;</span><br><span class="line">b = ReadFile(hFile, Buff1, FileSize, &amp;amp;dwSizeOfRead, NULL);</span><br><span class="line"><span class="comment">//读取文件内容</span></span><br><span class="line"><span class="keyword">if</span> ((dwSizeOfRead != FileSize) || (!b))</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"读取文件出错n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//解密操作</span></span><br><span class="line"><span class="function">Aes <span class="title">aes</span><span class="params">(16, (<span class="keyword">unsigned</span> <span class="keyword">char</span> *)</span>"1234567812345678")</span>;</span><br><span class="line"><span class="comment">//将缓存区里面的数据加密,放入新的缓存区里面</span></span><br><span class="line">HANDLE hNewFile = CreateFile(<span class="string">L"D:\1(解密).txt"</span>, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line">DWORD count = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> Temp1[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">char</span> Temp2[<span class="number">16</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &amp;lt; FileSize / <span class="number">16</span>; j++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">memset</span>(Temp1, <span class="number">0</span> ,<span class="keyword">sizeof</span>(Temp1));</span><br><span class="line"><span class="built_in">memset</span>(Temp2, <span class="number">0</span>, <span class="keyword">sizeof</span>(Temp2));</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt;=<span class="number">15</span>; i++)</span><br><span class="line">Temp1[i] = Buff1[i + count];</span><br><span class="line">aes.InvCipher((<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp1, (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)Temp2);</span><br><span class="line"><span class="keyword">if</span> (j == FileSize / <span class="number">16</span> - <span class="number">1</span>) <span class="comment">//最后一次写文件</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> add = (<span class="keyword">int</span>)Temp2[<span class="number">15</span>];<span class="comment">//获得最后一次要写入的16-add个字节</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(<span class="keyword">char</span>) * (<span class="number">16</span> - add), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//将新缓存区的数据写入新的文件里面</span></span><br><span class="line">DWORD dwSizeOfWrite = <span class="number">0</span>;</span><br><span class="line">WriteFile(hNewFile, Temp2, <span class="keyword">sizeof</span>(Temp2), &amp;amp;dwSizeOfWrite, <span class="number">0</span>);</span><br><span class="line">SetFilePointer(hNewFile, <span class="number">0</span>, NULL, FILE_END);</span><br><span class="line">count +=<span class="number">16</span>;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">CloseHandle(hFile);</span><br><span class="line">CloseHandle(hNewFile);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br><span class="line"></span><br><span class="line">&amp;nbsp;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/07/03/VS2010给MFC工程添加图标/" itemprop="url">
+                VS2010给MFC工程添加图标
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-07-03T13:18:20+08:00" content="2012-07-03">
+            2012-07-03
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这本来是一件很简单的事情，但是自己楞是搞了好久才搞出来。下面说下注意点。</p>
+<p>1.关于ico格式图标的制作。自己原来没有注意，本以为只要把jpg的后缀改成ico就好了，没想到在资源导入的时候一直无法识别。自己一开始没有注意到这个问题，结果纠结了好久。后来百度了一下发现可能是这个问题。于是找了个制作ico格式图标的网站重新制作了ico图标，再将资源以ICON方式导入进去，这次终于成功了。把文件中原来所有的IDR_MAINFRAME改成自己的图标ID就能看到自己的图标了。</p>
+<p>2.<a href="http://blog.csdn.net/link_/article/details/7261801" target="_blank" rel="external">http://blog.csdn.net/link_/article/details/7261801</a>  这个是具体的方法。</p>
+<p>&nbsp;</p>
+<p>自己还遇到了一个问题：在debug的时候说是Debug Aeertion Failed！</p>
+<p>转到错误的地方看了一下，是下面几个宏出错了</p>
+<p>// IDM_ABOUTBOX 必须在系统命令范围内。</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ASSERT<span class="list">(<span class="list">(<span class="keyword">IDI_ICON1</span> <span class="keyword">&amp;amp</span><span class="comment">; 0xFFF0) == IDI_ICON1);</span></span><br><span class="line">ASSERT<span class="list">(<span class="keyword">IDI_ICON1</span> <span class="keyword">&amp;lt</span><span class="comment">; 0xF000);</span></span><br><span class="line"></span><br><span class="line">ASSERT<span class="list">(<span class="keyword">bNameValid</span>)</span><span class="comment">;</span></span></span></span></span><br></pre></td></tr></table></figure>
+<p>转到宏的定义：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define ASSERT<span class="list">(<span class="keyword">f</span>)</span>          DEBUG_ONLY<span class="list">(<span class="list">(<span class="keyword">void</span>)</span> <span class="list">(<span class="list">(<span class="keyword">f</span>)</span> || !:<span class="keyword">:AfxAssertFailedLine</span><span class="list">(<span class="keyword">THIS_FILE</span>, __LINE__)</span> || <span class="list">(<span class="keyword">AfxDebugBreak</span><span class="list">()</span>, <span class="number">0</span>)</span>)</span>)</span></span><br></pre></td></tr></table></figure>
+<p>百度一下，说是指针越界 野指针什么的问题。自己MFC没学过也看不懂。</p>
+<p>这个问题暂时保留，请高手解答。。。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/06/27/Windows环境下Unicode编程总结和将ANSI转换到Unicode-将Unicode转换到ANSI/" itemprop="url">
+                Windows环境下Unicode编程总结和将ANSI转换到Unicode 将Unicode转换到ANSI
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-06-27T16:53:16+08:00" content="2012-06-27">
+            2012-06-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><div id="article_content"><br><br><strong>Windows环境下Unicode编程总结</strong><br><br>&nbsp;<br><br><strong>UNICODE环境设置</strong><br><br>在安装Visual Studio时，在选择VC++时需要加入unicode选项，保证相关的库文件可以拷贝到system32下。<br><br><strong>UNICODE编译设置：</strong><br><br>C/C++, Preprocessor difinitions 去除_MBCS，加_UNICODE,UNICODE<br><br>在ProjectSetting/link/output 中设置Entry为wWinMainCRTStartup<br><br>反之为MBCS（ANSI）编译。<br><br><strong>Unicode ：宽字节字符集</strong><br><br><strong>1. 如何取得一个既包含单字节字符又包含双字节字符的字符串的字符个数？</strong><br><br>可以调用Microsoft Visual C++的运行期库包含函数_mbslen来操作多字节（既包括单字节也包括双字节）字符串。<br><br>调用strlen函数，无法真正了解字符串中究竟有多少字符，它只能告诉你到达结尾的0之前有多少个字节。<br><br><strong>2. 如何对DBCS（双字节字符集）字符串进行操作？</strong><br><br>函数 描述<br><br>PTSTR CharNext （ LPCTSTR ）; 返回字符串中下一个字符的地址<br><br>PTSTR CharPrev （ LPCTSTR, LPCTSTR ）； 返回字符串中上一个字符的地址<br><br>BOOL IsDBCSLeadByte( BYTE )； 如果该字节是DBCS字符的第一个字节，则返回非0值<br><br><strong>3. 为什幺要使用Unicode？</strong><br><br>（1） 可以很容易地在不同语言之间进行数据交换。<br><br>（2） 使你能够分配支持所有语言的单个二进制.exe文件或DLL文件。<br><br>（3） 提高应用程序的运行效率。<br><br>Windows 2000是使用Unicode从头进行开发的，如果调用任何一个Windows函数并给它传递一个ANSI字符串，那幺系统首先要将字符串转换成 Unicode，然后将Unicode字符串传递给操作系统。如果希望函数返回ANSI字符串，系统就会首先将Unicode字符串转换成ANSI字符 串，然后将结果返回给你的应用程序。进行这些字符串的转换需要占用系统的时间和内存。通过从头开始用Unicode来开发应用程序，就能够使你的应用程序 更加有效地运行。<br><br>Windows CE 本身就是使用Unicode的一种操作系统，完全不支持ANSI Windows函数<br><br>Windows 98 只支持ANSI，只能为ANSI开发应用程序。<br><br>Microsoft公司将COM从16位Windows转换成Win32时，公司决定需要字符串的所有COM接口方法都只能接受Unicode字符串。<br><br><strong>4. 如何编写Unicode源代码？</strong><br><br>Microsoft公司为Unicode设计了WindowsAPI，这样，可以尽量减少代码的影响。实际上，可以编写单个源代码文件，以便使用或者不使 用Unicode来对它进行编译。只需要定义两个宏（UNICODE和_UNICODE），就可以修改然后重新编译该源文件。<br><br>_UNICODE宏用于C运行期头文件，而UNICODE宏则用于Windows头文件。当编译源代码模块时，通常必须同时定义这两个宏。<br><br><strong>5. Windows定义的Unicode数据类型有哪些？</strong><br><br>数据类型 说明<br><br>WCHAR Unicode字符<br><br>PWSTR 指向Unicode字符串的指针<br><br>PCWSTR 指向一个恒定的Unicode字符串的指针<br><br>对应的ANSI数据类型为CHAR，LPSTR和LPCSTR。<br><br>ANSI/Unicode通用数据类型为TCHAR，PTSTR,LPCTSTR。<br><br><strong><br><br>**</strong>6. 如何对Unicode进行操作？<strong><br><br>字符集 特性 实例<br><br>ANSI 操作函数以str开头 strcpy<br><br>Unicode 操作函数以wcs开头 wcscpy<br><br>MBCS 操作函数以_mbs开头 _mbscpy<br><br>ANSI/Unicode 操作函数以_tcs开头 _tcscpy（C运行期库）<br><br>ANSI/Unicode 操作函数以lstr开头 lstrcpy（Windows函数）<br><br>所有新的和未过时的函数在Windows2000中都同时拥有ANSI和Unicode两个版本。ANSI版本函数结尾以A表示；Unicode版本函数结尾以W表示。Windows会如下定义：<br><br>#ifdef UNICODE<br><br>#define CreateWindowEx CreateWindowExW<br><br>#else<br><br>#define CreateWindowEx CreateWindowExA<br><br>#endif // !UNICODE
+
+</strong>7. 如何表示Unicode字符串常量？<strong><br><br>字符集 实例<br><br>ANSI “string”<br><br>Unicode L“string”<br><br>ANSI/Unicode T(“string”)或_TEXT(“string”)if( szError[0] == _TEXT(‘J’) ){ }
+
+</strong>8. 为什幺应当尽量使用操作系统函数？<strong><br><br>这将有助于稍稍提高应用程序的运行性能，因为操作系统字符串函数常常被大型应用程序比如操作系统的外壳进程Explorer.exe所使用。由于这些函数使用得很多，因此，在应用程序运行时，它们可能已经被装入RAM。<br><br>如：StrCat，StrChr，StrCmp和StrCpy等。
+
+</strong>9. 如何编写符合ANSI和Unicode的应用程序？<strong><br><br>（1） 将文本串视为字符数组，而不是chars数组或字节数组。<br><br>（2） 将通用数据类型（如TCHAR和PTSTR）用于文本字符和字符串。<br><br>（3） 将显式数据类型（如BYTE和PBYTE）用于字节、字节指针和数据缓存。<br><br>（4） 将TEXT宏用于原义字符和字符串。<br><br>（5） 执行全局性替换（例如用PTSTR替换PSTR）。<br><br>（6） 修改字符串运算问题。例如函数通常希望在字符中传递一个缓存的大小，而不是字节。这意味着不应该传递sizeof(szBuffer),而应该传递 （sizeof(szBuffer)/sizeof(TCHAR)。另外，如果需要为字符串分配一个内存块，并且拥有该字符串中的字符数目，那幺请记住要 按字节来分配内存。这就是说，应该调用<br><br>malloc(nCharacters *sizeof(TCHAR)),而不是调用malloc(nCharacters)。
+
+</strong>10. 如何对字符串进行有选择的比较？<strong><br><br>通过调用CompareString来实现。<br><br>标志 含义<br><br>NORM_IGNORECASE 忽略字母的大小写<br><br>NORM_IGNOREKANATYPE 不区分平假名与片假名字符<br><br>NORM_IGNORENONSPACE 忽略无间隔字符<br><br>NORM_IGNORESYMBOLS 忽略符号<br><br>NORM_IGNOREWIDTH 不区分单字节字符与作为双字节字符的同一个字符<br><br>SORT_STRINGSORT 将标点符号作为普通符号来处理
+
+</strong>11. 如何判断一个文本文件是ANSI还是Unicode？<strong><br><br>判断如果文本文件的开头两个字节是0xFF和0xFE，那幺就是Unicode，否则是ANSI。
+
+</strong>12. 如何判断一段字符串是ANSI还是Unicode？<strong><br><br>用IsTextUnicode进行判断。IsTextUnicode使用一系列统计方法和定性方法，以便猜测缓存的内容。由于这不是一种确切的科学方法，因此 IsTextUnicode有可能返回不正确的结果。
+
+</strong>13. 如何在Unicode与ANSI之间转换字符串？<strong><br><br>Windows函数MultiByteToWideChar用于将多字节字符串转换成宽字符串；函数WideCharToMultiByte将宽字符串转换成等价的多字节字符串。
+
+</strong>14. Unicode和DBCS之间的区别<strong><br><br>Unicode使用（特别在C程序设计语言环境里）“宽字符集”。「Unicode中的每个字符都是16位宽而不是8位宽。」在Unicode中，没有单 单使用8位数值的意义存在。相比之下，在“双位组字符集”中我们仍然处理8位数值。有些位组自身定义字符，而某些位组则显示需要和另一个位组共同定义一个 字符。<br><br>处理DBCS字符串非常杂乱，但是处理Unicode文字则像处理有秩序的文字。您也许会高兴地知道前128个Unicode字符（16位代码从 0&#215;0000到0x007F）就是ASCII字符，而接下来的128个Unicode字符（代码从0&#215;0080到0x00FF）是ISO 8859-1对ASCII的扩展。Unicode中不同部分的字符都同样基于现有的标准。这是为了便于转换。希腊字母表使用从0&#215;0370到0x03FF 的代码，斯拉夫语使用从0&#215;0400到0x04FF的代码，美国使用从0&#215;0530到0x058F的代码，希伯来语使用从0&#215;0590到0x05FF的代 码。中国、日本和韩国的象形文字（总称为CJK）占用了从0&#215;3000到0x9FFF的代码。Unicode的最大好处是这里只有一个字符集，没有一点含 糊。
+
+</strong>15.衍生标准<strong><br><br>Unicode是一个标准。UTF-8是其概念上的子集，UTF-8是具体的编码标准。而ＵＮＩＣＯＤＥ是所有想达到世界统一编码标准的标准。UTF-8标准就是Unicode（ISO10646）标准的一种变形方式，<br><br>UTF的全称是：Unicode/UCS Transformation Format，其实有两种UTF，一种是UTF-8，一种是UTF-16，<br><br>不过UTF-16使用较少，其对应关系如下：<br><br>在Unicode中编码为 0000 &#8211; 007F 的 UTF-8 中编码形式为: 0xxxxxxx<br><br>在Unicode中编码为 0080 &#8211; 07FF 的 UTF-8 中编码形式为: 110xxxxx 10xxxxxx<br><br>在Unicode中编码为 0000 &#8211; 007F 的 UTF-8 中编码形式为: 1110xxxx 10xxxxxx 10xxxxxx
+
+</strong>utf-8 <strong>是unicode的 一个新的编码标准,其实unicode有过好几个标准.我们知道一直以来使用的unicode字符内码都是16位,它实际上还不能把全世界的所有字符编在 一个平面系统,比如中国的藏文等小语种,所以utf-8扩展到了32位,也就是说理论在utf-8中可容纳二的三十二次方个字符. UNICODE的思想就是想把所有的字符统一编码,实现一个统一的标准.big5、gb都是独立的字符集,这也叫做远东字符集,把它拿到德文版的 WINDOWS上可能将会引起字符编码的冲突&#8230;.早期的WINDOWS默认的字符集是ANSI.notepad中输入的汉字是本地编码,但在 NT/2000内部是可以直接支持UNICODE的。notepad.exe在WIN95和98中都是ANSI字符,在NT中则是 UNICODE.ANSI和UNICODE可以方便的实现对应映射,也就是转换 ASCII是8位范围内的字符集，对于范围之外的字符如汉字它是无法表达的。unicode是16位范围内的字符集，对于不同地区的字符分区分 配，unicode是多个IT巨头共同制定的字符编码标准。如果在unicode环境下比如WINDOWS NT上，一个字符占两字节16位，而在ANSI环境下如WINDOWS98下一个字符占一个字节8位.Unicode字符是16位宽，最多允许 65,535字符，数据类型被称为WCHAR。<br><br>对于已有的ANSI字符，unicode简单的将其扩展为16位：比如ANSI&#8221;A&#8221;=0&#215;43,则对应的UNICODE为<br><br>&#8220;A&#8221;= 0&#215;0043<br><br>而ASCII用七存放128个字符,ASCII是一个真正的美国标准,所以它不能满足其他国家的需要,例如斯拉夫语的字母和汉字于是出现了Windows ANSI字符集,是一种扩展的ASCII码,用8位存放字符,低128位仍然存放原来的ASCII码,<br><br>而高128位加入了希腊字母等<br><br>if def UNICODE<br><br>TCHAR = wchar<br><br>else<br><br>TCHAR = char<br><br>你需要在Project/Settings/C/C++/Preprocesser definitions中添加UNICODE和_UNICODE<br><br>UINCODE,_UNICODE都要定义。不定义_UNICODE的话，用SetText(HWND,LPCTSTR),将被解释为 SetTextA(HWND,LPTSTR),这时API将把你给的Unicode字符串看作ANSI字符串，显示乱码。因为windows API是已经编译好存在于dll中的，由于不管UNICODE还是ANSI字符串，都被看作一段buffer,如&#8221;0B A3 00 35 24 3C 00 00&#8243;如果按ANSI读，因为ANSI字串是以&#8217;/0&#8242;结束的，所以只能读到两字节&#8221;0B A3 /0&#8243;，如果按UNICODE读，将完整的读到&#8217;/0/0&#8242;结束。<br><br>由于UNICODE没有额外的指示位，所以系统必须知道你提供的字串是哪种格式。此外，UNICODE好象是ANSI C++规定的，_UNICODE是windows SDK提供的。如果不编写windows程序，可以只定义UNICODE。<br><br>开发过程：
+
+</strong>围绕着文件读写、字符串处理展开。文件主要有两种：.txt和.ini文件<strong><br><br>1.    在unicode和非unicode环境下字符串做不同处理的，那么需要参考以上9，10两条，以适应不同环境得字符串处理要求。<br><br>对文件读写也一样。只要调用相关接口函数时，参数中的字符串前都加上_TEXT等相关宏。如果写成的那个文件需要是unicode格式保存的，那么在创建文件时需要加入一个字节头。<br><br>CFile file;<br><br>WCHAR szwBuffer[128];<br><br>WCHAR _pszUnicode = L&#8221;Unicode string/n&#8221;; // unicode string<br><br>CHAR _pszAnsi = &#8220;Ansi string/n&#8221;;                  // ansi string<br><br>WORD wSignature = 0xFEFF;<br><br>file.Open(TEXT(&#8220;Test.txt&#8221;), CFile::modeCreate|CFile::modeWrite);<br><br>file.Write(&amp;wSignature, 2);<br><br>file.Write(pszUnicode, lstrlenW(pszUnicode) _ sizeof(WCHAR));<br><br>// explicitly use lstrlenW function<br><br>MultiByteToWideChar(CP_ACP, 0, pszAnsi, -1, szwBuffer, 128);<br><br>file.Write(szwBuffer, lstrlenW(szwBuffer) _ sizeof(WCHAR));<br><br>file.Close();<br><br>//以上这段代码在unicode和非unicode环境下都有效。这里显式的指明用Unicode来进行操作。<br><br>2.    在非unicode环境下，缺省调用的都是ANSI格式的字符串，此时TCHAR转换为CHAR类型的，除非显式定义WCHAR。所以在这个环境下，如果 读取unicode文件，那么首先需要移动2个字节，然后读取得字符串需要用MultiByteToWideChar来转换，转换后字符串信息才代表 unicode数据。<br><br>3.    在unicode环境下，缺省调用得都是unicode格式得字符串，也就是宽字符，此时TCHAR转换为WCHAR，相关得API函数也都调用宽字符类 型的函数。此时读取unicode文件也和上面一样，但是读取得数据是WCHAR的，如果要转换成ANSI格式，需要调用 WideCharToMultiByte。如果读取ANSI的，则不用移动两个字节，直接读取然后视需要转换即可。<br><br>某些语言（如韩语）必须在unicode环境下才能显示，这种情况下，在非unicode环境下开发，就算用字符串函数转换也不能达到显示文字的目的，因 为此时调用得API函数是用ANSI的（虽然底层都是用UNICODE处理但是处理结果是按照程序员调用的API来显示的）。所以必须用unicode来 开发。<br><br>本文来自CSDN博客，转载请标明出处：<a href="http://blog.csdn.net/Augusdi/archive/2009/10/15/4677533.aspx" target="_blank" rel="external">http://blog.csdn.net/Augusdi/archive/2009/10/15/4677533.aspx</a><br><br>=============================================================================<br><br>&nbsp;
+
+</strong>将ANSI转换到Unicode 将Unicode转换到ANSI <strong>
+
+</strong>将ANSI转换到Unicode   <strong><br><br>(1)通过L这个宏来实现，例如:   CLSIDFromProgID(   L&#8221;MAPI.Folder&#8221;,&amp;clsid);<br><br>(2)通过MultiByteToWideChar函数实现转换,例如:<br><br>char   *szProgID   =   &#8220;MAPI.Folder&#8221;;<br><br>WCHAR   szWideProgID[128];<br><br>CLSID   clsid;<br><br>long   lLen   =   MultiByteToWideChar(CP_ACP,0,szProgID,strlen(szProgID),szWideProgID,sizeof(szWideProgID));<br><br>szWideProgID[lLen]   =   &#8216;/0&#8242;;<br><br>(3)通过A2W宏来实现,例如:<br><br>USES_CONVERSION;<br><br>CLSIDFromProgID(   A2W(szProgID),&amp;clsid);
+
+</strong>  将Unicode转换到ANSI<br><br>**  (1)使用WideCharToMultiByte,例如:<br><br>//   假设已经有了一个Unicode   串   wszSomeString&#8230;<br><br>char   szANSIString   [MAX_PATH];<br><br>WideCharToMultiByte   (   CP_ACP,   WC_COMPOSITECHECK,   wszSomeString,   -1,   szANSIString,   sizeof(szANSIString),   NULL,   NULL   );<br><br>(2)使用W2A宏来实现,例如:<br><br>USES_CONVERSION;<br><br>pTemp=W2A(wszSomeString);<br><br>本文来自CSDN博客，转载请标明出处：<a href="http://blog.csdn.net/Augusdi/archive/2009/10/15/4677487.aspx" target="_blank" rel="external">http://blog.csdn.net/Augusdi/archive/2009/10/15/4677487.aspx</a><br><br></div></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/12/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/14/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 昨天晚上失眠了，于是一直在想实现GDI的一个效果：首先绘制10个相连的矩形，当鼠标移到某个矩形的时候，自动填充那个矩形的背景颜色为灰色，移开的时候恢复原来的白色。当只有一个矩形的时候，当然不是一件难事。但是当有10个矩形的时候，问题就产生了。首先先看一下代码：
+12345678910111213141516171819202">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows SDK模拟游戏钢琴的实现（二）">
+<meta property="og:url" content="http://yoursite.com/2012/01/11/windows-SDK模拟游戏钢琴的实现（二）/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 昨天晚上失眠了，于是一直在想实现GDI的一个效果：首先绘制10个相连的矩形，当鼠标移到某个矩形的时候，自动填充那个矩形的背景颜色为灰色，移开的时候恢复原来的白色。当只有一个矩形的时候，当然不是一件难事。但是当有10个矩形的时候，问题就产生了。首先先看一下代码：
+12345678910111213141516171819202">
+<meta property="og:updated_time" content="2015-07-25T05:03:41.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windows SDK模拟游戏钢琴的实现（二）">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 昨天晚上失眠了，于是一直在想实现GDI的一个效果：首先绘制10个相连的矩形，当鼠标移到某个矩形的时候，自动填充那个矩形的背景颜色为灰色，移开的时候恢复原来的白色。当只有一个矩形的时候，当然不是一件难事。但是当有10个矩形的时候，问题就产生了。首先先看一下代码：
+12345678910111213141516171819202">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windows SDK模拟游戏钢琴的实现（二） // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windows SDK模拟游戏钢琴的实现（二）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-11T14:09:00+08:00" content="2012-01-11">
+            2012-01-11
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 昨天晚上失眠了，于是一直在想实现GDI的一个效果：首先绘制10个相连的矩形，当鼠标移到某个矩形的时候，自动填充那个矩形的背景颜色为灰色，移开的时候恢复原来的白色。当只有一个矩形的时候，当然不是一件难事。但是当有10个矩形的时候，问题就产生了。首先先看一下代码：</p>
+<p></p><br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt<span class="comment">;windows.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;math.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">#define NUM  10</span><br><span class="line"></span><br><span class="line">struct own_rectangle&#123;</span><br><span class="line">	int xLeft   <span class="comment">;</span></span><br><span class="line">	int xRight  <span class="comment">;</span></span><br><span class="line">	int yTop    <span class="comment">;</span></span><br><span class="line">	int yBottom <span class="comment">;</span></span><br><span class="line">&#125;rect[NUM]<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,</span><br><span class="line">					PSTR szCmdLine, int iCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">	static TCHAR szAppName[] = TEXT(&amp;quot<span class="comment">;piano demo by mouse&amp;quot;);</span></span><br><span class="line">	HWND hwnd<span class="comment">;</span></span><br><span class="line">	MSG  msg<span class="comment">;</span></span><br><span class="line">	WNDCLASS wndclass<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	wndclass.style = CS_HREDRAW | CS_VREDRAW <span class="comment">;</span></span><br><span class="line">	wndclass.lpfnWndProc = WndProc<span class="comment">;</span></span><br><span class="line">	wndclass.cbClsExtra = 0<span class="comment">;</span></span><br><span class="line">	wndclass.cbWndExtra = 0<span class="comment">;</span></span><br><span class="line">	wndclass.hInstance  = hInstance<span class="comment">;</span></span><br><span class="line">	wndclass.hIcon      = LoadIcon(NULL, IDI_APPLICATION)<span class="comment">;</span></span><br><span class="line">    wndclass.hCursor    = LoadCursor (NULL, IDC_ARROW)<span class="comment">;</span></span><br><span class="line">	wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH)<span class="comment">;</span></span><br><span class="line">	wndclass.lpszClassName = szAppName<span class="comment">;</span></span><br><span class="line">	wndclass.lpszMenuName  = NULL<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	if (!RegisterClass(&amp;amp<span class="comment">;amp;wndclass))</span></span><br><span class="line">	&#123;</span><br><span class="line">		MessageBox(NULL, TEXT(&amp;quot<span class="comment">;Program requires Windows NT!&amp;quot;),</span></span><br><span class="line">					szAppName, MB_ICONERROR) <span class="comment">;</span></span><br><span class="line">		return 0<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	hwnd = CreateWindow (szAppName, TEXT(&amp;quot<span class="comment">;Piano Demo Using Mouse&amp;quot;),</span></span><br><span class="line">			WS_OVERLAPPEDWINDOW,</span><br><span class="line">			CW_USEDEFAULT, CW_USEDEFAULT,</span><br><span class="line">			CW_USEDEFAULT, CW_USEDEFAULT,</span><br><span class="line">			NULL, NULL, hInstance, NULL) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	ShowWindow (hwnd, iCmdShow) <span class="comment">;</span></span><br><span class="line">	UpdateWindow (hwnd)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	while (GetMessage (&amp;amp<span class="comment">;amp;msg, NULL, 0, 0))</span></span><br><span class="line">	&#123;</span><br><span class="line">		TranslateMessage (&amp;amp<span class="comment">;amp;msg) ;</span></span><br><span class="line">		DispatchMessage (&amp;amp<span class="comment">;amp;msg) ;</span></span><br><span class="line">	&#125;</span><br><span class="line">	return msg.wParam<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</span><br><span class="line">&#123;</span><br><span class="line">	static int cxClient, cyClient<span class="comment">;</span></span><br><span class="line">	static int Flag[NUM] =&#123;<span class="number">0,0,0,0</span>,<span class="number">0,0,0,0</span>,0,0&#125;<span class="comment">;</span></span><br><span class="line">	HDC hdc<span class="comment">;</span></span><br><span class="line">	int i = 0<span class="comment">;</span></span><br><span class="line">	PAINTSTRUCT ps<span class="comment">;                           //ps数组里面存放了RECT,用来重绘客户区的位置</span></span><br><span class="line">	POINT hitPoint<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">	int xCornerEllipse<span class="comment">;</span></span><br><span class="line">	int yCornerEllipse<span class="comment">;</span></span><br><span class="line">	int xStart = 200, yStart = 100, xEnd = 100, yEnd = 300<span class="comment">;</span></span><br><span class="line">	HBRUSH hBrush<span class="comment">;</span></span><br><span class="line">	HPEN hPen<span class="comment">;</span></span><br><span class="line">	switch (message)</span><br><span class="line">	&#123;</span><br><span class="line">		case WM_SIZE:</span><br><span class="line">			cxClient = LOWORD(lParam)<span class="comment">;</span></span><br><span class="line">			cyClient = HIWORD(lParam)<span class="comment">;</span></span><br><span class="line">		return 0<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case WM_MOUSEMOVE:</span><br><span class="line">			 hitPoint.x = LOWORD(lParam)<span class="comment">;</span></span><br><span class="line">			 hitPoint.y = HIWORD(lParam)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			 for (i = 0<span class="comment">; i &amp;amp;lt; NUM; i++)        //&amp;lt;span style=&amp;quot;color:#ffffff;&amp;quot;&amp;gt;&amp;lt;span style=&amp;quot;color:#000000;&amp;quot;&amp;gt;为什么 只有当i=0的时候才有效果呢？&amp;lt;/span&amp;gt;</span></span><br><span class="line">&amp;lt<span class="comment">;/span&amp;gt;			&#123;</span></span><br><span class="line">				if (hitPoint.x &amp;amp<span class="comment">;gt;= rect[i].xLeft &amp;amp;amp;&amp;amp;amp; hitPoint.x &amp;amp;lt;= rect[i].xRight &amp;amp;amp;&amp;amp;amp; hitPoint.y &amp;amp;gt;= rect[i].yTop &amp;amp;amp;&amp;amp;amp; hitPoint.y &amp;amp;lt;= rect[i].yBottom )</span></span><br><span class="line">					Flag[i] = 1<span class="comment">;</span></span><br><span class="line">				else</span><br><span class="line">					Flag[i] = 0<span class="comment">;</span></span><br><span class="line">				InvalidateRect(hwnd, NULL, TRUE)<span class="comment">;</span></span><br><span class="line">				//break<span class="comment">;</span></span><br><span class="line">			 &#125;</span><br><span class="line">		return 0<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case WM_PAINT:</span><br><span class="line">				hdc = BeginPaint (hwnd, &amp;amp<span class="comment">;amp;ps);</span></span><br><span class="line"></span><br><span class="line">				ps.rcPaint.left   =   rect[i].xLeft<span class="comment">;</span></span><br><span class="line">				ps.rcPaint.right  =   rect[i].xRight<span class="comment">;</span></span><br><span class="line">				ps.rcPaint.top    =   rect[i].yTop<span class="comment">;</span></span><br><span class="line">				ps.rcPaint.bottom =   rect[i].yBottom<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			hBrush = (HBRUSH)GetStockObject (GRAY_BRUSH)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			if (Flag[i] == 1)                             //如果鼠标位置在矩形框内，将刷子选进设备环境里面</span><br><span class="line">				SelectObject(hdc, hBrush)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			hPen = CreatePen (PS_SOLID, 1, RGB(<span class="number">255,0,0</span>))<span class="comment">;</span></span><br><span class="line">			SelectObject (hdc, hPen)<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			rect[0].xLeft    =  400   <span class="comment">;</span></span><br><span class="line">			rect[0].xRight   =  420   <span class="comment">;</span></span><br><span class="line">			rect[0].yTop     =  210    <span class="comment">;</span></span><br><span class="line">			rect[0].yBottom  =  300   <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">			Rectangle(hdc, rect[0].xLeft, rect[0].yTop, rect[0].xRight, rect[0].yBottom)<span class="comment">;</span></span><br><span class="line">			for (i = 1<span class="comment">; i &amp;amp;lt;NUM; i++)</span></span><br><span class="line">			&#123;</span><br><span class="line">				rect[i].xLeft    = rect[i-1].xLeft  + 20   <span class="comment">;</span></span><br><span class="line">				rect[i].xRight   = rect[i-1].xRight + 20   <span class="comment">;</span></span><br><span class="line">				rect[i].yTop     = rect[0].yTop            <span class="comment">;</span></span><br><span class="line">				rect[i].yBottom  = rect[0].yBottom         <span class="comment">;</span></span><br><span class="line">				Rectangle(hdc, rect[i].xLeft, rect[i].yTop, rect[i].xRight, rect[i].yBottom)<span class="comment">;</span></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			DeleteObject(hPen)<span class="comment">;</span></span><br><span class="line">			EndPaint(hwnd, &amp;amp<span class="comment">;amp;ps);</span></span><br><span class="line">		return 0<span class="comment">;</span></span><br><span class="line"></span><br><span class="line">		case WM_DESTROY:</span><br><span class="line">			PostQuitMessage (0)<span class="comment">;</span></span><br><span class="line">		return 0<span class="comment">;</span></span><br><span class="line">	&#125;</span><br><span class="line">	return DefWindowProc (hwnd, message, wParam, lParam) <span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p></p>
+<p></p><p></p>
+<p>下面来看一个这个处理鼠标移动的操作：</p>
+<p></p><br><figure class="highlight"><figcaption><span>WM_MOUSEMOVE:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#9; hitPoint.x = LOWORD(lParam);&#10;&#9; hitPoint.y = HIWORD(lParam);&#10;&#10;&#9; for (i = 0; i &#38;lt; NUM; i++)&#10;&#9;&#123;&#10;&#9;&#9;if (hitPoint.x &#38;gt;= rect[i].xLeft &#38;amp;&#38;amp; hitPoint.x &#38;lt;= rect[i].xRight &#38;amp;&#38;amp; hitPoint.y &#38;gt;= rect[i].yTop &#38;amp;&#38;amp; hitPoint.y &#38;lt;= rect[i].yBottom )&#10;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;else&#10;&#9;&#9;&#9;Flag[i] = 0;&#10;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;break;&#10;&#9; &#125;&#10;return 0;</span><br></pre></td></tr></table></figure><p></p>
+<p>一运行问题就来了：只有当鼠标移到第一个矩形的时候才会产生效果，而移到后面9个的时候根本没有产生任何效果！！</p>
+<p>我把上面for 循环的 初始条件的<span style="color:#ff0000">&nbsp; i=0</span>&nbsp; 改成&nbsp; <span style="color:#ff0000"></span></p>
+<p>i=1,这下子更加糟糕了：连第一个矩形都不能产生效果了。看来问题就是在这里了。</p>
+<p>那么为什么会不起作用呢？</p>
+<p>向华哥请教后，终于发现端倪了：</p>
+<figure class="highlight"><figcaption><span>(Flag[i] == 1)</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SelectObject(hdc, hBrush);</span><br></pre></td></tr></table></figure>
+<p>我是什么时候把刷子的句柄选入设备环境里面的呢？ 就是上面的当&nbsp; Flag[i] == 1 的时候&nbsp;，一旦选入了以后，那么后面所有的矩形绘制的时候用的都是灰色的刷子。</p>
+<p>所以首先在WM_PAINT消息里面 添加选择刷子的消息：</p>
+<p>for (i = 1; i &lt;NUM; i&#43;&#43;)</p>
+<p>{&nbsp;</p>
+<p><span style="color:#ff0000">&nbsp; if (Flag[i] == 1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;</span></p>
+<p><span style="color:#ff0000">&nbsp;SelectObject(hdc, hBrush);&nbsp;</span></p>
+<p>&nbsp;rect[i].xLeft&nbsp;&nbsp;&nbsp; = rect[i-1].xLeft&nbsp; &#43; 20&nbsp;&nbsp; ;</p>
+<p>&nbsp;rect[i].xRight&nbsp;&nbsp; = rect[i-1].xRight &#43; 20&nbsp;&nbsp; ;</p>
+<p>&nbsp;rect[i].yTop&nbsp;&nbsp;&nbsp;&nbsp; = rect[0].yTop&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</p>
+<p>&nbsp;rect[i].yBottom&nbsp; = rect[0].yBottom&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;</p>
+<p>&nbsp;Rectangle(hdc, rect[i].xLeft, rect[i].yTop, rect[i].xRight, rect[i].yBottom);</p>
+<p>}</p>
+<p>&nbsp;但是麻烦又来了：如果第i个是灰色的，那么从第i&#43;1个开始后面的所有矩形都变成灰色的了由于发送了10条重绘消息，说明鼠标移动到某个点的时候整个屏幕刷新了10次！！相当于10个矩形总共画了10次！！现在问题应该很明显了：重新绘制出来的窗口把原来的窗口效果给覆盖掉了，如果说原来第i次第i个矩形是灰色的，那么第i&#43;1次的时候又被覆盖成白色的了！！！</p>
+<p>而且我的i设置的时候不是全局变量，所以每一个进入VM_PAINT消息的时候i都是0</p>
+<p>好了，错误发现以后，我们就可以改正了。首先是逻辑上的修正：</p>
+<p>每次重新绘制整个窗口的时候都先把10个矩形画出来，然后在根据鼠标移动传过来的信息判断哪一个矩形应该被重画。</p>
+<p>逻辑清楚了以后，写起来就简单了。</p>
+<p>我把（一）中的声音效果再加进来，再添加鼠标左键点击发出声音，最终的代码如下：</p>
+<p></p><br><figure class="highlight"><figcaption><span>&lt;windows.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;math.h&#38;gt;&#10;#include &#38;lt;mmsystem.h&#38;gt;&#10;&#10;#pragma comment(lib, &#38;quot;WINMM.LIB&#38;quot;)&#10;&#10;#define NUM  10&#10;&#10;struct own_rectangle&#123;&#10;&#9;int xLeft   ;&#10;&#9;int xRight  ;&#10;&#9;int yTop    ;&#10;&#9;int yBottom ;&#10;&#125;rect[NUM];&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM);&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;&#9;&#9;&#9;&#9;&#9;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;&#9;static TCHAR szAppName[] = TEXT(&#38;quot;piano demo by mouse&#38;quot;);&#10;&#9;HWND hwnd;&#10;&#9;MSG  msg;&#10;&#9;WNDCLASS wndclass;&#10;&#10;&#9;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;&#9;wndclass.lpfnWndProc = WndProc;&#10;&#9;wndclass.cbClsExtra = 0;&#10;&#9;wndclass.cbWndExtra = 0;&#10;&#9;wndclass.hInstance  = hInstance;&#10;&#9;wndclass.hIcon      = LoadIcon(NULL, IDI_APPLICATION);&#10;    wndclass.hCursor    = LoadCursor (NULL, IDC_ARROW);&#10;&#9;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH);&#10;&#9;wndclass.lpszClassName = szAppName;&#10;&#9;wndclass.lpszMenuName  = NULL;&#10;&#10;&#9;if (!RegisterClass(&#38;amp;amp;wndclass))&#10;&#9;&#123;&#10;&#9;&#9;MessageBox(NULL, TEXT(&#38;quot;Program requires Windows NT!&#38;quot;),&#10;&#9;&#9;&#9;&#9;&#9;szAppName, MB_ICONERROR) ;&#10;&#9;&#9;return 0;&#10;&#9;&#125;&#10;&#10;&#9;hwnd = CreateWindow (szAppName, TEXT(&#38;quot;Piano Demo Using Mouse&#38;quot;),&#10;&#9;&#9;&#9;WS_OVERLAPPEDWINDOW,&#10;&#9;&#9;&#9;CW_USEDEFAULT, CW_USEDEFAULT,&#10;&#9;&#9;&#9;CW_USEDEFAULT, CW_USEDEFAULT,&#10;&#9;&#9;&#9;NULL, NULL, hInstance, NULL) ;&#10;&#10;&#9;ShowWindow (hwnd, iCmdShow) ;&#10;&#9;UpdateWindow (hwnd);&#10;&#10;&#9;while (GetMessage (&#38;amp;amp;msg, NULL, 0, 0))&#10;&#9;&#123;&#10;&#9;&#9;TranslateMessage (&#38;amp;amp;msg) ;&#10;&#9;&#9;DispatchMessage (&#38;amp;amp;msg) ;&#10;&#9;&#125;&#10;&#9;return msg.wParam;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;&#9;TCHAR str1[100], str2[100], str_i[10];&#10;&#9;static int cxClient, cyClient;&#10;&#9;static int Flag[NUM] =&#123;0,0,0,0,0,0,0,0,0,0&#125;;&#10;&#9;HDC hdc;&#10;&#9;static int i = 0;&#10;&#9;int j = 0;&#10;&#9;PAINTSTRUCT ps;                           //ps&#25968;&#32452;&#37324;&#38754;&#23384;&#25918;&#20102;RECT,&#29992;&#26469;&#37325;&#32472;&#23458;&#25143;&#21306;&#30340;&#20301;&#32622;&#10;&#9;POINT hitPoint;&#10;&#10;&#9;int xCornerEllipse;&#10;&#9;int yCornerEllipse;&#10;&#9;int xStart = 200, yStart = 100, xEnd = 100, yEnd = 300;&#10;&#9;HBRUSH hBrush;&#10;&#9;HPEN hPen;&#10;&#9;switch (message)&#10;&#9;&#123;&#10;&#9;&#9;case WM_SIZE:&#10;&#9;&#9;&#9;cxClient = LOWORD(lParam);&#10;&#9;&#9;&#9;cyClient = HIWORD(lParam);&#10;&#9;&#9;return 0;&#10;&#10;&#9;&#9;case WM_MOUSEMOVE:&#10;&#9;&#9;&#9; hitPoint.x = LOWORD(lParam);&#10;&#9;&#9;&#9; hitPoint.y = HIWORD(lParam);&#10;&#10;&#9;&#9;&#9; for (i = 0; i &#38;amp;lt; NUM; i++)&#10;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;if (hitPoint.x &#38;amp;gt;= rect[i].xLeft &#38;amp;amp;&#38;amp;amp; hitPoint.x &#38;amp;lt;= rect[i].xRight &#38;amp;amp;&#38;amp;amp; hitPoint.y &#38;amp;gt;= rect[i].yTop &#38;amp;amp;&#38;amp;amp; hitPoint.y &#38;amp;lt;= rect[i].yBottom )&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9; &#125;&#10;&#9;&#9;&#9; if (NUM == i)&#10;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;return 0;&#10;&#10;&#9;&#9;case WM_LBUTTONDOWN:&#10;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;    hitPoint.x = LOWORD(lParam);&#10;&#9;&#9;&#9;&#9;hitPoint.y = HIWORD(lParam);&#10;&#9;&#9;&#9;&#9;for (i = 0; i &#38;amp;lt; NUM; i++)&#10;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;if (hitPoint.x &#38;amp;gt;= rect[i].xLeft &#38;amp;amp;&#38;amp;amp; hitPoint.x &#38;amp;lt;= rect[i].xRight &#38;amp;amp;&#38;amp;amp; hitPoint.y &#38;amp;gt;= rect[i].yTop &#38;amp;amp;&#38;amp;amp; hitPoint.y &#38;amp;lt;= rect[i].yBottom )&#10;&#9;&#9;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;&#9;&#9;_itow(i+1, str_i, 10);&#10;&#9;&#9;&#9;&#9;&#9;&#9;wsprintfW(str1, TEXT(&#38;quot;close %s.mp3&#38;quot;),str_i);&#10;&#9;&#9;&#9;&#9;&#9;&#9;wsprintfW(str2, TEXT(&#38;quot;play %s.mp3&#38;quot;),str_i);&#10;&#9;&#9;&#9;&#9;&#9;&#9;mciSendString(str1, NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;&#9;mciSendString(str2, NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;break;&#10;&#10;&#9;&#9;case WM_PAINT:&#10;&#9;&#9;&#9;hdc = BeginPaint (hwnd, &#38;amp;amp;ps);&#10;&#9;&#9;&#9;hPen = CreatePen (PS_SOLID, 1, RGB(255,0,0));&#10;&#9;&#9;&#9;SelectObject (hdc, hPen);&#10;&#10;&#9;&#9;&#9;//hBrush = (HBRUSH)GetStockObject (GRAY_BRUSH);&#10;&#9;&#9;&#9;rect[0].xLeft    =  400   ;&#10;&#9;&#9;&#9;rect[0].xRight   =  420   ;&#10;&#9;&#9;&#9;rect[0].yTop     =  210    ;&#10;&#9;&#9;&#9;rect[0].yBottom  =  300   ;&#10;&#9;&#9;&#9;Rectangle(hdc, rect[0].xLeft, rect[0].yTop, rect[0].xRight, rect[0].yBottom);&#10;&#10;&#9;&#9;&#9;for (j = 1; j &#38;amp;lt; NUM; j++)&#10;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;rect[j].xLeft    = rect[j-1].xLeft  + 20   ;&#10;&#9;&#9;&#9;&#9;rect[j].xRight   = rect[j-1].xRight + 20   ;&#10;&#9;&#9;&#9;&#9;rect[j].yTop     = rect[0].yTop            ;&#10;&#9;&#9;&#9;&#9;rect[j].yBottom  = rect[0].yBottom         ;&#10;&#9;&#9;&#9;&#9;Rectangle(hdc, rect[j].xLeft, rect[j].yTop, rect[j].xRight, rect[j].yBottom);&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;if (Flag[i] == 1)&#123;&#10;&#9;&#9;&#9;&#9;SelectObject(hdc, (HBRUSH)GetStockObject (GRAY_BRUSH));&#10;&#9;&#9;&#9;&#9;Rectangle(hdc, rect[i].xLeft, rect[i].yTop, rect[i].xRight, rect[i].yBottom);&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;&#9;else if (NUM == i)&#123;&#10;&#9;&#9;&#9;&#9;SelectObject(hdc, (HBRUSH)GetStockObject (WHITE_BRUSH));&#10;&#9;&#9;&#9;&#9;Rectangle(hdc, rect[i].xLeft, rect[i].yTop, rect[i].xRight, rect[i].yBottom);&#10;&#9;&#9;&#9;&#125;&#10;&#10;&#9;&#9;&#9;DeleteObject(hPen);&#10;&#9;&#9;&#9;EndPaint(hwnd, &#38;amp;amp;ps);&#10;&#9;&#9;return 0;&#10;&#9;&#9;case WM_KEYDOWN:&#10;&#9;&#9;&#9;switch(wParam)&#10;&#9;&#9;&#9;&#123;&#10;&#9;&#9;&#9;&#9;case 0x31:&#10;&#9;&#9;&#9;&#9;&#9;i = 0;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;quot;close 1.mp3&#38;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;quot;play 1.mp3&#38;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x32:&#10;&#9;&#9;&#9;&#9;&#9;i = 1;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;quot;close 2.mp3&#38;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;quot;play 2.mp3&#38;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x33:&#10;&#9;&#9;&#9;&#9;&#9;i = 2;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 3.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 3.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x34:&#10;&#9;&#9;&#9;&#9;&#9;i = 3;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 4.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 4.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x35:&#10;&#9;&#9;&#9;&#9;&#9;i = 4;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 5.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 5.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x36:&#10;&#9;&#9;&#9;&#9;&#9;i = 5;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 6.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 6.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x37:&#10;&#9;&#9;&#9;&#9;&#9;i = 6;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 7.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 7.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x38:&#10;&#9;&#9;&#9;&#9;&#9;i = 7;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 8.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 8.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x39:&#10;&#9;&#9;&#9;&#9;&#9;i = 8;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 9.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 9.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;&#9;case 0x30:&#10;&#9;&#9;&#9;&#9;&#9;i = 9;&#10;&#9;&#9;&#9;&#9;&#9;Flag[i] = 1;&#10;&#9;&#9;&#9;&#9;&#9;InvalidateRect(hwnd, NULL, TRUE);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;close 10.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;mciSendString(TEXT(&#38;amp;quot;play 10.mp3&#38;amp;quot;), NULL, 0, NULL);&#10;&#9;&#9;&#9;&#9;&#9;break;&#10;&#10;&#9;&#9;&#9;&#125;&#10;&#9;&#9;return 0;&#10;&#10;&#9;&#9;case WM_DESTROY:&#10;&#9;&#9;&#9;PostQuitMessage (0);&#10;&#9;&#9;return 0;&#10;&#9;&#125;&#10;&#9;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;</span><br></pre></td></tr></table></figure><p></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/13/vim进阶学习笔记/" rel="prev">vim进阶学习笔记</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/05/关于位运算符实现的问题/" rel="next">关于位运算符实现的问题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

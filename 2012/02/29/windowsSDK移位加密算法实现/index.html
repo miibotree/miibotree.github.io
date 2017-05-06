@@ -1,0 +1,601 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK,信息安全,未分类," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="昨天老师让我们用MFC写一个凯撒加密，花了一会时间完成后，又花了半天自己写了个移位加密算法，是用SDK写的。
+算法部分请教了自己学ACM的同学，这里先谢谢他了。
+移位算法描述：
+变位加密不隐藏明文的字符，即明文的字母保持相同，但其顺序被打乱重新排列成另一种不同的格式。1）简单变位加密。预先约定好一组数字表示密钥，将文字依次写在密钥下，再按数字次序重新组织文字实现加密，也有人喜欢将明文逆序输出作为密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK移位加密算法实现">
+<meta property="og:url" content="http://yoursite.com/2012/02/29/windowsSDK移位加密算法实现/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="昨天老师让我们用MFC写一个凯撒加密，花了一会时间完成后，又花了半天自己写了个移位加密算法，是用SDK写的。
+算法部分请教了自己学ACM的同学，这里先谢谢他了。
+移位算法描述：
+变位加密不隐藏明文的字符，即明文的字母保持相同，但其顺序被打乱重新排列成另一种不同的格式。1）简单变位加密。预先约定好一组数字表示密钥，将文字依次写在密钥下，再按数字次序重新组织文字实现加密，也有人喜欢将明文逆序输出作为密">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/02/0_1330094592EUII.gif-300x233.png">
+<meta property="og:updated_time" content="2015-07-25T05:03:10.030Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK移位加密算法实现">
+<meta name="twitter:description" content="昨天老师让我们用MFC写一个凯撒加密，花了一会时间完成后，又花了半天自己写了个移位加密算法，是用SDK写的。
+算法部分请教了自己学ACM的同学，这里先谢谢他了。
+移位算法描述：
+变位加密不隐藏明文的字符，即明文的字母保持相同，但其顺序被打乱重新排列成另一种不同的格式。1）简单变位加密。预先约定好一组数字表示密钥，将文字依次写在密钥下，再按数字次序重新组织文字实现加密，也有人喜欢将明文逆序输出作为密">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK移位加密算法实现 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK移位加密算法实现
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-29T10:05:17+08:00" content="2012-02-29">
+            2012-02-29
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>昨天老师让我们用MFC写一个凯撒加密，花了一会时间完成后，又花了半天自己写了个移位加密算法，是用SDK写的。</p>
+<p>算法部分请教了自己学ACM的同学，这里先谢谢他了。</p>
+<p>移位算法描述：</p>
+<div>变位加密不隐藏明文的字符，即明文的字母保持相同，但其顺序被打乱重新排列成另一种不同的格式。</div><br><div>1）简单变位加密。预先约定好一组数字表示密钥，将文字依次写在密钥下，再按数字次序重新组织文字实现加密，也有人喜欢将明文逆序输出作为密文。例如</div><br><div>密钥：5 2 4 1 6 3   (密文排列次序)</div><br><div>明文：信息安全技术</div><br><div>密文：技息全信术安</div>
+
+<p>先用c++描述加密解密算法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;iostream&amp;gt;</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> <span class="built_in">map</span>[<span class="number">1001</span>], ans[<span class="number">1001</span>], fin[<span class="number">1001</span>], temp[<span class="number">1001</span>];</span><br><span class="line"><span class="keyword">int</span> key[<span class="number">1001</span>];</span><br><span class="line"><span class="comment">//map = Proclaim 这里是写SDK的时候把名字变过去了，对照一下</span></span><br><span class="line"><span class="comment">//ans = Key</span></span><br><span class="line"><span class="comment">//fin = Cryptograph</span></span><br><span class="line"><span class="comment">//lenk= Key_Length</span></span><br><span class="line"><span class="comment">//lenm= Proclaim_Length</span></span><br><span class="line"><span class="comment">//key = Key_Each</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="built_in">cin</span> &amp;gt;&amp;gt; <span class="built_in">map</span>;</span><br><span class="line"><span class="built_in">cin</span> &amp;gt;&amp;gt; ans;</span><br><span class="line"><span class="keyword">int</span> lenk = <span class="built_in">strlen</span>(ans);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; lenk; i++)</span><br><span class="line">key[i] = ans[i] - <span class="string">'0'</span>;</span><br><span class="line"><span class="keyword">int</span> lenm = <span class="built_in">strlen</span>(<span class="built_in">map</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = lenm; i &amp;lt; <span class="number">1001</span>; i++)</span><br><span class="line"><span class="built_in">map</span>[i] = <span class="string">'0'</span>;</span><br><span class="line"><span class="comment">//memset(fin, '0', sizeof(fin));解密时候加上</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; lenm; ) <span class="comment">//这里注意一下，最后一个条件是空的!!!!!!</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">temp[j] = <span class="built_in">map</span>[i++];</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">i--;</span><br><span class="line"><span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; lenk; j++)</span><br><span class="line">fin[i++] = temp[key[j]-<span class="number">1</span>];</span><br><span class="line"><span class="comment">//fin[key[j]-1+i] = temp[j];解密算法</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">puts</span>(fin);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后是自己的SDK实现</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#21464;&#20301;&#21152;&#23494;&#35299;&#23494;&#31639;&#27861;&#10;By MiiBotree&#10;------------------------------------------------------------*/&#10;&#10;#include &#38;lt;windows.h&#38;gt;&#10;#include &#38;lt;string.h&#38;gt;&#10;&#10;#define IDC_BUTTON1 1&#10;#define IDC_BUTTON2 2&#10;#define IDC_EDIT1 3&#10;#define IDC_EDIT2 4&#10;#define IDC_EDIT3 5&#10;#define IDC_EDIT4 6&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;static TCHAR szAppName[] = TEXT (&#34;Caesar&#34;) ;&#10;HWND hwnd ;&#10;MSG msg ;&#10;WNDCLASS wndclass ;&#10;&#10;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;wndclass.lpfnWndProc = WndProc ;&#10;wndclass.cbClsExtra = 0 ;&#10;wndclass.cbWndExtra = 0 ;&#10;wndclass.hInstance = hInstance ;&#10;wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION) ;&#10;wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;&#10;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;wndclass.lpszMenuName = NULL ;&#10;wndclass.lpszClassName = szAppName ;&#10;&#10;if (!RegisterClass (&#38;amp;wndclass))&#10;&#123;&#10;MessageBox (NULL, TEXT (&#34;This program requires Windows NT!&#34;),&#10;szAppName, MB_ICONERROR) ;&#10;return 0 ;&#10;&#125;&#10;&#10;hwnd = CreateWindow (szAppName,&#10;TEXT (&#34;&#21464;&#20301;&#31639;&#27861;By MiiBotree&#34;),&#10;WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |&#10;WS_THICKFRAME | WS_MINIMIZEBOX,&#10;CW_USEDEFAULT,&#10;CW_USEDEFAULT,&#10;700,&#10;550,&#10;NULL,&#10;NULL,&#10;hInstance,&#10;NULL) ;&#10;&#10;ShowWindow (hwnd, iCmdShow) ;&#10;UpdateWindow (hwnd) ;&#10;&#10;while (GetMessage (&#38;amp;msg, NULL, 0, 0))&#10;&#123;&#10;TranslateMessage (&#38;amp;msg) ;&#10;DispatchMessage (&#38;amp;msg) ;&#10;&#125;&#10;return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;HDC hdc ;&#10;PAINTSTRUCT ps ;&#10;RECT rect ;&#10;HWND hwndButton;&#10;HWND hwndEdit;&#10;static int cxChar, cyChar;&#10;switch (message)&#10;&#123;&#10;&#10;case WM_CREATE:&#10;cxChar = LOWORD (GetDialogBaseUnits ()) ;&#10;cyChar = HIWORD (GetDialogBaseUnits ()) ;&#10;hwndButton = CreateWindow ( TEXT(&#34;button&#34;),&#10;TEXT(&#34;&#21152;&#23494;&#34;),&#10;WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,&#10;cxChar + 420, cyChar * (1 + 2 * 1)+100,&#10;10 * cxChar, 7 * cyChar / 4,&#10;hwnd, (HMENU) IDC_BUTTON1,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndButton = CreateWindow ( TEXT(&#34;button&#34;),&#10;TEXT(&#34;&#35299;&#23494;&#34;),&#10;WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON,&#10;cxChar + 420 , cyChar * (1 + 2 * 1)+200,&#10;10 * cxChar, 7 * cyChar / 4,&#10;hwnd, (HMENU) IDC_BUTTON2,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+40,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT1,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+140,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT2,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+240,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT3,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;hwndEdit = CreateWindow (TEXT(&#34;edit&#34;),NULL,&#10;WS_CHILD | WS_VISIBLE |&#10;WS_BORDER|ES_LEFT | ES_MULTILINE |&#10;ES_AUTOVSCROLL,&#10;cxChar+200 , cyChar * (1 + 2 * 1)+340,&#10;20 * cxChar, (7 * cyChar / 4)*2,&#10;hwnd, (HMENU)IDC_EDIT4,&#10;((LPCREATESTRUCT) lParam)-&#38;gt;hInstance, NULL) ;&#10;&#10;return 0 ;&#10;&#10;case WM_PAINT:&#10;LOGFONT a;&#10;a.lfHeight=25;&#10;a.lfWidth=10;&#10;a.lfEscapement=0;&#10;a.lfWeight=700;&#10;a.lfItalic=FALSE;&#10;a.lfUnderline=FALSE;&#10;a.lfStrikeOut=FALSE;&#10;a.lfCharSet =GB2312_CHARSET;&#10;hdc = BeginPaint (hwnd, &#38;amp;ps);&#10;GetClientRect (hwnd, &#38;amp;rect);&#10;SelectObject(hdc,CreateFontIndirect(&#38;amp;a));&#10;SetTextColor(hdc,(255,255,255));&#10;TextOut(hdc, 100, 100, L&#34;&#26126;&#25991;&#34;, wcslen(L&#34;&#26126;&#25991;&#34;));&#10;TextOut(hdc, 100, 200, L&#34;&#23494;&#38053;&#34;, wcslen(L&#34;&#23494;&#38053;&#34;));&#10;TextOut(hdc, 100, 300, L&#34;&#23494;&#25991;&#34;, wcslen(L&#34;&#23494;&#25991;&#34;) );&#10;TextOut(hdc, 100, 400, L&#34;&#26126;&#25991;&#35299;&#34;, wcslen(L&#34;&#26126;&#25991;&#35299;&#34;) );&#10;TextOut(hdc, 500, 450, L&#34;MiiBotree&#21046;&#20316;&#34;, wcslen(L&#34;MiiBotree&#21046;&#20316;&#34;) );&#10;&#10;ReleaseDC(hwnd, hdc);&#10;EndPaint (hwnd, &#38;amp;ps);&#10;return 0;&#10;&#10;case WM_COMMAND:&#10;if (LOWORD (wParam == IDC_BUTTON1))&#10;&#123;&#10;TCHAR Proclaim[256];//&#26126;&#25991;&#10;TCHAR Cryptograph[256];//&#23494;&#25991;&#10;TCHAR Key[256];//&#23494;&#38053;&#10;TCHAR temp[256];&#10;int Key_Length = 0, Proclaim_Length;&#10;//&#23494;&#38053;&#30340;&#38271;&#24230;&#65292; &#26126;&#25991;&#30340;&#38271;&#24230;&#10;int Key_Each[256];&#10;GetDlgItemText(hwnd, IDC_EDIT1, Proclaim, sizeof(Proclaim));&#10;GetDlgItemText(hwnd, IDC_EDIT2, Key, sizeof(Key));&#10;Key_Length = wcslen(Key);&#10;Proclaim_Length = wcslen(Proclaim);&#10;&#10;if (Key_Length &#38;gt; Proclaim_Length)//&#21028;&#26029;&#36755;&#20837;&#26159;&#21542;&#26377;&#38169;&#35823;&#10;MessageBox(hwnd,TEXT(&#34;&#26126;&#25991;&#25110;&#32773;&#23494;&#38053;&#36755;&#20837;&#26377;&#35823;&#65292;&#35831;&#37325;&#26032;&#36755;&#20837;&#34;), TEXT(&#34;&#20986;&#38169;&#21862;&#34;), MB_OK);&#10;&#10;if (Key_Length == 0)&#10;MessageBox(hwnd,TEXT(&#34;&#26126;&#25991;&#25110;&#32773;&#23494;&#38053;&#36755;&#20837;&#26377;&#35823;&#65292;&#35831;&#37325;&#26032;&#36755;&#20837;&#34;), TEXT(&#34;&#20986;&#38169;&#21862;&#34;), MB_OK);&#10;if (Proclaim_Length % Key_Length != 0)//&#26126;&#25991;&#34917;&#20840;&#10;&#123;&#10;for (int i = Proclaim_Length; i &#38;lt;= (Proclaim_Length / Key_Length + 1)*Key_Length-1; i++)&#10;Proclaim[i] = &#39;0&#39;;&#10;Proclaim[(Proclaim_Length / Key_Length + 1)*Key_Length] = NULL;&#10;&#125;&#10;//&#26126;&#25991;&#34917;&#20840;&#32467;&#26463;&#10;&#10;for (int i = 0; i &#38;lt; Key_Length; i++)&#10;Key_Each[i] = Key[i] - &#39;0&#39;;&#10;&#10;for(int i = 0; i &#38;lt; Proclaim_Length;)&#10;&#123;&#10;int j = 0;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;temp[j] = Proclaim[i++];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i--;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;Cryptograph[i++] = temp[Key_Each[j]-1];&#10;&#125;&#10;if (Proclaim_Length % Key_Length != 0)&#10;Cryptograph[(Proclaim_Length / Key_Length + 1)*Key_Length] = NULL;&#10;else&#10;Cryptograph[Proclaim_Length]=NULL;&#10;&#10;SetDlgItemText(hwnd,IDC_EDIT3,Cryptograph);&#10;&#10;&#125;&#10;&#10;if (LOWORD (wParam == 2))&#10;&#123;&#10;TCHAR Cryptograph[256];//&#23494;&#25991;&#10;TCHAR Key[256];//&#23494;&#38053;&#10;TCHAR ReProclaim[256];//&#36824;&#21407;&#26126;&#25991;&#10;TCHAR temp[256];&#10;int Key_Length, Cryptograph_Length;&#10;//&#23494;&#38053;&#30340;&#38271;&#24230;&#65292; &#23494;&#25991;&#30340;&#38271;&#24230;&#10;int Key_Each[256];&#10;&#10;GetDlgItemText(hwnd, IDC_EDIT3,Cryptograph, sizeof(Cryptograph));&#10;GetDlgItemText(hwnd, IDC_EDIT2, Key, sizeof(Key));&#10;Key_Length = wcslen(Key);&#10;Cryptograph_Length = wcslen(Cryptograph);&#10;&#10;for (int i = 0; i &#38;lt; Key_Length; i++)&#10;Key_Each[i] = Key[i] - &#39;0&#39;;&#10;memset(ReProclaim, &#39;0&#39;, sizeof(ReProclaim));&#10;&#10;for(int i = 0; i &#38;lt; Cryptograph_Length; )&#10;&#123;&#10;int j = 0;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;temp[j] = Cryptograph[i++];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i--;&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;ReProclaim[Key_Each[j]-1+i] = temp[j];&#10;for(j = 0; j &#38;lt; Key_Length; j++)&#10;i++;&#10;&#125;&#10;ReProclaim[Cryptograph_Length]=NULL;&#10;SetDlgItemText(hwnd,IDC_EDIT4,ReProclaim);&#10;&#125;&#10;return 0;&#10;case WM_DESTROY:&#10;PostQuitMessage (0) ;&#10;return 0 ;&#10;&#125;&#10;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>最后发张效果图</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/02/0_1330094592EUII.gif.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/02/0_1330094592EUII.gif-300x233.png" alt="" title="加密算法"></a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+            <a href="/tags/信息安全/" rel="tag">#信息安全</a>
+          
+            <a href="/tags/未分类/" rel="tag">#未分类</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/03/01/fedora16中VMware模块加载错误解决方案/" rel="prev">fedora16中VMware模块加载错误解决方案</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/02/22/JAVA学习笔记/" rel="next">JAVA学习笔记</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

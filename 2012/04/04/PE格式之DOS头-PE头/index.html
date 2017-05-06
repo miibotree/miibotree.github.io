@@ -1,0 +1,790 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE,汇编," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="清明节回来乘车到学校，没想到竟然做错了公交车。来回竟然多花了3个小时。。。。。。车子又挤。真的快无语了。
+所以写下代码来泄愤。。。。
+首先给大家推广下小甲鱼的网站
+http://fishc.com/  小甲鱼是个大帅锅（。。。。）
+这个网站做的很齐全，里面讲汇编，PE，破解等很多好的资源。小甲鱼的视频讲解也是很详细的。自己看完书再看一遍小甲鱼的视频，最后自己再写代码巩固一下，感觉学习效果还是不错的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE格式之DOS头+PE头">
+<meta property="og:url" content="http://yoursite.com/2012/04/04/PE格式之DOS头-PE头/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="清明节回来乘车到学校，没想到竟然做错了公交车。来回竟然多花了3个小时。。。。。。车子又挤。真的快无语了。
+所以写下代码来泄愤。。。。
+首先给大家推广下小甲鱼的网站
+http://fishc.com/  小甲鱼是个大帅锅（。。。。）
+这个网站做的很齐全，里面讲汇编，PE，破解等很多好的资源。小甲鱼的视频讲解也是很详细的。自己看完书再看一遍小甲鱼的视频，最后自己再写代码巩固一下，感觉学习效果还是不错的">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/04/2009060617535490-1024x659.gif">
+<meta property="og:image" content="http://fishc.com/uploads/allimg/120113/9_120113221105_1.gif">
+<meta property="og:image" content="http://fishc.com/uploads/allimg/120113/9_120113220446_1.gif">
+<meta property="og:updated_time" content="2015-07-25T05:08:32.246Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PE格式之DOS头+PE头">
+<meta name="twitter:description" content="清明节回来乘车到学校，没想到竟然做错了公交车。来回竟然多花了3个小时。。。。。。车子又挤。真的快无语了。
+所以写下代码来泄愤。。。。
+首先给大家推广下小甲鱼的网站
+http://fishc.com/  小甲鱼是个大帅锅（。。。。）
+这个网站做的很齐全，里面讲汇编，PE，破解等很多好的资源。小甲鱼的视频讲解也是很详细的。自己看完书再看一遍小甲鱼的视频，最后自己再写代码巩固一下，感觉学习效果还是不错的">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> PE格式之DOS头+PE头 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              PE格式之DOS头+PE头
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-04T19:30:03+08:00" content="2012-04-04">
+            2012-04-04
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>清明节回来乘车到学校，没想到竟然做错了公交车。来回竟然多花了3个小时。。。。。。车子又挤。真的快无语了。</p>
+<p>所以写下代码来泄愤。。。。</p>
+<p>首先给大家推广下小甲鱼的网站</p>
+<p><a href="http://fishc.com/" target="_blank" rel="external">http://fishc.com/</a>  小甲鱼是个大帅锅（。。。。）</p>
+<p>这个网站做的很齐全，里面讲汇编，PE，破解等很多好的资源。小甲鱼的视频讲解也是很详细的。自己看完书再看一遍小甲鱼的视频，最后自己再写代码巩固一下，感觉学习效果还是不错的。</p>
+<p>好吧，接下来就不说废话了。先发一张图片，这个是比较完整的PE结构。图片有点大貌似不太好看。</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/04/2009060617535490.gif" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/04/2009060617535490-1024x659.gif" alt="" title="2009060617535490"></a></p>
+<p>然后从小甲鱼那里搞来的DOS头结构和PE头结构的数据结构如下（有中文翻译的）</p>
+<p>IMAGE_DOS_HEADER STRUCT</p>
+<p>{</p>
+<p>+0h WORD e_magic    // Magic DOS signature MZ(4Dh 5Ah)     DOS可执行文件标记</p>
+<p>+2h   WORD e_cblp    // Bytes on last page of file</p>
+<p>+4h WORD e_cp    // Pages in file</p>
+<p>+6h WORD e_crlc    // Relocations</p>
+<p>+8h WORD e_cparhdr   // Size of header in paragraphs</p>
+<p>+0ah WORD e_minalloc   // Minimun extra paragraphs needs</p>
+<p>+0ch WORD e_maxalloc  // Maximun extra paragraphs needs</p>
+<p>+0eh WORD e_ss            // intial(relative)SS value        DOS代码的初始化堆栈SS</p>
+<p>+10h WORD e_sp     // intial SP value                       DOS代码的初始化堆栈指针SP</p>
+<p>+12h WORD e_csum     // Checksum</p>
+<p>+14h WORD e_ip     // intial IP value               DOS代码的初始化指令入口[指针IP]</p>
+<p>+16h WORD e_cs     // intial(relative)CS value         DOS代码的初始堆栈入口</p>
+<p>+18h WORD e_lfarlc     // File Address of relocation table</p>
+<p>+1ah WORD e_ovno         // Overlay number</p>
+<p>+1ch WORD e_res[4]      // Reserved words</p>
+<p>+24h WORD e_oemid      // OEM identifier(for e_oeminfo)</p>
+<p>+26h WORD      e_oeminfo   // OEM information;e_oemid specific</p>
+<p>+29h WORD e_res2[10]   // Reserved words</p>
+<p>+3ch DWORD   e_lfanew     //  Offset to start of PE header      指向PE文件头</p>
+<p>} IMAGE_DOS_HEADER ENDS</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>首先是IMAGE_NT_HEADERS 结构的定义：（啥？结构不会，先看看小甲鱼童鞋的《零基础入门学习C语言》关于结构方面的章节吧~）</p>
+<p>IMAGE_NT_HEADERS STRUCT</p>
+<p>{</p>
+<p>+0h       DWORDSignature</p>
+<p>+4h       IMAGE_FILE_HEADER FileHeader</p>
+<p>+18h     IMAGE_OPTIONAL_HEADER32OptionalHeader</p>
+<p>} IMAGE_NT_HEADERS ENDS</p>
+<p>&nbsp;</p>
+<h2 id="Signature_字段：">Signature 字段：</h2><p>在一个有效的 PE 文件里，Signature 字段被设置为00004550h, ASCII 码字符是“PE00”。标志这 PE 文件头的开始。</p>
+<p>“PE00” 字符串是 PE 文件头的开始，DOS 头部的 e_lfanew 字段正是指向这里。</p>
+<p>如下图所示：<span style="color: #339966;"></span></p>
+<p></p>
+<div><img src="http://fishc.com/uploads/allimg/120113/9_120113221105_1.gif" alt="PE教程,PE视频教程,PE原理,PE头教程"></div>
+
+<p>&nbsp;</p>
+<h2 id="IMAGE_FILE_HEADER_结构">IMAGE_FILE_HEADER 结构</h2><p>typedef struct _IMAGE_FILE_HEADER</p>
+<p>{</p>
+<p>+04h WORD   Machine;   // 运行平台</p>
+<p>+06h   WORD   NumberOfSections; // 文件的区块数目</p>
+<p>+08h DWORD TimeDateStamp; // 文件创建日期和时间</p>
+<p>+0Ch   DWORD PointerToSymbolTable; // 指向符号表(主要用于调试)</p>
+<p>+10h DWORD NumberOfSymbols; // 符号表中符号个数(同上)</p>
+<p>+14h   WORD   SizeOfOptionalHeader; // IMAGE_OPTIONAL_HEADER32 结构大小</p>
+<p>+16h   WORD   Characteristics; // 文件属性</p>
+<p>} IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;</p>
+<p>&nbsp;</p>
+<p>该结构如下图所示：</p>
+<p><img src="http://fishc.com/uploads/allimg/120113/9_120113220446_1.gif" alt="PE教程,PE视频教程,PE原理,PE头教程"></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="下边，小甲鱼童鞋为大家详细解释各个成员的含义和用法：">下边，小甲鱼童鞋为大家详细解释各个成员的含义和用法：</h2><p>（1）Machine：可执行文件的目标CPU类型。<span style="font-family: 'Times New Roman'; font-size: medium;"></span></p>
+<p></p>
+<p>&nbsp;</p>
+<div><br><table><br><tbody><br><tr><br><th>Value</th><br><th>Meaning</th><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_FILE_MACHINE_I386</dt><br><dt>0x014c  </dt><br></dl><br></td><br><td>x86</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_FILE_MACHINE_IA64</dt><br><dt>0&#215;0200</dt><br></dl><br></td><br><td>Intel Itanium</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_FILE_MACHINE_AMD64</dt><br><dt>0&#215;8664</dt><br></dl><br></td><br><td>x64</td><br></tr><br></tbody><br></table><br></div>
+
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>（2）NumberOfSection: 区块的数目。（注：区块表是紧跟在 IMAGE_NT_HEADERS 后边的）</p>
+<p>（3）TimeDataStamp: 表明文件是何时被创建的。</p>
+<p>这个值是自1970年1月1日以来用格林威治时间（GMT） 计算的秒数，这个值是比文件系统（FILESYSTEM）的日期时间更加精确的指示器。如何将这个值翻译请 看：<a href="http://home.fishc.com/space.php?uid=9&amp;do=blog&amp;id=555" target="_blank" rel="external">http://home.fishc.com/space.php?uid=9&amp;do=blog&amp;id=555</a></p>
+<p>提示：VC的话可以用_ctime 函数或者 gmtime 函数。</p>
+<p>（4）PointerToSymbolTable: COFF 符号表的文件偏移位置，现在基本没用了。</p>
+<p>（5）NumberOfSymbols: 如果有COFF 符号表，它代表其中的符号数目，COFF符号是一个大小固定的结构，如果想找到COFF 符号表的结束位置，则需要这个变量。</p>
+<p>（6）SizeOfOptionalHeader: 紧跟着IMAGE_FILE_HEADER 后边的数据结构（IMAGE_OPTIONAL_HEADER）的大小。(对于32位PE文件，这个值通常是00E0h；对于64位PE32+文件，这个值是00F0h )。</p>
+<p>（7）Characteristics: 文件属性，有选择的通过几个值可以运算得到。( 这些标志的有效值是定义于 winnt.h 内的 IMAGE_FILE_** 的值，具体含义见下表。普通的EXE文件这个字段的值一般是 0100h，DLL文件这个字段的值一般是 210Eh。)小甲鱼温馨提示：多种属性可以通过 “或运算” 使得同时拥有！</p>
+<p>&nbsp;</p>
+<p>The characteristics of the image. This member can be one or more of the following values.</p>
+<p>&nbsp;</p>
+<p><span style="font-family: 'Times New Roman';"> </span></p>
+<p>&nbsp;</p>
+<p><table></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><th>Value</th></p>
+<p><th>Meaning</th><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_RELOCS_STRIPPED   </span></dt></p>
+<p><dt>0&#215;0001</dt><br><br></p>
+<p><td><span style="font-size: xx-small;">Relocation information was stripped from the </span></td></p><p></p>
+<p><span style="font-size: xx-small;">file. </span>The file must be loaded at its preferred</p>
+<p>base address. If the base address is not</p>
+<p>available, the loader reports an error.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_EXECUTABLE_IMAGE</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0002</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The file is executable (there are no unresolved </span></td></p>
+<p><span style="font-size: xx-small;">external references).</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_LINE_NUMS_STRIPPED</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0004</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">COFF line numbers were stripped from the </span></td></p>
+<p><span style="font-size: xx-small;">file.</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_LOCAL_SYMS_STRIPPED</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0008</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">COFF symbol table entries were stripped from </span></td></p>
+<p><span style="font-size: xx-small;">file.</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_AGGRESIVE_WS_TRIM</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0010</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">Aggressively trim the working set. This value is </span></td></p>
+<p><span style="font-size: xx-small;">obsolete </span>as of Windows 2000.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_LARGE_ADDRESS_AWARE</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0020</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The application can handle addresses larger </span></td></p>
+<p><span style="font-size: xx-small;">than 2 GB.</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_BYTES_REVERSED_LO</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0080</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The bytes of the word are reversed. This flag</span></td></p>
+<p><span style="font-size: xx-small;"> is obsolete.</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_32BIT_MACHINE</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0100</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The computer supports 32-bit words.</span></td><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_DEBUG_STRIPPED</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0200</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">Debugging information was removed and stored </span></td></p>
+<p><span style="font-size: xx-small;">separately </span>in another file.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_REMOVABLE_RUN_FROM_SWAP</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0400</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">If the image is on removable media, copy it to</span></td></p>
+<p><span style="font-size: xx-small;">and run it </span>from the swap file.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_NET_RUN_FROM_SWAP</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;0800</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">If the image is on the network, copy it to and </span></td></p>
+<p><span style="font-size: xx-small;">run it from </span>the swap file.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_SYSTEM</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;1000</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The image is a system file.</span></td><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_DLL</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;2000</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The image is a DLL file. While it is an executable</span></td></p>
+<p><span style="font-size: xx-small;"> file, </span>it cannot be run directly.<br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_UP_SYSTEM_ONLY</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;4000</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The file should be run only on a uniprocessor</span></td></p>
+<p><span style="font-size: xx-small;"> computer.</span><br></p>
+<p><tr></tr></p>
+<p><td></td></p>
+<p><dl></dl></p>
+<p><dt><span style="font-size: xx-small;">IMAGE_FILE_BYTES_REVERSED_HI</span></dt></p>
+<p><dt><span style="font-size: xx-small;">0&#215;8000</span></dt><br><br></p>
+<p><td><span style="font-size: xx-small;">The bytes of the word are reversed. This flag</span></td></p>
+<p><span style="font-size: xx-small;"> is obsolete.</span><br><br><br></p>
+<p></p><p>最后是自己写的读取dos头和pe头的代码（参考了醒哥的博客www.kkmonster.com）</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;tchar.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">const TCHAR* FileName = <span class="string">"c:\windows\system32\cmd.exe"</span>;</span><br><span class="line"><span class="regexp">//</span>文件目录</span><br><span class="line">BYTE* pBase = NULL;</span><br><span class="line"><span class="regexp">//</span>基地址</span><br><span class="line">BYTE* fnReadFile();</span><br><span class="line"><span class="regexp">//</span>读取文件</span><br><span class="line"><span class="keyword">int</span> fnReadPE (BYTE *pBuffer);</span><br><span class="line"><span class="regexp">//</span>读取PE文件信息</span><br><span class="line">BYTE* fnReadDosHeader(BYTE* pBuffer);</span><br><span class="line"><span class="regexp">//</span>读取dos文件头信息</span><br><span class="line"><span class="keyword">int</span> fnReadNTHeader(BYTE* pBuffer);</span><br><span class="line"><span class="regexp">//</span>读取 PE文件头信息</span><br><span class="line"><span class="keyword">int</span> fnReadFileHeader(BYTE* ImageFileHeader);</span><br><span class="line"><span class="regexp">//</span>读取PE文件头中的FileHeader结构的信息</span><br><span class="line"><span class="keyword">int</span> fnReadOptionalHeader(BYTE* ImageOptionalHeader);</span><br><span class="line"><span class="regexp">//</span>读取PE文件头中的OptionalHeader结构的信息</span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">BYTE* pBuffer = fnReadFile();</span><br><span class="line"></span><br><span class="line">fnReadPE (pBuffer);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">BYTE* fnReadFile()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"映射文件...n"</span>);</span><br><span class="line">HANDLE hFile = CreateFile(FileName, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);</span><br><span class="line"><span class="regexp">//</span>读取文件</span><br><span class="line"><span class="keyword">if</span> (hFile == INVALID_HANDLE_VALUE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"打开文件出错n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">DWORD dwFileSize = GetFileSize(hFile, NULL);</span><br><span class="line"><span class="regexp">//</span>获得文件大小</span><br><span class="line">BYTE* pBuffer = new BYTE[dwFileSize];</span><br><span class="line"><span class="regexp">//new</span>相当于malloc</span><br><span class="line">DWORD dwSizeOfRead;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(!ReadFile(hFile, pBuffer, dwFileSize, &amp;amp;dwSizeOfRead, NULL))</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"读取文件出错n"</span>);</span><br><span class="line">pBase = NULL;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">pBase = pBuffer;</span><br><span class="line"><span class="keyword">return</span> pBase;</span><br><span class="line"><span class="regexp">//</span>基地址</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fnReadPE(BYTE *pBuffer)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"读取PE信息...n"</span>);</span><br><span class="line">BYTE* pBaseNTHeader = fnReadDosHeader(pBuffer);</span><br><span class="line"><span class="regexp">//</span>调用fnReadDosHeader函数获取Dos头信息,并且获得PE文件头的基地址</span><br><span class="line"><span class="keyword">if</span> (!pBaseNTHeader)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!fnReadNTHeader(pBaseNTHeader))</span><br><span class="line">//读取PE文件头信息</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">BYTE* fnReadDosHeader(BYTE* pBuffer)</span><br><span class="line">//读取dos文件头信息</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"读取DOS文件头...n"</span>);</span><br><span class="line">PIMAGE_DOS_HEADER SrcImageDosHeader = (PIMAGE_DOS_HEADER)pBuffer;</span><br><span class="line"><span class="keyword">if</span> (SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_magic != IMAGE_DOS_SIGNATURE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"IMAGE_DOS_HEADER结构n"</span>);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_magic :<span class="variable">%04x</span> DOS可执行文件标记n"</span>,SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_magic);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_cblp :<span class="variable">%04x</span> Bytes on last page of filen"</span>,SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_cblp);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_cp :<span class="variable">%04x</span> Page in filen"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_cp);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_crlc :<span class="variable">%04x</span> Relocationsn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_crlc);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_cparhdr :<span class="variable">%04x</span> Size of header in paragraphsn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_cparhdr);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_minalloc:<span class="variable">%04x</span> Minimum extra paragraphs neededn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_minalloc);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_maxalloc:<span class="variable">%04x</span> Maximum extra paragraphs neededn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_maxalloc);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_ss :<span class="variable">%04x</span> Initial (relative) SS value DOS代码的初始化堆栈SSn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_ss);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_sp :<span class="variable">%04x</span> Initial SP value DOS代码的初始化堆栈指针SPn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_sp);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_csum :<span class="variable">%04x</span> Checksumn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_csum);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_ip :<span class="variable">%04x</span> Initial IP value DOS代码的初始化指针入口n"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_ip);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_cs :<span class="variable">%04x</span> Initial (relative) CS value DOS代码的初始堆栈入口n"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_cs);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_lfarlc :<span class="variable">%04x</span> File address of elocation tablen"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_lfarlc);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_ovno :<span class="variable">%04x</span> Overlay numbern"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_ovno);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_res[4] :<span class="variable">%04x</span>, <span class="variable">%04x</span>, <span class="variable">%04x</span>, <span class="variable">%04x</span> Reserved wordsn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res[<span class="number">0</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res[<span class="number">1</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res[<span class="number">2</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res[<span class="number">3</span>]);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_oemid :<span class="variable">%04x</span> OEM identifier (for e_oeminfo)n"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_oemid);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_oeminfo :<span class="variable">%04x</span> OEM information; e_oemid specificn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_oeminfo);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_res2[10]:<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>,<span class="variable">%04x</span>, Reserved wordsn"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">0</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">1</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">2</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">3</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">4</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">5</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">6</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">7</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">8</span>],SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_res2[<span class="number">9</span>]);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"e_lfanew :<span class="variable">%04x</span> File address of new exe header 指向PE文件头n"</span>, SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_lfanew);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> (BYTE*) (pBuffer + SrcImageDosHeader-&amp;<span class="keyword">gt</span>;e_lfanew);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fnReadNTHeader(BYTE* pBaseNTBuffer)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"读取PE文件头...n"</span>);</span><br><span class="line">PIMAGE_NT_HEADERS SrcImageNTHeader = (PIMAGE_NT_HEADERS)(pBaseNTBuffer);</span><br><span class="line"><span class="keyword">if</span> (SrcImageNTHeader-&amp;<span class="keyword">gt</span>;Signature != IMAGE_NT_SIGNATURE)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"IMAGE_NT_HEADERS结构n"</span>);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Signature :<span class="variable">%08xn</span>"</span>, SrcImageNTHeader-&amp;<span class="keyword">gt</span>;Signature);</span><br><span class="line">fnReadFileHeader((BYTE*)&amp;amp;SrcImageNTHeader-&amp;<span class="keyword">gt</span>;FileHeader);</span><br><span class="line"><span class="regexp">//</span>读取FileHeader结构的信息</span><br><span class="line">fnReadOptionalHeader((BYTE*) &amp;amp;SrcImageNTHeader-&amp;<span class="keyword">gt</span>;OptionalHeader);</span><br><span class="line"><span class="regexp">//</span>读取OptionalHeader结构的信息</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fnReadFileHeader(BYTE* ImageFileHeader)</span><br><span class="line">&#123;</span><br><span class="line">PIMAGE_FILE_HEADER SrcImageFileHeader = (PIMAGE_FILE_HEADER)ImageFileHeader;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"IMAGE_NT_HEADERS结构n"</span>);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Machine: <span class="variable">%04xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;Machine);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"NumberOfSections: <span class="variable">%04xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;NumberOfSections);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"TimeDateStamp: <span class="variable">%08xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;TimeDateStamp);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"PointerToSymbolTable: <span class="variable">%08xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;PointerToSymbolTable);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"NumberOfSymbols: <span class="variable">%08xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;NumberOfSymbols);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfOptionalHeader: <span class="variable">%04xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;SizeOfOptionalHeader);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Characteristics: <span class="variable">%04xn</span>"</span>, SrcImageFileHeader-&amp;<span class="keyword">gt</span>;Characteristics);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> fnReadOptionalHeader(BYTE* ImageOptionalHeader)</span><br><span class="line">&#123;</span><br><span class="line">PIMAGE_OPTIONAL_HEADER SrcImageOptional_Header = (PIMAGE_OPTIONAL_HEADER)ImageOptionalHeader;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"IMAGE_OPTIONAL_HEADER结构n"</span>);</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> Standard fields.</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Magic: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;Magic);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MajorLinkerVersion: <span class="variable">%02xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MajorLinkerVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MinorLinkerVersion: <span class="variable">%02xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MinorLinkerVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfCode: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfCode);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfInitializedData: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfInitializedData);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfUninitializedData: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfUninitializedData);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"AddressOfEntryPoint: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;AddressOfEntryPoint);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"BaseOfCode: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;BaseOfCode);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"BaseOfData: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;BaseOfData);</span><br><span class="line"></span><br><span class="line"><span class="regexp">//</span> NT additional fields.</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"ImageBase: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;ImageBase);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SectionAlignment: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SectionAlignment);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"FileAlignmen: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;FileAlignment);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MajorOperatingSystemVersion:<span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MajorOperatingSystemVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MinorOperatingSystemVersion:<span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MinorOperatingSystemVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MajorImageVersion; <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MajorImageVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MinorImageVersion: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MinorImageVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MajorSubsystemVersion: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MajorSubsystemVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"MinorSubsystemVersion: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;MinorSubsystemVersion);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Win32VersionValue: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;Win32VersionValue);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfImage: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfImage);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfHeaders: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfHeaders);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"CheckSum: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;CheckSum);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"Subsystem: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;Subsystem);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"DllCharacteristics: <span class="variable">%04xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;DllCharacteristics);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfStackReserve: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfStackReserve);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfStackCommit: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfStackCommit);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfHeapReserve: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfHeapCommit);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"SizeOfHeapCommit: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;SizeOfHeapCommit);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"LoaderFlags: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;LoaderFlags);</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"NumberOfRvaAndSizes: <span class="variable">%08xn</span>"</span>, SrcImageOptional_Header-&amp;<span class="keyword">gt</span>;NumberOfRvaAndSizes);</span><br><span class="line"><span class="regexp">//</span>IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这只是初步，代码还有待完善。。。。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+            <a href="/tags/汇编/" rel="tag">#汇编</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/07/PE区块权限与createfile形参权限的区别/" rel="prev">PE区块权限与createfile形参权限的区别</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/03/关于miibotree的由来/" rel="next">关于miibotree的由来</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Signature_字段："><span class="nav-text">Signature 字段：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IMAGE_FILE_HEADER_结构"><span class="nav-text">IMAGE_FILE_HEADER 结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#下边，小甲鱼童鞋为大家详细解释各个成员的含义和用法："><span class="nav-text">下边，小甲鱼童鞋为大家详细解释各个成员的含义和用法：</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

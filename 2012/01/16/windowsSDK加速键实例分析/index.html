@@ -1,0 +1,612 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="今天在看windows程序设计菜单里面的加速键，看了好几遍才勉强看懂，下面来解释一下书本里面的代码：
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK加速键实例分析">
+<meta property="og:url" content="http://yoursite.com/2012/01/16/windowsSDK加速键实例分析/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="今天在看windows程序设计菜单里面的加速键，看了好几遍才勉强看懂，下面来解释一下书本里面的代码：
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879">
+<meta property="og:updated_time" content="2015-07-25T05:04:07.863Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK加速键实例分析">
+<meta name="twitter:description" content="今天在看windows程序设计菜单里面的加速键，看了好几遍才勉强看懂，下面来解释一下书本里面的代码：
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK加速键实例分析 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK加速键实例分析
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-16T21:01:00+08:00" content="2012-01-16">
+            2012-01-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>今天在看windows程序设计菜单里面的加速键，看了好几遍才勉强看懂，下面来解释一下书本里面的代码：</p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt;windows.h&amp;gt;</span><br><span class="line">#include &amp;quot;resource.h&amp;quot;</span><br><span class="line"></span><br><span class="line">#define ID_EDIT     <span class="number">1</span></span><br><span class="line"></span><br><span class="line">LRESULT <span class="function">CALLBACK <span class="title">WndProc</span> <span class="params">(HWND, UINT, WPARAM, LPARAM)</span></span>;</span><br><span class="line"></span><br><span class="line">TCHAR szAppName[] = TEXT (&amp;amp;quot;PopPad2&amp;amp;quot;) ;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> <span class="function">WINAPI <span class="title">WinMain</span> <span class="params">(HINSTANCE hInstance, HINSTANCE hPrevInstance,</span><br><span class="line">                    PSTR szCmdLine, <span class="keyword">int</span> iCmdShow)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">     HACCEL   hAccel ;                  <span class="comment">//定义加速键表的句柄</span></span><br><span class="line">     HWND     hwnd ;</span><br><span class="line">     MSG      msg ;</span><br><span class="line">     WNDCLASS wndclass ;</span><br><span class="line"></span><br><span class="line">     wndclass.style         = CS_HREDRAW | CS_VREDRAW ;</span><br><span class="line">     wndclass.lpfnWndProc   = WndProc ;</span><br><span class="line">     wndclass.cbClsExtra    = <span class="number">0</span> ;</span><br><span class="line">     wndclass.cbWndExtra    = <span class="number">0</span> ;</span><br><span class="line">     wndclass.hInstance     = hInstance ;</span><br><span class="line">     wndclass.hIcon         = LoadIcon (hInstance, szAppName) ;</span><br><span class="line">     wndclass.hCursor       = LoadCursor (NULL, IDC_ARROW) ;</span><br><span class="line">     wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;</span><br><span class="line">     wndclass.lpszMenuName  = szAppName ;</span><br><span class="line">     wndclass.lpszClassName = szAppName ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (!RegisterClass (&amp;amp;amp;wndclass))</span><br><span class="line">     &#123;</span><br><span class="line">          MessageBox (NULL, TEXT (&amp;amp;quot;This program requires Windows NT!&amp;amp;quot;),</span><br><span class="line">                      szAppName, MB_ICONERROR) ;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     hwnd = CreateWindow (szAppName, szAppName,</span><br><span class="line">                          WS_OVERLAPPEDWINDOW,</span><br><span class="line">                          GetSystemMetrics (SM_CXSCREEN) / <span class="number">4</span>,     <span class="comment">//创建窗口的大小设定</span></span><br><span class="line">                          GetSystemMetrics (SM_CYSCREEN) / <span class="number">4</span>,</span><br><span class="line">                          GetSystemMetrics (SM_CXSCREEN) / <span class="number">2</span>,</span><br><span class="line">                          GetSystemMetrics (SM_CYSCREEN) / <span class="number">2</span>,</span><br><span class="line">                          NULL, NULL, hInstance, NULL) ;</span><br><span class="line"></span><br><span class="line">     ShowWindow (hwnd, iCmdShow) ;</span><br><span class="line">     UpdateWindow (hwnd) ;</span><br><span class="line"></span><br><span class="line">     hAccel = LoadAccelerators (hInstance, szAppName) ;			 <span class="comment">//加载到内存中并获得句柄</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">while</span> (GetMessage (&amp;amp;amp;msg, NULL, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">     &#123;</span><br><span class="line">          <span class="keyword">if</span> (!TranslateAccelerator (hwnd, hAccel, &amp;amp;amp;msg))		<span class="comment">//如果msg中的消息是键盘消息，那么函数在加速建表中寻找句柄为hAccel的匹配值，调用句柄为hwnd的窗口过程</span></span><br><span class="line">          &#123;</span><br><span class="line">               TranslateMessage (&amp;amp;amp;msg) ;</span><br><span class="line">               DispatchMessage (&amp;amp;amp;msg) ;</span><br><span class="line">          &#125;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> msg.wParam ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">AskConfirmation (HWND hwnd)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">return</span> MessageBox (hwnd, TEXT (&amp;amp;quot;Really want to close PopPad2?&amp;amp;quot;),</span><br><span class="line">                        szAppName, MB_YESNO | MB_ICONQUESTION) ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">LRESULT <span class="function">CALLBACK <span class="title">WndProc</span> <span class="params">(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">     <span class="keyword">static</span> HWND hwndEdit ;				<span class="comment">//子窗口控件编辑框的句柄</span></span><br><span class="line">     <span class="keyword">int</span>         iSelect, iEnable ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">switch</span> (message)</span><br><span class="line">     &#123;</span><br><span class="line">     <span class="keyword">case</span> WM_CREATE:</span><br><span class="line">          hwndEdit = CreateWindow (TEXT (&amp;amp;quot;edit&amp;amp;quot;), NULL,</span><br><span class="line">                              WS_CHILD | WS_VISIBLE | WS_HSCROLL | WS_VSCROLL |</span><br><span class="line">                              WS_BORDER | ES_LEFT | ES_MULTILINE |</span><br><span class="line">                              ES_AUTOHSCROLL | ES_AUTOVSCROLL,</span><br><span class="line">                              <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, hwnd, (HMENU) ID_EDIT,</span><br><span class="line">                              ((LPCREATESTRUCT) lParam)-&amp;amp;gt;hInstance, NULL) ;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_SETFOCUS:</span><br><span class="line">          SetFocus (hwndEdit) ;						<span class="comment">//设置焦点给子窗口控件</span></span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_SIZE:</span><br><span class="line">          MoveWindow (hwndEdit, 0, 0, LOWORD (lParam), HIWORD (lParam), TRUE) ;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_INITMENUPOPUP:							//关键部分</span><br><span class="line">          <span class="keyword">if</span> (lParam == 1)</span><br><span class="line">          &#123;</span><br><span class="line">               EnableMenuItem ((HMENU) wParam, IDM_EDIT_UNDO,</span><br><span class="line">                    SendMessage (hwndEdit, EM_CANUNDO, <span class="number">0</span>, <span class="number">0</span>) ?</span><br><span class="line">                                   MF_ENABLED : MF_GRAYED) ;</span><br><span class="line"></span><br><span class="line">               EnableMenuItem ((HMENU) wParam, IDM_EDIT_PASTE,</span><br><span class="line">                    IsClipboardFormatAvailable (CF_TEXT) ?</span><br><span class="line">                                   MF_ENABLED : MF_GRAYED) ;</span><br><span class="line"></span><br><span class="line">               iSelect = SendMessage (hwndEdit, EM_GETSEL, <span class="number">0</span>, <span class="number">0</span>) ;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> (HIWORD (iSelect) == LOWORD (iSelect))</span><br><span class="line">                    iEnable = MF_GRAYED ;</span><br><span class="line">               <span class="keyword">else</span></span><br><span class="line">                    iEnable = MF_ENABLED ;</span><br><span class="line"></span><br><span class="line">               EnableMenuItem ((HMENU) wParam, IDM_EDIT_CUT,   iEnable) ;</span><br><span class="line">               EnableMenuItem ((HMENU) wParam, IDM_EDIT_COPY,  iEnable) ;</span><br><span class="line">               EnableMenuItem ((HMENU) wParam, IDM_EDIT_CLEAR, iEnable) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_COMMAND:</span><br><span class="line">          <span class="keyword">if</span> (lParam)</span><br><span class="line">          &#123;</span><br><span class="line">               <span class="keyword">if</span> (LOWORD (lParam) == ID_EDIT &amp;amp;amp;&amp;amp;amp;</span><br><span class="line">                         (HIWORD (wParam) == EN_ERRSPACE ||</span><br><span class="line">                          HIWORD (wParam) == EN_MAXTEXT))</span><br><span class="line">                    MessageBox (hwnd, TEXT (&amp;amp;quot;Edit control out of space.&amp;amp;quot;),</span><br><span class="line">                                szAppName, MB_OK | MB_ICONSTOP) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span> <span class="keyword">switch</span> (LOWORD (wParam))</span><br><span class="line">          &#123;</span><br><span class="line">          <span class="keyword">case</span> IDM_FILE_NEW:</span><br><span class="line">          <span class="keyword">case</span> IDM_FILE_OPEN:</span><br><span class="line">          <span class="keyword">case</span> IDM_FILE_SAVE:</span><br><span class="line">          <span class="keyword">case</span> IDM_FILE_SAVE_AS:</span><br><span class="line">          <span class="keyword">case</span> IDM_FILE_PRINT:</span><br><span class="line">               MessageBeep (0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_APP_EXIT:</span><br><span class="line">               SendMessage (hwnd, WM_CLOSE, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_UNDO:</span><br><span class="line">               SendMessage (hwndEdit, WM_UNDO, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_CUT:</span><br><span class="line">               SendMessage (hwndEdit, WM_CUT, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_COPY:</span><br><span class="line">               SendMessage (hwndEdit, WM_COPY, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_PASTE:</span><br><span class="line">               SendMessage (hwndEdit, WM_PASTE, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_CLEAR:</span><br><span class="line">               SendMessage (hwndEdit, WM_CLEAR, 0, 0) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_EDIT_SELECT_ALL:</span><br><span class="line">               SendMessage (hwndEdit, EM_SETSEL, 0, -1) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_HELP_HELP:</span><br><span class="line">               MessageBox (hwnd, TEXT (&amp;amp;quot;Help not yet implemented!&amp;amp;quot;),</span><br><span class="line">                           szAppName, MB_OK | MB_ICONEXCLAMATION) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> IDM_APP_ABOUT:</span><br><span class="line">               MessageBox (hwnd, TEXT (&amp;amp;quot;POPPAD2 (c) Charles Petzold, <span class="number">1998</span>&amp;amp;quot;),</span><br><span class="line">                           szAppName, MB_OK | MB_ICONINFORMATION) ;</span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">break</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_CLOSE:</span><br><span class="line">          <span class="keyword">if</span> (IDYES == AskConfirmation (hwnd))</span><br><span class="line">               DestroyWindow (hwnd) ;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_QUERYENDSESSION:</span><br><span class="line">          <span class="keyword">if</span> (IDYES == AskConfirmation (hwnd))</span><br><span class="line">               <span class="keyword">return</span> 1 ;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">               <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">case</span> WM_DESTROY:</span><br><span class="line">          PostQuitMessage (0) ;</span><br><span class="line">          <span class="keyword">return</span> <span class="number">0</span> ;</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="function"><span class="keyword">return</span> <span class="title">DefWindowProc</span> <span class="params">(hwnd, message, wParam, lParam)</span> </span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个程序实现了一个简单的记事本功能，在EDIT菜单下能实现撤销(UNDO)，剪切(CUT)，复制(COPY)，粘贴(PASTE)，删除(DELETE)，全选(SELECT ALL)这些功能</p>
+<p>关键部分是下面的代码:</p>
+<p></p><br><figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">case WM_INITMENUPOPUP:</span><br><span class="line">          <span class="keyword">if</span> <span class="params">(lParam == <span class="number">1</span>)</span></span><br><span class="line">          &#123;</span><br><span class="line">               EnableMenuItem <span class="params">(<span class="params">(HMENU)</span> wParam, IDM_EDIT_UNDO,</span><br><span class="line">                    SendMessage <span class="params">(hwndEdit, EM_CANUNDO, <span class="number">0</span>, <span class="number">0</span>)</span> ?</span><br><span class="line">                                   MF_ENABLED : MF_GRAYED)</span> ;</span><br><span class="line"></span><br><span class="line">               EnableMenuItem <span class="params">(<span class="params">(HMENU)</span> wParam, IDM_EDIT_PASTE,</span><br><span class="line">                    IsClipboardFormatAvailable <span class="params">(CF_TEXT)</span> ?</span><br><span class="line">                                   MF_ENABLED : MF_GRAYED)</span> ;</span><br><span class="line"></span><br><span class="line">               iSelect = SendMessage <span class="params">(hwndEdit, EM_GETSEL, <span class="number">0</span>, <span class="number">0</span>)</span> ;</span><br><span class="line"></span><br><span class="line">               <span class="keyword">if</span> <span class="params">(HIWORD <span class="params">(iSelect)</span> == LOWORD <span class="params">(iSelect)</span>)</span></span><br><span class="line">                    iEnable = MF_GRAYED ;</span><br><span class="line">               <span class="keyword">else</span></span><br><span class="line">                    iEnable = MF_ENABLED ;</span><br><span class="line"></span><br><span class="line">               EnableMenuItem <span class="params">(<span class="params">(HMENU)</span> wParam, IDM_EDIT_CUT,   iEnable)</span> ;</span><br><span class="line">               EnableMenuItem <span class="params">(<span class="params">(HMENU)</span> wParam, IDM_EDIT_COPY,  iEnable)</span> ;</span><br><span class="line">               EnableMenuItem <span class="params">(<span class="params">(HMENU)</span> wParam, IDM_EDIT_CLEAR, iEnable)</span> ;</span><br><span class="line">               return <span class="number">0</span> ;</span><br><span class="line">          &#125;</span><br><span class="line">          break ;</span><br></pre></td></tr></table></figure><p></p>
+<p>现在我们就来具体分析一下吧^_^</p>
+<p>一开始我不太明白WM_INITMENUPOPUP消息的意思，所以我查了下字典，init是初始化的意思，popup上次说过了是弹出的意思。</p>
+<p>然后参考了一些资料：</p>
+<p><span style="color:#3333FF">WM_INITMENUPOPUP消息在下拉菜单或子菜单</span><span style="color:#3333FF"><span style="color:#FF6666">将要被激活的时候</span>发出.如果没有替换整个菜单,</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;允许这个应用程序在菜单显示之前进行修改,</p>
+<p><span style="color:#3333FF"></span></p>
+<p>hmenuPopup = (HMENU) wParam;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //子菜单句柄</p>
+<p>uPos = (UINT) LOWORD(lParam);&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // 子菜单项位置</p>
+<p>fSystemMenu = (BOOL) HIWORD(lParam); // 窗体菜单(系统菜单)标记</p>
+<p></p><p></p>
+<p><span style="color:#3333FF">参数</span></p>
+<p>hmenuPopup&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;wParam&#20540;.下拉菜单或子菜单的句柄</p>
+<p>uPos&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lParam低次序字的&#20540;.指定一个打开的下拉菜单或子菜单在菜单项中基于0相关联的位置</p>
+<p><span style="color:#3333FF">fSystemMenu&nbsp;</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lParam高次序字的&#20540;.指定是否下拉菜单是窗体菜单(同样大家知道的系统菜单或控制菜单),如果菜单是窗体菜单,</p>
+<p><span style="color:#3333FF">&nbsp;&nbsp;&nbsp;&nbsp;这个参数是TRUE,否则它是FALSE;</span></p>
+<p><span style="color:#3333FF">返回&#20540;:</span></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果一个应用程序处理这个消息,它将要返回0</p>
+<p>有了资料以后，我们就能理解了，为什么要处理这个消息呢？其实这个消息的处理正是EDIT下面的选项能执行的关键所在，下面具体来看看吧</p>
+<p>if (lParam == 1)<br><br>指定当菜单项为第1项的时候触发，因为最前面的是第0项，所以EDIT就是第一项了。<br><br><figure class="highlight"><figcaption><span>((HMENU) wParam, IDM_EDIT_UNDO,</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SendMessage (hwndEdit, EM_CANUNDO, 0, 0) ?&#10;               MF_ENABLED : MF_GRAYED) ;</span><br></pre></td></tr></table></figure><br><br></p><p>接下来我们碰到了EnableMenuItem这个函数，同样不知道我查了下资料如下<br><br><span style="color:#3333FF">允许或禁止指定的菜单条目 　　BOOL EnableMenuItem(HMENU hMenu,UINT uIDEnableItem, UINT uEnable);　　</span><br><br><span style="color:#3333FF">返回&#20540; ： BOOL 判断是否成功　　</span><br><br><span style="color:#3333FF">hMenu ，菜单句柄 　　</span><br><br><span style="color:#3333FF">uIDEnableItem ，欲允许或禁止的一个菜单条目的标识符。</span><br><br><span style="color:#3333FF">uEnable ，参考ModifyMenu函数中的菜单常数标志定义表，其中列出了允许使用的所有常数。对于这个函数，只能指定下述常数：MF_BYCOMMAND，MF_BYPOSITION，MF_ENABLED，MF_DISABLED以及MF_GRAYED</span><br><br><span style="color:#3333FF">MF_BYCOMMAND 指定参数给出已存在的菜单项的命令ID号。此为缺省&#20540;。　　·<br><br></span><br><br><span style="color:#3333FF">MF_BYPOSITION 指定参数给出已存在菜单项的位置。第一项所在的位置是0。　　·<br><br></span><br><br><span style="color:#3333FF">MF_DISABLED 使菜单项无效，以便它不能被选择，但不变灰。 　　·<br><br></span><br><br><span style="color:#3333FF">MF_ENABLED 使菜单项有效，以便它能够被选择，并可从变灰的状态中恢复出来。 　　·<br><br></span><br><br><span style="color:#3333FF">MF_GRAYED 使菜单项无效，以便它不能被选择并同时变灰。　</span>　<br><br>有了资料以后我们再来理解一下上面的代码：<br><br>第1个参数自然就是菜单的句柄了，第二个参数就是确定ID了，第三个参数用了一个简化的if条件语句判断，发送EM_CANUNDO给编辑控件，如果可以执行撤销（UNDO）操作，那么SendMessage返回非0&#20540;，同时这个选项启用，否则变灰色。<br><br></p><p>[/c] EnableMenuItem ((HMENU) wParam, IDM_EDIT_PASTE,<br><br>                    IsClipboardFormatAvailable (CF_TEXT) ?<br><br>                                   MF_ENABLED : MF_GRAYED) ;[/c]这几行代码与上面的几行类&#20284;，只不过条件语句里面换了个函数&nbsp; IsClipboardFormatAvailable，这个函数我们中文翻译一下，clipboard是剪切板的意思，所以函数的意思就是“剪切板里面有可用得东西吗？”并且用CF_TEXT来检测<br><br><figure class="highlight"><figcaption><span>= SendMessage (hwndEdit, EM_GETSEL, 0, 0) ;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (HIWORD (iSelect) == LOWORD (iSelect))&#10;                    iEnable = MF_GRAYED ;&#10;               else&#10;                    iEnable = MF_ENABLED ;</span><br></pre></td></tr></table></figure><br><br></p><p>书里面说，发送EM_SEL消息后在iSelect里面的低字位保存了<span style="color:#FF0000">第一个被选中字符的位置</span>，高字位是<span style="color:#FF0000">紧随选中文本后面的第一个字符的位置</span><br><br>如果相等，那么文本没有被选中。<br><br>这里我不是很理解，如果文本没有被选中的话，那么iSelect里面的低字位和高字位是文本的第一个字符吗？那么如果文本是空的话又是怎么实现的呢？这个问题请高手帮忙解答啊~~<br><br>接着如果选中了，那么iEnable 里面存放MF_ENABLED,&nbsp;&nbsp; 如果没有选中，那么存放的是MF_GRAYED。<br><br></p><br><figure class="highlight"><figcaption><span>((HMENU) wParam, IDM_EDIT_CUT,   iEnable) ;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EnableMenuItem ((HMENU) wParam, IDM_EDIT_COPY,  iEnable) ;&#10;EnableMenuItem ((HMENU) wParam, IDM_EDIT_CLEAR, iEnable) ;&#10;&#10;&#26368;&#21518;iEnable&#29992;&#20110;&#19977;&#20010;&#33756;&#21333;&#39033;&#30446;EnableMenuItem&#30340;&#31532;&#19977;&#20010;&#21442;&#25968;&#12290;</span><br></pre></td></tr></table></figure><br><br><p></p>
+
+<p>好吧，理解了关键部分的代码之后，这个程序应该就能看懂了吧，呵呵~~~~</p>
+<p>参考文献</p>
+<p>windows程序设计</p>
+<p>百度百科<a href="http://baike.baidu.com/view/1294033.htm" target="_blank" rel="external">http://baike.baidu.com/view/1294033.htm</a></p>
+<p><a href="http://blog.csdn.net/yingzheng1983/article/details/3135818" target="_blank" rel="external">http://blog.csdn.net/yingzheng1983/article/details/3135818</a>嬴政</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/17/fedora-16-使用LiveCD修复grub2引导/" rel="prev">fedora 16 使用LiveCD修复grub2引导</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/15/windowsSDK-菜单资源浅谈/" rel="next">windowsSDK 菜单资源浅谈</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

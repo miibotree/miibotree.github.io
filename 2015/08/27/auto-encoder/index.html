@@ -1,0 +1,634 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="auto-encoder," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linear Factor Models and Auto-Encoders">
+<meta property="og:url" content="http://yoursite.com/2015/08/27/auto-encoder/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+<meta property="og:image" content="http://yoursite.com/images/1440660151406.png">
+<meta property="og:image" content="http://yoursite.com/images/1440661415673.png">
+<meta property="og:image" content="http://yoursite.com/images/1440674570331.png">
+<meta property="og:updated_time" content="2015-08-27T12:08:35.759Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linear Factor Models and Auto-Encoders">
+<meta name="twitter:description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Linear Factor Models and Auto-Encoders // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Linear Factor Models and Auto-Encoders
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-27T20:06:52+08:00" content="2015-08-27">
+            2015-08-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>文章来自MIT的Deep Learning未出版版本:</p>
+<blockquote>
+<p>@unpublished{Bengio-et-al-2015-Book,<br>    title={Deep Learning},<br>    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},<br>    note={Book in preparation for MIT Press},<br>    url={<a href="http://www.iro.umontreal.ca/~bengioy/dlbook}" target="_blank" rel="external">http://www.iro.umontreal.ca/~bengioy/dlbook}</a>,<br>    year={2015}<br>}</p>
+</blockquote>
+<p><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/autoencoders.html" target="_blank" rel="external">Deep Learning Book: Chapter 15: Linear Factor Models and Auto-Encoders</a><br><a id="more"></a><br>Linear Factor Models(线性因子模型):</p>
+<blockquote>
+<p>Linear Factor是无监督的生成模型，通过线性变化，将可观测的输入向量x在隐藏层h中重新解释。</p>
+</blockquote>
+<p>Auto-encoders(自动编码机)：</p>
+<blockquote>
+<p>Auto-encoders是无监督的学习算法，</p>
+<ul>
+<li>通过非线性的参数化转换，将输入数据x进行重构生成h。它可以是一个前向神经网络，也可以是其它形式。</li>
+<li>再通过类似于Linear Factor Models，将重构h向后重新还原成数据r。</li>
+</ul>
+</blockquote>
+<p><img src="/images/1440660151406.png" alt="Alt text"><br>如上图所示，Linear Factor Models只包含上面的Decoder解码部分，而AE则是包含Encoder和Decoder两个部分。<br>PCA（主成分分析法）是其中一种Linear Factor Models，也可以看成是一种线性的auto-encoder,但是对于其它的Linear Factor Models，都是隐式地定义了从h到x的推断机制。</p>
+<p>自动编码机的概念和模型其实早在神经网络年代就已经被提出了，但是近年来又重新火了起来。它们沉寂了很多年，因为人们一直以来都认为它背后的数学解释和几何基础不完整。（Hinton的课程中提到，一直以来AU的效果竟然比不上PCA，直到Russ Salakhutdinov 和Hinton提出用于预训练的方式一层一层训练整个网络之后，效果比PCA提升了很多！）</p>
+<blockquote>
+<p>自动编码机的核心思想就是：通过神经网络，让输出尽量和输入相像！</p>
+</blockquote>
+<p>可以看上面那个图，整个系统由下面这些部分组成：</p>
+<ul>
+<li>输入 x</li>
+<li>编码函数 f</li>
+<li>“code”，或者叫internal representation(中间表示) h = f(x)</li>
+<li>解码函数 g</li>
+<li>输出, 或者叫 “reconstruction”(重构) r = g ( h )  = g ( f ( x ) )</li>
+<li>损失函数L(r, x),用来计算重构r和输入x之间的差异，衡量重构的好坏。我们的目标是让L最小</li>
+</ul>
+<h2 id="15-1_Regularized_Auto-Encoders">15.1 Regularized Auto-Encoders</h2><p>如果重构出来的r仅仅和原来的x一模一样，那么整个AE就完全没有用。为了让重构出来的r不和原来的x一模一样，增加了约束条件：也就是让h的维度比x的维度更小(或者更大)。<br><img src="/images/1440661415673.png" alt="Alt text"><br>看这个图,我们主要看中间h对应的那个线段的长短：</p>
+<ul>
+<li>左图h的长度比x小，这是一种不完全的表示，我们叫做code bottleneck(瓶颈，很形象)，就如PCA(降维)所做的一样</li>
+<li>右图h的长度比x大，是一种过度的表示</li>
+</ul>
+<p>h的长度如果比x小，这样的模型的应用很直观。Hinton的课程中举过例子，在文档检索中，每一篇文档提取出一系列bag of words。现在拿query文档的bag of words向量和数据库中所有文档的bag of words向量去比较，由于数据库很大，那么比较的速度会很慢。但是现在如果说把bag of words压缩，本来2000维的压缩成10维，那么比较的速度将会大大提升！实验证明使用AE是很有效的。</p>
+<p>但是h的长度比x大的应用乍一看好像不好想。事实上，如果说h的维度比x高，那么能够更好地挖掘x的结构特征！作者认为如果你想更好地挖掘输入的分布，那么你不应该被输入的维度所限制。</p>
+<p>除了<strong>bottleneck constraint</strong>之外，还有下面几种约束或者加正则项的方法来保证AE不是单纯的进行输入的复制：</p>
+<ul>
+<li><p><strong>稀疏地表示或者稀疏地表示输入的导数</strong>。虽然h的维度比x大很多，但是很有可能有用的只是局部的维度，而更多的维度都是0(或者$||  \frac {\partial h_i }{ \partial x}  ||$接近0).<br>当$||  \frac {\partial h_i }{ \partial x}  ||$接近0的时候，hi并没有参与到对x的局部变化编码中。这在几何学上可以用manifold learning(流形学习)来很好地解释。符合这种稀疏方法的AE有至少有下面四种：</p>
+<ul>
+<li>Sparse coding。它已经被研究地很透彻了。这是一种linear factor model，而不是auto-encoder，因为它没有显示的编码参数，而是使用迭代优化过程来计算code(也就是h)的最大似然(就是说最接近x)。sparse coding是这么做的：<br><img src="/images/1440674570331.png" alt="Alt text"><br>这里的L是重构损失函数，f是编码函数(没有参数)，g是解码函数(有参数)，$\Omega(h)$是稀疏正则项。Sparse coding不仅有着流形或者几何学解释，而且可以用有向图来解释。</li>
+<li>predictive sparse decomposition (PSD)。这是sparse coding的一种变形，它可以自由选择使用优化编码器还是有参数编码器。</li>
+<li>sparse auto-encoders。它在auto-encoder的基础上增加了一个稀疏惩罚项，来让编码器的输出变得稀疏。除了L1惩罚项之外，还有t-分布惩罚项。</li>
+<li>Contractive autoencoders。显示的惩罚项为$||  \frac {\partial h_i }{ \partial x}  ||^2_F$</li>
+</ul>
+</li>
+<li><p>对于噪声和缺失信息的输入有很强的鲁棒性。如果在输入层或者隐藏层增加噪声，或者输入有缺失，在这样的情况下仍然需要网络来重构出完整、无噪声的输入，那么网络就必须抓住输入数据分布的结构，来最佳地重构。这样的auto-encoder我们叫做denoising auto-encoders(除噪自动编码机)。</p>
+</li>
+</ul>
+<p>—待续</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/auto-encoder/" rel="tag">#auto-encoder</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/25/from-BM-to-RBM/" rel="next">BM(玻尔兹曼机)和RBM(受限玻尔兹曼机)</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#15-1_Regularized_Auto-Encoders"><span class="nav-text">15.1 Regularized Auto-Encoders</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

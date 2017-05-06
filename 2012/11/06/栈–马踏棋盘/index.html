@@ -1,0 +1,644 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="DataStruct,数据结构," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="智商是硬伤系列之二&amp;#8230;
+马踏棋盘
+题目描述就不讲了，下面先写写思路：
+定义
+s1 当前所在位置存储的下一步的所有可走路线
+s[65] s[step] 存储的下一步的所有可走路线
+函数
+Number下一步可走的数目
+Exit 下一步可走的位置，并且压入s[step]
+思路：
+1.GetOrdnance 输入初始坐标
+2.InitStack 栈的初始化操作
+3.Next step关键步骤
+&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="栈–马踏棋盘">
+<meta property="og:url" content="http://yoursite.com/2012/11/06/栈–马踏棋盘/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="智商是硬伤系列之二&amp;#8230;
+马踏棋盘
+题目描述就不讲了，下面先写写思路：
+定义
+s1 当前所在位置存储的下一步的所有可走路线
+s[65] s[step] 存储的下一步的所有可走路线
+函数
+Number下一步可走的数目
+Exit 下一步可走的位置，并且压入s[step]
+思路：
+1.GetOrdnance 输入初始坐标
+2.InitStack 栈的初始化操作
+3.Next step关键步骤
+&amp;">
+<meta property="og:updated_time" content="2015-07-25T04:51:30.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="栈–马踏棋盘">
+<meta name="twitter:description" content="智商是硬伤系列之二&amp;#8230;
+马踏棋盘
+题目描述就不讲了，下面先写写思路：
+定义
+s1 当前所在位置存储的下一步的所有可走路线
+s[65] s[step] 存储的下一步的所有可走路线
+函数
+Number下一步可走的数目
+Exit 下一步可走的位置，并且压入s[step]
+思路：
+1.GetOrdnance 输入初始坐标
+2.InitStack 栈的初始化操作
+3.Next step关键步骤
+&amp;">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 栈–马踏棋盘 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              栈–马踏棋盘
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-06T15:36:11+08:00" content="2012-11-06">
+            2012-11-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>智商是硬伤系列之二&#8230;</p>
+<p>马踏棋盘</p>
+<p>题目描述就不讲了，下面先写写思路：</p>
+<p>定义</p>
+<p>s1 当前所在位置存储的下一步的所有可走路线</p>
+<p>s[65] s[step] 存储的下一步的所有可走路线</p>
+<p>函数</p>
+<p>Number下一步可走的数目</p>
+<p>Exit 下一步可走的位置，并且压入s[step]</p>
+<p>思路：</p>
+<p>1.GetOrdnance 输入初始坐标</p>
+<p>2.InitStack 栈的初始化操作</p>
+<p>3.Next step关键步骤</p>
+<p>&#8212;-1.当前栈的初始化操</p>
+<p>&#8212;-2.将当前所在位置压入临时栈s1</p>
+<p>&#8212;-3.当前step的下一步所有可走路线s[step]</p>
+<p>&#8212;-4.先pop一个下一步可走路线</p>
+<p>&#8212;&#8212;&#8211;1.如果没有下一步可以走了，回溯操作</p>
+<p>&#8212;&#8212;&#8211;2.下一步是死路，换种下一步的走法</p>
+<p>&#8212;&#8212;&#8211;3.下一步有走的位置，但是s[step]为空了，直接走下一步</p>
+<p>4.其他情况？？</p>
+<p>4.PrintChessBoard打印棋盘操作</p>
+<p>Horse.cpp</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> <span class="string">"SqStack.h"</span></span><br><span class="line"></span><br><span class="line">#define N <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//马的走位</span></span><br><span class="line"><span class="keyword">int</span> HTry1[] = &#123;-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">2</span>&#125;; <span class="comment">//x方向走位</span></span><br><span class="line"><span class="keyword">int</span> HTry2[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">2</span>, -<span class="number">2</span>, -<span class="number">1</span>&#125;; <span class="comment">//y方向走位</span></span><br><span class="line"><span class="comment">//标识</span></span><br><span class="line"><span class="keyword">int</span> board[N][N] = &#123;<span class="number">0</span>&#125;; <span class="comment">//N * N 个棋盘</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">step</span> = <span class="number">1</span>; <span class="comment">//已经走的步数</span></span><br><span class="line">SqStack s[<span class="number">65</span>]; <span class="comment">//第step步的下一步的所有可能位置</span></span><br><span class="line">SqStack s1; <span class="comment">//临时栈</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数定义</span></span><br><span class="line"><span class="keyword">void</span> GetOrdnance(Point &amp;amp;p); <span class="comment">//获得坐标</span></span><br><span class="line"><span class="keyword">void</span> Exit(Point p); <span class="comment">//计算下一步</span></span><br><span class="line"><span class="keyword">int</span> Number(Point p); <span class="comment">//找出当前位置下一步的各种可能位置，计算可能之和</span></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">Next</span>(Point p); <span class="comment">//找出各个位置并将其步数记录</span></span><br><span class="line">bool Legal(Point p); <span class="comment">//判断是否可行</span></span><br><span class="line"><span class="keyword">void</span> PrintChessBoard(<span class="keyword">int</span> board[N][N]); <span class="comment">//打印棋盘</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">Point p;</span><br><span class="line">GetOrdnance(p);</span><br><span class="line">InitStack(s1);</span><br><span class="line"><span class="keyword">Next</span>(p);</span><br><span class="line">PrintChessBoard(board);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> GetOrdnance(Point &amp;amp;p)</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"输入 x ( 0 - %d ), y ( 0 - %d )n"</span>, N - <span class="number">1</span>, N - <span class="number">1</span>);</span><br><span class="line">scanf(<span class="string">"%d%d"</span>, &amp;amp;p.x, &amp;amp;p.y);</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断输入是否合法</span></span><br><span class="line"><span class="keyword">while</span> (! ((p.x &amp;gt;= <span class="number">0</span>) &amp;amp;&amp;amp; (p.x &amp;lt; N - <span class="number">1</span>) &amp;amp;&amp;amp; (p.y &amp;gt;= <span class="number">0</span>) &amp;amp;&amp;amp; (p.y &amp;lt; N - <span class="number">1</span>)) )</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"输入不合法，请重新输入n"</span>);</span><br><span class="line">printf(<span class="string">"输入 x ( 0 - %d ), y ( 0 - %d )n"</span>, N - <span class="number">1</span>, N -<span class="number">1</span>);</span><br><span class="line">scanf(<span class="string">"%d%d"</span>, &amp;amp;p.x, &amp;amp;p.y);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> PrintChessBoard(<span class="keyword">int</span> board[N][N])</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; N; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; N; j++)</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"%5d"</span>, board[i][j]);</span><br><span class="line">&#125;</span><br><span class="line">printf(<span class="string">"n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Number(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point p1;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">8</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">p1.x = p.x + HTry1[i];</span><br><span class="line">p1.y = p.y + HTry2[i];</span><br><span class="line"><span class="keyword">if</span> (Legal(p1))</span><br><span class="line">&#123;</span><br><span class="line">j++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">Next</span>(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point p1, p2; <span class="comment">//p2存储下一步要走的位置 p1存储当前位置</span></span><br><span class="line">InitStack(s[<span class="keyword">step</span>]);</span><br><span class="line">board[p.x][p.y] = <span class="keyword">step</span>;</span><br><span class="line"><span class="keyword">Push</span>(s1, p); <span class="comment">//将当前所在位置压入临时栈s1</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">step</span> &amp;lt; N * N)</span><br><span class="line">&#123;</span><br><span class="line">Exit(p);</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//p2是从s[step]里pop出来的</span></span><br><span class="line"><span class="keyword">if</span> ((s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top &amp;amp;&amp;amp; Number(p2) == <span class="number">0</span>) &amp;amp;&amp;amp; <span class="keyword">step</span> != N * N - <span class="number">1</span>) <span class="comment">//s[step]为空栈 下一步不能走了 步数没有到64</span></span><br><span class="line">&#123; <span class="comment">//这个时候我们需要回溯操作</span></span><br><span class="line"><span class="keyword">Pop</span>(s1, p1); <span class="comment">//把当前位置从临时栈s1里pop出来</span></span><br><span class="line">board[p1.x][p1.y] = <span class="number">0</span>; <span class="comment">//清零操作</span></span><br><span class="line">--<span class="keyword">step</span>; <span class="comment">//步数减1</span></span><br><span class="line"><span class="keyword">while</span> (s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top) <span class="comment">//清除s[step]栈为空栈</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">Pop</span>(s1, p1); <span class="comment">//从s1中弹栈放到p1中</span></span><br><span class="line">board[p1.x][p1.y] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">step</span>--; <span class="comment">//一直回溯到能走为止</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//换一种下一步的走法</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (Number(p2) == <span class="number">0</span> &amp;amp;&amp;amp; s[<span class="keyword">step</span>].base != s[<span class="keyword">step</span>].top)<span class="comment">//下一步没有走的位置 栈不为空</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//换一种下一步的走法</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (Number(p2) != <span class="number">0</span> &amp;amp;&amp;amp; s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top)<span class="comment">//下一步有走的位置 但是栈s[step]为空</span></span><br><span class="line">&#123; <span class="comment">//直接走下一步</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Exit(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point temp;</span><br><span class="line">Point p1;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">Point ap[<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">8</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">p1.x = p.x + HTry1[i];</span><br><span class="line">p1.y = p.y + HTry2[i];</span><br><span class="line"><span class="keyword">if</span> (Legal(p1))</span><br><span class="line">&#123;</span><br><span class="line">ap[j] = p1;</span><br><span class="line">j++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="comment">//将下一步的可能位置存储在ap[]中</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> <span class="keyword">count</span> = <span class="number">0</span>; <span class="keyword">count</span> &amp;lt; Number(p) - <span class="number">1</span>; <span class="keyword">count</span>++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &amp;lt; Number(p) - <span class="number">1</span>; k++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (Number(ap[k]) &amp;lt; Number(ap[k+<span class="number">1</span>])) <span class="comment">//从大到小排列</span></span><br><span class="line">&#123;</span><br><span class="line">temp = ap[k+<span class="number">1</span>];</span><br><span class="line">ap[k+<span class="number">1</span>] = ap[k];</span><br><span class="line">ap[k] = temp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">0</span>; t &amp;lt; Number(p); t++) &#123; <span class="keyword">Push</span>(s[<span class="keyword">step</span>], ap[t]); <span class="comment">//从大到小压入s[step]栈中，pop的时候就是从小到大 &#125; &#125; bool Legal(Point p) &#123; if ((p.x &amp;gt;= 0) &amp;amp;&amp;amp; (p.x &amp;lt; N) &amp;amp;&amp;amp; (p.y &amp;gt;= 0) &amp;amp;&amp;amp; (p.y &amp;lt; N) &amp;amp;&amp;amp; (board[p.x][p.y] == 0))</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SqStack.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OK 1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> ERROR 0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OVERFLOW -2</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACK_INIT_SIZE 100 <span class="comment">//存储空间初始分配量</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACKINCREMEMNT 10 <span class="comment">//存储空间分配增量</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _Point&#123;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span> y;</span><br><span class="line">&#125;Point;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> Point SElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _SqStack</span><br><span class="line">&#123;</span><br><span class="line">SElemType *base;</span><br><span class="line">SElemType *top;</span><br><span class="line"><span class="keyword">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*基本操作的函数原型说明*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//构造一个空栈</span></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span><span class="params">(SqStack S)</span></span>;</span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span><span class="params">(SqStack s)</span></span>;</span><br><span class="line"><span class="comment">//返回栈顶元素</span></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span><span class="params">(SqStack s, SElemType &amp;amp;e)</span></span>;</span><br><span class="line"><span class="comment">//进栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Push</span><span class="params">(SqStack &amp;amp;s, SElemType e)</span></span>;</span><br><span class="line"><span class="comment">//出栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> <span class="params">(SqStack &amp;amp;s, SElemType &amp;amp;e)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>SqStack.cpp</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include "SqStack.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//构造一个空栈 S</span></span><br><span class="line">s.<span class="keyword">base</span> = (SElemType *)malloc(STACK_INIT_SIZE * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line"><span class="comment">//存储分配失败</span></span><br><span class="line"><span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> OVERFLOW;</span><br><span class="line">s.top = s.<span class="keyword">base</span>;</span><br><span class="line">s.stacksize = STACK_INIT_SIZE;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span>(<span class="params">SqStack S</span>)</span>;</span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span>(<span class="params">SqStack s</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span>(<span class="params">SqStack s, SElemType &amp;amp;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//若栈不为空，用e返回s的栈顶元素，并返回OK；否则返回ERROR</span></span><br><span class="line"><span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> ERROR;</span><br><span class="line">e = *(s.top - <span class="number">1</span>);</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Push</span>(<span class="params">SqStack &amp;amp;s, SElemType e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//插入元素e为新的栈顶元素</span></span><br><span class="line"><span class="keyword">if</span> (s.top - s.<span class="keyword">base</span> &amp;gt;= s.stacksize)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//栈满，追加空间</span></span><br><span class="line">s.<span class="keyword">base</span> = (SElemType*) realloc(s.<span class="keyword">base</span>, (s.stacksize + STACK_INIT_SIZE) * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line"><span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> OVERFLOW;</span><br><span class="line">s.top = s.<span class="keyword">base</span> + s.stacksize;</span><br><span class="line">s.stacksize += STACKINCREMEMNT;</span><br><span class="line">&#125;</span><br><span class="line">*s.top++ = e;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> (<span class="params">SqStack &amp;amp;s, SElemType &amp;amp;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> ERROR;</span><br><span class="line">e = * --s.top;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DataStruct/" rel="tag">#DataStruct</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/11/08/二叉链表的遍历/" rel="prev">二叉链表的遍历</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/11/06/栈和队列–魔王语言/" rel="next">栈和队列–魔王语言</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

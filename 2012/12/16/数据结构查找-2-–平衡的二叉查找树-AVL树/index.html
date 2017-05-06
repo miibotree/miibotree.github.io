@@ -1,0 +1,581 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="AVLTree,数据结构," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="上篇博客介绍了二叉查找树，来看下各项操作的时间复杂度。查找                 插入                删除o(log n )          o(1)                  o(1)有序                链表                 链表我们可以想象下，在构造二叉查找树的时候，如果按以下递增序列构造如：2 4 5 6 7 8，那么构造出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构查找(2)–平衡的二叉查找树(AVL树)">
+<meta property="og:url" content="http://yoursite.com/2012/12/16/数据结构查找-2-–平衡的二叉查找树-AVL树/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="上篇博客介绍了二叉查找树，来看下各项操作的时间复杂度。查找                 插入                删除o(log n )          o(1)                  o(1)有序                链表                 链表我们可以想象下，在构造二叉查找树的时候，如果按以下递增序列构造如：2 4 5 6 7 8，那么构造出">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/12/1355624913_5301.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/12/1.png">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2012/12/Tree_Rebalancing1.png">
+<meta property="og:updated_time" content="2015-07-25T04:55:54.422Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构查找(2)–平衡的二叉查找树(AVL树)">
+<meta name="twitter:description" content="上篇博客介绍了二叉查找树，来看下各项操作的时间复杂度。查找                 插入                删除o(log n )          o(1)                  o(1)有序                链表                 链表我们可以想象下，在构造二叉查找树的时候，如果按以下递增序列构造如：2 4 5 6 7 8，那么构造出">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 数据结构查找(2)–平衡的二叉查找树(AVL树) // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              数据结构查找(2)–平衡的二叉查找树(AVL树)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-12-16T15:50:38+08:00" content="2012-12-16">
+            2012-12-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><div><br><div><span style="font-size: x-small;">上篇博客介绍了二叉查找<span style="font-size: x-small;">树，来看下各项操作的时间复杂度。<p></p><br><br></span></span></div><br><div><span style="font-size: x-small;">查找                 插入                删除</span></div><br><div><span style="font-size: x-small;">o(log n )          o(1)                  o(1)</span></div><br><div><span style="font-size: x-small;">有序                链表                 链表<br><br><span style="font-size: x-small;">我们可以想象下，<span style="font-size: x-small;">在构造二叉查找<span style="font-size: x-small;">树的时候，如果按<span style="font-size: x-small;">以下递增序列构造如：2 4 5 6 7 8，那么构造出来的查找二叉树将会是接近链表的形式，这样就增加了<span style="font-size: x-small;">查找的时间复杂度。<br><br><span style="font-size: x-small;">也就是说，这<span style="font-size: x-small;">课树失去了平衡。我们看看下面这个图就明白了。<br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/1355624913_5301.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/1355624913_5301.png" alt="" title="1355624913_5301"></a><br><br><span style="font-size: x-small;">这样一来，<span style="font-size: x-small;">b虽然也是一颗二叉查找<span style="font-size: x-small;">树，但是查找效率大大下降。所以，我们引入了<span style="font-size: x-small;">平衡<span style="font-size: x-small;">的二叉查找树（AVL）树。<br><br><span style="color: #000099; font-size: small;">1.平衡</span><br><br><span style="font-size: x-small;">关键是<span style="font-size: x-small;">“平衡”这个概念的理解。<br><br><span style="font-size: x-small;">定义如下:<br><br><span style="color: #3333ff;">树中每个结点的</span><span style="color: blue;">左、右子树深度之差的绝对值不大于</span><span style="color: blue;"><span style="font-size: x-small;">1<br><br></span></span><br><br>节点的<strong>平衡因子</strong>是它的左子树的高度减去它的右子树的高度（有时相反）。带有平衡因子1、0或 -1的节点被认为是平衡的。带有平衡因子 -2或2的节点被认为是不平衡的，并需要重新平衡这个树。平衡因子可以直接存储在每个节点中，或从可能存储在节点中的子树高度计算出来。<br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">下面给个例子<span style="font-size: x-small;">，我们以<span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">左子树的高度减去它的右子树的高度作为平衡因子。<br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/1.png" alt="" title="1"></a><br><br><span style="color: #000099; font-size: small;">2.旋转<br><br><span style="font-size: small;"><span style="color: #000000; font-size: x-small;">平衡树的关键，就是如何达到平衡，这里的关键技术就是旋转了。<br><br><span style="font-size: x-small;"><br><br>下面引出的<span style="font-size: x-small;">是基本概念：<br><br></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span>有四种种情况可能导致二叉查找树不平衡，分别为：<br><br>（1）LL：插入一个新节点到根节点的左子树（Left）的左子树（Left），导致根节点的平衡因子由1变为2<br><br>（2）RR：插入一个新节点到根节点的右子树（Right）的右子树（Right），导致根节点的平衡因子由-1变为-2<br><br>（3）LR：插入一个新节点到根节点的左子树（Left）的右子树（Right），导致根节点的平衡因子由1变为2<br><br>（4）RL：插入一个新节点到根节点的右子树（Right）的左子树（Left），导致根节点的平衡因子由-1变为-2<br><br>针对四种种情况可能导致的不平衡，可以通过旋转使之变平衡。有两种基本的旋转：<br><br>（1）左旋转：将根节点旋转到（根节点的）右孩子的左孩子位置<br><br>（2）右旋转：将根节点旋转到（根节点的）左孩子的右孩子位置<br><br>给大家看<span style="font-size: x-small;">张wiki上面的图，一目了然：<br><br><span id="more-548"></span><br><br><a href="http://miibotree.com/wp-content/uploads/2012/12/Tree_Rebalancing1.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/12/Tree_Rebalancing1.png" alt="" title="Tree_Rebalancing"></a><br><br><span style="font-size: x-small;"><span style="font-size: x-small;">2.1<span style="font-size: x-small;"> 左左<span style="font-size: x-small;">(LL)</span>情况<br><br><span style="font-size: x-small;">针对左左这种情况，我们需要右旋。看上面的图就应该很明白。<br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">我看人家的代码<span style="font-size: x-small;"><span style="font-size: x-small;">，这种情况的</span>函数名叫做</span>RightRo<span style="font-size: x-small;">t</span>ate，后来自己写着写着因为函数名把自己给搞晕了。所以我的函数是这样命名的：<span style="font-size: x-small;"><br><br>左左情况，函数名就叫LeftLeft，<span style="font-size: x-small;">这样就不用引入什么左旋右旋这样的概念<span style="font-size: x-small;">了。</span>免得把自己搞乱。如果大家不喜欢的话可以按照自己的理解来<span style="font-size: x-small;">~~</span></span></span><br><br></span></span></span>我们附上代码：</span><br><br></span></span></span></span><br><br><figure class="highlight"><figcaption><span>LeftLeft(AVLTree T)</span><a href="//LL">右旋</a></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;lchild;&#10;&#9;root-&#38;gt;lchild = pivot-&#38;gt;rchild;&#10;&#9;pivot-&#38;gt;rchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;//&#36825;&#37324;&#30340;&#39034;&#24207;&#19981;&#33021;&#25913;&#21464;&#65292;&#20174;&#19979;&#38754;&#21040;&#19978;&#38754;&#35745;&#31639;&#24179;&#34913;&#22240;&#23376;&#12290;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br>2.2右右(RR)情况<br><br><span style="font-size: x-small;">针对右右这种情况，我们需要左旋（其实我们可以根本不用记左旋，只要根据上面这张wiki 的图把代码写出来就好了）<br><br></span><br><br><figure class="highlight"><figcaption><span>RightRight(AVLTree T)//RR 左旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;rchild;&#10;&#9;root-&#38;gt;rchild = pivot-&#38;gt;lchild;&#10;&#9;pivot-&#38;gt;lchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br>2.3左右(LR)情况<br><br><span style="font-size: x-small;">这种情况其实是上面两种的综合，首先将pivot进行RR情况的操作（左旋），然后将root进行LL情况的操作（右旋）。<br><br><span style="font-size: x-small;">我<span style="font-size: x-small;">依然是根据图得出的结论，写的代码</span></span><br><br></span><br><br><figure class="highlight"><figcaption><span>LeftRight(AVLTree T)//LR pivot左旋 root右旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;T-&#38;gt;lchild = RightRight(T-&#38;gt;lchild);&#10;&#9;return LeftLeft(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">2.<span style="font-size: x-small;">4右左(RL)情况</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><br><figure class="highlight"><figcaption><span>RightLeft(AVLTree T)//RL pivot右旋 root左旋</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#10;&#9;T-&#38;gt;rchild = LeftLeft(T-&#38;gt;rchild);&#10;&#9;return RightRight(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;">从上面我们可以看出，RR跟LL是相互对应的，LR跟RL也是相互对应的。</span><br><br><span style="font-size: x-small;">把我写好的部分代码先贴出来。删除的操作还没有<span style="font-size: x-small;">完成。<span style="font-size: x-small;">在vs2010下测试通过.<br><br><span style="font-size: x-small;">AVLTree.h<br><br></span></span></span></span><br><br><figure class="highlight"><figcaption><span>&lt;stdio.h&gt;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &#38;lt;malloc.h&#38;gt;&#10;#include &#38;lt;stdlib.h&#38;gt;&#10;&#10;#define OK 1&#10;&#10;typedef int TElemType ;&#10;typedef int Status ;&#10;typedef int KeyType ;&#10;&#10;typedef struct AVLTNode&#123;&#10;&#9;TElemType data;&#10;&#9;int bf;&#10;&#9;struct AVLTNode *lchild, *rchild, *parent;&#10;&#125;AVLTNode, *AVLTree;&#10;&#10;int Height(AVLTree T);&#10;int Max(int A, int B);&#10;AVLTree AVLInsert(AVLTree T);&#10;&#10;AVLTree LeftLeft(AVLTree T);&#9;&#9;//LL&#22411;&#65292;&#21491;&#26059;&#10;AVLTree RightRight(AVLTree T);&#9;&#9;//RR&#22411;&#65292;&#24038;&#26059;&#10;AVLTree LeftRight(AVLTree T);&#9;&#9;//LR&#22411;&#65292;&#26059;&#36716;&#10;AVLTree RightLeft(AVLTree T);&#9;&#9;//RL&#22411;&#65292;&#26059;&#36716;&#10;&#10;//global &#10;char chos;&#10;int input;&#10;AVLTree T = NULL;&#10;&#10;int Height(AVLTree T)&#10;&#123;&#10;&#9;if (T == NULL)&#10;&#9;&#9;return -1;&#10;&#9;else&#10;&#9;&#9;return T-&#38;gt;bf;&#10;&#125;&#10;&#10;int Max(int A, int B)&#10;&#123;&#10;&#9;return ((A &#38;gt; B) ? A : B);&#10;&#125;&#10;&#10;AVLTree AVLInsert(AVLTree T)&#10;&#123;&#10;&#9;if (NULL == T)&#10;&#9;&#123;&#10;&#9;&#9;T = (AVLTree)malloc(sizeof(AVLTNode));&#10;&#9;&#9;T-&#38;gt;data&#9;  = input;&#10;&#9;&#9;T-&#38;gt;lchild = NULL;&#10;&#9;&#9;T-&#38;gt;rchild = NULL;&#10;&#9;&#9;T-&#38;gt;bf&#9;  = 0;&#10;&#9;&#125;&#10;&#9;else if (input &#38;lt; T-&#38;gt;data)&#10;&#9;&#123;&#10;&#9;&#9;T-&#38;gt;lchild = AVLInsert(T-&#38;gt;lchild);&#10;&#9;&#9;if (Height(T-&#38;gt;lchild) - Height(T-&#38;gt;rchild) == 2)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;if (input &#38;lt; T-&#38;gt;lchild-&#38;gt;data)&#10;&#9;&#9;&#9;&#9;T = LeftLeft(T);//LL&#10;&#9;&#9;&#9;else&#10;&#9;&#9;&#9;&#9;T = LeftRight(T);//LR&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#10;&#9;else if (input &#38;gt; T-&#38;gt;data)&#10;&#9;&#123;&#10;&#9;&#9;T-&#38;gt;rchild = AVLInsert(T-&#38;gt;rchild);&#10;&#9;&#9;if (Height(T-&#38;gt;rchild) - Height(T-&#38;gt;lchild) == 2)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;if (input &#38;gt; T-&#38;gt;rchild-&#38;gt;data)&#10;&#9;&#9;&#9;&#9;T = RightRight(T);&#9;//RR&#10;&#9;&#9;&#9;else&#10;&#9;&#9;&#9;&#9;T = RightLeft(T);&#9;//RL&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#9;T-&#38;gt;bf = Max(Height(T-&#38;gt;lchild), Height(T-&#38;gt;rchild)) + 1;&#10;&#9;return T;&#10;&#125;&#10;&#10;AVLTree LeftLeft(AVLTree T)&#9;//LL &#21491;&#26059;&#10;&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;lchild;&#10;&#9;root-&#38;gt;lchild = pivot-&#38;gt;rchild;&#10;&#9;pivot-&#38;gt;rchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;//&#36825;&#37324;&#30340;&#39034;&#24207;&#19981;&#33021;&#25913;&#21464;&#65292;&#20174;&#19979;&#38754;&#21040;&#19978;&#38754;&#35745;&#31639;&#24179;&#34913;&#22240;&#23376;&#12290;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;&#10;&#10;AVLTree RightRight(AVLTree T)//RR &#24038;&#26059;&#10;&#123;&#10;&#9;AVLTree root, pivot; &#10;&#9;root = T;&#10;&#9;pivot = T-&#38;gt;rchild;&#10;&#9;root-&#38;gt;rchild = pivot-&#38;gt;lchild;&#10;&#9;pivot-&#38;gt;lchild = root;&#10;&#10;&#9;root-&#38;gt;bf  = Max(Height(root-&#38;gt;lchild), Height(root-&#38;gt;rchild)) + 1;&#10;&#9;pivot-&#38;gt;bf = Max(Height(pivot-&#38;gt;lchild), Height(pivot-&#38;gt;rchild)) + 1;&#10;&#9;return pivot;&#10;&#125;&#10;&#10;AVLTree LeftRight(AVLTree T)//LR pivot&#24038;&#26059; root&#21491;&#26059;&#10;&#123;&#10;&#9;T-&#38;gt;lchild = RightRight(T-&#38;gt;lchild);&#10;&#9;return LeftLeft(T);&#10;&#125;&#10;&#10;AVLTree RightLeft(AVLTree T)//RL pivot&#21491;&#26059; root&#24038;&#26059;&#10;&#123;&#10;&#9;T-&#38;gt;rchild = LeftLeft(T-&#38;gt;rchild);&#10;&#9;return RightRight(T);&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="color: #000099; font-size: small;"><span style="font-size: small;"><span style="color: #000000; font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;"><span style="font-size: x-small;">AVLTree.cpp</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br><br><figure class="highlight"><figcaption><span>"AVLTree.h"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;//functions&#10;void Chose();&#10;void Insert();&#10;void Output(AVLTree T);&#10;void PrintTree(AVLTree T);&#10;void Delete();&#10;&#10;int main()&#10;&#123;&#10;&#10;&#9;while (1)&#10;&#9;&#123;&#10;&#9;&#9;Chose();&#10;&#9;&#9;switch(chos)&#10;&#9;&#9;&#123;&#10;&#9;&#9;&#9;case &#39;i&#39;:&#10;&#9;&#9;&#9;&#9;Insert();&#10;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;case &#39;d&#39;:&#10;&#9;&#9;&#9;&#9;Delete();&#10;&#9;&#9;&#9;&#9;break;&#10;&#9;&#9;&#9;case &#39;e&#39;:&#10;&#9;&#9;&#9;&#9;exit(0);&#10;&#9;&#9;&#125;&#10;&#9;&#125;&#10;&#10;&#9;return 0;&#10;&#125;&#10;&#10;void Chose()&#10;&#123;&#10;&#9;printf(&#34;i) Insert a point n&#34;&#10;&#9;&#9;   &#34;d) Delete a point n&#34;&#10;&#9;&#9;   &#34;e) exit&#9;&#9;&#9;  n&#34;&#10;&#9;&#9;   &#34;Input your choise n&#34;);&#10;&#9;scanf(&#34;%c&#34;, &#38;amp;chos);&#10;&#9;getchar();&#10;&#125;&#10;&#10;void Insert()&#10;&#123;&#10;&#9;printf(&#34;nInput the point you want to Insert: &#34;);&#10;&#9;scanf(&#34;%d&#34;, &#38;amp;input);&#10;&#9;getchar();&#10;&#9;T = AVLInsert(T);&#10;&#9;Output(T);&#10;&#125;&#10;&#10;void Output(AVLTree T)&#10;&#123;&#10;&#9;if (T == NULL)&#10;&#9;&#9;printf(&#34;Nonen&#34;);&#10;&#9;else&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;%dtrootn&#34;, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T);&#10;&#9;&#125;&#10;&#125;&#10;//Tree print&#10;void PrintTree(AVLTree T)&#10;&#123;&#10;&#9;if (T-&#38;gt;lchild)&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;Lchildt%dt[parent:%d]n&#34;, T-&#38;gt;lchild-&#38;gt;data, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T-&#38;gt;lchild);&#9;&#9;&#9;&#10;&#9;&#125;&#10;&#10;&#9;if (T-&#38;gt;rchild)&#10;&#9;&#123;&#10;&#9;&#9;printf(&#34;Rchildt%dt[parent:%d]n&#34;, T-&#38;gt;rchild-&#38;gt;data, T-&#38;gt;data);&#10;&#9;&#9;PrintTree(T-&#38;gt;rchild);&#9;&#9;&#9;&#10;&#9;&#125;&#10;&#125;&#10;&#10;void Delete()&#10;&#123;&#10;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br><span style="font-size: x-small;">文献参考：<br><br><span style="font-size: x-small;">图片<span style="font-size: x-small;">参考：</span></span><br><br></span><a href="http://zh.wikipedia.org/wiki/AVL%E6%A0%91" target="_blank" rel="external">http://zh.wikipedia.org/wiki/AVL%E6%A0%91</a><br><br><span style="font-size: x-small;"><span style="font-size: x-small;">基本概念参考：</span></span><br><br><a href="http://dongxicheng.org/structure/avl/" target="_blank" rel="external">http://dongxicheng.org/structure/avl/</a><br><br>代码参考：<br><br><a href="http://www.asiteof.me/2010/06/avl/" target="_blank" rel="external">http://www.asiteof.me/2010/06/avl/</a><br><br></div><br></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/AVLTree/" rel="tag">#AVLTree</a>
+          
+            <a href="/tags/数据结构/" rel="tag">#数据结构</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/01/18/移位运算符和运算符重载/" rel="prev">移位运算符和运算符重载</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/12/15/软件UI调研/" rel="next">软件UI调研</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

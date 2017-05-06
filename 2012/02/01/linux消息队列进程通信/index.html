@@ -1,0 +1,662 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux,进程," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="一、消息队列的基本概念消息队列 (也叫做报文队列)是Unix系统V版本中3种进程间通信机制之一。另外两种是信号灯和共享内存。这些IPC机制使用共同的授权方法。只有通过系统调用将标志符传递给核心之后，进程才能存取这些资源。这种系统IPC对象使用的控制方法和文件系统非常类似。使用对象的引用标志符作为资源表中的索引。
+消息队列就是一个消息的链表。就是把消息看作一个记录，并且这个记录具有特定的格式以及特定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux消息队列进程通信">
+<meta property="og:url" content="http://yoursite.com/2012/02/01/linux消息队列进程通信/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="一、消息队列的基本概念消息队列 (也叫做报文队列)是Unix系统V版本中3种进程间通信机制之一。另外两种是信号灯和共享内存。这些IPC机制使用共同的授权方法。只有通过系统调用将标志符传递给核心之后，进程才能存取这些资源。这种系统IPC对象使用的控制方法和文件系统非常类似。使用对象的引用标志符作为资源表中的索引。
+消息队列就是一个消息的链表。就是把消息看作一个记录，并且这个记录具有特定的格式以及特定">
+<meta property="og:updated_time" content="2015-07-25T05:09:54.726Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux消息队列进程通信">
+<meta name="twitter:description" content="一、消息队列的基本概念消息队列 (也叫做报文队列)是Unix系统V版本中3种进程间通信机制之一。另外两种是信号灯和共享内存。这些IPC机制使用共同的授权方法。只有通过系统调用将标志符传递给核心之后，进程才能存取这些资源。这种系统IPC对象使用的控制方法和文件系统非常类似。使用对象的引用标志符作为资源表中的索引。
+消息队列就是一个消息的链表。就是把消息看作一个记录，并且这个记录具有特定的格式以及特定">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> linux消息队列进程通信 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              linux消息队列进程通信
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-01T20:23:00+08:00" content="2012-02-01">
+            2012-02-01
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h3 id="一、消息队列的基本概念">一、消息队列的基本概念</h3><p>消息队列 <wbr>(也叫做报文队列)是Unix系统V版本中3种进程间通信机制之一。另外两种是信号灯和共享内存。这些IPC机制使用共同的授权方法。只有通过系统调用将标志符传递给核心之后，进程才能存取这些资源。这种系统IPC对象使用的控制方法和文件系统非常类似。使用对象的引用标志符作为资源表中的索引。</p>
+<p><span style="color: #3366ff;">消息队列就是一个消息的链表</span>。就是把消息看作一个记录，并且这个记录具有特定的格式以及特定的优先级。对消息队列有写权限的进程可以按照一定的规则添加新消息；对消息队列有读权限的进程则可以从消息队列中读出消息。</p>
+<p>Linux采用消息队列的方式来实现消息传递。这种消息的发送方式是：<span style="color: #3366ff;">发送方不必等待接收方检查它所收到的消息就可以继续工作下去，而接收方如果没有收到消息也不需等待</span>。这种通信机制相对简单，但是应用程序使用起来就需要使用相对复杂的方式来应付了。新的消息总是放在队列的末尾，<span style="color: #ff00;">接收的时候并不总是从头来接收，可以从中间来接收</span>。</p>
+<p>消息队列是<span style="color: #ff00;">随内核持续</span>的并和进程相关，只有在内核重起或者显示<span style="color: #ff00;">删除一个消息队列时，该消息队列才会真正被删除</span>。因此系统中记录消息队列的数据结构 <wbr>(struct <wbr>ipc_ids <wbr>msg_ids)位于内核中，系统中的所有消息队列都可以在结构msg_ids中中找到访问入口。</p>
+<p>IPC标识符：每一个I <wbr>P <wbr>C目标都有一个唯一的I <wbr>P <wbr>C标识符。这里所指的I <wbr>P <wbr>C目标是指一个单独的消息队列、一个信号量集或者一个共享的内存段。系统内核使用此标识符在系统内核中指明 <wbr>I <wbr>P <wbr>C目标。</p>
+<p>IPC <wbr>关键字：想要获得唯一的标识符，则必须使用一个 <wbr>I <wbr>P <wbr>C关键字。客户端进程和服务器端进程必须双方都同意此关键字。这是建立一个客户机/服务器框架的第一步。在System <wbr>V <wbr>IPC机制中，建立两端联系的路由方法是和I <wbr>P <wbr>C关键字直接相关的。通过在应用程序中设置关键字值，每一次使用的关键字都可以是相同的。一般情况下，可以使用f <wbr>t <wbr>o <wbr>k <wbr>( <wbr>)函数为客户端和服务器端产生关键字值。</p>
+<h3 id="二、ipcs_命令">二、ipcs <wbr>命令</h3><p>命令ipcs用于读取System <wbr>V <wbr>IPC目标的状态。</p>
+<p>ipcs <wbr>-q: <wbr>只显示消息队列。</p>
+<p>ipcs <wbr>-s: <wbr>只显示信号量。</p>
+<p>ipcs <wbr>-m: <wbr>只显示共享内存。</p>
+<p>ipcs <wbr>–help: <wbr>其他的参数。 <wbr> <wbr> <wbr> <wbr></p>
+<p>&nbsp;</p>
+<p><wbr></p>
+<p><span style="font-weight: bold;">三、消息队列的主要调用</span></p>
+<p><wbr></p>
+<p>内核中实现消息传递机制的代码基本上都在文件ipc／msg.c中,消息队列的主要调用有下面4个</p>
+<p>(1)msgget：调用者提供一个消息队列的键标 <wbr>(用于表示个消息队列的唯一名字)，当这个消息队列存在的时候， <wbr>这个消息调用负责返回这个队列的标识号；如果这个队列不存在，就创建一个消息队列，然后返回这个消息队列的标识号 <wbr>，主要由sys_msgget执行。</p>
+<p>(2)msgsnd：向一个消息队列发送一个消息，主要由sys_msgsnd执行。</p>
+<p>(3)msgrcv：从一个消息队列中收到一个消息，主要由sys_msgrcv执行。</p>
+<p>(4)msgctl：在消息队列上执行指定的操作。根据参数的不同和权限的不同，可以执行检索、删除等的操作，主要由sys_msgctl执行。</p>
+<p>&nbsp;</p>
+<h1 id="include_&lt;sys/types-h&gt;">include &lt;sys/types.h&gt;</h1><h1 id="include_&lt;sys/ipc-h&gt;">include &lt;sys/ipc.h&gt;</h1><h1 id="include_&lt;sys/msg-h&gt;">include &lt;sys/msg.h&gt;</h1><p>int     msgget( key_t msgkey , int flag );</p>
+<p>取得一个消息队列的ID，如不存在则建立。</p>
+<p>返回值：        成功时：消息队列的ID</p>
+<p>失败时：-1</p>
+<p>&nbsp;</p>
+<p>int     msgsnd( int msqid , struct msgbuf *msgp , size_t msgsiz , int msgflag );</p>
+<p>向消息队列送消息</p>
+<p>返回值：        成功时：0</p>
+<p>失败时：-1</p>
+<p>msqid是消息队列的ID，size_t msgsiz是结构体成员mdata的大小，msgflag与上一章所讲的共享内存的flag起一样的作用，不过，当这个参数为IPC_NOWAIT的时候，如果消息队列已满，则返回错误值。如果不为IPC_NOWAIT，在消息队列已满 的情况下，会一直等到消息队列有空地方的时候再发送。</p>
+<p>注意这里的这个 struct msgbuf *msgp 。要求的格式如下：</p>
+<p>struct  msgbuf</p>
+<p>{</p>
+<p>long    mtype;</p>
+<p>char    mdata[256];</p>
+<p>};</p>
+<p>long mtype在这里我们用来保存本进程的PID。mdata则是保存要发送的数据。由于mdata的大小不一定（根据实际需要定义），所以这个结构体并没有事先定义好。但是我们定义这个结构体的时候一定要遵循这个规定。你可以改的，只有mdata的大小，和结构体的名称。尽量不要修改结构体成员的名称和类型。实际上，根据mtype，我们还可以有所选择地接受消息。这在下面将会谈到。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>int     msgrcv( int msqid , struct msgbuf *msgp , size_t msgsiz , long msgtyp , int msgflag );</p>
+<p>从消息队列取得一个消息</p>
+<p>返回值：        成功时：0</p>
+<p>失败时：-1</p>
+<p>msqid , *msgp , msgsiz不用说了。long msgtyp是结构体msgbuf的mtype成员。msgflag与上述一样。只不过为IPC_NOWAIT的时候，如果消息队列是空的，则等到有消息可读的时候再读。当不为IPC_NOWAIT的时候，如果消息队列是空的，则返回错误值（与字面上理解的有些相反）</p>
+<p>&nbsp;</p>
+<p>下面这个链接帮助了我更好地理解了<span style="color: #ff00;">msgrcv  中的 long msgtyp这个参数和</span></p>
+<p>struct  msgbuf</p>
+<p>{</p>
+<p>long    mtype;</p>
+<p>char    mdata[256];</p>
+<p>};</p>
+<p><span style="color: #ff00;">里的long mtype这个结构体成员。</span></p>
+<p><a href="http://topic.csdn.net/u/20120131/15/235be4a4-3901-41ef-a577-55a5650efeeb.html?14521" target="_blank" rel="external">http://topic.csdn.net/u/20120131/15/235be4a4-3901-41ef-a577-55a5650efeeb.html?14521</a></p>
+<p>&nbsp;</p>
+<p>同样地，为了控制管理消息队列，一样有一个函数msgctl()如下：</p>
+<h1 id="include_&lt;sys/types-h&gt;-1">include &lt;sys/types.h&gt;</h1><h1 id="include_&lt;sys/ipc-h&gt;-1">include &lt;sys/ipc.h&gt;</h1><h1 id="include_&lt;sys/msg-h&gt;-1">include &lt;sys/msg.h&gt;</h1><p>int     msgctl( int msqid , int cmd , struct msqid_ds *buf );</p>
+<p>返回值：        成功时：0</p>
+<p>失败时：-1</p>
+<p>cmd所指定的值与共享内存部分相同。</p>
+<p>&nbsp;</p>
+<p>最后自己写了一个利用消息队列实现进程通信</p>
+<p>基本思路：</p>
+<p>我每次将A端发送消息时的消息类型标记为奇数，将B端发送的消息类型为偶数。</p>
+<p>A端读取消息类型为偶数的消息（也就是说是从B端发送过来的）</p>
+<p>B端读取消息类型为奇数的消息（也就是说是从A端发送过来的）</p>
+<p>&nbsp;</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//A.c</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;sys/types.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;sys/ipc.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;sys/msg.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">int</span> count = <span class="number">0</span>; &amp;nbsp; &amp;nbsp; &amp;nbsp; <span class="comment">/*打印奇数消息类型，发送偶数消息类型*/</span></span><br><span class="line"><span class="keyword">int</span> msqid;</span><br><span class="line"><span class="keyword">key_t</span> msgkey;</span><br><span class="line"><span class="keyword">struct</span> msgbuf</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">long</span> mtype;</span><br><span class="line"><span class="keyword">char</span> mdata[<span class="number">256</span>];</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">struct</span> msgbuf msgdata , *p ;</span><br><span class="line">p = &amp;amp;amp;msgdata ;</span><br><span class="line">msgkey = ftok( &amp;quot;.&amp;quot; , &amp;<span class="preprocessor">#039;a&amp;#039; ); /*计算标识符*/</span></span><br><span class="line">msqid = msgget( msgkey , IPC_CREAT | <span class="number">0666</span> ) ; &amp;nbsp;<span class="comment">/*取得消息队列的ID*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(&amp;quot;MiiBotree : &amp;quot;);</span><br><span class="line">fflush( stdin ); &amp;nbsp; <span class="comment">/*刷新标准输入缓冲区*/</span></span><br><span class="line">gets( p-&amp;amp;gt;mdata ); &amp;nbsp; <span class="comment">/*输入字符串*/</span></span><br><span class="line">p-&amp;amp;gt;mtype = count;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!msgsnd( msqid , p , <span class="keyword">sizeof</span>(p-&amp;amp;gt;mdata) , <span class="number">0</span> )) &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;<span class="comment">/*送消息*/</span></span><br><span class="line">&#123;</span><br><span class="line">count = count + <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">msgrcv( msqid , p , <span class="keyword">sizeof</span>(p-&amp;amp;gt;mdata) , count+<span class="number">1</span> , <span class="number">0</span> ) ; &amp;nbsp; <span class="comment">/*读消息*/</span></span><br><span class="line"><span class="keyword">if</span> (p-&amp;amp;gt;mtype % <span class="number">2</span> == <span class="number">1</span>)&#123;</span><br><span class="line"><span class="built_in">printf</span>(&amp;quot;Firefoxbug:%sn&amp;quot;, p-&amp;amp;gt;mdata);</span><br><span class="line">count += <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">//B.c&amp;lt<span class="comment">;/textarea&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;sys/types.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;sys/ipc.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;sys/msg.h&amp;gt;</span></span><br><span class="line">#include &amp;lt<span class="comment">;stdio.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">int count = 1<span class="comment">; /*打印奇数消息类型，发送偶数消息类型*/</span></span><br><span class="line">int msqid<span class="comment">;</span></span><br><span class="line">key_t msgkey<span class="comment">;</span></span><br><span class="line">struct msgbuf</span><br><span class="line">&#123;</span><br><span class="line">long mtype<span class="comment">;</span></span><br><span class="line">char mdata[256]<span class="comment">;</span></span><br><span class="line">&#125;<span class="comment">;</span></span><br><span class="line">struct msgbuf msgdata , *p <span class="comment">;</span></span><br><span class="line">p = &amp;amp<span class="comment">;amp;msgdata ;</span></span><br><span class="line">msgkey = ftok ( &amp;quot<span class="comment">;.&amp;quot; , &amp;#039;a&amp;#039; );</span></span><br><span class="line">msqid = msgget( msgkey , IPC_CREAT | 0666 ) <span class="comment">;</span></span><br><span class="line"></span><br><span class="line">while(1)</span><br><span class="line">&#123;</span><br><span class="line">printf(&amp;quot<span class="comment">;Firefoxbug : &amp;quot;);</span></span><br><span class="line">fflush( stdin )<span class="comment">;</span></span><br><span class="line">gets( p-&amp;amp<span class="comment">;gt;mdata );</span></span><br><span class="line">p-&amp;amp<span class="comment">;gt;mtype = count;</span></span><br><span class="line">if (!msgsnd( msqid , p , sizeof(p-&amp;amp<span class="comment">;gt;mdata) , 0 ))</span></span><br><span class="line">&#123;</span><br><span class="line">count = count + 2<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">msgrcv( msqid , p , sizeof(p-&amp;amp<span class="comment">;gt;mdata) , count-1 , 0 ) ;</span></span><br><span class="line">if (p-&amp;amp<span class="comment">;gt;mtype % 2 == 0)&#123;</span></span><br><span class="line">printf(&amp;quot<span class="comment">;MiiBotree:%sn&amp;quot;, p-&amp;amp;gt;mdata);</span></span><br><span class="line">count += 2<span class="comment">;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">return 0<span class="comment">;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>A.c和B.c 程序基本上是一样的</p>
+<p>这个程序还有一些不完善的地方：</p>
+<p>1.每个端口不能连续输入，必须等对方输入以后才 会显示结果。这里我也不清楚怎么回事。gdb的调试还不太会，错误不太会找。希望高手指教，呵呵</p>
+<p>2.没有删除消息队列，下次打开时候还会残留以前的消息</p>
+<p>&nbsp;</p>
+<p>最后列出参考资料：</p>
+<p><a href="http://linux.chinaunix.net/techdoc/develop/2009/04/27/1109110.shtml" target="_blank" rel="external">http://linux.chinaunix.net/techdoc/develop/2009/04/27/1109110.shtml</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_48c9576b0100joqg.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_48c9576b0100joqg.html</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_48c9576b0100joqg.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_48c9576b0100joqg.html</a></p>
+<p>《Linux软件工程师（c语言）实用版》</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/进程/" rel="tag">#进程</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/02/09/windowsSDK贪吃蛇/" rel="prev">windowsSDK贪吃蛇</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/30/linux-进程控制入门/" rel="next">linux 进程控制入门</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、消息队列的基本概念"><span class="nav-text">一、消息队列的基本概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、ipcs_命令"><span class="nav-text">二、ipcs 命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/types-h>"><span class="nav-text">include <sys/types.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/ipc-h>"><span class="nav-text">include <sys/ipc.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/msg-h>"><span class="nav-text">include <sys/msg.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/types-h>-1"><span class="nav-text">include <sys/types.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/ipc-h>-1"><span class="nav-text">include <sys/ipc.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<sys/msg-h>-1"><span class="nav-text">include <sys/msg.h></span></a></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

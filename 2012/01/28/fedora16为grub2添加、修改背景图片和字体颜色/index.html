@@ -1,0 +1,623 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Fedora16,Linux," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="总觉的自己的grub2开机界面太黑暗了，所以上网搜索了一下想找个解决办法。由于grub2比较新，fedora16上换grub2背景好像还没有，只找到一篇类似的文章。
+&amp;nbsp;
+Grub2添加背景图片
+style=&quot;color: #3366ff;&quot;&amp;gt;第一步1&amp;#22312;/etc/default/grub&amp;#30340;&amp;#26368;&amp;#21518;&amp;#21152;&amp;#19978;&amp;#653">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fedora16为grub2添加、修改背景图片和字体颜色">
+<meta property="og:url" content="http://yoursite.com/2012/01/28/fedora16为grub2添加、修改背景图片和字体颜色/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="总觉的自己的grub2开机界面太黑暗了，所以上网搜索了一下想找个解决办法。由于grub2比较新，fedora16上换grub2背景好像还没有，只找到一篇类似的文章。
+&amp;nbsp;
+Grub2添加背景图片
+style=&quot;color: #3366ff;&quot;&amp;gt;第一步1&amp;#22312;/etc/default/grub&amp;#30340;&amp;#26368;&amp;#21518;&amp;#21152;&amp;#19978;&amp;#653">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/sleep.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif">
+<meta property="og:updated_time" content="2015-07-25T04:46:33.572Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fedora16为grub2添加、修改背景图片和字体颜色">
+<meta name="twitter:description" content="总觉的自己的grub2开机界面太黑暗了，所以上网搜索了一下想找个解决办法。由于grub2比较新，fedora16上换grub2背景好像还没有，只找到一篇类似的文章。
+&amp;nbsp;
+Grub2添加背景图片
+style=&quot;color: #3366ff;&quot;&amp;gt;第一步1&amp;#22312;/etc/default/grub&amp;#30340;&amp;#26368;&amp;#21518;&amp;#21152;&amp;#19978;&amp;#653">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> fedora16为grub2添加、修改背景图片和字体颜色 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              fedora16为grub2添加、修改背景图片和字体颜色
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-28T21:26:00+08:00" content="2012-01-28">
+            2012-01-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>总觉的自己的grub2开机界面太黑暗了<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/sleep.gif" alt="睡觉">，所以上网搜索了一下想找个解决办法。由于grub2比较新，fedora16上换grub2背景好像还没有，只找到一篇类似的文章。</p>
+<p>&nbsp;</p>
+<p>Grub2添加背景图片</p>
+<figure class="highlight"><figcaption><span>style="color: #3366ff;">第一步</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#22312;/etc/default/grub&#30340;&#26368;&#21518;&#21152;&#19978;&#65306;&#10;GRUB_BACKGROUND=/usr/share/images/desktop-base/desktop-grub.png &#10;GRUB_TERMINAL_OUTPUT=gfxterm</span><br></pre></td></tr></table></figure>
+<p>GRUB_THEME=/boot/grub2/mytheme/theme.txt</p>
+<p><span style="color: #3333ff;">第二步</span></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```mkdir /usr/share/grub&#10;chmod 0777 /usr/share/grub</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><figcaption><span>style="color: #3366ff;">第三步</span>```</figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#19979;&#36733;&#25105;&#19978;&#20256;&#30340;gfxterm&#23383;&#20307;&#25991;&#20214;&#65306;&#10;&#10;http://download.csdn.net/detail/gaoxin1076/4033667&#160;&#160; &#65288;tar.bz2&#26684;&#24335;&#65289;&#10;&#10;http://download.csdn.net/detail/gaoxin1076/4033663&#160;&#160; &#65288;rar&#26684;&#24335;&#65289;&#10;&#10;&#35299;&#21387;&#32553;&#25991;&#20214;&#65292;&#25226;&#25152;&#26377;&#25991;&#20214;&#37117;&#25918;&#20837;/usr/share/grub&#30446;&#24405;&#37324;&#10;&#10;&#60;span style=&#34;color: #3366ff;&#34;&#62;&#31532;&#22235;&#27493;&#60;/span&#62;&#10;&#10;&#22914;&#26524;&#20320;&#19979;&#36733;&#30340;&#26159;rar&#26684;&#24335;&#30340;&#65292;&#60;span style=&#34;color: #ff0000;&#34;&#62;&#25226;&#25991;&#20214;&#37324;&#38754;&#30340;&#160; 05_debian_theme &#21644;&#160; 06_ubuntu_theme&#37325;&#21629;&#21517;&#20026;&#160; 05_redhat_theme &#21644;&#160; 06_fedora_theme&#60;/span&#62;&#10;&#10;&#22914;&#26524;&#26159;tar.bz2&#23601;&#19981;&#29992;&#36825;&#19968;&#27493;&#20102;&#65292;&#25105;&#24050;&#32463;&#35813;&#22909;&#20102;&#12290;&#10;&#10;&#22914;&#26524;&#20320;&#24895;&#24847;&#30340;&#35805;&#65292;&#21487;&#20197;&#25171;&#24320;&#60;span style=&#34;color: #ff0000;&#34;&#62; 06_fedora_theme&#60;/span&#62;&#36825;&#20010;&#25991;&#20214;&#65292;&#25226;&#20854;&#20013;&#30340;&#10;&#10;```        echo &#34;Found Debian background: `basename $&#123;bg&#125;`&#34; &#38;gt;&#38;amp;2</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">改成</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><figcaption><span>"Found Fedora background: `basename $&#123;bg&#125;`" &gt;&amp;2```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```&#24403;&#28982;&#22914;&#26524;&#20320;&#20599;&#25042;&#21487;&#20197;&#19981;&#25913;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p><span style="color: #3366ff;">第五步</span></p>
+<p><span style="color: #3366ff;"><span style="color: #000000;">创建一个/usr/share/images/desktop-base/目录：</span></span></p>
+<p></p>
+<figure class="highlight"><figcaption><span>/usr/share/images/</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/share/images/desktop-base</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#28982;&#21518;&#25214;&#19968;&#20010;&#33258;&#24049;&#21916;&#27426;&#30340;&#22270;&#29255;&#37325;&#21629;&#21517;&#20026;&#65306;desktop-grub.png&#25918;&#36827;&#21435;</span><br></pre></td></tr></table></figure>
+<p><span style="color: #3366ff;"></span></p>
+<p></p>
+<p><span style="color: #3366ff;">第六步</span></p>
+<p>运行命令</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">```grub2-mkconfig -o /boot/grub2/grub.cfg</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">来刷新配置文件；</span><br></pre></td></tr></table></figure>
+<p><span style="color: #ff0000;">重启电脑后就可以看到grub的背景就是你喜欢的背景图片了。<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/laugh.gif" alt="大笑"></span></p>
+<p>&nbsp;</p>
+<p>下面是一些附加注意事项：</p>
+<figure class="highlight"><figcaption><span>style="color: #3366ff; font-size: small;">Grub2添加背景图片</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20462; &#25913; /etc/grub.d/05_redhat_theme&#65292;&#25214;&#21040;&#36825;&#19968;&#34892;&#65306; if set_background_image &#8220;/usr/share/images/desktop-base/desktop-grub.png&#8221; then&#65292;&#25226;&#24341;&#21495;&#37096;&#20998;&#26367;&#25442;&#25104;&#20320;&#35201;&#26356;&#25442;&#30340;&#22270;&#29255;&#30340;&#30446;&#24405;&#30340;&#36335;&#24452;&#12290;&#10;&#36825;&#26679;&#19968;&#26469;&#65292;Grub &#23601;&#20250;&#22312;&#65306;&#10;&#20320;&#35201;&#26356;&#25442;&#30340;&#22270;&#29255;&#30340;&#30446;&#24405;&#30340;&#36335;&#24452;&#30340;&#30446;&#24405;&#19979;&#23547;&#25214;&#21040;&#21518;&#32512;&#21517;&#20026; png &#30340;&#25991;&#20214;&#12290;&#10;&#27880;&#65306;&#22914;&#26524;&#20320;&#30340;&#22270;&#29255;&#26159;jpg &#26684;&#24335;&#65292;&#37027;&#20040;&#21482;&#35201;&#22312;&#21518;&#32512;&#21517;&#20877;&#28155;&#21152; jpg &#21363;&#21487;&#12290;&#10;grub2-mkconfig&#10;grub2-mkconfig -o /boot/grub2/grub.cfg&#10;&#36825;&#26679;&#23601;OK&#20102;&#65292;&#37325;&#21551;&#21518;&#23601;&#21487;&#20197;&#30475;&#21040;&#20102;&#12290;&#10;&#22914;&#26524;&#35201;&#20462;&#25913;&#22270;&#29255;&#30340;&#20998;&#36776;&#29575;&#65292;&#27604;&#22914;&#22270;&#29255;&#26159; 1334x768&#65292;&#37027;&#20040;&#20462;&#25913; /etc/default/grub&#65306;</span><br></pre></td></tr></table></figure>
+<p>GRUB_GFXMODE=1334&#215;768要把前面的#号去掉,如果不去掉#则为默认值.</p>
+<p><span style="color: #ff0000; font-size: small;">我自己实验了n次，发现只有png格式的图片才可以，把jpg强制转换也不行，原因还不知道，大家借鉴</span></p>
+<figure class="highlight"><figcaption><span>style="color: #3366ff; font-size: small;">更改字体颜色：</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#20462;&#25913;05_redhat_theme&#21644;06_fedora_theme&#33258;&#24049;&#20462;&#25913;&#19979;&#38754;&#36825;&#20004;&#34892;&#12290;&#10;color_normal=green/black&#10;color_highlight=white/black&#10;&#27880;&#37322;:&#10;set color_normal=green/black&#160; &#160;&#160; &#160;green&#20026;&#23383;&#20307;&#39068;&#33394;/black&#20026;&#32972;&#26223;&#39068;&#33394;&#10;set color_highlight=white/black&#160; &#160;white&#20026;&#36873;&#20013;&#36873;&#39033;&#30340;&#39068;&#33394;/black&#20026;&#32972;&#26223;&#39068;&#33394;&#10;&#20854;&#20013;&#32972;&#26223;&#33394;&#24517;&#39035;&#26159;black(black&#30452;&#35793;&#20026;&#40657;&#33394;,&#35774;&#32622;&#25104;&#40657;&#33394;&#23454;&#38469;&#19978;&#26159;&#36879;&#26126;&#33394;)&#65292;/&#21069;&#38754;&#30340;&#39068;&#33394;&#21487;&#20197;&#20462;&#25913;&#25104;&#20320;&#21916;&#27426;&#30340;&#39068;&#33394;&#12290;&#10;&#28982;&#21518;grub2-mkconfig&#10;grub2-mkconfig -o /boot/grub2/grub.cfg&#10;&#20877;sudo reboot&#10;&#37325;&#21551;&#30005;&#33041;&#21518;&#23601;&#21487;&#20197;&#30475;&#21040;&#25928;&#26524;&#20102;&#12290;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+<p>最后写上参考文献</p>
+<p><a href="http://www.linuxdiyf.com/bbs/thread-270524-1-1.html" target="_blank" rel="external">http://www.linuxdiyf.com/bbs/thread-270524-1-1.html</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;![&#24494;&#31505;](http://static.blog.csdn.net/xheditor/xheditor_emot/default/smile.gif)&#10;&#10;```</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Fedora16/" rel="tag">#Fedora16</a>
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/29/linux下翻墙/" rel="prev">linux下翻墙</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/27/学期总结（一）/" rel="next">学期总结（一）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

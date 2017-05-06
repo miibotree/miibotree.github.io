@@ -1,0 +1,724 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux,vim," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 最近在看《学习vi和vim编辑器第7版中文版》，一些基本的命令这里就不介绍了，反正大家都找得到，这里给大家介绍一点有趣的东西
+&amp;nbsp;&amp;nbsp;&amp;nbsp; 关于ex 编辑器
+&amp;nbsp;&amp;nbsp;&amp;nbsp; ex编辑器是一个行编辑器，在vim中输入&amp;nbsp; Q&amp;nbsp; 会进入到ex编辑器，如果是不小心进入的，输入vi&amp;nbsp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim进阶学习笔记">
+<meta property="og:url" content="http://yoursite.com/2012/01/13/vim进阶学习笔记/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 最近在看《学习vi和vim编辑器第7版中文版》，一些基本的命令这里就不介绍了，反正大家都找得到，这里给大家介绍一点有趣的东西
+&amp;nbsp;&amp;nbsp;&amp;nbsp; 关于ex 编辑器
+&amp;nbsp;&amp;nbsp;&amp;nbsp; ex编辑器是一个行编辑器，在vim中输入&amp;nbsp; Q&amp;nbsp; 会进入到ex编辑器，如果是不小心进入的，输入vi&amp;nbsp;">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/15/0_1326637364XX8u.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/16/0_13266804782bm3.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/18/0_1326896577Y7Yc.gif">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.925Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim进阶学习笔记">
+<meta name="twitter:description" content="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; 最近在看《学习vi和vim编辑器第7版中文版》，一些基本的命令这里就不介绍了，反正大家都找得到，这里给大家介绍一点有趣的东西
+&amp;nbsp;&amp;nbsp;&amp;nbsp; 关于ex 编辑器
+&amp;nbsp;&amp;nbsp;&amp;nbsp; ex编辑器是一个行编辑器，在vim中输入&amp;nbsp; Q&amp;nbsp; 会进入到ex编辑器，如果是不小心进入的，输入vi&amp;nbsp;">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> vim进阶学习笔记 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              vim进阶学习笔记
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-13T16:36:00+08:00" content="2012-01-13">
+            2012-01-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>&nbsp;&nbsp;&nbsp;&nbsp; 最近在看《学习vi和vim编辑器第7版中文版》，一些基本的命令这里就不介绍了，反正大家都找得到，这里给大家介绍一点有趣的东西</p>
+<p>&nbsp;&nbsp;<span style="font-size:18px">&nbsp;<span style="color:#3333ff"> 关于ex 编辑器</span></span></p>
+<p>&nbsp;&nbsp;&nbsp; ex编辑器是一个行编辑器，在vim中输入&nbsp; Q&nbsp; 会进入到ex编辑器，如果是不小心进入的，输入vi&nbsp;&nbsp;&nbsp; 或者&nbsp; visual 就可以回到vim 中了</p>
+<p>&nbsp;&nbsp;&nbsp; 大家都知道 vim 是有三种模式的，其实命令行模式的vim 就是打开了一个可视化的ex编辑器。所以说学点ex行编辑器的知识在vim中还是很有用的。</p>
+<p>&nbsp; </p>
+<p>&nbsp; ：set命令</p>
+<p>&nbsp;&nbsp; 打开选项</p>
+<p>&nbsp;&nbsp;&nbsp; :set option</p>
+<p>&nbsp;&nbsp;&nbsp; 关闭选项</p>
+<p>&nbsp;&nbsp; :set nooption</p>
+<p>&nbsp; 指定搜索模式忽略大小写</p>
+<p>&nbsp;&nbsp; ：set&nbsp; ic</p>
+<p>检查vi正在使用的选项</p>
+<p>&nbsp;&nbsp; ：set all </p>
+<p>：set nu (:set number)&nbsp;&nbsp; 显示行号，这个在编写程序的时候是非常有用的</p>
+<p>.exrc文件</p>
+<p>.exrc文件用来控制vi的环境，可以编辑设置。</p>
+<p>但是这里要注意优先级，储存在环境变量里面的EXINIT是最先执行的，然后是主目录下面的.exrc&nbsp;&nbsp; 最后才是当前目录下的.exrc文件</p>
+<p>当然你也可以读取其他目录下的.exrc文件，可以使用：so .progoptions</p>
+<p>：！ command&nbsp; 创建一个shell</p>
+<p>比如&nbsp;&nbsp; </p>
+<p>：！ date 可以在不离开vi的情况下显示时间</p>
+<p>当然如果你想输入多个命令，可以创建一个shell</p>
+<p>:sh</p>
+<p>请注意这里其实并没有离开vi环境，可以使用ctrl&#43;d来重新回到vi的怀抱中～～～</p>
+<p>：r&nbsp;&nbsp;&nbsp; (: read)可以与命令相结合，将命令的结果读入到文件中，比如</p>
+<p>：r !date&nbsp;&nbsp;&nbsp;&nbsp; 会将系统时间读入到你的文件中</p>
+<p>单词缩写：</p>
+<p>：ab&nbsp; abbr phrase</p>
+<p>例如</p>
+<p>：ab&nbsp;&nbsp;&nbsp; imrc&nbsp; International Materials Research Center&nbsp; 制定缩写，但是在vim下面好像不能递归定义，比如</p>
+<p>：ab&nbsp; the&nbsp;&nbsp; the&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这样的递归调用是不允许的</p>
+<p>&nbsp; :map 自定义命令序列（对vi的命令模式命令宏）</p>
+<p>：map x sequence 将x映射到编辑命令sequence 中</p>
+<p>比如</p>
+<p>：map v dwelp&nbsp;&nbsp;&nbsp;&nbsp; 按下v键就可以颠倒两个单词的顺序</p>
+<p>当然ex编辑器还有很多好玩的有用的地方，我就先介绍到这里了</p>
+<p>下面我们来玩玩&nbsp;&nbsp;<span style="font-size:18px"> <span style="color:#000099">折叠命令</span></span></p>
+<p>zf 创建折叠 （范围从开始到光标移动到达后的位置结束）</p>
+<p>比如你可以使用z4j来折叠5行</p>
+<p>za&nbsp; 切换一个折叠的状态</p>
+<p>zd&nbsp; 删除一个折叠</p>
+<p>zj光标移到下一个折叠开始的地方</p>
+<p>zk光标移到上一个折叠结尾处</p>
+<p>zE去除所有折叠</p>
+<p>zo递归打开折叠</p>
+<p>手动组合命令折叠是很强大的哦～</p>
+<p>比如 首先将你的光标移到 { 处，&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; zf% 后就会自动折叠到对应的}，这样是不是很方便呢，^_^</p>
+<p><span style="font-size:18px; color:#3333ff">多窗口功能</span></p>
+<p>利用vim的多窗口功能，我们可以很方便的比较两个不同版本的文件，可以快速的在多个文件当中进行剪切和复制操作</p>
+<p>vim -o file1 file 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 使用-o选项可以同时打开多个文本文件</p>
+<p>当然你也可以指定要打开几个窗口</p>
+<p>vim -o5file1&nbsp; file2 </p>
+<p>那么第1个窗口，就是最顶端的窗口打开file1,第2个窗口打开file2，后面三个是空文件，注意由于打开的是不同的文件，所以他们各自对应<span style="color:#ff0000">不同的缓冲区。</span></p>
+<p>如果你想设置窗口的尺寸，那么你可以用winheight 和winwidth来设置</p>
+<p>:set winheight=100&nbsp;&nbsp;&nbsp; 可以将窗口高度设置成100</p>
+<p>那么怎么分割同一个文件共享相同的缓冲区呢？</p>
+<p>&nbsp;&nbsp; :split&nbsp;&nbsp;&nbsp; 水平分割</p>
+<p>&nbsp; :vsplit&nbsp;&nbsp;&nbsp; 垂直分割（我想一般人还是喜欢垂直分割吧^_^）</p>
+<p>当然你也可以在后面指定文件同时编辑不同的文件</p>
+<p>下面来具体说说split命令：</p>
+<p>：[n] new&nbsp; [&#43;&#43;opt]&nbsp; [&#43;cmd] [file]</p>
+<p>n&nbsp;&nbsp; Vim指定在新窗口中显示的行数，新窗口位于画面顶端</p>
+<p>opt&nbsp; 传递vim选项信息给<span style="color:#ff0000">新的窗口会话（前面加&#43;&#43;）</span></p>
+<p>cmd 传入在新窗口中执行的命令（前面加&#43;）</p>
+<p>file指定欲在新窗口中编辑的文件</p>
+<p>例如</p>
+<p>：15split &#43;&#43;fileformat=unix&nbsp; otherfile</p>
+<p>指定了新打开的文件为otherfile行高为15，使用unix的fileformat</p>
+<p>你也可以使用按键命令^Ws&nbsp;&nbsp;&nbsp; ^WS&nbsp;&nbsp; ^W^S分割窗口</p>
+<p><img src="http://hi.csdn.net/attachment/201201/15/0_1326637364XX8u.gif" alt=""></p>
+<p>好了，现在我们已经会创建多个窗口了，那么怎么移动呢？其实鼠标是一种很方便的方法。默认的vim可能没有发开mouse选项，那么我们可以设置一下</p>
+<p>：set mouse=a&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 这时候你会发现不仅可以光标可以在不同窗口之间切换了～～不仅如此，还可以调整窗口的大小边距了～～～</p>
+<p>当然，也可以使用键盘切换</p>
+<p>CTRL&#43;W&nbsp; j&nbsp;&nbsp; 表示移动到下一个窗口</p>
+<p>CTRL&#43;W&nbsp; k &nbsp; 表示移动到上一个窗口</p>
+<p>CTRL&#43;W&nbsp; h &nbsp; 表示移动到左边一个窗口</p>
+<p>CTRL&#43;W&nbsp; l &nbsp; 表示移动到右边一个窗口</p>
+<p>这里和移动光标是一样的，还可以使用上下左右键</p>
+<p>CTRL&#43;W&nbsp; t &nbsp; 表示移动到最左上角的窗口</p>
+<p>CTRL&#43;W&nbsp; b &nbsp; 表示移动到最右上角的窗口</p>
+<p>移动窗口本身</p>
+<p>CTRL&#43;W&nbsp; r &nbsp; 向右或向下轮换窗口</p>
+<p>CTRL&#43;W&nbsp; R &nbsp; 向左或向上轮换窗口（大写跟小写的意思是相反的，这在很多vim命令里面都是这样设定的哦）</p>
+<p>CTRL&#43;W&nbsp; x&nbsp; （X） 交换同行或同列的窗口的位置，当然你可以使用3^Wx这样的命令来与第3个窗口交换</p>
+<p>移动窗口改变布局</p>
+<p>CTRL&#43;W&nbsp; K &nbsp; 移动当前屏幕到顶端，使用屏幕<span style="color:#cc0000">全部宽度</span>&nbsp; </p>
+<p>CTRL&#43;W&nbsp; J&nbsp; 移动当前屏幕到底端，使用屏幕<span style="color:#cc0000">全部宽度</span>&nbsp; </p>
+<p>CTRL&#43;W&nbsp; H&nbsp; 移动当前屏幕到左端，使用屏幕<span style="color:#cc0000">全部高度</span>&nbsp; </p>
+<p>CTRL&#43;W&nbsp; L &nbsp; 移动当前屏幕到右端，使用屏幕<span style="color:#cc0000">全部高度</span>&nbsp;&nbsp;</p>
+<p>窗口调整尺寸命令</p>
+<p>CTRL&#43;W&nbsp; =&nbsp; 调整所有窗口到相同尺寸</p>
+<p>CTRL&#43;W&nbsp; &#43;&nbsp; 当前窗口高度增加一行</p>
+<p>CTRL&#43;W&nbsp; -&nbsp; 当前窗口高度减少一行</p>
+<p>CTRL&#43;W&nbsp; &lt;&nbsp; 减少当前窗口宽度</p>
+<p>CTRL&#43;W&nbsp; &gt; 增加当前窗口宽度</p>
+<p>你也可以用命令编辑:</p>
+<p>:resize n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （设置高度）</p>
+<p>:vertical resize n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; （设置宽度）</p>
+<p>创建新分页</p>
+<p>就好比大家在用火狐浏览器一样，vim也可以创建多个分页，然后在分页上编辑哦！！！</p>
+<p>:tabnew filename&nbsp;&nbsp;&nbsp; 打开新分页</p>
+<p>:tabclose&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 关闭当前分页</p>
+<p>:tabonly&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 关闭其他所有分页</p>
+<p>更方便的是，你可以打开鼠标选项:set mouse=a</p>
+<p>然后点击上方的分页列表就可以选择分页，双击可以自动创建分页。是不是很方便啊，我估计Notepad&#43;&#43;就是从vim里学来的吧～～～</p>
+<p><img src="http://hi.csdn.net/attachment/201201/16/0_13266804782bm3.gif" alt=""></p>
+<p><span style="font-size:18px; color:#000099">语法高亮配色方案</span></p>
+<p>学过windowsSDk的应该都知道资源文件.rc吧，同样的，在vim里面你也可以编辑配置文件.vimrc编写自己的脚本来设置属于你自己的vim</p>
+<p>这里我们先来设置一样<span style="color:#996633">环境配色方案</span>吧</p>
+<p>Vim自定义了17种默认配色方案，比如</p>
+<p>在.vimrc文件里面输入（如果没有的话可以新创建一个，创建&nbsp;&nbsp; ~/.vimrc 就能改变 ～目录下所有的 vim配置了</p>
+<p>colorscheme desert</p>
+<p>这个据说是很多人喜欢的低调的沙漠配色方案</p>
+<p>但是我不是很喜欢啊，于是自己去网上找啊找，找到了一个很好看的配色方案：molokai</p>
+<p>具体步骤如下：</p>
+<p>这里先提供网站给大家下载</p>
+<p><a href="http://www.vim.org/scripts/script_search_results.php?keywords=&amp;script_type=color&#43;scheme&amp;order_by=rating&amp;direction=descending&amp;search=search" target="_blank" rel="external">http://www.vim.org/scripts/script_search_results.php?keywords=&amp;script_type=color&#43;scheme&amp;order_by=rating&amp;direction=descending&amp;search=search</a></p>
+<p><a href="http://code.google.com/p/vimcolorschemetest/" target="_blank" rel="external">http://code.google.com/p/vimcolorschemetest/</a></p>
+<p>然后比如像我一样下了molokai</p>
+<p></p><p></p>
+<p>首先把下载下来的 .vim 文件放在 <span style="color:#ff0000">“/usr/share/vim/vim73/colors/”</span>目录或者放在<span style="color:#ff0000">“~/.vim/colors/”</span>目录下，后者如果不存在可以自己建一个。</p>
+<p>然后 在 “~/.vimrc” 文件中添加下面一行，重新打开一个vim就可以了。</p>
+<blockquote>
+<p><span style="color:#ff0000">_colorscheme 配色方案名称_</span></p>
+<p>_比如我就是 colorscheme molokai</p>
+<p>_</p>
+</blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 另外，可以用一个插件 “<a href="http://www.vim.org/scripts/script.php?script_id=1298" title="ColorSchemeExplorer" target="_blank" rel="external">Color Scheme Explorer</a>” 来帮你选择喜欢的配色。把解压后的文件放到 “~/.vim/plugin/” 下，在vim中输入下面的命令：</p>
+<blockquote>
+<p>_:ColorSchemeExplorer_</p>
+</blockquote>
+<p>会列出上面两个colors目录中的所有配色文件，按”回车”来选择一个方案来test就可以了。</p>
+<p>在选择配色方案的过程中，如果发现更改后的配色和目标配色不一致，或者说色调非常难看，那么在 “~/.vimrc” 中添加下面一行就可以了。这个用来指定配色方案是256色。</p>
+<p><span style="color:#ff0000">_set t_Co=256_</span></p>
+<p>给大家看下效果图：</p>
+<p><img src="http://hi.csdn.net/attachment/201201/18/0_1326896577Y7Yc.gif" alt=""></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/vim/" rel="tag">#vim</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/15/windowsSDK-菜单资源浅谈/" rel="prev">windowsSDK 菜单资源浅谈</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/11/windows-SDK模拟游戏钢琴的实现（二）/" rel="next">windows SDK模拟游戏钢琴的实现（二）</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

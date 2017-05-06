@@ -1,0 +1,648 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="c,c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="昨天睡觉的时候就在想，为什么未初始化的字符数组会出现烫烫 这样的情况呢？
+学过汇编的应该知道，肯定跟指令有关系的。
+今天百度了一下，有下面的解释，讲的非常详细：
+http://bbs.dlut.edu.cn/nforum/article/C/25711
+VC经常输出烫的原因是，在vc的debug编译选项下，栈区的未初始化数据，每一个byte
+都被设置为0xCC，
+cccc的汉字编码就是烫。
+inc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="烫烫烫烫烫烫烫烫烫烫烫烫">
+<meta property="og:url" content="http://yoursite.com/2012/05/02/烫烫烫烫烫烫烫烫烫烫烫烫/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="昨天睡觉的时候就在想，为什么未初始化的字符数组会出现烫烫 这样的情况呢？
+学过汇编的应该知道，肯定跟指令有关系的。
+今天百度了一下，有下面的解释，讲的非常详细：
+http://bbs.dlut.edu.cn/nforum/article/C/25711
+VC经常输出烫的原因是，在vc的debug编译选项下，栈区的未初始化数据，每一个byte
+都被设置为0xCC，
+cccc的汉字编码就是烫。
+inc">
+<meta property="og:updated_time" content="2015-07-25T04:55:00.798Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="烫烫烫烫烫烫烫烫烫烫烫烫">
+<meta name="twitter:description" content="昨天睡觉的时候就在想，为什么未初始化的字符数组会出现烫烫 这样的情况呢？
+学过汇编的应该知道，肯定跟指令有关系的。
+今天百度了一下，有下面的解释，讲的非常详细：
+http://bbs.dlut.edu.cn/nforum/article/C/25711
+VC经常输出烫的原因是，在vc的debug编译选项下，栈区的未初始化数据，每一个byte
+都被设置为0xCC，
+cccc的汉字编码就是烫。
+inc">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 烫烫烫烫烫烫烫烫烫烫烫烫 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              烫烫烫烫烫烫烫烫烫烫烫烫
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-05-02T16:26:07+08:00" content="2012-05-02">
+            2012-05-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>昨天睡觉的时候就在想，为什么未初始化的字符数组会出现烫烫 这样的情况呢？</p>
+<p>学过汇编的应该知道，肯定跟指令有关系的。</p>
+<p>今天百度了一下，有下面的解释，讲的非常详细：</p>
+<p><a href="http://bbs.dlut.edu.cn/nforum/article/C/25711" target="_blank" rel="external">http://bbs.dlut.edu.cn/nforum/article/C/25711</a></p>
+<p>VC经常输出烫的原因是，在vc的debug编译选项下，栈区的未初始化数据，每一个byte</p>
+<p>都被设置为0xCC，</p>
+<p>cccc的汉字编码就是烫。</p>
+<h1 id="include_&lt;stdio-h&gt;">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;">include &lt;stdlib.h&gt;</h1><p>int main(int argc, char* argv[])</p>
+<p>{</p>
+<p>char c[12];</p>
+<p>printf(&#8220;%s&#8221;,c);</p>
+<p>return 0;</p>
+<p>}</p>
+<p>以上代码，在vc的dubeg模式下会输出烫，在release模式下输出空。</p>
+<h1 id="include_&lt;stdio-h&gt;-1">include &lt;stdio.h&gt;</h1><h1 id="include_&lt;stdlib-h&gt;-1">include &lt;stdlib.h&gt;</h1><p>char c[12];</p>
+<p>int main(int argc, char* argv[])</p>
+<p>{</p>
+<p>printf(&#8220;%s&#8221;,c);</p>
+<p>return 0;</p>
+<p>}</p>
+<p>这段代码总是输出空，<span style="color: #ff0000;">说明只有栈区的未初始化变量被设置为0xCC。</span></p>
+<p>最近才知道这是<span style="color: #ff0000;"> int 3h</span>的机器码，设置了一个断点。</p>
+<p><span style="color: #ff0000;">有时未初始化变量被设置为0xCD,这时就是汉字屯了。</span></p>
+<p>更具体见</p>
+<p><a href="http://blog.csdn.net/chenyu2202863/archive/2008/06/17/2555780.aspx" target="_blank" rel="external">http://blog.csdn.net/chenyu2202863/archive/2008/06/17/2555780.aspx</a></p>
+<p>摘一段</p>
+<p>名字      描述</p>
+<p>0xCD   Clean Memory    申请的内存由malloc或者new完成</p>
+<p>0xDD   Dead Memory    释放后的内存，用来检测悬垂指针</p>
+<p>0xFD   Fence Memory    动态申请后的内存值，没有初始化。用来检测数组的下标界</p>
+<p>限</p>
+<p>0xAB   (Allocated Block?)    使用LocalAlloc（）分配的内存 0x0DF0ADBA Bad</p>
+<p>Food     使用LocalAlloc并且参数为LMEM_FIXED，但是还没写入</p>
+<p>0xCC    使用了/GZ选项，没有初始化的自动变量在DBGHEAP.C文件中，</p>
+<p>大一学c语言主要是在tc下，学c++开始使用vc6。当把一个字符串作为一个类的构造函</p>
+<p>数的参数传入时，</p>
+<p>那时我知道的c库函数聊聊无几。只好像c语言一样，自己用指针实现了strcpy。</p>
+<p>为了防止溢出，类里保存这个字符串的属性给了很大空间。这样没有被填充的属性剩余</p>
+<p>空间保持了默认</p>
+<p>的0xcc，就是一串串的烫啊，真是烫死我了。</p>
+<p>前几天还有人问我，就顺带提一下。在vc6工具栏点右键，选中Build才能得到生成</p>
+<p>release版程序的下拉列表。</p>
+<p>只有release版的程序才可以在没有安装vc的机器上运行。</p>
+<p>最后，加上我补充的一句，未防止不同编译器对字符数组的初始化不同，建议声明完数</p>
+<p>组后立即初始化；</p>
+<p>不如</p>
+<h1 id="define_MAX_64;">define MAX 64;</h1><p>char   buff[MAX];</p>
+<p>memset(buff,0,sizeof(buff));</p>
+<p>这样就不会令你 一直 烫烫烫烫啦。。。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag">#c</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/05/02/汇编笔记/" rel="prev">汇编笔记</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/05/01/注册表修改IE默认主页/" rel="next">注册表修改IE默认主页</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdio-h>"><span class="nav-text">include <stdio.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdlib-h>"><span class="nav-text">include <stdlib.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdio-h>-1"><span class="nav-text">include <stdio.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#include_<stdlib-h>-1"><span class="nav-text">include <stdlib.h></span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#define_MAX_64;"><span class="nav-text">define MAX 64;</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

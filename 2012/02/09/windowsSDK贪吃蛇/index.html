@@ -1,0 +1,617 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="windowsSDK,贪吃蛇," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="上几天看了人家用c语言在控制台上面写俄罗斯方块，觉得自己应该能在SDK上写个贪吃蛇出来。毕竟贪吃蛇比俄罗斯方块简单一点吧。&amp;nbsp;运用知识1.GUI绘图2.计时器3.键盘控制思路（一）蛇的产生机制1.蛇身体的绘制（n个正方形，创建结构体存放4个点坐标，创建结构体数组）2.运用键盘改变蛇的前进方向（其实改变的只有头尾，并递推改变数组）（二）食物的产生机制1.获取当前窗口大小2.利用随机函数产生x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windowsSDK贪吃蛇">
+<meta property="og:url" content="http://yoursite.com/2012/02/09/windowsSDK贪吃蛇/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="上几天看了人家用c语言在控制台上面写俄罗斯方块，觉得自己应该能在SDK上写个贪吃蛇出来。毕竟贪吃蛇比俄罗斯方块简单一点吧。&amp;nbsp;运用知识1.GUI绘图2.计时器3.键盘控制思路（一）蛇的产生机制1.蛇身体的绘制（n个正方形，创建结构体存放4个点坐标，创建结构体数组）2.运用键盘改变蛇的前进方向（其实改变的只有头尾，并递推改变数组）（二）食物的产生机制1.获取当前窗口大小2.利用随机函数产生x">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201202/5/0_1328425997ywly.gif">
+<meta property="og:image" content="http://static.blog.csdn.net/xheditor/xheditor_emot/default/wronged.gif">
+<meta property="og:updated_time" content="2015-07-25T05:03:18.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="windowsSDK贪吃蛇">
+<meta name="twitter:description" content="上几天看了人家用c语言在控制台上面写俄罗斯方块，觉得自己应该能在SDK上写个贪吃蛇出来。毕竟贪吃蛇比俄罗斯方块简单一点吧。&amp;nbsp;运用知识1.GUI绘图2.计时器3.键盘控制思路（一）蛇的产生机制1.蛇身体的绘制（n个正方形，创建结构体存放4个点坐标，创建结构体数组）2.运用键盘改变蛇的前进方向（其实改变的只有头尾，并递推改变数组）（二）食物的产生机制1.获取当前窗口大小2.利用随机函数产生x">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> windowsSDK贪吃蛇 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              windowsSDK贪吃蛇
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-02-09T16:42:28+08:00" content="2012-02-09">
+            2012-02-09
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><div id="article_content"><br><br>上几天看了人家用c语言在控制台上面写俄罗斯方块，觉得自己应该能在SDK上写个贪吃蛇出来。毕竟贪吃蛇比俄罗斯方块简单一点吧。<br><br>&nbsp;<br><br>运用知识<br><br>1.GUI绘图<br><br>2.计时器<br><br>3.键盘控制<br><br>思路<br><br><strong>（一）蛇的产生机制</strong><br><br>1.蛇身体的绘制（n个正方形，创建结构体存放4个点坐标，创建结构体数组）<br><br>2.运用键盘改变蛇的前进方向（其实改变的只有头尾，并递推改变数组）<br><br><strong>（二）食物的产生机制</strong><br><br>1.获取当前窗口大小<br><br>2.利用随机函数产生x,y为食物（用正方形或圆形函数绘制）的左上角坐标<br><br>3.绘制食物<br><br><strong>（三）吃食物机制</strong><br><br>1.必须验证是蛇头吃到食物<br><br>2.吃到食物后食物消失并且重新产生食物（重新产生的食物最好不与蛇的身体重合）<br><br>3.蛇的身体的增长（与当前蛇前进的方向有关，数组的扩增）<br><br><strong>（四）死亡机制</strong><br><br>1.蛇头碰到自己的身体就算死亡<br><br>2.蛇头超过窗口就算死亡<br><br>&nbsp;<br><br>因为以前写过模拟钢琴游戏和随机数生成器，所以写起来还是比较顺手的，下面是代码：<br><br>&nbsp;<br><br><div><br><div><br><div><br><br>**<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;p&#62;** [view plain](http://blog.csdn.net/gaoxin1076/article/details/7234249# &#34;view plain&#34;)[copy](http://blog.csdn.net/gaoxin1076/article/details/7234249# &#34;copy&#34;)[print](http://blog.csdn.net/gaoxin1076/article/details/7234249# &#34;print&#34;)[?](http://blog.csdn.net/gaoxin1076/article/details/7234249# &#34;?&#34;)&#10;&#10;&#60;div&#62;&#60;object id=&#34;ZeroClipboardMovie_1&#34; width=&#34;23&#34; height=&#34;12&#34; classid=&#34;clsid:d27cdb6e-ae6d-11cf-96b8-444553540000&#34; codebase=&#34;http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,40,0&#34;&#62;&#60;param name=&#34;src&#34; value=&#34;http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf&#34; /&#62;&#60;param name=&#34;loop&#34; value=&#34;loop&#34; /&#62;&#60;param name=&#34;menu&#34; value=&#34;false&#34; /&#62;&#60;param name=&#34;quality&#34; value=&#34;best&#34; /&#62;&#60;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34; /&#62;&#60;param name=&#34;allowfullscreen&#34; value=&#34;false&#34; /&#62;&#60;param name=&#34;pluginspage&#34; value=&#34;http://www.macromedia.com/go/getflashplayer&#34; /&#62;&#60;param name=&#34;flashvars&#34; value=&#34;id=1&#38;amp;width=23&#38;amp;height=12&#34; /&#62;&#60;param name=&#34;wmode&#34; value=&#34;transparent&#34; /&#62;&#60;embed id=&#34;ZeroClipboardMovie_1&#34; width=&#34;23&#34; height=&#34;12&#34; type=&#34;application/x-shockwave-flash&#34; src=&#34;http://static.blog.csdn.net/scripts/ZeroClipboard/ZeroClipboard.swf&#34; loop=&#34;loop&#34; menu=&#34;false&#34; quality=&#34;best&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;false&#34; pluginspage=&#34;http://www.macromedia.com/go/getflashplayer&#34; flashvars=&#34;id=1&#38;amp;width=23&#38;amp;height=12&#34; wmode=&#34;transparent&#34; /&#62;&#60;/object&#62;&#60;/div&#62;&#10;&#60;/div&#62;&#10;&#60;/div&#62;&#10;&#60;ol start=&#34;1&#34;&#62;&#10;&#60;ol start=&#34;1&#34;&#62;&#10;```&#38;lt;/ol&#38;gt;&#10;&#38;lt;/ol&#38;gt;&#10;&#38;lt;ol start=&#38;quot;1&#38;quot;&#38;gt;&#10;&#38;lt;ol start=&#38;quot;1&#38;quot;&#38;gt;#include&#38;lt;/ol&#38;gt;&#10;&#38;lt;/ol&#38;gt;&#10;&#38;lt;ol start=&#38;quot;1&#38;quot;&#38;gt;&#10;&#38;lt;ol start=&#38;quot;1&#38;quot;&#38;gt;#include&#38;lt;/ol&#38;gt;&#10;&#38;lt;/ol&#38;gt;&#10;#define ID_TIMER 1&#10;&#10;struct own_rectangle&#123; //&#34503;&#36523;&#20307;&#30340;&#32467;&#26500;&#20307;&#10;int xLeft ;&#10;int xRight ;&#10;int yTop ;&#10;int yBottom ;&#10;&#125;rect[255];&#10;&#10;struct Snake_Food&#123; //&#39135;&#29289;&#32467;&#26500;&#20307;&#10;int x;&#10;int y;&#10;&#125;Food;&#10;&#10;int Keyboard_Flag = 1;//&#38190;&#30424;&#26631;&#24535;&#10;int NUM = 3; // &#34503;&#36523;&#20307;&#38271;&#24230;&#65292;&#40664;&#35748;&#20174;3&#24320;&#22987;&#10;RECT Rect_Window;//&#33719;&#24471;&#31383;&#21475;&#23458;&#25143;&#21306;&#22823;&#23567;&#10;&#10;LRESULT CALLBACK WndProc (HWND, UINT, WPARAM, LPARAM) ;&#10;&#10;int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,&#10;PSTR szCmdLine, int iCmdShow)&#10;&#123;&#10;static TCHAR szAppName[] = TEXT (&#38;quot;GreedySnake&#38;quot;) ;&#10;HWND hwnd ;&#10;MSG msg ;&#10;WNDCLASS wndclass ;&#10;&#10;wndclass.style = CS_HREDRAW | CS_VREDRAW ;&#10;wndclass.lpfnWndProc = WndProc ;&#10;wndclass.cbClsExtra = 0 ;&#10;wndclass.cbWndExtra = 0 ;&#10;wndclass.hInstance = hInstance ;&#10;wndclass.hIcon = LoadIcon (NULL, IDI_APPLICATION) ;&#10;wndclass.hCursor = LoadCursor (NULL, IDC_ARROW) ;&#10;wndclass.hbrBackground = (HBRUSH) GetStockObject (WHITE_BRUSH) ;&#10;wndclass.lpszMenuName = NULL ;&#10;wndclass.lpszClassName = szAppName ;&#10;&#10;if (!RegisterClass (&#38;amp;amp;wndclass))&#10;&#123;&#10;MessageBox (NULL, TEXT (&#38;quot;This program requires Windows NT!&#38;quot;),&#10;szAppName, MB_ICONERROR) ;&#10;return 0 ;&#10;&#125;&#10;&#10;hwnd = CreateWindow (szAppName,&#10;TEXT (&#38;quot;GreedySnake&#38;quot;),&#10;WS_OVERLAPPEDWINDOW,&#10;CW_USEDEFAULT,&#10;CW_USEDEFAULT,&#10;CW_USEDEFAULT,&#10;CW_USEDEFAULT,&#10;NULL,&#10;NULL,&#10;hInstance,&#10;NULL) ;&#10;&#10;ShowWindow (hwnd, iCmdShow) ;&#10;UpdateWindow (hwnd) ;&#10;&#10;while (GetMessage (&#38;amp;amp;msg, NULL, 0, 0))&#10;&#123;&#10;TranslateMessage (&#38;amp;amp;msg) ;&#10;DispatchMessage (&#38;amp;amp;msg) ;&#10;&#125;&#10;return msg.wParam ;&#10;&#125;&#10;&#10;LRESULT CALLBACK WndProc (HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)&#10;&#123;&#10;HDC hdc ;&#10;PAINTSTRUCT ps ;&#10;int j;&#10;&#10;switch (message)&#10;&#123;&#10;case WM_CREATE:&#10;SetTimer (hwnd, ID_TIMER, 200, NULL) ;//&#35774;&#32622;&#26102;&#38388;&#10;GetClientRect(hwnd, &#38;amp;amp;Rect_Window); //&#33719;&#21462;&#31383;&#21475;&#22823;&#23567;&#10;rect[0].xLeft = 400 ; //&#21021;&#22987;&#21270;&#34503;&#36523;&#20307;&#10;rect[0].xRight = 420 ;&#10;rect[0].yTop = 200 ;&#10;rect[0].yBottom = 220 ;&#10;for (j = 1; j &#38;amp;lt; NUM; j++)&#10;&#123;&#10;rect[j].xLeft = rect[j-1].xLeft + 20 ;&#10;rect[j].xRight = rect[j-1].xRight + 20 ;&#10;rect[j].yTop = rect[0].yTop ;&#10;rect[j].yBottom = rect[0].yBottom ;&#10;&#125;&#10;srand(time(0));&#10;Food.x = (rand() % Rect_Window.right) / 20 * 20 ; //&#20445;&#35777;&#20135;&#29983;&#30340;&#39135;&#29289;&#19982;&#34503;&#21487;&#20197;&#36830;&#25509;&#10;Food.y = (rand() % Rect_Window.bottom) / 20 * 20;&#10;return 0 ;&#10;&#10;case WM_PAINT:&#10;&#10;hdc = BeginPaint (hwnd, &#38;amp;amp;ps);&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++) //&#30011;&#34503;&#10;Rectangle(hdc, rect[j].xLeft, rect[j].yTop, rect[j].xRight, rect[j].yBottom);&#10;&#10;SelectObject(hdc, (HBRUSH)GetStockObject (GRAY_BRUSH));&#10;Rectangle(hdc, rect[NUM-1].xLeft, rect[NUM-1].yTop, rect[NUM-1].xRight, rect[NUM-1].yBottom);&#10;Ellipse(hdc, Food.x, Food.y, Food.x+20, Food.y+20);//&#30011;&#39135;&#29289;&#10;&#10;EndPaint(hwnd, &#38;amp;amp;ps);&#10;return 0;&#10;&#10;case WM_TIMER:&#10;&#10;//&#38190;&#30424;&#25805;&#20316;&#23545;&#24212;&#25913;&#21464;&#34503;&#30340;&#24418;&#29366;&#10;&#10;//1&#23545;&#24212;&#22788;&#29702;&#21521;&#21491;&#10;if (1 == Keyboard_Flag)&#10;&#123;&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++)&#10;&#123;&#10;rect[j].xLeft = rect[j+1].xLeft ;&#10;rect[j].xRight = rect[j+1].xRight ;&#10;rect[j].yBottom = rect[j+1].yBottom ;&#10;rect[j].yTop = rect[j+1].yTop ;&#10;&#125;&#10;rect[NUM-1].xLeft += 20;&#10;rect[NUM-1].xRight += 20;&#10;&#125;&#10;//2&#23545;&#24212;&#22788;&#29702;&#21521;&#19979;&#10;else if (2 == Keyboard_Flag)&#10;&#123;&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++)&#10;&#123;&#10;rect[j].xLeft = rect[j+1].xLeft ;&#10;rect[j].xRight = rect[j+1].xRight ;&#10;rect[j].yTop = rect[j+1].yTop ;&#10;rect[j].yBottom = rect[j+1].yBottom ;&#10;&#125;&#10;rect[NUM-1].yBottom += 20;&#10;rect[NUM-1].yTop += 20;&#10;&#125;&#10;//3&#23545;&#24212;&#22788;&#29702;&#21521;&#24038;&#10;else if (3 == Keyboard_Flag)&#10;&#123;&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++)&#10;&#123;&#10;rect[j].xLeft = rect[j+1].xLeft ;&#10;rect[j].xRight = rect[j+1].xRight ;&#10;rect[j].yTop = rect[j+1].yTop ;&#10;rect[j].yBottom = rect[j+1].yBottom ;&#10;&#125;&#10;rect[NUM-1].xLeft -= 20;&#10;rect[NUM-1].xRight -= 20;&#10;&#125;&#10;//4&#23545;&#24212;&#22788;&#29702;&#21521;&#19978;&#10;else if (4 == Keyboard_Flag)&#10;&#123;&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++)&#10;&#123;&#10;rect[j].xLeft = rect[j+1].xLeft ;&#10;rect[j].xRight = rect[j+1].xRight ;&#10;rect[j].yTop = rect[j+1].yTop ;&#10;rect[j].yBottom = rect[j+1].yBottom ;&#10;&#125;&#10;rect[NUM-1].yTop -= 20;&#10;rect[NUM-1].yBottom -= 20;&#10;&#125;&#10;//&#21028;&#26029;&#34503;&#22836;&#26159;&#21542;&#21507;&#21040;&#39135;&#29289;&#10;if (rect[NUM-1].xLeft == Food.x &#38;amp;amp;&#38;amp;amp; rect[NUM-1].yTop == Food.y)&#10;&#123;&#10;&#10;if (1 == Keyboard_Flag)//&#21521;&#21491;&#21507;&#21040;&#39135;&#29289;&#10;&#123;&#10;NUM++;&#10;for (j = NUM-1; j &#38;amp;gt; 0 ; j--)&#10;&#123;&#10;rect[j].xLeft = rect[j-1].xLeft ;&#10;rect[j].xRight = rect[j-1].xRight ;&#10;rect[j].yTop = rect[j-1].yTop ;&#10;rect[j].yBottom = rect[j-1].yBottom ;&#10;&#125;&#10;rect[0].xLeft -= 20;&#10;rect[0].xRight -= 20;&#10;Food.x = (rand() % Rect_Window.right) / 20 * 20 ; //&#34503;&#21507;&#21040;&#21518;&#39135;&#29289;&#22352;&#26631;&#25913;&#21464;&#10;Food.y = (rand() % Rect_Window.bottom) / 20 * 20;&#10;&#125;&#10;else if (2 == Keyboard_Flag)//&#21521;&#19979;&#21507;&#21040;&#39135;&#29289;&#10;&#123;&#10;NUM++;&#10;for (j = NUM-1; j &#38;amp;gt; 0 ; j--)&#10;&#123;&#10;rect[j].xLeft = rect[j-1].xLeft ;&#10;rect[j].xRight = rect[j-1].xRight ;&#10;rect[j].yTop = rect[j-1].yTop ;&#10;rect[j].yBottom = rect[j-1].yBottom ;&#10;&#125;&#10;rect[0].yTop -= 20;&#10;rect[0].yBottom -= 20;&#10;Food.x = (rand() % Rect_Window.right) / 20 * 20 ; //&#34503;&#21507;&#21040;&#21518;&#39135;&#29289;&#22352;&#26631;&#25913;&#21464;&#10;Food.y = (rand() % Rect_Window.bottom) / 20 * 20;&#10;&#125;&#10;&#10;else if (3 == Keyboard_Flag)//&#21521;&#24038;&#21507;&#21040;&#39135;&#29289;&#10;&#123;&#10;NUM++;&#10;for (j = NUM-1; j &#38;amp;gt; 0 ; j--)&#10;&#123;&#10;rect[j].xLeft = rect[j-1].xLeft ;&#10;rect[j].xRight = rect[j-1].xRight ;&#10;rect[j].yTop = rect[j-1].yTop ;&#10;rect[j].yBottom = rect[j-1].yBottom ;&#10;&#125;&#10;rect[0].xLeft += 20;&#10;rect[0].xRight += 20;&#10;Food.x = (rand() % Rect_Window.right) / 20 * 20 ; //&#34503;&#21507;&#21040;&#21518;&#39135;&#29289;&#22352;&#26631;&#25913;&#21464;&#10;Food.y = (rand() % Rect_Window.bottom) / 20 * 20;&#10;&#125;&#10;&#10;else if (4 == Keyboard_Flag)//&#21521;&#19978;&#21507;&#21040;&#39135;&#29289;&#10;&#123;&#10;NUM++;&#10;for (j = NUM-1; j &#38;amp;gt; 0 ; j--)&#10;&#123;&#10;rect[j].xLeft = rect[j-1].xLeft ;&#10;rect[j].xRight = rect[j-1].xRight ;&#10;rect[j].yTop = rect[j-1].yTop ;&#10;rect[j].yBottom = rect[j-1].yBottom ;&#10;&#125;&#10;rect[0].yTop += 20;&#10;rect[0].yBottom += 20;&#10;Food.x = (rand() % Rect_Window.right) / 20 * 20 ; //&#34503;&#21507;&#21040;&#21518;&#39135;&#29289;&#22352;&#26631;&#25913;&#21464;&#10;Food.y = (rand() % Rect_Window.bottom) / 20 * 20;&#10;&#125;&#10;&#125;&#10;//SnakeBody_Longer(&#38;amp;amp;rect, NUM);&#10;&#10;//&#27515;&#20129;&#26426;&#21046;&#10;&#10;//&#35302;&#30896;&#36793;&#30028;&#32780;&#27515;&#10;if (rect[NUM-1].xLeft &#38;amp;lt; 0 || rect[NUM-1].xRight &#38;amp;gt; Rect_Window.right ||&#10;rect[NUM-1].yTop &#38;amp;lt; 0 ||rect[NUM-1].yBottom &#38;amp;gt; Rect_Window.bottom )&#10;&#123;&#10;KillTimer(hwnd, ID_TIMER);&#10;MessageBox(hwnd, TEXT(&#38;quot;Game Over!&#38;quot;), TEXT(&#38;quot;Sorry,You Died, Never Give Up!&#38;quot;), MB_OK);&#10;return 0;&#10;&#125;&#10;//&#35302;&#30896;&#33258;&#24049;&#32780;&#27515;&#10;for (j = 0; j &#38;amp;lt; NUM-1; j++)&#10;&#123;&#10;if (rect[NUM-1].xLeft == rect[j].xLeft &#38;amp;amp;&#38;amp;amp; rect[NUM-1].xRight == rect[j].xRight &#38;amp;amp;&#38;amp;amp;&#10;rect[NUM-1].yTop == rect[j].yTop &#38;amp;amp;&#38;amp;amp; rect[NUM-1].yBottom == rect[j].yBottom)&#10;&#123;&#10;KillTimer(hwnd, ID_TIMER);&#10;MessageBox(hwnd, TEXT(&#38;quot;Game Over!&#38;quot;), TEXT(&#38;quot;Sorry,You Died, Never Give Up!&#38;quot;), MB_OK);&#10;return 0;&#10;&#125;&#10;&#125;&#10;&#10;InvalidateRect(hwnd, NULL, TRUE);&#10;return 0;&#10;case WM_KEYDOWN: //&#22788;&#29702;&#38190;&#30424;&#28040;&#24687;&#10;switch(wParam)&#10;&#123;&#10;case VK_LEFT:&#10;Keyboard_Flag = 3;&#10;break;&#10;case VK_RIGHT:&#10;Keyboard_Flag = 1;&#10;break;&#10;case VK_UP:&#10;Keyboard_Flag = 4;&#10;break;&#10;case VK_DOWN:&#10;Keyboard_Flag = 2;&#10;break;&#10;&#125;&#10;return 0;&#10;case WM_DESTROY:&#10;PostQuitMessage (0) ;&#10;return 0 ;&#10;&#125;&#10;return DefWindowProc (hwnd, message, wParam, lParam) ;&#10;&#125;</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p>这里我用 NUM 表示蛇身体的长度</p>
+<p>rect[num-1]表示的是蛇头，很多处理都用到了这个。</p>
+<p><img src="http://hi.csdn.net/attachment/201202/5/0_1328425997ywly.gif" alt=""></p>
+<p>写的时候可能代码有点乱，是按照顺序写下来的，关键代码都放在VM_TIMER里面了</p>
+<p>也没有写函数，所以看起来确实有点乱的。</p>
+<p>具体的话写了点注释，应该不难理解吧。</p>
+<p>&nbsp;</p>
+<p>还有不完善的地方可以修改：</p>
+<p>1.身体增长机制</p>
+<p>我是根据方向在尾部增长的，有时候看起来比较突兀，这里可以改进</p>
+<p>&nbsp;</p>
+<p>2食物产生机制</p>
+<p>产生食物的时候食物可能会落在窗口外面，这个时候蛇无论如何也吃不到食物了，这里有个BUG<img src="http://static.blog.csdn.net/xheditor/xheditor_emot/default/wronged.gif" alt="委屈"></p>
+<p>&nbsp;</p>
+<p>3.难度控制</p>
+<p>可以写个菜单，调节蛇的速度</p>
+<p>&nbsp;</p>
+<p>4.窗口应该设置为固定的</p>
+<p>&nbsp;</p>
+<p>5.结束机制</p>
+<p>结束后选择重新玩，或者退出游戏</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>不过这个只是实现了基本功能，还不能称为游戏。我觉得应该把它称作  &#8220;移动和增长方块&#8221;比较合适吧</p>
+<p>如果想称之为游戏，那必须还得添加一些可玩因素，比如</p>
+<p>1.积分机制</p>
+<p>2.过关机制</p>
+<p>3.蛇的移动速度调节</p>
+<p>4.食物的种类，不同类型食物可以增加身体长度不同，增加分数不同</p>
+<p>5.背景音乐</p>
+<p>6.把蛇画的好看点</p>
+<p>7.其他的创意因子</p>
+<p>暂时想到的可玩因素就只有这些了。大家有兴趣的话也可以去写个玩玩。最后说明，偶只是个新手，高手勿喷，呵呵</p>
+<p>&nbsp;</p>
+<p></p></div><p></p>
+</div></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+            <a href="/tags/贪吃蛇/" rel="tag">#贪吃蛇</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/02/09/线程事件对象之CreateEvent的用法/" rel="prev">线程事件对象之CreateEvent的用法</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/02/01/linux消息队列进程通信/" rel="next">linux消息队列进程通信</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="在PE文件结构中的区块表中的IMAGE_SECTION_HEADER结构体中有一个Characteristics属性，这个属性规定了区块的属性，该属性可以设置下面这些字段：
+FlagMeaning0&amp;#215;00000000Reserved.0&amp;#215;00000001Reserved.0&amp;#215;00000002Reserved.0&amp;#215;00000004Reserved.IMAGE_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE区块权限与createfile形参权限的区别">
+<meta property="og:url" content="http://yoursite.com/2012/04/07/PE区块权限与createfile形参权限的区别/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="在PE文件结构中的区块表中的IMAGE_SECTION_HEADER结构体中有一个Characteristics属性，这个属性规定了区块的属性，该属性可以设置下面这些字段：
+FlagMeaning0&amp;#215;00000000Reserved.0&amp;#215;00000001Reserved.0&amp;#215;00000002Reserved.0&amp;#215;00000004Reserved.IMAGE_">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.917Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PE区块权限与createfile形参权限的区别">
+<meta name="twitter:description" content="在PE文件结构中的区块表中的IMAGE_SECTION_HEADER结构体中有一个Characteristics属性，这个属性规定了区块的属性，该属性可以设置下面这些字段：
+FlagMeaning0&amp;#215;00000000Reserved.0&amp;#215;00000001Reserved.0&amp;#215;00000002Reserved.0&amp;#215;00000004Reserved.IMAGE_">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> PE区块权限与createfile形参权限的区别 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              PE区块权限与createfile形参权限的区别
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-07T17:45:57+08:00" content="2012-04-07">
+            2012-04-07
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>在PE文件结构中的区块表中的IMAGE_SECTION_HEADER结构体中有一个Characteristics属性，这个属性规定了区块的属性，该属性可以设置下面这些字段：</p>
+<table><br><tbody><br><tr><br><th>Flag</th><br><th>Meaning</th><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000001</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000002</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000004</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_TYPE_NO_PAD</dt><br><dt>0&#215;00000008</dt><br></dl><br></td><br><td>The section should not be padded to the next boundary. This flag is obsolete and is replaced by IMAGE_SCN_ALIGN_1BYTES.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000010</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_CNT_CODE</dt><br><dt>0&#215;00000020</dt><br></dl><br></td><br><td>The section contains executable code.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_CNT_INITIALIZED_DATA</dt><br><dt>0&#215;00000040</dt><br></dl><br></td><br><td>The section contains initialized data.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_CNT_UNINITIALIZED_DATA</dt><br><dt>0&#215;00000080</dt><br></dl><br></td><br><td>The section contains uninitialized data.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_LNK_OTHER</dt><br><dt>0&#215;00000100</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_LNK_INFO</dt><br><dt>0&#215;00000200</dt><br></dl><br></td><br><td>The section contains comments or other information. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00000400</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_LNK_REMOVE</dt><br><dt>0&#215;00000800</dt><br></dl><br></td><br><td>The section will not become part of the image. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_LNK_COMDAT</dt><br><dt>0&#215;00001000</dt><br></dl><br></td><br><td>The section contains COMDAT data. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00002000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_NO_DEFER_SPEC_EXC</dt><br><dt>0&#215;00004000</dt><br></dl><br></td><br><td>Reset speculative exceptions handling bits in the TLB entries for this section.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_GPREL</dt><br><dt>0&#215;00008000</dt><br></dl><br></td><br><td>The section contains data referenced through the global pointer.</td><br></tr><br><tr><br><td><br><dl><br><dt>0&#215;00010000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_PURGEABLE</dt><br><dt>0&#215;00020000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_LOCKED</dt><br><dt>0&#215;00040000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_PRELOAD</dt><br><dt>0&#215;00080000</dt><br></dl><br></td><br><td>Reserved.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_1BYTES</dt><br><dt>0&#215;00100000</dt><br></dl><br></td><br><td>Align data on a 1-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_2BYTES</dt><br><dt>0&#215;00200000</dt><br></dl><br></td><br><td>Align data on a 2-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_4BYTES</dt><br><dt>0&#215;00300000</dt><br></dl><br></td><br><td>Align data on a 4-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_8BYTES</dt><br><dt>0&#215;00400000</dt><br></dl><br></td><br><td>Align data on a 8-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_16BYTES</dt><br><dt>0&#215;00500000</dt><br></dl><br></td><br><td>Align data on a 16-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_32BYTES</dt><br><dt>0&#215;00600000</dt><br></dl><br></td><br><td>Align data on a 32-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_64BYTES</dt><br><dt>0&#215;00700000</dt><br></dl><br></td><br><td>Align data on a 64-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_128BYTES</dt><br><dt>0&#215;00800000</dt><br></dl><br></td><br><td>Align data on a 128-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_256BYTES</dt><br><dt>0&#215;00900000</dt><br></dl><br></td><br><td>Align data on a 256-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_512BYTES</dt><br><dt>0x00A00000</dt><br></dl><br></td><br><td>Align data on a 512-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_1024BYTES</dt><br><dt>0x00B00000</dt><br></dl><br></td><br><td>Align data on a 1024-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_2048BYTES</dt><br><dt>0x00C00000</dt><br></dl><br></td><br><td>Align data on a 2048-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_4096BYTES</dt><br><dt>0x00D00000</dt><br></dl><br></td><br><td>Align data on a 4096-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_ALIGN_8192BYTES</dt><br><dt>0x00E00000</dt><br></dl><br></td><br><td>Align data on a 8192-byte boundary. This is valid only for object files.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_LNK_NRELOC_OVFL</dt><br><dt>0&#215;01000000</dt><br></dl><br></td><br><td>The section contains extended relocations. The count of relocations for the section exceeds the 16 bits that is reserved for it in the section header. If the NumberOfRelocations field in the section header is 0xffff, the actual relocation count is stored in theVirtualAddress field of the first relocation. It is an error if IMAGE_SCN_LNK_NRELOC_OVFL is set and there are fewer than 0xffff relocations in the section.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_DISCARDABLE</dt><br><dt>0&#215;02000000</dt><br></dl><br></td><br><td>The section can be discarded as needed.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_NOT_CACHED</dt><br><dt>0&#215;04000000</dt><br></dl><br></td><br><td>The section cannot be cached.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_NOT_PAGED</dt><br><dt>0&#215;08000000</dt><br></dl><br></td><br><td>The section cannot be paged.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_SHARED</dt><br><dt>0&#215;10000000</dt><br></dl><br></td><br><td>The section can be shared in memory.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_EXECUTE</dt><br><dt>0&#215;20000000</dt><br></dl><br></td><br><td>The section can be executed as code.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_READ</dt><br><dt>0&#215;40000000</dt><br></dl><br></td><br><td>The section can be read.</td><br></tr><br><tr><br><td><br><dl><br><dt>IMAGE_SCN_MEM_WRITE</dt><br><dt>0&#215;80000000</dt><br></dl><br></td><br><td>The section can be written to.</td><br></tr><br></tbody><br></table>
+
+<p>这些标志字段通过或运算可以叠加。</p>
+<p>比如</p>
+<p>IMAGE_SCN_MEM_READ规定了可读权限</p>
+<p>IMAGE_SCN_MEM_WRITE规定了可写权限</p>
+<p>&nbsp;</p>
+<p>然后我在打开PE文件的时候使用了CreateFile这个函数，这个函数定义如下：</p>
+<p>&nbsp;</p>
+<pre>HANDLE CreateFile(
+  LPCTSTR lpFileName,
+  DWORD dwDesiredAccess,
+  DWORD dwShareMode,
+  LPSECURITY_ATTRIBUTES lpSecurityAttributes,
+  DWORD dwCreationDisposition,
+  DWORD dwFlagsAndAttributes,
+  HANDLE hTemplateFile
+);</pre>
+
+<p>HANDLE CreateFile(</p>
+<div></div>
+
+<p>LPCTSTR lpFileName, //指向文件名的指针</p>
+<div></div>
+
+<p>DWORD dwDesiredAccess, //访问模式（写/读）</p>
+<div></div>
+
+<p>DWORD dwShareMode, //共享模式</p>
+<div></div>
+
+<p>LPSECURITY_ATTRIBUTES lpSecurityAttributes, //指向安全属性的指针</p>
+<div></div>
+
+<p>DWORD dwCreationDisposition, //如何创建</p>
+<div></div>
+
+<p>DWORD dwFlagsAndAttributes, //文件属性</p>
+<div></div>
+
+<p>HANDLE hTemplateFile //用于复制文件句柄</p>
+<div></div>
+
+<p>);</p>
+<div></div>
+
+<p>然后我的问题就是：这里在函数CreateFile中的形参中规定了文件的权限，在PE结构中的Characteristics中又规定了区块的权限，那么这两个权限有什么区别呢？</p>
+<p>&nbsp;</p>
+<p>作为一个新手，怎么也想不明白这个问题。后来问了学长，终于揭开了我的疑惑：</p>
+<p>首先在Chracteristics属性中规定的区块权限是在磁盘上的PE文件映射到了内存以后，如果要对内存中的PE区块进行可读可写等区块操作，这个时候就要用到这个Chracteristics属性了。</p>
+<p>而在磁盘中的PE文件其实不过是一堆二进制数据。大家都知道在linux里面的话一切都是文件。把这个概念引申过来，那么在磁盘上PE文件和记事本的.txt其实是没有本质上的区别的，因为在计算机硬盘里存的就是一堆二进制代码的0和1.所以我们在CreateFile的时候在形参里面首先规定这个文件的读写权限，就可以对这个文件进行相应的操作了。</p>
+<p>&nbsp;</p>
+<p>其实这个问题想明白了是很简单的。-_-|||简单的说，就是Chracteristics属性规定了在内存中的读写权限，而CreateFile形参中的dwDesiredAccess规定了打开文件以后在磁盘中的读写权限。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/09/对于参加信息安全全国邀请赛课题选择的一些看法/" rel="prev">对于参加信息安全全国邀请赛课题选择的一些看法</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/04/PE格式之DOS头-PE头/" rel="next">PE格式之DOS头+PE头</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

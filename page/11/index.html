@@ -1,0 +1,1259 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Miibotree'thinking">
+<meta property="og:url" content="http://yoursite.com/page/11/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Miibotree'thinking">
+<meta name="twitter:description">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/08/二叉链表的遍历/" itemprop="url">
+                二叉链表的遍历
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-08T21:52:41+08:00" content="2012-11-08">
+            2012-11-08
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>晚上闲着没事请干，敲敲书上的二叉树，用递归的方法实现最简单的前序，中序，后序遍历</p>
+<p>Tree.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//BiTree </span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;malloc.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//define</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  OK 1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span>  ERROR 0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OVERFLOW -1</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//typedef</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> TElemType;</span><br><span class="line"></span><br><span class="line"><span class="comment">//struct</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> BiTNode&#123;</span><br><span class="line">	TElemType data;</span><br><span class="line">	<span class="keyword">struct</span> BiTNode *lchild, *rchild;</span><br><span class="line">&#125;BiTNode, *BiTree;</span><br><span class="line"></span><br><span class="line"><span class="comment">//functions</span></span><br><span class="line"><span class="function">Status <span class="title">CreateBiTree</span><span class="params">(BiTree &amp;amp;T)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">PreOrderTraverse</span>  <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">InOrderTraverse</span>   <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">PostOrderTraverse</span> <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">LeverOrderTraverse</span><span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Visit</span><span class="params">(TElemType e)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">CreateBiTree</span><span class="params">(BiTree &amp;amp;T)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> ch;</span><br><span class="line">	<span class="built_in">scanf</span>(&amp;quot;%c&amp;quot;, &amp;amp;ch);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (ch == &amp;<span class="preprocessor">#039; &amp;#039;) </span></span><br><span class="line">		T = NULL;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (!(T = (BiTNode *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(BiTNode))))</span><br><span class="line">			<span class="keyword">return</span> OVERFLOW;</span><br><span class="line">		T-&amp;gt;data = ch;</span><br><span class="line">		<span class="comment">//Visit(T-&amp;gt;data);</span></span><br><span class="line">		CreateBiTree(T-&amp;gt;lchild);</span><br><span class="line">		CreateBiTree(T-&amp;gt;rchild);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">PreOrderTraverse</span>  <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T)</span><br><span class="line">	&#123;</span><br><span class="line">		Visit(T-&amp;gt;data);</span><br><span class="line">		PreOrderTraverse(T-&amp;gt;lchild, Visit);</span><br><span class="line">		PreOrderTraverse(T-&amp;gt;rchild, Visit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">InOrderTraverse</span>  <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T)</span><br><span class="line">	&#123;</span><br><span class="line">		InOrderTraverse(T-&amp;gt;lchild, Visit);</span><br><span class="line">		Visit(T-&amp;gt;data);</span><br><span class="line">		InOrderTraverse(T-&amp;gt;rchild, Visit);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">PostOrderTraverse</span>  <span class="params">(BiTree T, Status (* Visit)</span><span class="params">(TElemType e)</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (T)</span><br><span class="line">	&#123;</span><br><span class="line">		PostOrderTraverse(T-&amp;gt;lchild, Visit);</span><br><span class="line">		PostOrderTraverse(T-&amp;gt;rchild, Visit);</span><br><span class="line">		Visit(T-&amp;gt;data);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Visit</span><span class="params">(TElemType e)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;%cn&amp;quot;, e);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Tree.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Tree.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	BiTree T;</span><br><span class="line">	CreateBiTree(T);</span><br><span class="line"><span class="comment">//PreOrder </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"PreOrder isn"</span>);</span><br><span class="line">	PreOrderTraverse(T, Visit);</span><br><span class="line"><span class="comment">//InOrder </span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"InOrder isn"</span>);</span><br><span class="line">	InOrderTraverse(T, Visit);</span><br><span class="line"><span class="comment">//PostOrder</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"PostOrder isn"</span>);</span><br><span class="line">	PostOrderTraverse(T, Visit);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/06/栈–马踏棋盘/" itemprop="url">
+                栈–马踏棋盘
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-06T15:36:11+08:00" content="2012-11-06">
+            2012-11-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>智商是硬伤系列之二&#8230;</p>
+<p>马踏棋盘</p>
+<p>题目描述就不讲了，下面先写写思路：</p>
+<p>定义</p>
+<p>s1 当前所在位置存储的下一步的所有可走路线</p>
+<p>s[65] s[step] 存储的下一步的所有可走路线</p>
+<p>函数</p>
+<p>Number下一步可走的数目</p>
+<p>Exit 下一步可走的位置，并且压入s[step]</p>
+<p>思路：</p>
+<p>1.GetOrdnance 输入初始坐标</p>
+<p>2.InitStack 栈的初始化操作</p>
+<p>3.Next step关键步骤</p>
+<p>&#8212;-1.当前栈的初始化操</p>
+<p>&#8212;-2.将当前所在位置压入临时栈s1</p>
+<p>&#8212;-3.当前step的下一步所有可走路线s[step]</p>
+<p>&#8212;-4.先pop一个下一步可走路线</p>
+<p>&#8212;&#8212;&#8211;1.如果没有下一步可以走了，回溯操作</p>
+<p>&#8212;&#8212;&#8211;2.下一步是死路，换种下一步的走法</p>
+<p>&#8212;&#8212;&#8211;3.下一步有走的位置，但是s[step]为空了，直接走下一步</p>
+<p>4.其他情况？？</p>
+<p>4.PrintChessBoard打印棋盘操作</p>
+<p>Horse.cpp</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> <span class="string">"SqStack.h"</span></span><br><span class="line"></span><br><span class="line">#define N <span class="number">8</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//马的走位</span></span><br><span class="line"><span class="keyword">int</span> HTry1[] = &#123;-<span class="number">2</span>, -<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">2</span>&#125;; <span class="comment">//x方向走位</span></span><br><span class="line"><span class="keyword">int</span> HTry2[] = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">2</span>, -<span class="number">2</span>, -<span class="number">1</span>&#125;; <span class="comment">//y方向走位</span></span><br><span class="line"><span class="comment">//标识</span></span><br><span class="line"><span class="keyword">int</span> board[N][N] = &#123;<span class="number">0</span>&#125;; <span class="comment">//N * N 个棋盘</span></span><br><span class="line"><span class="keyword">int</span> <span class="keyword">step</span> = <span class="number">1</span>; <span class="comment">//已经走的步数</span></span><br><span class="line">SqStack s[<span class="number">65</span>]; <span class="comment">//第step步的下一步的所有可能位置</span></span><br><span class="line">SqStack s1; <span class="comment">//临时栈</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//函数定义</span></span><br><span class="line"><span class="keyword">void</span> GetOrdnance(Point &amp;amp;p); <span class="comment">//获得坐标</span></span><br><span class="line"><span class="keyword">void</span> Exit(Point p); <span class="comment">//计算下一步</span></span><br><span class="line"><span class="keyword">int</span> Number(Point p); <span class="comment">//找出当前位置下一步的各种可能位置，计算可能之和</span></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">Next</span>(Point p); <span class="comment">//找出各个位置并将其步数记录</span></span><br><span class="line">bool Legal(Point p); <span class="comment">//判断是否可行</span></span><br><span class="line"><span class="keyword">void</span> PrintChessBoard(<span class="keyword">int</span> board[N][N]); <span class="comment">//打印棋盘</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">Point p;</span><br><span class="line">GetOrdnance(p);</span><br><span class="line">InitStack(s1);</span><br><span class="line"><span class="keyword">Next</span>(p);</span><br><span class="line">PrintChessBoard(board);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> GetOrdnance(Point &amp;amp;p)</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"输入 x ( 0 - %d ), y ( 0 - %d )n"</span>, N - <span class="number">1</span>, N - <span class="number">1</span>);</span><br><span class="line">scanf(<span class="string">"%d%d"</span>, &amp;amp;p.x, &amp;amp;p.y);</span><br><span class="line"></span><br><span class="line"><span class="comment">//判断输入是否合法</span></span><br><span class="line"><span class="keyword">while</span> (! ((p.x &amp;gt;= <span class="number">0</span>) &amp;amp;&amp;amp; (p.x &amp;lt; N - <span class="number">1</span>) &amp;amp;&amp;amp; (p.y &amp;gt;= <span class="number">0</span>) &amp;amp;&amp;amp; (p.y &amp;lt; N - <span class="number">1</span>)) )</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"输入不合法，请重新输入n"</span>);</span><br><span class="line">printf(<span class="string">"输入 x ( 0 - %d ), y ( 0 - %d )n"</span>, N - <span class="number">1</span>, N -<span class="number">1</span>);</span><br><span class="line">scanf(<span class="string">"%d%d"</span>, &amp;amp;p.x, &amp;amp;p.y);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> PrintChessBoard(<span class="keyword">int</span> board[N][N])</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; N; i++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; N; j++)</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"%5d"</span>, board[i][j]);</span><br><span class="line">&#125;</span><br><span class="line">printf(<span class="string">"n"</span>);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> Number(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point p1;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">8</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">p1.x = p.x + HTry1[i];</span><br><span class="line">p1.y = p.y + HTry2[i];</span><br><span class="line"><span class="keyword">if</span> (Legal(p1))</span><br><span class="line">&#123;</span><br><span class="line">j++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> j;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> <span class="keyword">Next</span>(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point p1, p2; <span class="comment">//p2存储下一步要走的位置 p1存储当前位置</span></span><br><span class="line">InitStack(s[<span class="keyword">step</span>]);</span><br><span class="line">board[p.x][p.y] = <span class="keyword">step</span>;</span><br><span class="line"><span class="keyword">Push</span>(s1, p); <span class="comment">//将当前所在位置压入临时栈s1</span></span><br><span class="line"><span class="keyword">if</span> (<span class="keyword">step</span> &amp;lt; N * N)</span><br><span class="line">&#123;</span><br><span class="line">Exit(p);</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//p2是从s[step]里pop出来的</span></span><br><span class="line"><span class="keyword">if</span> ((s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top &amp;amp;&amp;amp; Number(p2) == <span class="number">0</span>) &amp;amp;&amp;amp; <span class="keyword">step</span> != N * N - <span class="number">1</span>) <span class="comment">//s[step]为空栈 下一步不能走了 步数没有到64</span></span><br><span class="line">&#123; <span class="comment">//这个时候我们需要回溯操作</span></span><br><span class="line"><span class="keyword">Pop</span>(s1, p1); <span class="comment">//把当前位置从临时栈s1里pop出来</span></span><br><span class="line">board[p1.x][p1.y] = <span class="number">0</span>; <span class="comment">//清零操作</span></span><br><span class="line">--<span class="keyword">step</span>; <span class="comment">//步数减1</span></span><br><span class="line"><span class="keyword">while</span> (s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top) <span class="comment">//清除s[step]栈为空栈</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">Pop</span>(s1, p1); <span class="comment">//从s1中弹栈放到p1中</span></span><br><span class="line">board[p1.x][p1.y] = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">step</span>--; <span class="comment">//一直回溯到能走为止</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//换一种下一步的走法</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (Number(p2) == <span class="number">0</span> &amp;amp;&amp;amp; s[<span class="keyword">step</span>].base != s[<span class="keyword">step</span>].top)<span class="comment">//下一步没有走的位置 栈不为空</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">Pop</span>(s[<span class="keyword">step</span>], p2); <span class="comment">//换一种下一步的走法</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (Number(p2) != <span class="number">0</span> &amp;amp;&amp;amp; s[<span class="keyword">step</span>].base == s[<span class="keyword">step</span>].top)<span class="comment">//下一步有走的位置 但是栈s[step]为空</span></span><br><span class="line">&#123; <span class="comment">//直接走下一步</span></span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">step</span>++;</span><br><span class="line"><span class="keyword">Next</span>(p2);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">void</span> Exit(Point p)</span><br><span class="line">&#123;</span><br><span class="line">Point temp;</span><br><span class="line">Point p1;</span><br><span class="line"><span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">Point ap[<span class="number">8</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &amp;lt; <span class="number">8</span>; i++)</span><br><span class="line">&#123;</span><br><span class="line">p1.x = p.x + HTry1[i];</span><br><span class="line">p1.y = p.y + HTry2[i];</span><br><span class="line"><span class="keyword">if</span> (Legal(p1))</span><br><span class="line">&#123;</span><br><span class="line">ap[j] = p1;</span><br><span class="line">j++;</span><br><span class="line">&#125;</span><br><span class="line">&#125;<span class="comment">//将下一步的可能位置存储在ap[]中</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> <span class="keyword">count</span> = <span class="number">0</span>; <span class="keyword">count</span> &amp;lt; Number(p) - <span class="number">1</span>; <span class="keyword">count</span>++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &amp;lt; Number(p) - <span class="number">1</span>; k++)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (Number(ap[k]) &amp;lt; Number(ap[k+<span class="number">1</span>])) <span class="comment">//从大到小排列</span></span><br><span class="line">&#123;</span><br><span class="line">temp = ap[k+<span class="number">1</span>];</span><br><span class="line">ap[k+<span class="number">1</span>] = ap[k];</span><br><span class="line">ap[k] = temp;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> t = <span class="number">0</span>; t &amp;lt; Number(p); t++) &#123; <span class="keyword">Push</span>(s[<span class="keyword">step</span>], ap[t]); <span class="comment">//从大到小压入s[step]栈中，pop的时候就是从小到大 &#125; &#125; bool Legal(Point p) &#123; if ((p.x &amp;gt;= 0) &amp;amp;&amp;amp; (p.x &amp;lt; N) &amp;amp;&amp;amp; (p.y &amp;gt;= 0) &amp;amp;&amp;amp; (p.y &amp;lt; N) &amp;amp;&amp;amp; (board[p.x][p.y] == 0))</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SqStack.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OK 1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> ERROR 0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> OVERFLOW -2</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACK_INIT_SIZE 100 <span class="comment">//存储空间初始分配量</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACKINCREMEMNT 10 <span class="comment">//存储空间分配增量</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _Point&#123;</span><br><span class="line"><span class="keyword">int</span> x;</span><br><span class="line"><span class="keyword">int</span> y;</span><br><span class="line">&#125;Point;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> Point SElemType;</span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">int</span> Status;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _SqStack</span><br><span class="line">&#123;</span><br><span class="line">SElemType *base;</span><br><span class="line">SElemType *top;</span><br><span class="line"><span class="keyword">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*基本操作的函数原型说明*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//构造一个空栈</span></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span><span class="params">(SqStack &amp;amp;s)</span></span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span><span class="params">(SqStack S)</span></span>;</span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span><span class="params">(SqStack s)</span></span>;</span><br><span class="line"><span class="comment">//返回栈顶元素</span></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span><span class="params">(SqStack s, SElemType &amp;amp;e)</span></span>;</span><br><span class="line"><span class="comment">//进栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Push</span><span class="params">(SqStack &amp;amp;s, SElemType e)</span></span>;</span><br><span class="line"><span class="comment">//出栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> <span class="params">(SqStack &amp;amp;s, SElemType &amp;amp;e)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>SqStack.cpp</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include "SqStack.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//构造一个空栈 S</span></span><br><span class="line">s.<span class="keyword">base</span> = (SElemType *)malloc(STACK_INIT_SIZE * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line"><span class="comment">//存储分配失败</span></span><br><span class="line"><span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> OVERFLOW;</span><br><span class="line">s.top = s.<span class="keyword">base</span>;</span><br><span class="line">s.stacksize = STACK_INIT_SIZE;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span>(<span class="params">SqStack &amp;amp;s</span>)</span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span>(<span class="params">SqStack S</span>)</span>;</span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span>(<span class="params">SqStack s</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span>(<span class="params">SqStack s, SElemType &amp;amp;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//若栈不为空，用e返回s的栈顶元素，并返回OK；否则返回ERROR</span></span><br><span class="line"><span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> ERROR;</span><br><span class="line">e = *(s.top - <span class="number">1</span>);</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Push</span>(<span class="params">SqStack &amp;amp;s, SElemType e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//插入元素e为新的栈顶元素</span></span><br><span class="line"><span class="keyword">if</span> (s.top - s.<span class="keyword">base</span> &amp;gt;= s.stacksize)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//栈满，追加空间</span></span><br><span class="line">s.<span class="keyword">base</span> = (SElemType*) realloc(s.<span class="keyword">base</span>, (s.stacksize + STACK_INIT_SIZE) * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line"><span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> OVERFLOW;</span><br><span class="line">s.top = s.<span class="keyword">base</span> + s.stacksize;</span><br><span class="line">s.stacksize += STACKINCREMEMNT;</span><br><span class="line">&#125;</span><br><span class="line">*s.top++ = e;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> (<span class="params">SqStack &amp;amp;s, SElemType &amp;amp;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line"><span class="keyword">return</span> ERROR;</span><br><span class="line">e = * --s.top;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/11/06/栈和队列–魔王语言/" itemprop="url">
+                栈和队列–魔王语言
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-11-06T15:30:37+08:00" content="2012-11-06">
+            2012-11-06
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>可以算是一道经典的数据结构的问题吧。关于题目的描述这里就不讲了，反正大家都搜得到的。</p>
+<p>我的笨脑子经过了自己一个晚上加上一个下午的思索，才终于把这道破题目给做出来了。</p>
+<p>哎。。。智商是硬伤啊。。。</p>
+<p>做了模块化处理，敲了一边队列和 栈的操作，一起贴出来算了</p>
+<p>用的是顺序栈和链队</p>
+<p>先把关键部分的代码贴出来。。。不然估计没人会看下面的东西。。。</p>
+<p>Devil.cpp</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Quene.h"</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "SqStack.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init</span><span class="params">(<span class="keyword">char</span> *regular, <span class="keyword">char</span> *language, <span class="keyword">int</span> &amp;#038;length)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Operation</span><span class="params">(<span class="keyword">int</span> length, <span class="keyword">char</span> *language, <span class="keyword">char</span> *regular, SElemType &amp;#038;e, SqStack &amp;#038;s, SqStack &amp;#038;temps, LinkQuene &amp;#038;Q)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PrintfLan</span><span class="params">(LinkQuene Q, SElemType e)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="comment">//define</span></span><br><span class="line">	<span class="keyword">int</span> length = <span class="number">0</span>;</span><br><span class="line">	SElemType e;</span><br><span class="line">	SqStack s, temps;</span><br><span class="line">	LinkQuene Q;</span><br><span class="line">	<span class="keyword">char</span> language[<span class="number">1024</span>];</span><br><span class="line">	<span class="keyword">char</span> regular[<span class="number">1024</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Init</span></span><br><span class="line">	<span class="built_in">memset</span>(language, <span class="number">0</span>, <span class="number">1024</span>);</span><br><span class="line">	<span class="built_in">memset</span>(regular,  <span class="number">0</span>, <span class="number">1024</span>);</span><br><span class="line">	InitStack(s);</span><br><span class="line">	InitStack(temps);</span><br><span class="line">	InitQuene(Q);</span><br><span class="line"></span><br><span class="line"><span class="comment">//functions</span></span><br><span class="line">	Init(regular, language, length);</span><br><span class="line">	Operation(length, language, regular, e, s, temps, Q);</span><br><span class="line">	PrintfLan(Q, e);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Init</span><span class="params">(<span class="keyword">char</span> *regular, <span class="keyword">char</span> *language, <span class="keyword">int</span> &amp;#038;length)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//scanf devil's language</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"我是大魔王,我要开始说鸟语了n"</span>);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"魔王的规则B--&gt;"</span>);</span><br><span class="line">	gets(regular);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"魔王的语言："</span>);</span><br><span class="line">	gets(language);</span><br><span class="line">	length = <span class="built_in">strlen</span>(language);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Operation</span><span class="params">(<span class="keyword">int</span> length, <span class="keyword">char</span> *language, <span class="keyword">char</span> *regular, SElemType &amp;#038;e, SqStack &amp;#038;s, SqStack &amp;#038;temps, LinkQuene &amp;#038;Q)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> add;</span><br><span class="line">	<span class="keyword">char</span> *p;</span><br><span class="line">	<span class="keyword">char</span> *q;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//stack in</span></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> j = length - <span class="number">1</span>; j &gt;= <span class="number">0</span>; j--)</span><br><span class="line">		Push(s, *(language + j));</span><br><span class="line"></span><br><span class="line">	<span class="comment">//stack to quene</span></span><br><span class="line">	<span class="keyword">while</span> (StackEmpty(s))</span><br><span class="line">	&#123;</span><br><span class="line">		Pop(s, e);</span><br><span class="line">		<span class="keyword">if</span> (e != <span class="string">'('</span> &amp;<span class="preprocessor">#038;&amp;#038; e != ')')</span></span><br><span class="line">			<span class="comment">//处理不是括号的情况</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//处理是B的情况</span></span><br><span class="line">			<span class="keyword">if</span> (e == <span class="string">'B'</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				<span class="comment">//B中有A</span></span><br><span class="line">				q = regular;</span><br><span class="line">				<span class="keyword">while</span> (*q)</span><br><span class="line">				&#123;</span><br><span class="line">					<span class="keyword">if</span> (*q ==<span class="string">'A'</span>)</span><br><span class="line">					&#123;</span><br><span class="line">						EnQuene(Q, <span class="string">'s'</span>);</span><br><span class="line">						EnQuene(Q, <span class="string">'a'</span>);</span><br><span class="line">						EnQuene(Q, <span class="string">'e'</span>);</span><br><span class="line">					&#125;</span><br><span class="line">					<span class="keyword">else</span></span><br><span class="line">						EnQuene(Q, *q);</span><br><span class="line">					q++;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> <span class="keyword">if</span> (e == <span class="string">'A'</span>)</span><br><span class="line">				<span class="comment">//处理是A的情况</span></span><br><span class="line">			&#123;</span><br><span class="line">				EnQuene(Q, <span class="string">'s'</span>);</span><br><span class="line">				EnQuene(Q, <span class="string">'a'</span>);</span><br><span class="line">				EnQuene(Q, <span class="string">'e'</span>);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="comment">//处理一般情况</span></span><br><span class="line">				EnQuene(Q, e);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			<span class="comment">//处理括号的情况</span></span><br><span class="line">		&#123;</span><br><span class="line">			<span class="comment">//进临时栈</span></span><br><span class="line">			<span class="keyword">if</span> (e == <span class="string">'('</span>)</span><br><span class="line">				<span class="comment">//处理左括号</span></span><br><span class="line">			&#123;</span><br><span class="line">				Push(temps, e);</span><br><span class="line">				Pop(s, e);</span><br><span class="line">				add = e;</span><br><span class="line">				Pop(s, e);</span><br><span class="line">				<span class="keyword">while</span> (e != <span class="string">')'</span>)</span><br><span class="line">				&#123;</span><br><span class="line">					Push(temps, e);</span><br><span class="line">					Push(temps, add);</span><br><span class="line">					Pop(s, e);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (e == <span class="string">')'</span>)</span><br><span class="line">				<span class="comment">//处理右括号</span></span><br><span class="line">				Push(temps, e);</span><br><span class="line"></span><br><span class="line">			<span class="comment">//出栈</span></span><br><span class="line">			Pop(temps, e);</span><br><span class="line">			<span class="keyword">while</span> (e != <span class="string">'('</span>)</span><br><span class="line">			&#123;</span><br><span class="line">				Pop(temps, e);</span><br><span class="line">				EnQuene(Q, e);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">PrintfLan</span><span class="params">(LinkQuene Q, SElemType e)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//printf</span></span><br><span class="line">	<span class="keyword">while</span> (QueneEmpty(Q))</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		DeQuene(Q, e);</span><br><span class="line">		<span class="keyword">switch</span> (e)</span><br><span class="line">		&#123;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'t'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"天"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'d'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"地"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'s'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"上"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'a'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"一只"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'e'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"鹅"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'z'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"追"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'g'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"赶"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'x'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"下"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'n'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"蛋"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">case</span> <span class="string">'h'</span>:</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"恨"</span>);<span class="keyword">break</span>;</span><br><span class="line">		<span class="keyword">default</span>:</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Devil.h</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;stdio<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;malloc<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="built_in">string</span><span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#define</span> OK <span class="number">1</span></span><br><span class="line"><span class="variable">#define</span> ERROR <span class="number">0</span></span><br><span class="line"><span class="variable">#define</span> OVERFLOW <span class="subst">-</span><span class="number">2</span></span><br><span class="line">typedef int Status;</span><br></pre></td></tr></table></figure>
+<p>Quene.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Devil.h"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> QElemType;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> QNode&#123;</span><br><span class="line">	QElemType data;</span><br><span class="line">	<span class="keyword">struct</span> QNode *next;</span><br><span class="line">&#125;QNode, *QuenePtr;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span>&#123;</span><br><span class="line">	QuenePtr front;</span><br><span class="line">	QuenePtr rear;</span><br><span class="line">&#125;LinkQuene;</span><br><span class="line"></span><br><span class="line"><span class="comment">//队列的基本函数原型说明</span></span><br><span class="line"><span class="function">Status <span class="title">InitQuene</span><span class="params">(LinkQuene &amp;#038;Q)</span></span>;				<span class="comment">//构造一个空的队列</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyQuene</span><span class="params">(LinkQuene &amp;#038;Q)</span></span>;			<span class="comment">//销毁队列Q</span></span><br><span class="line"><span class="function">Status <span class="title">ClearQuene</span><span class="params">(LinkQuene &amp;#038;Q)</span></span>;			<span class="comment">//清空队列Q</span></span><br><span class="line"><span class="function">Status <span class="title">QueneEmpty</span><span class="params">(LinkQuene Q)</span></span>;				<span class="comment">//判断队列是否为空</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">QueneLength</span><span class="params">(LinkQuene Q)</span></span>;				<span class="comment">//返回队列的长度</span></span><br><span class="line"><span class="function">Status <span class="title">GetHead</span><span class="params">(LinkQuene Q, QElemType &amp;#038;e)</span></span>;	<span class="comment">//返回队头信息</span></span><br><span class="line"><span class="function">Status <span class="title">EnQuene</span><span class="params">(LinkQuene &amp;#038;Q, QElemType e)</span></span>;	<span class="comment">//插入元素e</span></span><br><span class="line"><span class="function">Status <span class="title">DeQuene</span><span class="params">(LinkQuene &amp;#038;Q, QElemType &amp;#038;e)</span></span>;	<span class="comment">//删除队头元素</span></span><br></pre></td></tr></table></figure>
+<p>SqStack.h</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#<span class="keyword">include</span> "Devil.h"</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACK_INIT_SIZE 100		<span class="comment">//存储空间初始分配量</span></span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> STACKINCREMEMNT 10		<span class="comment">//存储空间分配增量</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">char</span> SElemType; </span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> _SqStack</span><br><span class="line">&#123;</span><br><span class="line">	SElemType *base;</span><br><span class="line">	SElemType *top;</span><br><span class="line">	<span class="keyword">int</span> stacksize;</span><br><span class="line">&#125;SqStack;</span><br><span class="line"></span><br><span class="line"><span class="comment">//构造一个空栈</span></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span><span class="params">(SqStack &amp;#038;s)</span></span>;</span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span><span class="params">(SqStack &amp;#038;s)</span></span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span><span class="params">(SqStack &amp;#038;s)</span></span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span><span class="params">(SqStack S)</span></span>;</span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span><span class="params">(SqStack s)</span></span>;</span><br><span class="line"><span class="comment">//返回栈顶元素</span></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span><span class="params">(SqStack s, SElemType &amp;#038;e)</span></span>;</span><br><span class="line"><span class="comment">//进栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Push</span><span class="params">(SqStack &amp;#038;s, SElemType e)</span></span>;</span><br><span class="line"><span class="comment">//出栈操作</span></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> <span class="params">(SqStack &amp;#038;s, SElemType &amp;#038;e)</span></span>;</span><br></pre></td></tr></table></figure>
+<p>Quene.cpp</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="string">"Quene.h"</span></span><br><span class="line"></span><br><span class="line">Status InitQuene(LinkQuene <span class="subst">&amp;</span><span class="variable">#038</span>;Q)</span><br><span class="line">&#123;</span><br><span class="line">	Q<span class="built_in">.</span>front <span class="subst">=</span> Q<span class="built_in">.</span>rear <span class="subst">=</span> (QuenePtr)malloc(sizeof(QNode));</span><br><span class="line">	<span class="keyword">if</span> (<span class="subst">!</span>Q<span class="built_in">.</span>front)</span><br><span class="line">		<span class="keyword">return</span> OVERFLOW;</span><br><span class="line">	Q<span class="built_in">.</span>front<span class="subst">-&gt;</span>next <span class="subst">=</span> <span class="built_in">NULL</span>;<span class="comment">//队首指针设为空，那对尾指针呢？？？</span></span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Status DestroyQuene(LinkQuene <span class="subst">&amp;</span><span class="variable">#038</span>;Q)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//销毁队列Q</span></span><br><span class="line">	<span class="keyword">while</span> (Q<span class="built_in">.</span>front)</span><br><span class="line">	&#123;</span><br><span class="line">		Q<span class="built_in">.</span>rear <span class="subst">=</span> Q<span class="built_in">.</span>front<span class="subst">-&gt;</span>next;</span><br><span class="line">		free(Q<span class="built_in">.</span>front);</span><br><span class="line">		Q<span class="built_in">.</span>front <span class="subst">=</span> Q<span class="built_in">.</span>rear;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Status EnQuene(LinkQuene <span class="subst">&amp;</span><span class="variable">#038</span>;Q, QElemType e)</span><br><span class="line">&#123;</span><br><span class="line">	QuenePtr p;</span><br><span class="line">	p <span class="subst">=</span> (QuenePtr)malloc(sizeof(QNode));</span><br><span class="line">	<span class="keyword">if</span> (<span class="subst">!</span>p)</span><br><span class="line">		<span class="keyword">return</span> OVERFLOW;</span><br><span class="line">	p<span class="subst">-&gt;</span><span class="built_in">data</span> <span class="subst">=</span> e;</span><br><span class="line">	p<span class="subst">-&gt;</span>next <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">	Q<span class="built_in">.</span>rear<span class="subst">-&gt;</span>next <span class="subst">=</span> p;</span><br><span class="line">	Q<span class="built_in">.</span>rear <span class="subst">=</span> p;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Status DeQuene(LinkQuene <span class="subst">&amp;</span><span class="variable">#038</span>;Q, QElemType <span class="subst">&amp;</span><span class="variable">#038</span>;e)</span><br><span class="line">&#123;</span><br><span class="line">	QuenePtr p;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (Q<span class="built_in">.</span>front <span class="subst">==</span> Q<span class="built_in">.</span>rear)</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	p <span class="subst">=</span> Q<span class="built_in">.</span>front<span class="subst">-&gt;</span>next;</span><br><span class="line">	e <span class="subst">=</span> p<span class="subst">-&gt;</span><span class="built_in">data</span>;</span><br><span class="line">	Q<span class="built_in">.</span>front<span class="subst">-&gt;</span>next <span class="subst">=</span> p<span class="subst">-&gt;</span>next;</span><br><span class="line">	<span class="keyword">if</span> (Q<span class="built_in">.</span>rear <span class="subst">==</span> p)</span><br><span class="line">		Q<span class="built_in">.</span>rear <span class="subst">=</span> Q<span class="built_in">.</span>front;</span><br><span class="line">	free(p);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Status QueneEmpty(LinkQuene Q)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span> (Q<span class="built_in">.</span>front <span class="subst">==</span> Q<span class="built_in">.</span>rear)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SqStack.cpp</p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include "SqStack.h"</span></span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">InitStack</span>(<span class="params">SqStack &amp;#<span class="number">038</span>;s</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//构造一个空栈 S</span></span><br><span class="line">	s.<span class="keyword">base</span> = (SElemType *)malloc(STACK_INIT_SIZE * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">	<span class="comment">//存储分配失败</span></span><br><span class="line">	<span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line">		<span class="keyword">return</span> OVERFLOW;</span><br><span class="line">	memset(s.<span class="keyword">base</span>, <span class="number">0</span>, STACK_INIT_SIZE * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">	s.top = s.<span class="keyword">base</span>;</span><br><span class="line">	s.stacksize = STACK_INIT_SIZE;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//销毁栈S，S不再存在</span></span><br><span class="line"><span class="function">Status <span class="title">DestroyStack</span>(<span class="params">SqStack &amp;#<span class="number">038</span>;s</span>)</span>;</span><br><span class="line"><span class="comment">//把S置为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">ClearStack</span>(<span class="params">SqStack &amp;#<span class="number">038</span>;s</span>)</span>;</span><br><span class="line"><span class="comment">//判断栈是否为空栈</span></span><br><span class="line"><span class="function">Status <span class="title">StackEmpty</span>(<span class="params">SqStack S</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (S.<span class="keyword">base</span> == S.top)</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//返回S的元素个数，即栈的长度</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">StackLength</span>(<span class="params">SqStack s</span>)</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">GetTop</span>(<span class="params">SqStack s, SElemType &amp;#<span class="number">038</span>;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//若栈不为空，用e返回s的栈顶元素，并返回OK；否则返回ERROR</span></span><br><span class="line">	<span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	e = *(s.top - <span class="number">1</span>);</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Push</span>(<span class="params">SqStack &amp;#<span class="number">038</span>;s, SElemType e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">//插入元素e为新的栈顶元素</span></span><br><span class="line">	<span class="keyword">if</span> (s.top - s.<span class="keyword">base</span> &gt;= s.stacksize)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">//栈满，追加空间</span></span><br><span class="line">		s.<span class="keyword">base</span> = (SElemType*) realloc(s.<span class="keyword">base</span>, (s.stacksize + STACK_INIT_SIZE) * <span class="keyword">sizeof</span>(SElemType));</span><br><span class="line">		<span class="keyword">if</span> (!s.<span class="keyword">base</span>)</span><br><span class="line">			<span class="keyword">return</span> OVERFLOW;</span><br><span class="line">		s.top = s.<span class="keyword">base</span> + s.stacksize;</span><br><span class="line">		s.stacksize += STACKINCREMEMNT;</span><br><span class="line">	&#125;</span><br><span class="line">	*s.top++ = e;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">Status <span class="title">Pop</span> (<span class="params">SqStack &amp;#<span class="number">038</span>;s, SElemType &amp;#<span class="number">038</span>;e</span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (s.top == s.<span class="keyword">base</span>)</span><br><span class="line">		<span class="keyword">return</span> ERROR;</span><br><span class="line">	e = * --s.top;</span><br><span class="line">	<span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/27/DLL注入（二）线程注入/" itemprop="url">
+                DLL注入（二）线程注入
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-27T11:07:35+08:00" content="2012-10-27">
+            2012-10-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>这里我们要用到上篇中的那个 msg.dll</p>
+<p><strong>下面的代码还是使用的统一的宽字符版本，已经在VS2010下编译通过。</strong></p>
+<p>首先上代码，然后慢慢解释：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;TlHelp32.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> LoadRemoteDll(DWORD dwProcessId, LPTSTR lpszLibName)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span>   bResult            = <span class="literal">FALSE</span>;</span><br><span class="line">    HANDLE hProcess            = <span class="literal">NULL</span>;</span><br><span class="line">    HANDLE hThread            = <span class="literal">NULL</span>;</span><br><span class="line">    PSTR   pszLibFileRemote = <span class="literal">NULL</span>;</span><br><span class="line">    DWORD cch;</span><br><span class="line">    PTHREAD_START_ROUTINE pfnThreadRrn;</span><br><span class="line">    __try</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获得想要注入代码的进程的句柄</span></span><br><span class="line">        hProcess = OpenProcess(PROCESS_ALL_ACCESS, <span class="literal">FALSE</span>, dwProcessId);</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">NULL</span> == hProcess)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//计算DLL路径名需要的字节数</span></span><br><span class="line">        cch = <span class="number">2</span> * (<span class="number">1</span> + lstrlen(lpszLibName));</span><br><span class="line">        <span class="comment">//在远程线程中为路径名分配空间</span></span><br><span class="line">        pszLibFileRemote = (PSTR)VirtualAllocEx(hProcess, <span class="literal">NULL</span>, cch, MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (pszLibFileRemote == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//将DLL的路径名复制到远程进程的地址空间</span></span><br><span class="line">        <span class="keyword">if</span> (!WriteProcessMemory(hProcess, (PVOID)pszLibFileRemote, (PVOID)lpszLibName, cch, <span class="literal">NULL</span>))</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//获得LoadLibraryA在Kernel.dll中得真正地址</span></span><br><span class="line">        pfnThreadRrn = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT(&amp;quot;Kernel32&amp;quot;)), &amp;quot;LoadLibraryW&amp;quot;);</span><br><span class="line">        <span class="keyword">if</span> (pfnThreadRrn == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line"></span><br><span class="line">        hThread = CreateRemoteThread(hProcess, <span class="literal">NULL</span>, <span class="number">0</span>, pfnThreadRrn, (PVOID)pszLibFileRemote, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (hThread == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//等待远程线程终止</span></span><br><span class="line">        WaitForSingleObject(hThread, INFINITE);</span><br><span class="line">        bResult = <span class="literal">TRUE</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    __finally</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//关闭句柄</span></span><br><span class="line">        <span class="keyword">if</span> (pszLibFileRemote != <span class="literal">NULL</span>)</span><br><span class="line">            VirtualFreeEx(hProcess, (PVOID)pszLibFileRemote, <span class="number">0</span>, MEM_RELEASE);</span><br><span class="line">        <span class="keyword">if</span> (hThread != <span class="literal">NULL</span>)</span><br><span class="line">            CloseHandle(hThread);</span><br><span class="line">        <span class="keyword">if</span> (hProcess != <span class="literal">NULL</span>)</span><br><span class="line">            CloseHandle(hProcess);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> GetProcessIdByName(LPWSTR szProcessName, LPDWORD lpPID)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//变量及其初始化</span></span><br><span class="line">    STARTUPINFO st;</span><br><span class="line">    PROCESS_INFORMATION pi;</span><br><span class="line">    PROCESSENTRY32 ps;</span><br><span class="line">    HANDLE hSnapshot;</span><br><span class="line">    ZeroMemory(&amp;amp;st, <span class="keyword">sizeof</span>(STARTUPINFO));</span><br><span class="line">    ZeroMemory(&amp;amp;pi, <span class="keyword">sizeof</span>(PROCESS_INFORMATION));</span><br><span class="line">    st<span class="variable">.cb</span> = <span class="keyword">sizeof</span>(STARTUPINFO);</span><br><span class="line">    ZeroMemory(&amp;amp;ps, <span class="keyword">sizeof</span>(PROCESSENTRY32));</span><br><span class="line">    ps<span class="variable">.dwSize</span> = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历进程</span></span><br><span class="line">    hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (hSnapshot == INVALID_HANDLE_VALUE)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Process32First(hSnapshot, &amp;amp;ps))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//比较进程名</span></span><br><span class="line">        <span class="keyword">if</span> (lstrcmpi(ps<span class="variable">.szExeFile</span>, TEXT(&amp;quot;calc<span class="variable">.exe</span>&amp;quot;)) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//找到了</span></span><br><span class="line">            *lpPID = ps<span class="variable">.th32ProcessID</span>;</span><br><span class="line">            CloseHandle(hSnapshot);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (Process32Next(hSnapshot, &amp;amp;ps));</span><br><span class="line">    <span class="comment">//没有找到</span></span><br><span class="line">    CloseHandle(hSnapshot);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//修改进程权限</span></span><br><span class="line"><span class="built_in">BOOL</span> EnablePrivilege(LPWSTR name)</span><br><span class="line">&#123;</span><br><span class="line">    HANDLE hToken;</span><br><span class="line">    <span class="built_in">BOOL</span> rv;</span><br><span class="line">    TOKEN_PRIVILEGES priv = &#123;<span class="number">1</span>, &#123;<span class="number">0</span>, <span class="number">0</span>, SE_PRIVILEGE_ENABLED&#125;&#125;;</span><br><span class="line">    LookupPrivilegeValue(<span class="number">0</span>, name, &amp;amp;priv<span class="variable">.Privileges</span>[<span class="number">0</span>]<span class="variable">.Luid</span>);</span><br><span class="line">    OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &amp;amp;hToken);</span><br><span class="line">    AdjustTokenPrivileges(hToken, <span class="literal">FALSE</span>, &amp;amp;priv, <span class="keyword">sizeof</span> priv, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    rv = GetLastError() == ERROR_SUCCESS;</span><br><span class="line">    CloseHandle(hToken);</span><br><span class="line">    <span class="keyword">return</span> rv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WinMain(HI<span class="built_in">NSTANCE</span> hInstance, HI<span class="built_in">NSTANCE</span> hPrevInstance, LPSTR lpCmdLine, <span class="keyword">int</span> nCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">    DWORD dwPID;</span><br><span class="line">    <span class="comment">//提权，获取SE_DEBUG_NAME 权限</span></span><br><span class="line">    <span class="comment">//可以在其他进程的内存空间中写入，创建线程</span></span><br><span class="line">     <span class="keyword">if</span> (<span class="number">0</span> != EnablePrivilege(SE_DEBUG_NAME))</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!GetProcessIdByName(TEXT(&amp;quot;calc<span class="variable">.exe</span>&amp;quot;), &amp;amp;dwPID))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//通过上传远程线程加载dll</span></span><br><span class="line">    <span class="comment">//将msg.dll放置在系统目录下</span></span><br><span class="line">    <span class="keyword">if</span> (!LoadRemoteDll(dwPID, TEXT(&amp;quot;msg<span class="variable">.dll</span>&amp;quot;)))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把上次的dll放到相对目录下面或者是扔到system32下面。</p>
+<p>我们首先从main函数开始吧：</p>
+<p>主要是由三个部分组成的：</p>
+<p>**1.提取权限</p>
+<p>**</p>
+<p>  //提权，获取SE_DEBUG_NAME 权限</p>
+<pre><code><span class="comment">//可以在其他进程的内存空间中写入，创建线程</span>
+
+ <span class="keyword">if</span> <span class="params">(<span class="number">0</span> != EnablePrivilege<span class="params">(SE_DEBUG_NAME)</span>)</span>
+
+     return <span class="number">0</span>;
+</code></pre><p>**</p>
+<p>2.遍历搜索进程UID**</p>
+<p>  if (!GetProcessIdByName(TEXT(&#8220;calc.exe&#8221;), &#038;dwPID))</p>
+<pre><code><span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p><strong>3.创建远程线程</strong></p>
+<p>  //通过上传远程线程加载dll</p>
+<pre><code><span class="comment">//将msg.dll放置在系统目录下</span>
+
+<span class="keyword">if</span> <span class="params">(!LoadRemoteDll<span class="params">(dw<span class="literal">PI</span>D, TEXT<span class="params">(&amp;#<span class="number">8220</span>;msg.dll&amp;#<span class="number">8221</span>;)</span>)</span>)</span>
+
+    return <span class="number">0</span>;
+</code></pre><p>前两个步骤我们就不具体讲了，不是我们的重点。关键是其实对于进程令牌Token自己也不是很理解，不好意思给大家讲。。。</p>
+<p>关键我们还是来看看第三个步骤好了。</p>
+<p>创建远程线程句柄有下面几个步骤：</p>
+<p>**</p>
+<p>1.获得想要注入代码的进程的句柄**</p>
+<p>hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwProcessId);</p>
+<p><strong>2.计算DLL路径名需要的字节数</strong></p>
+<p>cch = 2 * (1 + lstrlen(lpszLibName));</p>
+<p>这里自己对宽字符的处理没有做好</p>
+<p>可以使用wcslen函数</p>
+<p><strong>3.在远程线程中为路径名分配空间</strong></p>
+<p>pszLibFileRemote = (PSTR)VirtualAllocEx(hProcess, NULL, cch, MEM_COMMIT, PAGE_READWRITE);</p>
+<p><strong>4.将DLL的路径名复制到远程进程的地址空间</strong></p>
+<p>WriteProcessMemory(hProcess, (PVOID)pszLibFileRemote, (PVOID)lpszLibName, cch, NULL);</p>
+<p><strong>5.获得LoadLibraryA在Kernel.dll中得真正地址</strong></p>
+<p>pfnThreadRrn = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT(&#8220;Kernel32&#8243;)), &#8220;LoadLibraryW&#8221;);</p>
+<p>**6.最后是最最关键的函数</p>
+<p>**</p>
+<p>hThread = CreateRemoteThread(hProcess, NULL, 0, pfnThreadRrn, (PVOID)pszLibFileRemote, 0, NULL);</p>
+<p><strong>7.当然还有扫尾的工作</strong></p>
+<p>//关闭句柄</p>
+<pre><code>if <span class="list">(<span class="keyword">pszLibFileRemote</span> != NULL)</span>
+
+    VirtualFreeEx<span class="list">(<span class="keyword">hProcess</span>, <span class="list">(<span class="keyword">PVOID</span>)</span>pszLibFileRemote, <span class="number">0</span>, MEM_RELEASE)</span><span class="comment">;</span>
+
+if <span class="list">(<span class="keyword">hThread</span> != NULL)</span>
+
+    CloseHandle<span class="list">(<span class="keyword">hThread</span>)</span><span class="comment">;</span>
+
+if <span class="list">(<span class="keyword">hProcess</span> != NULL)</span>
+
+    CloseHandle<span class="list">(<span class="keyword">hProcess</span>)</span><span class="comment">;</span>
+</code></pre><p>运行一下，发现成功了!~~~</p>
+<p>最后栋哥跟我提醒了几点：</p>
+<p>**1.关于进程令牌的代码，有时候不写也是可以通过的。这里还有待研究一下。</p>
+<p>2.被注入的程序有时候要放在相对目录下才会产生效果。关于这点自己还没有实践过。有待验证。</p>
+<p>3.像explorer.exe有时候会无法注入。换个简单的calc.exe完全可以。火狐，qq全部都可以。可能是explorer.exe有点特别。</p>
+<p>4.第一次远程注入可以成功，第二次就不行了，就不能弹出对话框了，貌似进程打开之后马上就关闭了。个人以为原因可能处在dll的fdwReason。有时间尝试着调试一下。**</p>
+<p>自己改了一下，应该是这样的。上面的代码里面没有FreeLibrary，那么dll还是在远程地址空间里面。第二次想要注入的时候是不会发送DLL_PROCESS_ATTACH 消息的。</p>
+<p>DLL_PROCESS_ATTACH消息的发送是这样的：</p>
+<p>线程调用LoadLibrary   &#8211;&gt;   Dll是否已经被映射到了进程的地址空间中  (如果是)  &#8211;&gt;   递增DLL的使用计数  &#8211;&gt;  使用计数器是否等于1 （如果是） &#8211;&gt;  调用DLL的DllMain并且传入 DLL_PROCESS_ATTACH</p>
+<p>所以说，在Dll已经被映射到了进程地址空间之后，只不过DLL的使用计数增加了，如果是2，那么很明显就不会调用DLL的DllMain并且传入 DLL_PROCESS_ATTACH</p>
+<p>但是如果我把dll改一下，把弹框代码写在DLL_THREAD_ATTACH里面，那么每次创建线程的时候就都会收到DLL_THREAD_ATTACH消息了。</p>
+<p>关于远程线程注入就先讲到这里。当然这些都是最简单的最基本的东西。</p>
+<p>自己有时间去看看核心编程，顺便进一步了解下操作系统。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/27/DLL注入（一）编写动态链接库/" itemprop="url">
+                DLL注入（一）编写动态链接库
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-27T11:05:04+08:00" content="2012-10-27">
+            2012-10-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>想写个远程线程注入的东西&#8230;&#8230;</p>
+<p>问了下栋哥终于把机理给搞明白了。</p>
+<p>参考的书本是《Windows API 开发详解 &#8212;函数、接口、编程实例》和《windows核心编程》</p>
+<p>首先我们从编写一个dll开始。</p>
+<p>为了统一起见，下面的代码中所有函数全部使用宽字符版本。</p>
+<p>首先把代码给贴出来：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"><span class="keyword">*</span> msg.c动态链接库</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>/</span><br><span class="line"><span class="comment">#include &amp;lt;Windows.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;Psapi.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pragma comment(lib, &amp;quot;Psapi.lib&amp;quot;)</span></span><br><span class="line"></span><br><span class="line">__declspec(dllexport) DWORD ExportExample(LPSTR sMsg, DWORD dwCode);</span><br><span class="line"></span><br><span class="line">//dll main</span><br><span class="line">BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)</span><br><span class="line">&#123;</span><br><span class="line">	switch (fdwReason)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		&#123;</span><br><span class="line">			TCHAR lpMainMoudleName[MAX_PATH];</span><br><span class="line">			TCHAR lpMessage[MAX_PATH + 64];</span><br><span class="line">			//获取PID和主模块名，将弹出消息框</span><br><span class="line">			DWORD dwPID = GetCurrentProcessId();</span><br><span class="line">			GetModuleBaseName(GetCurrentProcess(), NULL, lpMainMoudleName, MAX_PATH);</span><br><span class="line">			wsprintf(lpMessage, L&amp;quot;process name: %s, PID: %u &amp;quot;, lpMainMoudleName, dwPID);</span><br><span class="line">			MessageBox(NULL, lpMessage, L&amp;quot;msg.dll&amp;quot;, MB_OK);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	case DLL_THREAD_ATTACH:</span><br><span class="line">		break;</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		break;</span><br><span class="line">	case DLL_THREAD_DETACH:</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//导出函数，显示消息</span><br><span class="line">DWORD ExportExample(LPWSTR szMsg, DWORD dwCode)</span><br><span class="line">&#123;</span><br><span class="line">	LPVOID lpShowOut = HeapAlloc(GetProcessHeap(), NULL, lstrlen(szMsg) + 100);</span><br><span class="line">	wsprintf((LPWSTR)lpShowOut, L&amp;quot;%s,%d&amp;quot;, szMsg, dwCode);</span><br><span class="line">	MessageBox(NULL, (LPWSTR)lpShowOut, L&amp;quot;由导出函数弹出的消息! &amp;quot;, MB_OK);</span><br><span class="line">	HeapFree(GetProcessHeap(), NULL, lpShowOut);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们来分析一下代码：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__declspec<span class="list">(<span class="keyword">dllexport</span>)</span> DWORD ExportExample<span class="list">(<span class="keyword">LPSTR</span> sMsg, DWORD dwCode)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这是个导出函数的声明，声明了这个函数是从dll中导出的函数。</p>
+<p>接下来是dll的主函数入口。跟main 和WinMain 差不多。它是DllMain</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">BOOL WINAPI <span class="function"><span class="title">DllMain</span><span class="params">(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)</span></span></span><br></pre></td></tr></table></figure>
+<p>dwnReason可以是下面四个值：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (fdwReason)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_PROCESS_ATTACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_THREAD_ATTACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_PROCESS_DETACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_THREAD_DETACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通俗的理解，分别是附加进程，附加线程，分离进程，分离线程的意思。</p>
+<p>具体的理解，大家可以查看《windows核心编程》，下面的博客也分别摘录了核心编程里面的东西：</p>
+<p><a href="http://blog.csdn.net/ithzhang/article/details/7051558" target="_blank" rel="external">http://blog.csdn.net/ithzhang/article/details/7051558</a></p>
+<p>本例子中的代码是这样的，在DLL_PROCESS_ATTACH的时候执行下面的代码：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">case DLL_PROCESS_ATTACH:</span><br><span class="line">	&#123;</span><br><span class="line">		TCHAR lpMainMoudleName[MAX_PATH];</span><br><span class="line">		TCHAR lpMessage[MAX_PATH + <span class="number">64</span>];</span><br><span class="line">		<span class="comment">//获取PID和主模块名，将弹出消息框</span></span><br><span class="line">		DWORD dwPID = GetCurrentProcessId<span class="params">()</span>;</span><br><span class="line">		GetModuleBaseName<span class="params">(GetCurrentProcess<span class="params">()</span>, NULL, lpMainMoudleName, MAX_PATH)</span>;</span><br><span class="line">		wsprintf<span class="params">(lpMessage, L<span class="string">"process name: %s, PID: %u "</span>, lpMainMoudleName, dw<span class="literal">PI</span>D)</span>;</span><br><span class="line">		MessageBox<span class="params">(NULL, lpMessage, L<span class="string">"msg.dll"</span>, MB_OK)</span>;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>代码很简单，获得进程ID并且用对话框的方式显示出来。</p>
+<p>接下来我们看看导出函数：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导出函数，显示消息</span></span><br><span class="line">DWORD ExportExample<span class="params">(LPWSTR szMsg, DWORD dwCode)</span></span><br><span class="line">&#123;</span><br><span class="line">	LPVOID lpShowOut = HeapAlloc<span class="params">(GetProcessHeap<span class="params">()</span>, NULL, lstrlen<span class="params">(szMsg)</span> + <span class="number">100</span>)</span>;</span><br><span class="line">	wsprintf<span class="params">(<span class="params">(LPWSTR)</span>lpShowOut, L<span class="string">"%s,%d"</span>, szMsg, dwCode)</span>;</span><br><span class="line">	MessageBox<span class="params">(NULL, <span class="params">(LPWSTR)</span>lpShowOut, L<span class="string">"由导出函数弹出的消息! "</span>, MB_OK)</span>;</span><br><span class="line">	HeapFree<span class="params">(GetProcessHeap<span class="params">()</span>, NULL, lpShowOut)</span>;</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导出函数也很简单，就是弹出一个对话框。这个没什么好说的。</p>
+<p>加载了动态链接库之后我们就可以直接使用这个dll中的接口函数了。dll的方便性就体现在这里了。^_^</p>
+<p>然后我们简单的重新写个代码测试一下这个dll的正确性：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;stdio<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;windows<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"></span><br><span class="line">typedef DWORD (<span class="subst">*</span>MY_EXPORT_PROC)(LPWSTR, DWORD);</span><br><span class="line"></span><br><span class="line"><span class="literal">void</span> main(<span class="literal">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    HINSTANCE hinstLib;</span><br><span class="line">    MY_EXPORT_PROC lpProcAdd;</span><br><span class="line">    BOOL fFreeResult, fRunTimeLinkSuccess <span class="subst">=</span> <span class="literal">FALSE</span>;</span><br><span class="line">    <span class="comment">//获得DLL模块句柄</span></span><br><span class="line">    hinstLib <span class="subst">=</span> LoadLibrary(TEXT(<span class="subst">&amp;</span>quot;msg<span class="built_in">.</span>dll<span class="subst">&amp;</span>quot;));</span><br><span class="line">    <span class="comment">//是否加载成功</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">!=</span> hinstLib)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获得指定导出函数的地址</span></span><br><span class="line">        lpProcAdd <span class="subst">=</span> (MY_EXPORT_PROC)GetProcAddress(hinstLib, <span class="subst">&amp;</span>quot;ExportExample<span class="subst">&amp;</span>quot;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断是否成功</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">!=</span> lpProcAdd)</span><br><span class="line">        &#123;</span><br><span class="line">            fRunTimeLinkSuccess <span class="subst">=</span> <span class="literal">TRUE</span>;</span><br><span class="line">            (lpProcAdd) (TEXT(<span class="subst">&amp;</span>quot;hello<span class="subst">&amp;</span>quot;), <span class="number">123</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//释放dll</span></span><br><span class="line">        fFreeResult <span class="subst">=</span> FreeLibrary(hinstLib);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="subst">!</span>fRunTimeLinkSuccess)</span><br><span class="line">        printf(<span class="subst">&amp;</span>quot;error; <span class="subst">%</span>un<span class="subst">&amp;</span>quot;, GetLastError());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用的一种比较麻烦的方法。跟#pragma comment（“xxx.lib”, lib）有点不一样的地方。</p>
+<h1 id="pragma_comment（“xxx-lib”,_lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。">pragma comment（“xxx.lib”, lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。</h1><p>使用这种方法的话，有没有lib文件的必要了。因为他在LoadLibrary之后直接获得了导出函数的地址</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获得指定导出函数的地址</span></span><br><span class="line">  lpProcAdd = <span class="params">(MY_EXPORT_PROC)</span>GetProcAddress<span class="params">(hinstLib, <span class="string">"ExportExample"</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>然后我们测试一下，发现成功弹出了dll中的两个对话框~~~！！</p>
+<p>OK，第一步我们先到这里了，接下来就是伟大的远程线程注入了，哈哈。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/16/windows内存堆的数据结构/" itemprop="url">
+                windows内存堆的数据结构
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-16T19:58:25+08:00" content="2012-10-16">
+            2012-10-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>还是紧接着昨天的问题，很想明白到底在内存中堆的数据结构到底是怎么样的？究竟是不是别人回答的红黑树的结构？</p>
+<p>在网上搜索了一番好像也鲜有答案。后来在《0day 安全 软件漏洞分析技术》一书里面找到了这个问题的部分答案。</p>
+<p>不同平台操作系统对内存的管理机制是不一样的。</p>
+<p>上面这本书里面主要讲了对windows2000 &#8211; windows xp1 平台的堆管理策略。</p>
+<p>对于基本的操作系统中堆的一些特征，这里就不再讲了。这里主要说说内存中堆的数据结构。</p>
+<p>自己画了张图给大家看看。。。</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350385789_1481.png" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350385789_1481.png" alt="" title="1350385789_1481"></a></p>
+<p>(堆的内存组织)</p>
+<p>现代操作系统的堆数据结构一般包括堆块和堆表两类。</p>
+<p>堆块：堆区的内存按照不同大小组织成块，以堆块为单位进行标识，而不是按照字节标识。一个堆块包括两个部分：块首和块身。</p>
+<p>块首是堆块头部的几个字节，用来标识这个堆块自身的信息，包括本块的大小、本块空闲还是占用等信息；</p>
+<p>块身紧跟在块首后面的部分，是最终分配给用户使用的数据区。</p>
+<p>我们在程序中很难感觉到块首的存在。但是正是由于这个块首的存在，解决了我上几天提出的为什么free的地址必须是malloc的地址 还有free的长度是确定的这两个问题。</p>
+<p>因为这些信息全部包含在块首里面，释放的时候必须进行比对，如果比对结果失败，那么自然是无法进行free操作了.(个人猜测，求验证)</p>
+<p>堆表：位于堆区的起始位置，用于索引堆区中堆块的重要信息。堆表的数据结构决定了整个堆区的组织方式。堆表在设计时可能会考虑采用平衡二叉树等高级数据结构用于优化查找效率。现代操作系统的堆表往往不止一种数据结构。</p>
+<p>在windows中，占用态的堆块被使用它的程序索引，而堆表只索引所有空闲态的堆块。</p>
+<p>重要的堆表有两种：空闲双向链表FreeList（空表） 和 快速单向链表Lookaside（快表）</p>
+<p>空闲双向链表FreeList（空表）：</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350386697_4208.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350386697_4208.jpg" alt="" title="1350386697_4208"></a></p>
+<p>堆区一开始的堆表区中有一个128项的指针数组（看到有人说把它看成队列的），被称作空表索引。该数组的每一项包含两个指针，用于表示一条空表。</p>
+<p>free[1] 标识了所有堆中所有大小为8字节的空闲堆块，之后每个索引指示的空闲堆块递增8个字节。即：</p>
+<p>free[2]标识了16个字节的空闲堆块。</p>
+<p>free[k] 标识了 k * 8 个字节的空闲堆块。</p>
+<p>指示第1项空表索引比较特殊，从图中我们也可以看到：这条双向链表链入了所有大于等于1024字节的堆块（小于512KB），堆块按照升序排列。</p>
+<p>快速单向链表Lookaside（快表）</p>
+<p><a href="http://miibotree.com/wp-content/uploads/2012/10/1350386645_3143.jpg" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2012/10/1350386645_3143.jpg" alt="" title="1350386645_3143"></a></p>
+<p>为什么叫做快表呢？因为速度快。。。为什么速度快呢？。。因为这类单向链表中从来不会发生堆块合并。</p>
+<p>结构组织和空表差不多，只是每条快表最多只有4个结点，故很快就会被填满。</p>
+<p>未完待续，下次讲讲 堆块的分配，释放和合并操作。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/15/free函数在操作系统内存中的实现/" itemprop="url">
+                free函数在操作系统内存中的实现
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-15T13:08:39+08:00" content="2012-10-15">
+            2012-10-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>昨天在写单项链表的时候碰到这样一个问题。</p>
+<p>我一次性malloc十个单位节点的内存空间出来赋值给L， 现在我想一次性删除从第3个到第6个节点，我是这么做的：</p>
+<p>1.将第六个节点的next指针指向NULL</p>
+<p>2.将L指针指向第三个单位空间的地址，再free(L)。</p>
+<p>等到把代码写完之后，才发现其中的问题：这里我的free(L)用的对吗？</p>
+<p>编译运行了一下才发现了问题所在。</p>
+<p>为了清楚地看到这个错误，将这个问题简化出来，请看下面的代码：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"><span class="preprocessor">#include</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line"><span class="keyword">char</span> *p = (<span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>) * <span class="number">10</span>);</span><br><span class="line"><span class="keyword">char</span> *q = p;</span><br><span class="line"><span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (; i &amp;lt; <span class="number">10</span>; i++)</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"%08Xn"</span>, q + i);</span><br><span class="line">q = q + <span class="number">2</span>;</span><br><span class="line"><span class="built_in">free</span>(q);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译执行之后结果如下：</p>
+<p><span id="more-462"></span></p>
+<p>0863E008</p>
+<p>0863E009</p>
+<p><strong>0863E00A</strong></p>
+<p>0863E00B</p>
+<p>0863E00C</p>
+<p>0863E00D</p>
+<p>0863E00E</p>
+<p>0863E00F</p>
+<p>0863E010</p>
+<p>0863E011</p>
+<p><strong>_ glibc detected _</strong> ./free: free(): invalid pointer: <strong>0x0863e00a</strong> _*_</p>
+<p>======= Backtrace: =========</p>
+<p>/lib/libc.so.6[0x4481d9f2]</p>
+<p>./free[0x8048487]</p>
+<p>/lib/libc.so.6(__libc_start_main+0xf3)[0x447be6b3]</p>
+<p>./free[0x8048391]</p>
+<p>======= Memory map: ========</p>
+<p>&#8230;&#8230;</p>
+<p>已放弃(吐核)</p>
+<p>在linux下面可以看到free这句代码是不能被运行的。</p>
+<p>那么为什么执行会出错呢？</p>
+<p>这里首先要谈谈malloc和free这两个函数的用法了。</p>
+<p>首先我们要知道的一个原则就是：malloc 和free是成对使用的。</p>
+<p>你可能会奇怪为什么malloc指定了内存分配的长度，而free的时候没有指定释放的内存长度。</p>
+<p>因为是成对使用的，所以满足下面两个原则：</p>
+<p>1.我们free的指针必须是malloc出来返回给你的指针。</p>
+<p>2. 所以，free的长度是你malloc要求分配的长度。</p>
+<p>看到这里可能有人会问：你是怎么得出这两个结论的呢？</p>
+<p>好吧，现在我们就来深究一下，free函数在操作系统内存中究竟是怎么实现的。</p>
+<p>但是毕竟自己实力有限，还是菜鸟一枚，如果让我阅读free 和malloc 的源代码，肯定是不现实的，貌似有1500多行。。。。</p>
+<p>CSDN下面这个帖子讲了一点东西：</p>
+<p><a href="http://topic.csdn.net/u/20090714/07/9ee25af0-8ecf-42e9-9ae5-ec2bdd1f72b8.html" target="_blank" rel="external">http://topic.csdn.net/u/20090714/07/9ee25af0-8ecf-42e9-9ae5-ec2bdd1f72b8.html</a></p>
+<p>自己摘除了一点基本信息：</p>
+<p>malloc/free 是操作系统提供的接口</p>
+<p>不同的系统可能使用不同的库</p>
+<p>接口形式相同，但是实现方式可能不同</p>
+<p>这主要取决于操作系统内存管理模式</p>
+<p>VC使用的CRT，而GCC使用的是libc</p>
+<p>下面这个帖子也讲了一点东西</p>
+<p><a href="http://topic.csdn.net/u/20090714/07/f7ddd06a-917b-42d0-9c99-ac4deac08904.html?21758" target="_blank" rel="external">http://topic.csdn.net/u/20090714/07/f7ddd06a-917b-42d0-9c99-ac4deac08904.html?21758</a></p>
+<p>里面有几段比较经典的话。虽然正确性还有待考证。摘录如下：</p>
+<p>1.</p>
+<p>free只是释放了malloc所申请的内存，并不改变指针的值；</p>
+<p>2)、由于指针所指向的内存已经被释放，所以其它代码有机会改写其中的内容，相当于该指针从此指向了自己无法控制的地方，也称为野指针；</p>
+<p>3)、为了避免失误，最好在free之后，将指针指向NULL。</p>
+<p>2.</p>
+<p>内核通过一个红黑树来记录了空闲的内存，malloc就是从树中查找一块大小适合的内存并把地址给你，然后把这个节点从树中摘除，避免被别人分配到产生冲突。这个内存现在归你一个人用了。</p>
+<p>free函数是把你的这个内存重新放回到红黑树中，让别人可以申请到这个内存。从逻辑上来说，你现在不能在使用这个内存了，因为它已经不属于你。但是系统的实现上目前没有做到，所以你还是能访问这个地址。</p>
+<p>另外，系统也不会帮你覆盖内存中的数据，因为做这一个操作浪费时间，没有必要。</p>
+<p>打一个简单的比方。你租了一套房子，后来租期到了，房子回到房东手里，或者又转租给别人。但是你拿着原来的钥匙还是能进入那套房子，虽然这个是不合法的。</p>
+<p>3.</p>
+<p>应该确切讲是不变的。内存管理多数是通过一个MBC链表实现的，及你实际分配的内存空间为：(nSize + 3) / 4 * 4 + sizeof(MBC）的大小，在malloc之后，系统程序实际返回的是分配的MBC地址+sizeof(MBC），释放内存时，free所做的第一个动作是ptr &#8211; sizeof(MBC)得到实际的MBC块，在这个MBC块中包含了该内存的大小，内存MBC链的指针等信息；所以，如果你使用了超出实际分配内存大小的空间，会造成整个MBC链的混乱，最直接表现是程序在free时在另一个不相关的地方出现了异常；所以您可以看出来，在执行了free之后，该块内存并没有改变，即使该块内存相邻内存为空，而发生了内存块的合并，您刚才使用的内存空间也没有发生改变（你看到的），改变的是MBC链表；</p>
+<p>详细的内存管理程序您可以参考一些库，如dlmalloc，这个库除了使用了MBC链外，还是用了沙箱机制；事实上早期DOS的内存管理程序也是使用的MBC链；</p>
+<p>4.</p>
+<p>1）我注意到之上的回复多数是基于系统端的，（如红黑树，我在Understand Linux kernal中还真没有听说过红黑树，最后居然在国内网站找到了 &#8212;- 不知道是不是只是国内学术名词，是内核的内存管理）；系统内存分配涉及属性、内存页面以及是否有MCU；但是注意一点malloc和free并不是直接使用系统内存管理程序，在多数Linux程序中malloc和free一般是通过标准库，及我说过的DL内存管理程序实现的；因此，内核的内存管理和我们在应用层面的内存管理（如malloc/free）不要混为一谈；</p>
+<p>2）DL的内存管理从效能上要比直接使用系统的内存管理效能要高，如经过我们实测：在随机大小、随机顺序申请释放 &#8212;- 目的在制造最差情况，DL内存管理程序是直接使用系统的3~3.9倍，考虑使用realloc，DL内存管理程序是系统的10~43.35倍；所以，实际情况下，我们并不是直接使用系统内存管理 &#8212;- 只是我们并不知道。</p>
+<p>唉。。。涉及到操作系统的内存管理跟数据结构的东西，自己也没有学过，只能先这样理解下。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/14/c-新手学习笔记之多态性和虚函数（1）/" itemprop="url">
+                c++新手学习笔记之多态性和虚函数（1）
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-14T12:02:56+08:00" content="2012-10-14">
+            2012-10-14
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>c++多态性主要表现在下面几个方面。</p>
+<p>1.函数重载</p>
+<p>2.运算符重载</p>
+<p>3.虚函数</p>
+<p>书上着重介绍了运算符的重载。</p>
+<p>自己看了半天概念性的东西也没看懂多少，还是不明白运算符重载的意义。</p>
+<p>于是就在网上搜索，看到了下面这个例子：</p>
+<p><a href="http://www.pconline.com.cn/pcedu/empolder/gj/c/0503/581281.html" target="_blank" rel="external">http://www.pconline.com.cn/pcedu/empolder/gj/c/0503/581281.html</a></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title">Test</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//过程省略</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span>(<span class="params"></span>)</span><br><span class="line"></span>&#123;</span><br><span class="line">Test a,c;</span><br><span class="line">c=a+a;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样的代码显然是编译不能通过的。这个时候我们就要对+这个运算符进行重载，使得能执行c = a + a的操作。</p>
+<p>于是恍然大悟，原来这就是运算符重载在c++当中的意义：<span style="color: #990000;">可以通过运算符重载完成类的运算符操作。当然意义不止这个。。。</span></p>
+<p>关于运算符重载的具体原则规律，参考了下面这个博客：</p>
+<p><a href="http://blog.csdn.net/zgl_dm/article/details/1767201" target="_blank" rel="external">http://blog.csdn.net/zgl_dm/article/details/1767201</a></p>
+<p>还是觉个书上面的例子好了。。。码农只会码代码- -|||</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">include</span> &amp;lt;iostream&amp;gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="type">Complex</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line"><span class="type">Complex</span>()</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">real</span> = imag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Complex</span>(<span class="type">double</span> r)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">real</span> = r;</span><br><span class="line">imag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Complex</span>(<span class="type">double</span> r, <span class="type">double</span> i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">real</span> = r;</span><br><span class="line">imag = i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Complex</span> operator +(const <span class="type">Complex</span> &amp;amp;c);</span><br><span class="line"><span class="type">Complex</span> operator -(const <span class="type">Complex</span> &amp;amp;c);</span><br><span class="line"><span class="type">Complex</span> operator *(const <span class="type">Complex</span> &amp;amp;c);</span><br><span class="line"><span class="type">Complex</span> operator /(const <span class="type">Complex</span> &amp;amp;c);</span><br><span class="line">friend void <span class="built_in">Print</span>(const <span class="type">Complex</span> &amp;amp;c);</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line"><span class="type">double</span> <span class="type">real</span>, imag;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//复数加法操作符重载</span><br><span class="line"><span class="type">Complex</span> <span class="type">Complex</span>::operator +(const <span class="type">Complex</span> &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="type">Complex</span>(<span class="type">real</span> + c.<span class="type">real</span>, imag + c.imag);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//复数减法操作符重载</span><br><span class="line"><span class="type">Complex</span> <span class="type">Complex</span>::operator -(const <span class="type">Complex</span> &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="type">Complex</span>(<span class="type">real</span> - c.<span class="type">real</span>, imag - c.imag);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//复数乘法操作符重载</span><br><span class="line"><span class="type">Complex</span> <span class="type">Complex</span>::operator *(const <span class="type">Complex</span> &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="type">Complex</span>(<span class="type">real</span> * c.<span class="type">real</span> - imag * c.imag, <span class="type">real</span> * c.imag + imag * c.<span class="type">real</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//复数除法操作符重载</span><br><span class="line"><span class="type">Complex</span> <span class="type">Complex</span>::operator /(const <span class="type">Complex</span> &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="type">Complex</span>((<span class="type">real</span> * c.<span class="type">real</span> + imag * c.imag) / (c.<span class="type">real</span> * c.<span class="type">real</span> + c.imag * c.imag),</span><br><span class="line">(imag * c.<span class="type">real</span> - <span class="type">real</span> * c.imag) / (c.<span class="type">real</span> * c.<span class="type">real</span> + c.imag * c.imag));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void <span class="built_in">Print</span>(const <span class="type">Complex</span> &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line">//判断虚部的正负</span><br><span class="line"><span class="keyword">if</span> (c.imag &amp;lt; <span class="number">0</span>)</span><br><span class="line">cout&amp;lt;&amp;lt;c.<span class="type">real</span>&amp;lt;&amp;lt;c.imag&amp;lt;&amp;lt;<span class="string">'i'</span>&amp;lt;&amp;lt;endl;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">cout&amp;lt;&amp;lt;c.<span class="type">real</span>&amp;lt;&amp;lt;<span class="string">'+'</span>&amp;lt;&amp;lt;c.imag&amp;lt;&amp;lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line"><span class="type">Complex</span> c1(<span class="number">2.5</span>), c2(<span class="number">5.5</span>, -<span class="number">1.0</span>), c3;</span><br><span class="line"></span><br><span class="line">c3 = c1 + c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 + c2 ="</span>;</span><br><span class="line"><span class="built_in">Print</span>(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 - c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 - c2 ="</span>;</span><br><span class="line"><span class="built_in">Print</span>(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 * c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 * c2 ="</span>;</span><br><span class="line"><span class="built_in">Print</span>(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 / c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 / c2 ="</span>;</span><br><span class="line"><span class="built_in">Print</span>(c3);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过这个例子，对运算符重载的作用有了个大概的了解。</p>
+<p>运算符重载有两种方法：</p>
+<p>1.成员函数的方法</p>
+<p>2.友元函数的方法</p>
+<p>下面学习一下友元函数的方法。。。。</p>
+<p>然后发现自己忘记友元函数了。。。回过头来再次复习一下。。。顺便BS一下自己的记忆力。</p>
+<p>看了继承性之后再回过头来看友元函数，觉得更加理解了友元函数存在的意义了。。。</p>
+<p><span style="color: #cc0000;">友元函数可以访问类中私有成员～～</span></p>
+<p>接着还是同样的复数运算，这次用友元函数的方法实现，（搞完这个吃饭去- -|||）：</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">#include &amp;lt;iostream&amp;gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">class Complex</span><br><span class="line">&#123;</span><br><span class="line">public:</span><br><span class="line">Complex()</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">real</span> = <span class="built_in">imag</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Complex(double r)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">real</span> = r;</span><br><span class="line"><span class="built_in">imag</span> = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Complex(double r, double i)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">real</span> = r;</span><br><span class="line"><span class="built_in">imag</span> = i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">friend Complex operator +(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2);</span><br><span class="line">friend Complex operator -(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2);</span><br><span class="line">friend Complex operator *(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2);</span><br><span class="line">friend Complex operator /(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2);</span><br><span class="line">friend void Print(<span class="keyword">const</span> Complex &amp;amp;c);</span><br><span class="line">private:</span><br><span class="line">double <span class="built_in">real</span>, <span class="built_in">imag</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//复数加法操作符重载</span></span><br><span class="line">Complex operator +(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> Complex(c1.<span class="built_in">real</span> + c2.<span class="built_in">real</span>, c1.<span class="built_in">imag</span> + c2.<span class="built_in">imag</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//复数减法操作符重载</span></span><br><span class="line">Complex operator -(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> Complex(c1.<span class="built_in">real</span> - c2.<span class="built_in">real</span>, c1.<span class="built_in">imag</span> - c2.<span class="built_in">imag</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//复数乘法操作符重载</span></span><br><span class="line">Complex operator *(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> Complex(c1.<span class="built_in">real</span> * c2.<span class="built_in">real</span> - c1.<span class="built_in">imag</span> * c2.<span class="built_in">imag</span>, c1.<span class="built_in">real</span> * c2.<span class="built_in">imag</span> + c1.<span class="built_in">imag</span> * c2.<span class="built_in">real</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//复数除法操作符重载</span></span><br><span class="line">Complex operator /(<span class="keyword">const</span> Complex &amp;amp;c1, <span class="keyword">const</span> Complex &amp;amp;c2)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> Complex((c1.<span class="built_in">real</span> * c2.<span class="built_in">real</span> + c1.<span class="built_in">imag</span> * c2.<span class="built_in">imag</span>) / (c2.<span class="built_in">real</span> * c2.<span class="built_in">real</span> + c2.<span class="built_in">imag</span> * c2.<span class="built_in">imag</span>),</span><br><span class="line">(c1.<span class="built_in">imag</span> * c2.<span class="built_in">real</span> - c1.<span class="built_in">real</span> * c2.<span class="built_in">imag</span>) / (c2.<span class="built_in">real</span> * c2.<span class="built_in">real</span> + c2.<span class="built_in">imag</span> * c2.<span class="built_in">imag</span>));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Print(<span class="keyword">const</span> Complex &amp;amp;c)</span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//判断虚部的正负</span></span><br><span class="line"><span class="keyword">if</span> (c.<span class="built_in">imag</span> &amp;lt; <span class="number">0</span>)</span><br><span class="line">cout&amp;lt;&amp;lt;c.<span class="built_in">real</span>&amp;lt;&amp;lt;c.<span class="built_in">imag</span>&amp;lt;&amp;lt;<span class="string">'i'</span>&amp;lt;&amp;lt;endl;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">cout&amp;lt;&amp;lt;c.<span class="built_in">real</span>&amp;lt;&amp;lt;<span class="string">'+'</span>&amp;lt;&amp;lt;c.<span class="built_in">imag</span>&amp;lt;&amp;lt;endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="typename">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">Complex c1(<span class="number">2.5</span>), c2(<span class="number">5.5</span>, -<span class="number">1.0</span>), c3;</span><br><span class="line"></span><br><span class="line">c3 = c1 + c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 + c2 ="</span>;</span><br><span class="line">Print(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 - c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 - c2 ="</span>;</span><br><span class="line">Print(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 * c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 * c2 ="</span>;</span><br><span class="line">Print(c3);</span><br><span class="line"></span><br><span class="line">c3 = c1 / c2;</span><br><span class="line">cout&amp;lt;&amp;lt;<span class="string">"c1 / c2 ="</span>;</span><br><span class="line">Print(c3);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>比较这两种方法留到后面再讲。。。。</p>
+<p>半天之后。。。。</p>
+<p>现在来比较 这两种方法的异同。</p>
+<p>先来了解下概念的东西：</p>
+<p>单目运算符是指操作数只有一个的运算符， 比如！</p>
+<p>双目运算符是值操作数有两个的运算符，比如 +  -  ||  &amp;&amp;</p>
+<p>对于双目运算符来举例，使用成员函数的方法是将第一个第一个操作数当车功能调用重载运算符成员函数的对象，将第二个操作数作为运算符函数的实参。</p>
+<p>而使用友元函数的方式之后，将两个操作数当作函数的实参。</p>
+<p>区别就在这里。。。自己也先按照书上讲的理解到这里。</p>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/14/几种配置c-编译环境的方法/" itemprop="url">
+                几种配置c++编译环境的方法
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-14T09:41:08+08:00" content="2012-10-14">
+            2012-10-14
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>昨天晚上睡觉的时候想了很长时间，总觉的在windows下面用vs太没意思了。于是早上起来的时候把fedora又恢复过来，准备继续在 linux下面写数据结构和c++，顺便学习操作系统。这些基础知识跟平台关系倒也不大，感觉如果在linux下面的话更加好玩，所以还是决定在接下来的 几个月里面在linux下面学习基础知识啦～～</p>
+<p>首先是基本环境的配置：</p>
+<p>linux下面坚持不用IDE，用ddd+vim+gdb开始学习。</p>
+<p>首先随便写个c++程序，原来一直使用的都是gcc编译的，后来才发现其实gcc也是可以编译c++程序的，而且方法还不止一种。</p>
+<p>1.</p>
+<p>程序 g++ 是将 gcc 默认语言设为 C++ 的一个特殊的版本，链接时它自动使用 C++ 标准库而不用 C 标准库。通过遵循源码的命名规范并指定对应库的名字，用 gcc 来编译链接 C++ 程序是可行的，如下例所示：</p>
+<figure class="highlight"><figcaption><span>gcc helloworld.cpp -lstdc++ -o helloworld```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;2.&#10;&#10;&#36873;&#39033; -l (ell) &#36890;&#36807;&#28155;&#21152;&#21069;&#32512; lib &#21644;&#21518;&#32512; .a &#23558;&#36319;&#38543;&#23427;&#30340;&#21517;&#23383;&#21464;&#25442;&#20026;&#24211;&#30340;&#21517;&#23383; libstdc++.a&#12290;&#32780;&#21518;&#23427;&#22312;&#26631;&#20934;&#24211;&#36335;&#24452;&#20013;&#26597;&#25214;&#35813;&#24211;&#12290;gcc &#30340;&#32534;&#35793;&#36807;&#31243;&#21644;&#36755;&#20986;&#25991;&#20214;&#19982; g++ &#26159;&#23436;&#20840;&#30456;&#21516;&#30340;&#12290;&#10;&#10;&#22312;&#22823;&#22810;&#25968;&#31995;&#32479;&#20013;&#65292;GCC &#23433;&#35013;&#26102;&#20250;&#23433;&#35013;&#19968;&#21517;&#20026; c++ &#30340;&#31243;&#24207;&#12290;&#22914;&#26524;&#34987;&#23433;&#35013;&#65292;&#23427;&#21644; g++ &#26159;&#31561;&#21516;&#65292;&#22914;&#19979;&#20363;&#25152;&#31034;&#65292;&#29992;&#27861;&#20063;&#19968;&#33268;&#65306;&#10;&#10;```$ c++ helloworld.cpp -o helloworld</span><br></pre></td></tr></table></figure>
+<p>3.就是yum install gcc-c++ 然后就可以使用g++了</p>
+<figure class="highlight"><figcaption><span>g++ helloworld.cpp -o helloworld</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#10;&#26152;&#22825;&#20877;&#27425;&#29992;&#20102;&#19968;&#19979;ddd&#65292;&#21487;&#33021;&#26159;&#26032;&#25163;&#30340;&#32536;&#25925;&#21543;&#65292;&#24863;&#35273;&#19981;&#26159;&#24456;&#22909;&#29992;&#12290;&#12290;&#12290;&#19981;&#36807;&#24050;&#32463;&#27604;vs&#30340;&#35843;&#35797;&#22120;&#22909;&#22810;&#20102;&#12290;&#10;&#33258;&#24049;&#26377;&#31354;&#20877;&#30475;&#30475;&#25163;&#20876;&#23398;&#20064;&#19979;&#22909;&#20102;&#12290;</span><br></pre></td></tr></table></figure>
+<p>&nbsp;</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2012/10/13/单向循环链表就地逆置/" itemprop="url">
+                单向循环链表就地逆置
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-13T15:57:20+08:00" content="2012-10-13">
+            2012-10-13
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>原来自己想过一个思路，后来发现完全是不正确的。</p>
+<p>看来最后还是得在网上查找算法，最后才实现了。</p>
+<blockquote>
+<p>(1)当链表为空表或只有一个结点时，该链表的逆置链表与原表相同。</p>
+<p>(2)当链表含2个以上结点时，可将该链表处理成只含第一结点的带头结点链表和一个无头结点的包含该链表剩余结点的链表。然后，将该无头结点链表中的所有结点顺着链表指针，由前往后将每个结点依次从无头结点链表中摘下，作为第一个结点插入到带头结点链表中。这样就可以得到逆置的链表</p>
+</blockquote>
+<p><strong>具体实现起来就不是那么困难了，在纸上面画画就出来了～～～</strong></p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;iostream<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;malloc<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">#define</span> OK <span class="number">1</span></span><br><span class="line"><span class="variable">#define</span> ERROR <span class="number">0</span></span><br><span class="line"><span class="variable">#define</span> LENGTH <span class="number">10</span></span><br><span class="line"></span><br><span class="line">typedef int ElemType;</span><br><span class="line">typedef int Status;</span><br><span class="line"></span><br><span class="line">typedef struct LNode</span><br><span class="line">&#123;</span><br><span class="line">ElemType <span class="built_in">data</span>;</span><br><span class="line">struct LNode<span class="subst">*</span> next;</span><br><span class="line">&#125;LNode, <span class="subst">*</span>LinkList;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建链表</span></span><br><span class="line">Status CreateList(LinkList <span class="subst">&amp;</span>amp;L)</span><br><span class="line">&#123;</span><br><span class="line">LinkList s <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">int i <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">L <span class="subst">=</span> (LinkList)malloc(sizeof(LNode) <span class="subst">*</span> LENGTH);</span><br><span class="line">L<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">L<span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="built_in">data</span> <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">for (i <span class="subst">=</span> <span class="number">1</span>; i <span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">=</span> LENGTH; i<span class="subst">++</span>)</span><br><span class="line">&#123;</span><br><span class="line">s <span class="subst">=</span> (LinkList)malloc(sizeof(LNode));</span><br><span class="line">s<span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="built_in">data</span> <span class="subst">=</span> <span class="number">10</span> <span class="subst">-</span> i <span class="subst">+</span> <span class="number">1</span>;</span><br><span class="line">s<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> L<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">L<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> s;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//链表逆置</span></span><br><span class="line">Status InverseList(LinkList <span class="subst">&amp;</span>amp;L)</span><br><span class="line">&#123;</span><br><span class="line">LinkList p <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">LinkList q <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line"><span class="comment">//传入的L是头节点</span></span><br><span class="line"><span class="keyword">if</span> (L <span class="subst">&amp;</span>amp;<span class="subst">&amp;</span>amp; L<span class="subst">-&amp;</span><span class="literal">gt</span>;next )<span class="comment">//保证至少含有两个节点以上</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="comment">//创建两个临时变量</span></span><br><span class="line">p <span class="subst">=</span> L<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">q <span class="subst">=</span> p<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">p<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//将除了头节点和第一个节点之外的多余节点遍历并将每个节点摘出来放到头节点的后面</span></span><br><span class="line"><span class="keyword">while</span> (q)</span><br><span class="line">&#123;</span><br><span class="line">p <span class="subst">=</span> q;</span><br><span class="line">q <span class="subst">=</span> q<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">p<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> L<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">L<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> p;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印链表</span></span><br><span class="line">Status PrintfList(LinkList L)</span><br><span class="line">&#123;</span><br><span class="line">int i <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span> (L <span class="subst">==</span> <span class="built_in">NULL</span>)</span><br><span class="line">std<span class="tag">::cout</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="string">"该链表是空表"</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;std<span class="tag">::endl</span>;</span><br><span class="line"><span class="keyword">while</span>(L<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">!=</span> <span class="built_in">NULL</span>)</span><br><span class="line">&#123;</span><br><span class="line">std<span class="tag">::cout</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="string">"第"</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;i<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="string">"个节点的数值:"</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;L<span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="built_in">data</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;std<span class="tag">::endl</span>;</span><br><span class="line">L <span class="subst">=</span> L<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">i<span class="subst">++</span>;</span><br><span class="line">&#125;</span><br><span class="line">std<span class="tag">::cout</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="string">"第"</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;i<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;<span class="string">"个节点的数值:"</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;L<span class="subst">-&amp;</span><span class="literal">gt</span>;<span class="built_in">data</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;std<span class="tag">::endl</span>;</span><br><span class="line">std<span class="tag">::cout</span><span class="subst">&amp;</span><span class="literal">lt</span>;<span class="subst">&amp;</span><span class="literal">lt</span>;std<span class="tag">::endl</span>;</span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除链表</span></span><br><span class="line">Status DeleteList(LinkList <span class="subst">&amp;</span>amp;L)</span><br><span class="line">&#123;</span><br><span class="line">LinkList p <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line"><span class="keyword">while</span> (L<span class="subst">-&amp;</span><span class="literal">gt</span>;next)</span><br><span class="line">&#123;</span><br><span class="line">p <span class="subst">=</span> L<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">L<span class="subst">-&amp;</span><span class="literal">gt</span>;next <span class="subst">=</span> p<span class="subst">-&amp;</span><span class="literal">gt</span>;next;</span><br><span class="line">free(p);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">LinkList L <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//创建链表，长度为10个长度</span></span><br><span class="line">CreateList(L);</span><br><span class="line"></span><br><span class="line"><span class="comment">//打印链表</span></span><br><span class="line">PrintfList(L);</span><br><span class="line"></span><br><span class="line"><span class="comment">//链表逆置</span></span><br><span class="line">InverseList(L);</span><br><span class="line"></span><br><span class="line"><span class="comment">//重新打印链表</span></span><br><span class="line">PrintfList(L);</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除链表</span></span><br><span class="line">DeleteList(L);</span><br><span class="line"></span><br><span class="line"><span class="comment">//删除链表之后打印链表</span></span><br><span class="line">PrintfList(L);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>早上8点开始写，写到下午4点。。。。写的累死了。。。去休息一会。。。。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/10/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/">&raquo;</a>
+  </nav>
+
+
+            </div>
+
+            
+
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+  
+  
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+  
+  
+
+  
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

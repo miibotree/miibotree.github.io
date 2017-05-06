@@ -1,0 +1,658 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="DLL,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这里我们要用到上篇中的那个 msg.dll
+下面的代码还是使用的统一的宽字符版本，已经在VS2010下编译通过。
+首先上代码，然后慢慢解释：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DLL注入（二）线程注入">
+<meta property="og:url" content="http://yoursite.com/2012/10/27/DLL注入（二）线程注入/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这里我们要用到上篇中的那个 msg.dll
+下面的代码还是使用的统一的宽字符版本，已经在VS2010下编译通过。
+首先上代码，然后慢慢解释：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869">
+<meta property="og:updated_time" content="2015-07-25T04:45:26.866Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DLL注入（二）线程注入">
+<meta name="twitter:description" content="这里我们要用到上篇中的那个 msg.dll
+下面的代码还是使用的统一的宽字符版本，已经在VS2010下编译通过。
+首先上代码，然后慢慢解释：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> DLL注入（二）线程注入 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              DLL注入（二）线程注入
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-27T11:07:35+08:00" content="2012-10-27">
+            2012-10-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这里我们要用到上篇中的那个 msg.dll</p>
+<p><strong>下面的代码还是使用的统一的宽字符版本，已经在VS2010下编译通过。</strong></p>
+<p>首先上代码，然后慢慢解释：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;windows.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;TlHelp32.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> LoadRemoteDll(DWORD dwProcessId, LPTSTR lpszLibName)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">BOOL</span>   bResult            = <span class="literal">FALSE</span>;</span><br><span class="line">    HANDLE hProcess            = <span class="literal">NULL</span>;</span><br><span class="line">    HANDLE hThread            = <span class="literal">NULL</span>;</span><br><span class="line">    PSTR   pszLibFileRemote = <span class="literal">NULL</span>;</span><br><span class="line">    DWORD cch;</span><br><span class="line">    PTHREAD_START_ROUTINE pfnThreadRrn;</span><br><span class="line">    __try</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获得想要注入代码的进程的句柄</span></span><br><span class="line">        hProcess = OpenProcess(PROCESS_ALL_ACCESS, <span class="literal">FALSE</span>, dwProcessId);</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">NULL</span> == hProcess)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//计算DLL路径名需要的字节数</span></span><br><span class="line">        cch = <span class="number">2</span> * (<span class="number">1</span> + lstrlen(lpszLibName));</span><br><span class="line">        <span class="comment">//在远程线程中为路径名分配空间</span></span><br><span class="line">        pszLibFileRemote = (PSTR)VirtualAllocEx(hProcess, <span class="literal">NULL</span>, cch, MEM_COMMIT, PAGE_READWRITE);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (pszLibFileRemote == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//将DLL的路径名复制到远程进程的地址空间</span></span><br><span class="line">        <span class="keyword">if</span> (!WriteProcessMemory(hProcess, (PVOID)pszLibFileRemote, (PVOID)lpszLibName, cch, <span class="literal">NULL</span>))</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//获得LoadLibraryA在Kernel.dll中得真正地址</span></span><br><span class="line">        pfnThreadRrn = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT(&amp;quot;Kernel32&amp;quot;)), &amp;quot;LoadLibraryW&amp;quot;);</span><br><span class="line">        <span class="keyword">if</span> (pfnThreadRrn == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line"></span><br><span class="line">        hThread = CreateRemoteThread(hProcess, <span class="literal">NULL</span>, <span class="number">0</span>, pfnThreadRrn, (PVOID)pszLibFileRemote, <span class="number">0</span>, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (hThread == <span class="literal">NULL</span>)</span><br><span class="line">            __leave;</span><br><span class="line">        <span class="comment">//等待远程线程终止</span></span><br><span class="line">        WaitForSingleObject(hThread, INFINITE);</span><br><span class="line">        bResult = <span class="literal">TRUE</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    __finally</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//关闭句柄</span></span><br><span class="line">        <span class="keyword">if</span> (pszLibFileRemote != <span class="literal">NULL</span>)</span><br><span class="line">            VirtualFreeEx(hProcess, (PVOID)pszLibFileRemote, <span class="number">0</span>, MEM_RELEASE);</span><br><span class="line">        <span class="keyword">if</span> (hThread != <span class="literal">NULL</span>)</span><br><span class="line">            CloseHandle(hThread);</span><br><span class="line">        <span class="keyword">if</span> (hProcess != <span class="literal">NULL</span>)</span><br><span class="line">            CloseHandle(hProcess);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> bResult;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">BOOL</span> GetProcessIdByName(LPWSTR szProcessName, LPDWORD lpPID)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">//变量及其初始化</span></span><br><span class="line">    STARTUPINFO st;</span><br><span class="line">    PROCESS_INFORMATION pi;</span><br><span class="line">    PROCESSENTRY32 ps;</span><br><span class="line">    HANDLE hSnapshot;</span><br><span class="line">    ZeroMemory(&amp;amp;st, <span class="keyword">sizeof</span>(STARTUPINFO));</span><br><span class="line">    ZeroMemory(&amp;amp;pi, <span class="keyword">sizeof</span>(PROCESS_INFORMATION));</span><br><span class="line">    st<span class="variable">.cb</span> = <span class="keyword">sizeof</span>(STARTUPINFO);</span><br><span class="line">    ZeroMemory(&amp;amp;ps, <span class="keyword">sizeof</span>(PROCESSENTRY32));</span><br><span class="line">    ps<span class="variable">.dwSize</span> = <span class="keyword">sizeof</span>(PROCESSENTRY32);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历进程</span></span><br><span class="line">    hSnapshot = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (hSnapshot == INVALID_HANDLE_VALUE)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">    <span class="keyword">if</span> (!Process32First(hSnapshot, &amp;amp;ps))</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">do</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//比较进程名</span></span><br><span class="line">        <span class="keyword">if</span> (lstrcmpi(ps<span class="variable">.szExeFile</span>, TEXT(&amp;quot;calc<span class="variable">.exe</span>&amp;quot;)) == <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//找到了</span></span><br><span class="line">            *lpPID = ps<span class="variable">.th32ProcessID</span>;</span><br><span class="line">            CloseHandle(hSnapshot);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">TRUE</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (Process32Next(hSnapshot, &amp;amp;ps));</span><br><span class="line">    <span class="comment">//没有找到</span></span><br><span class="line">    CloseHandle(hSnapshot);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">FALSE</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//修改进程权限</span></span><br><span class="line"><span class="built_in">BOOL</span> EnablePrivilege(LPWSTR name)</span><br><span class="line">&#123;</span><br><span class="line">    HANDLE hToken;</span><br><span class="line">    <span class="built_in">BOOL</span> rv;</span><br><span class="line">    TOKEN_PRIVILEGES priv = &#123;<span class="number">1</span>, &#123;<span class="number">0</span>, <span class="number">0</span>, SE_PRIVILEGE_ENABLED&#125;&#125;;</span><br><span class="line">    LookupPrivilegeValue(<span class="number">0</span>, name, &amp;amp;priv<span class="variable">.Privileges</span>[<span class="number">0</span>]<span class="variable">.Luid</span>);</span><br><span class="line">    OpenProcessToken(GetCurrentProcess(), TOKEN_ADJUST_PRIVILEGES, &amp;amp;hToken);</span><br><span class="line">    AdjustTokenPrivileges(hToken, <span class="literal">FALSE</span>, &amp;amp;priv, <span class="keyword">sizeof</span> priv, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    rv = GetLastError() == ERROR_SUCCESS;</span><br><span class="line">    CloseHandle(hToken);</span><br><span class="line">    <span class="keyword">return</span> rv;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> WinMain(HI<span class="built_in">NSTANCE</span> hInstance, HI<span class="built_in">NSTANCE</span> hPrevInstance, LPSTR lpCmdLine, <span class="keyword">int</span> nCmdShow)</span><br><span class="line">&#123;</span><br><span class="line">    DWORD dwPID;</span><br><span class="line">    <span class="comment">//提权，获取SE_DEBUG_NAME 权限</span></span><br><span class="line">    <span class="comment">//可以在其他进程的内存空间中写入，创建线程</span></span><br><span class="line">     <span class="keyword">if</span> (<span class="number">0</span> != EnablePrivilege(SE_DEBUG_NAME))</span><br><span class="line">         <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!GetProcessIdByName(TEXT(&amp;quot;calc<span class="variable">.exe</span>&amp;quot;), &amp;amp;dwPID))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">//通过上传远程线程加载dll</span></span><br><span class="line">    <span class="comment">//将msg.dll放置在系统目录下</span></span><br><span class="line">    <span class="keyword">if</span> (!LoadRemoteDll(dwPID, TEXT(&amp;quot;msg<span class="variable">.dll</span>&amp;quot;)))</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把上次的dll放到相对目录下面或者是扔到system32下面。</p>
+<p>我们首先从main函数开始吧：</p>
+<p>主要是由三个部分组成的：</p>
+<p>**1.提取权限</p>
+<p>**</p>
+<p>  //提权，获取SE_DEBUG_NAME 权限</p>
+<pre><code><span class="comment">//可以在其他进程的内存空间中写入，创建线程</span>
+
+ <span class="keyword">if</span> <span class="params">(<span class="number">0</span> != EnablePrivilege<span class="params">(SE_DEBUG_NAME)</span>)</span>
+
+     return <span class="number">0</span>;
+</code></pre><p>**</p>
+<p>2.遍历搜索进程UID**</p>
+<p>  if (!GetProcessIdByName(TEXT(&#8220;calc.exe&#8221;), &#038;dwPID))</p>
+<pre><code><span class="keyword">return</span> <span class="number">0</span>;
+</code></pre><p><strong>3.创建远程线程</strong></p>
+<p>  //通过上传远程线程加载dll</p>
+<pre><code><span class="comment">//将msg.dll放置在系统目录下</span>
+
+<span class="keyword">if</span> <span class="params">(!LoadRemoteDll<span class="params">(dw<span class="literal">PI</span>D, TEXT<span class="params">(&amp;#<span class="number">8220</span>;msg.dll&amp;#<span class="number">8221</span>;)</span>)</span>)</span>
+
+    return <span class="number">0</span>;
+</code></pre><p>前两个步骤我们就不具体讲了，不是我们的重点。关键是其实对于进程令牌Token自己也不是很理解，不好意思给大家讲。。。</p>
+<p>关键我们还是来看看第三个步骤好了。</p>
+<p>创建远程线程句柄有下面几个步骤：</p>
+<p>**</p>
+<p>1.获得想要注入代码的进程的句柄**</p>
+<p>hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, dwProcessId);</p>
+<p><strong>2.计算DLL路径名需要的字节数</strong></p>
+<p>cch = 2 * (1 + lstrlen(lpszLibName));</p>
+<p>这里自己对宽字符的处理没有做好</p>
+<p>可以使用wcslen函数</p>
+<p><strong>3.在远程线程中为路径名分配空间</strong></p>
+<p>pszLibFileRemote = (PSTR)VirtualAllocEx(hProcess, NULL, cch, MEM_COMMIT, PAGE_READWRITE);</p>
+<p><strong>4.将DLL的路径名复制到远程进程的地址空间</strong></p>
+<p>WriteProcessMemory(hProcess, (PVOID)pszLibFileRemote, (PVOID)lpszLibName, cch, NULL);</p>
+<p><strong>5.获得LoadLibraryA在Kernel.dll中得真正地址</strong></p>
+<p>pfnThreadRrn = (PTHREAD_START_ROUTINE)GetProcAddress(GetModuleHandle(TEXT(&#8220;Kernel32&#8243;)), &#8220;LoadLibraryW&#8221;);</p>
+<p>**6.最后是最最关键的函数</p>
+<p>**</p>
+<p>hThread = CreateRemoteThread(hProcess, NULL, 0, pfnThreadRrn, (PVOID)pszLibFileRemote, 0, NULL);</p>
+<p><strong>7.当然还有扫尾的工作</strong></p>
+<p>//关闭句柄</p>
+<pre><code>if <span class="list">(<span class="keyword">pszLibFileRemote</span> != NULL)</span>
+
+    VirtualFreeEx<span class="list">(<span class="keyword">hProcess</span>, <span class="list">(<span class="keyword">PVOID</span>)</span>pszLibFileRemote, <span class="number">0</span>, MEM_RELEASE)</span><span class="comment">;</span>
+
+if <span class="list">(<span class="keyword">hThread</span> != NULL)</span>
+
+    CloseHandle<span class="list">(<span class="keyword">hThread</span>)</span><span class="comment">;</span>
+
+if <span class="list">(<span class="keyword">hProcess</span> != NULL)</span>
+
+    CloseHandle<span class="list">(<span class="keyword">hProcess</span>)</span><span class="comment">;</span>
+</code></pre><p>运行一下，发现成功了!~~~</p>
+<p>最后栋哥跟我提醒了几点：</p>
+<p>**1.关于进程令牌的代码，有时候不写也是可以通过的。这里还有待研究一下。</p>
+<p>2.被注入的程序有时候要放在相对目录下才会产生效果。关于这点自己还没有实践过。有待验证。</p>
+<p>3.像explorer.exe有时候会无法注入。换个简单的calc.exe完全可以。火狐，qq全部都可以。可能是explorer.exe有点特别。</p>
+<p>4.第一次远程注入可以成功，第二次就不行了，就不能弹出对话框了，貌似进程打开之后马上就关闭了。个人以为原因可能处在dll的fdwReason。有时间尝试着调试一下。**</p>
+<p>自己改了一下，应该是这样的。上面的代码里面没有FreeLibrary，那么dll还是在远程地址空间里面。第二次想要注入的时候是不会发送DLL_PROCESS_ATTACH 消息的。</p>
+<p>DLL_PROCESS_ATTACH消息的发送是这样的：</p>
+<p>线程调用LoadLibrary   &#8211;&gt;   Dll是否已经被映射到了进程的地址空间中  (如果是)  &#8211;&gt;   递增DLL的使用计数  &#8211;&gt;  使用计数器是否等于1 （如果是） &#8211;&gt;  调用DLL的DllMain并且传入 DLL_PROCESS_ATTACH</p>
+<p>所以说，在Dll已经被映射到了进程地址空间之后，只不过DLL的使用计数增加了，如果是2，那么很明显就不会调用DLL的DllMain并且传入 DLL_PROCESS_ATTACH</p>
+<p>但是如果我把dll改一下，把弹框代码写在DLL_THREAD_ATTACH里面，那么每次创建线程的时候就都会收到DLL_THREAD_ATTACH消息了。</p>
+<p>关于远程线程注入就先讲到这里。当然这些都是最简单的最基本的东西。</p>
+<p>自己有时间去看看核心编程，顺便进一步了解下操作系统。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DLL/" rel="tag">#DLL</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/11/06/栈和队列–魔王语言/" rel="prev">栈和队列–魔王语言</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/10/27/DLL注入（一）编写动态链接库/" rel="next">DLL注入（一）编写动态链接库</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

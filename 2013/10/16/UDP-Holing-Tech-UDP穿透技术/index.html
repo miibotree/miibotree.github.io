@@ -1,0 +1,637 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="HTTP,web," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="P2P协议中有一个关键技术是UDP Holing Tech，即UDP打洞技术。
+关于NAT的工作原理，由于NAT有好多种类型，自己也没有完全搞清楚所有的NAT模型,而且现实情况中的网络环境太过复杂，所以这里只做两点最基本的说明：
+一.NAT的作用
+NAT的出现解决了两个问题：
+1.隐藏IP的作用。如果不希望自己本机的IP地址直接暴露在公网之中，通过NAT设备，赋予终端一个内网的Ip地址。这样终端就">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP Holing Tech(UDP穿透技术)">
+<meta property="og:url" content="http://yoursite.com/2013/10/16/UDP-Holing-Tech-UDP穿透技术/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="P2P协议中有一个关键技术是UDP Holing Tech，即UDP打洞技术。
+关于NAT的工作原理，由于NAT有好多种类型，自己也没有完全搞清楚所有的NAT模型,而且现实情况中的网络环境太过复杂，所以这里只做两点最基本的说明：
+一.NAT的作用
+NAT的出现解决了两个问题：
+1.隐藏IP的作用。如果不希望自己本机的IP地址直接暴露在公网之中，通过NAT设备，赋予终端一个内网的Ip地址。这样终端就">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/10/UDP-Holing.png">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UDP Holing Tech(UDP穿透技术)">
+<meta name="twitter:description" content="P2P协议中有一个关键技术是UDP Holing Tech，即UDP打洞技术。
+关于NAT的工作原理，由于NAT有好多种类型，自己也没有完全搞清楚所有的NAT模型,而且现实情况中的网络环境太过复杂，所以这里只做两点最基本的说明：
+一.NAT的作用
+NAT的出现解决了两个问题：
+1.隐藏IP的作用。如果不希望自己本机的IP地址直接暴露在公网之中，通过NAT设备，赋予终端一个内网的Ip地址。这样终端就">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> UDP Holing Tech(UDP穿透技术) // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              UDP Holing Tech(UDP穿透技术)
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-10-16T22:38:50+08:00" content="2013-10-16">
+            2013-10-16
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>P2P协议中有一个关键技术是UDP Holing Tech，即UDP打洞技术。</p>
+<p>关于NAT的工作原理，由于NAT有好多种类型，自己也没有完全搞清楚所有的NAT模型,而且现实情况中的网络环境太过复杂，所以这里只做两点最基本的说明：</p>
+<p>一.NAT的作用</p>
+<p>NAT的出现解决了两个问题：</p>
+<p>1.隐藏IP的作用。如果不希望自己本机的IP地址直接暴露在公网之中，通过NAT设备，赋予终端一个内网的Ip地址。这样终端就不会直接暴露在外网中。</p>
+<p>2.IPV4不足的问题，通过NAT建立一个局域网，局域网内使用的是NAT分配给终端的虚拟内网IP地址，而内网访问公网服务器的时候，经过NAT的时候会把局域网内的ip地址转换为公网的ip地址。相当于局域网内 复用 了一个ip地址，解决了Ipv4不足的问题。</p>
+<p>二.NAT的分类</p>
+<p>1.Basic NAT(Basic Network Address Translation)</p>
+<p>这种情况基本上不常见。就是一个外网ip地址对应局域网内的一个ip地址，即公网ip地址与局域网内的ip地址数量是一样的。这个时候NAT仅仅起到了地址隐藏的作用。</p>
+<p>2. NAPT(Network Address/Port Translator)</p>
+<p>在Basic NAT的基础上增加了Port端口号，即使只分配了一个ip地址，通过分配不同的端口，以g_Ip : Port的形式对应不同的内网Ip : Port</p>
+<p>注意：这里的g_Ip是分配的一个公网ip地址</p>
+<p>也就是说，NAPT解决了上面说的NAT的第二个作用，即ipv4不足的问题</p>
+<p>在实际情况中，我们将这两种类型混合使用。</p>
+<p>接下来就可以讲UDP穿透技术了。</p>
+<p>以下算法摘自wiki：<a href="http://en.wikipedia.org/wiki/UDP_hole_punching" target="_blank" rel="external">http://en.wikipedia.org/wiki/UDP_hole_punching</a></p>
+<p><span id="more-752"></span></p>
+<p>&nbsp;</p>
+<p>Algorithm</p>
+<p>Let A and B be the two hosts, each in its own private network; N1 and N2 are the two NAT devices with globally reachable IP addresses P1 and P2 respectively; S is a public server with a well-known globally reachable IP address.</p>
+<p>1. A and B each begin a UDP conversation with S; the NAT devices N1 and N2 create UDP translation states and assign temporary external port numbers X and Y</p>
+<p>2. S examines the UDP packets to get the source port used by N1 and N2 (the external NAT ports X and Y)</p>
+<p>3. S passes P1:X to B and P2:Y to A</p>
+<p>4. A sends a packet to P2:Y.</p>
+<p>5. N1 examines A&#8217;s packet and creates the following tuple in its translation table: {Source-IP-A,X,P2,Y}</p>
+<p>6. B sends a packet to P1:X</p>
+<p>7. N2 examines B&#8217;s packet and creates the following tuple in its translation table: {Source-IP-B,Y,P1,X}</p>
+<p>8. Depending on the state of N1&#8242;s translation table when B&#8217;s first packet arrives (i.e. whether the tuple {Source-IP-A,X,P2,Y} has been created by the time of arrival of B&#8217;s first packet), B&#8217;s first packet is dropped (no entry in translation table) or passed (entry in translation table has been made).</p>
+<p>9. Depending on the state of N2&#8242;s translation table when A&#8217;s first packet arrives (i.e. whether the tuple {Source-IP-B,Y,P1,X} has been created by the time of arrival of A&#8217;s first packet), A&#8217;s first packet is dropped (no entry in translation table) or passed (entry in translation table has been made).</p>
+<p>10. At worst, the second packet from A reaches B; at worst the second packet from B reaches A. Holes have been &#8220;punched&#8221; in the NAT and both hosts can communicate.</p>
+<p>还是举个栗子给大家看看哈^_^</p>
+<p><a href="http://miibotree.com/?attachment_id=756" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/10/UDP-Holing.png" alt="UDP Holing"></a></p>
+<p>我们想实现ClientA 和ClientB之间的通信。但是在不知道两台客户端ip地址的情况下，是无法进行通信的。所以：</p>
+<p>1.首先通过一个中继服务器S，建立两条线路：即ClientA &lt;&#8211;&gt; S 和 ClientB &lt;&#8211;&gt;S</p>
+<p>2. 中继S服务器将A的外网Ip地址和端口号155.156.158.158:6200发送给Client B,</p>
+<p>同样的，中继S服务器将B的外网Ip地址和端口号185.186.187.188:5200发送给Client A。</p>
+<p>这样一来，Client A 和Client B已经知道了双方的公网Ip地址和端口号。但是现在两者如果直接进行UDP通信还是不行。为什么？因为没有打洞。</p>
+<p>也就是说，Router 0的路由表里面只有S和ClientA之间通信的路由规则，并没有Client A和Client B之间通信的路由规则。所以如果此时ClientB 发送UDP消息给ClientA，包会直接被ClientA给丢弃掉。那么如何解决这个问题呢？</p>
+<p>3.其实很简单，就是“打洞”。说的非常形象。</p>
+<p>如果说ClientA想发送消息给ClientB，首先发个包给中继服务器S，让S通知ClientB发送个UDP包给ClientA。ClientB发送给ClientA的包虽然会被ClientA给丢弃掉，但是已经在Router 1上面打了个从ClientB到ClientA的洞，即在Router 1的路由规则里面添加了一条ClientB和ClientA之间相互通信的规则。</p>
+<p>4.这个时候ClientA发送UDP消息给ClientB的时候，由于在Router 1上面已经有了这个专门的“洞”，ClientA发送的UDP包就能成功的被ClientB给接收到啦！</p>
+<p>同理，ClientB发UDP消息给ClientA也与之类似。</p>
+<p>&nbsp;</p>
+<p>这个是自己对UDP穿透的简单理解。初学网络，如果上述有什么错误的地方，还请批评指正。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
+          
+            <a href="/tags/web/" rel="tag">#web</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/10/23/A-new-start-0/" rel="prev">A new start!</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/10/10/HTTP协议之Transfer-Encoding/" rel="next">HTTP协议之Transfer-Encoding</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

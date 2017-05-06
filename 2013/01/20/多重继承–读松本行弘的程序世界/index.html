@@ -1,0 +1,635 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="JAVA,Mix-in,Ruby,c/c++," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="这个学期是简单的学习了基本的C++。感觉C++中最复杂的还是后面的多重继承和多态性。
+多重继承有以下几个优点：
+很自然地做到了单一继承的扩展；
+可以继承多个类的功能；
+虽然说多重继承的好处很明显，但是缺点也是相当明显的：
+单一继承的时候，类之间的关系就是一条直线，很明白；
+而到了多重继承的时候，类之间的关系就变成了一个网状图，类之间的关系图就变的很不明确了。
+此外，多重继承让类关系复杂化，
+还可能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多重继承–读松本行弘的程序世界">
+<meta property="og:url" content="http://yoursite.com/2013/01/20/多重继承–读松本行弘的程序世界/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="这个学期是简单的学习了基本的C++。感觉C++中最复杂的还是后面的多重继承和多态性。
+多重继承有以下几个优点：
+很自然地做到了单一继承的扩展；
+可以继承多个类的功能；
+虽然说多重继承的好处很明显，但是缺点也是相当明显的：
+单一继承的时候，类之间的关系就是一条直线，很明白；
+而到了多重继承的时候，类之间的关系就变成了一个网状图，类之间的关系图就变的很不明确了。
+此外，多重继承让类关系复杂化，
+还可能">
+<meta property="og:image" content="http://miibotree.com/wp-content/uploads/2013/01/11.png">
+<meta property="og:updated_time" content="2015-07-25T05:01:29.076Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="多重继承–读松本行弘的程序世界">
+<meta name="twitter:description" content="这个学期是简单的学习了基本的C++。感觉C++中最复杂的还是后面的多重继承和多态性。
+多重继承有以下几个优点：
+很自然地做到了单一继承的扩展；
+可以继承多个类的功能；
+虽然说多重继承的好处很明显，但是缺点也是相当明显的：
+单一继承的时候，类之间的关系就是一条直线，很明白；
+而到了多重继承的时候，类之间的关系就变成了一个网状图，类之间的关系图就变的很不明确了。
+此外，多重继承让类关系复杂化，
+还可能">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 多重继承–读松本行弘的程序世界 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              多重继承–读松本行弘的程序世界
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-01-20T22:43:22+08:00" content="2013-01-20">
+            2013-01-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这个学期是简单的学习了基本的C++。感觉C++中最复杂的还是后面的多重继承和多态性。</p>
+<p>多重继承有以下几个优点：</p>
+<p>很自然地做到了单一继承的扩展；</p>
+<p>可以继承多个类的功能；</p>
+<p>虽然说多重继承的好处很明显，但是缺点也是相当明显的：</p>
+<p>单一继承的时候，类之间的关系就是一条直线，很明白；</p>
+<p>而到了多重继承的时候，类之间的关系就变成了一个网状图，类之间的关系图就变的很不明确了。</p>
+<p>此外，多重继承让类关系复杂化，</p>
+<p>还可能出现 继承功能名字重复的问题，（比如C++中的虚基类就是为了解决此类问题）</p>
+<p>C++是允许多重继承的。JAVA虽然不允许多继承，但是有接口的概念，有了接口之后，以一种叫做 “规格的继承”（书上是这么写的，感觉意思不够明确），直白地说，虽然没有直接实现多重继承，但相当于间接地实现了多重继承，感觉有点像C++中的友元类。</p>
+<p>Ruby中介绍了Mix-in模块来解决多重继承。</p>
+<p>简单的说相当于把这些Mix-in模块看成是一个个可拆卸的模块，要用的时候拼接插入进去，解决了实现继承的问题。</p>
+<p>举个Window的简单例子,看下面这张图片:</p>
+<p><a href="http://miibotree.com/?attachment_id=556" target="_blank" rel="external"><img src="http://miibotree.com/wp-content/uploads/2013/01/11.png" alt="11"></a></p>
+<p>左边是普通的多继承的例子，而右边则是Mix-in版本的例子</p>
+<p>把Titled 和Framed分别作为两个Mix-in模块，插入到所需的类里面去，既保证了单一继承的单纯性，也实现了多重继承的共有性。</p>
+<p>还是给大家举个例子好了：</p>
+<p><a href="http://jack-boy.iteye.com/blog/1745112" target="_blank" rel="external">http://jack-boy.iteye.com/blog/1745112</a></p>
+<p>Ruby自己也没学多少东西，只好码点东西出来冲冲数：</p>
+<p>&nbsp;</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">class <span class="keyword">Person</span></span><br><span class="line">	attr_accessor :name, :age, :<span class="keyword">gender</span></span><br><span class="line">	def initialize (name)</span><br><span class="line">		@name = name</span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">module UsefulFeatures</span><br><span class="line">	def come_in(<span class="keyword">person</span>)</span><br><span class="line">		self.current_person = <span class="keyword">person</span></span><br><span class="line">		#set_current_person(<span class="keyword">person</span>)</span><br><span class="line">	end</span><br><span class="line">	def current_person</span><br><span class="line">		#self.current+<span class="keyword">person</span></span><br><span class="line">		@current_person</span><br><span class="line">	end</span><br><span class="line"></span><br><span class="line">	def set_current_person(<span class="keyword">person</span>)</span><br><span class="line">		puts <span class="string">"set current person"</span></span><br><span class="line">		@current_person = <span class="keyword">person</span></span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">class <span class="keyword">Room</span></span><br><span class="line">	include UsefulFeatures</span><br><span class="line"></span><br><span class="line">	def current_person=(<span class="keyword">person</span>)</span><br><span class="line">		#self.current.<span class="keyword">person</span> = <span class="keyword">person</span></span><br><span class="line">		puts <span class="string">"set current person (use =)"</span></span><br><span class="line">		@current_person = <span class="keyword">person</span></span><br><span class="line">	end</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">if __FILE__ == $0</span><br><span class="line">	jack = <span class="keyword">Person</span>.new(<span class="string">"jack"</span>)</span><br><span class="line">	puts <span class="string">"name: #&#123;jack.name&#125;"</span></span><br><span class="line">	bob = <span class="keyword">Person</span>.new(<span class="string">"bob"</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">room</span> = <span class="keyword">Room</span>.new()</span><br><span class="line">	<span class="keyword">room</span>.come_in(jack)</span><br><span class="line">	puts <span class="string">"room current person #&#123;room.current_person.name&#125;"</span></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>自己每天没事写写博客&#8230;写这篇文章的主要目的就是提醒自己要有发散性思维，不要被一种编程语言所局限了。</p>
+<p>编程语言其实和现实中的语言很类似，中国人学习外语，很容易被中国的思维所局限。所以像我们学习英语，很多时候是学习的不仅仅是语言本身，而是从语言中蕴含的文化，历史，最重要的是思想，考虑问题的方式。</p>
+<p>举个简单的例子，英语中的祈使句:Could/Would you please&#8230;&#8230;</p>
+<p>或者是虚拟语气：If I were you&#8230;&#8230;</p>
+<p>类似于这样的例子，说明人家充分考虑别人的感受，是一种尊重他人的表现。</p>
+<p>以此类推，我们把这种思想借鉴到编程语言当中来，就可以看出不同的编程语言之间的差异了。</p>
+<p>当然自己也只能初步了解了解了，具体的东西还是得慢慢来看。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JAVA/" rel="tag">#JAVA</a>
+          
+            <a href="/tags/Mix-in/" rel="tag">#Mix-in</a>
+          
+            <a href="/tags/Ruby/" rel="tag">#Ruby</a>
+          
+            <a href="/tags/c-c/" rel="tag">#c/c++</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/01/22/Kinect环境配置/" rel="prev">Kinect环境配置</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/01/18/移位运算符和运算符重载/" rel="next">移位运算符和运算符重载</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

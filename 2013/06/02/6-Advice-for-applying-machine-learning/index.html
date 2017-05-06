@@ -1,0 +1,808 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Machine Learning,MachineLearning," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第六讲. 怎样选择机器学习方法——Advice for applying machine learning
+===============================
+候选机器学习方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="(6)Advice for applying machine learning">
+<meta property="og:url" content="http://yoursite.com/2013/06/02/6-Advice-for-applying-machine-learning/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第六讲. 怎样选择机器学习方法——Advice for applying machine learning
+===============================
+候选机器学习方">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343437816_4254.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343480103_4705.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343480369_4168.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343481688_4647.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343481862_6058.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343482366_9247.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343482446_9803.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343483553_5115.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343483884_1140.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343484056_3257.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343484595_6134.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343489907_1825.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350019398_2892.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350019410_6409.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350022126_6772.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350022146_1286.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350026192_9384.jpg">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201210/12/1350022363_3386.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343485336_9809.jpg">
+<meta property="og:image" content="http://yoursite.com/file:///C:/Temp/ISLZT%60Q$@7Z85N$JT99OQAW.gif">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343488015_9752.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343489949_8716.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343489520_3981.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/28/1343491055_2077.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/29/1343491397_1191.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/29/1343491414_9656.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/29/1343491551_2985.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/29/1343491833_8587.jpg">
+<meta property="og:image" content="http://my.csdn.net/uploads/201207/29/1343491992_8029.jpg">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="(6)Advice for applying machine learning">
+<meta name="twitter:description" content="Machine Learning系列
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(http://blog.csdn.net/abcjennifer)
+第六讲. 怎样选择机器学习方法——Advice for applying machine learning
+===============================
+候选机器学习方">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> (6)Advice for applying machine learning // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              (6)Advice for applying machine learning
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-06-02T12:50:43+08:00" content="2013-06-02">
+            2013-06-02
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Machine Learning系列</p>
+<p>以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</p>
+<p><strong>第六讲. 怎样选择机器学习方法——Advice for applying machine learning</strong></p>
+<p><strong>===============================</strong></p>
+<p><strong>候选机器学习方法</strong></p>
+<p><strong>评价方法假设</strong></p>
+<p>**☆模型选择和训练、验证实验数据</p>
+<p>**</p>
+<p>**☆区别诊断偏离bias和偏差variance</p>
+<p>**</p>
+<p>**☆规则化 和 bias/variance</p>
+<p>**</p>
+<p><strong>Learning Curve：什么时候增加训练数据training set才是有效的？</strong></p>
+<hr>
+<p><strong>===============================</strong></p>
+<p><strong>候选机器学习方法——Deciding what to try next</strong></p>
+<hr>
+<p>还用房价的prediction举例，假设我们已经实现了用规则化的线性回归方法预测房价：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343437816_4254.jpg" alt=""></p>
+<p>但发现该预测应用于一个新的训练数据上时有很大误差（error），这时应采取一些解决方案：</p>
+<div>Get more training examples</div><br><div><br><div>Try smaller sets of features</div><br><div>Try getting additional features</div><br><div>Try adding polynomial features (e.g.  x1^2, x2^2, x1x2&#8230;)</div><br><div>Try decreasing λ</div><br><div>Try increasing λ</div><br></div><br><div></div>
+
+<p>Machine Learning 方法的诊断：</p>
+<ul>
+<li>什么是诊断Dignostic呢？诊断就是能够判断一种学习算法能不能work，并且改善该算法性能的一个测试。</li>
+</ul>
+<p><span id="more-704"></span></p>
+<p>Diagnostic: A test that you can run to gain insight what is/isn&#8217;t working with a learning algorithm, and gain guidance as to how best to improve its performance.</p>
+<p>-诊断的效果：Diagnostics can take time to implement, but doing so can be a very good use of your time.</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343480103_4705.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>评价方法假设——Evaluating a hypothesis</p>
+<p>首先呢，我们将所有数据分为两个集合，一个Trainning set和一个Testing set，用Training set得到参数向量，用Testing set进行测试（比如分类）。</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343480369_4168.jpg" alt=""></p>
+<p>这时，将test set的error分为线性回归linear regression和逻辑回归logistic regression两类：</p>
+<p>-线性回归的error：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343481688_4647.jpg" alt=""></p>
+<p>-逻辑回归的error：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343481862_6058.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>模型选择和训练、验证实验数据</p>
+<p>&nbsp;</p>
+<p>面 对模型选择问题，如何才能得到一个just fit的模型而不会导致underfit 或者overfit呢？我们引入一类数据集，叫做cross validation set，即交叉验证数据集。将所有数据按&lt;6,2,2&gt;分为training set , cross validation set , testing set三类，如下图所示：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343482366_9247.jpg" alt=""></p>
+<p>其error计算公式如下，其实三类计算方法大同小异，相同的公式只是换了数据及而已：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343482446_9803.jpg" alt=""></p>
+<p>进行模型选择的方法其实很简单，对应下图大家来看：</p>
+<p>-首先，建立d个model 假设（图中有10个，d表示其id），分别在training set 上求使其training error最小的θ向量，那么得到d个θ</p>
+<p>-然后，对这d个model假设，带入θ，在cross validation set上计算J(cv)，即cv set error最小的一个model 作为 hypothesis，如下图中J(cv)在第4组中最小，便取d=4的假设。</p>
+<p>PS: 其实d表示dimension，也就是维度，表示该hypothesis的最大polynomial项是d维的。</p>
+<p>PS&#8217;: 一般地，J(cv)是大于等于J(train)的</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343483553_5115.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>区别诊断偏离bias和偏差variance</p>
+<p>前面的课程中我们曾讲过相同数据不同回归情况：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343483884_1140.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>这一节中，我们给大家区分两个概念：bias vs. variance。</p>
+<p>如下图所示为error随不同dimension的model变化图，可以想见，随d上升是一个由underfit到overfit的过程，这个过程中，training set的error逐渐下降，而cv set的error先降后升。</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343484056_3257.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>这里就产生了bias和variance的概念：</p>
+<p>bias：J(train)大，J(cv)大，J(train)≈J(cv)，bias产生于d小，underfit阶段；</p>
+<p>variance：J(train)小，J(cv)大，J(train)&lt;&lt;J(cv)，variance产生于d大，overfit阶段；</p>
+<p>如下图所示：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343484595_6134.jpg" alt=""></p>
+<p>来来，做道题：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489907_1825.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-</p>
+<p>&nbsp;</p>
+<p>好，有了初步概念，现在我们来看bias和variance的由来及具体定义：</p>
+<p>给定数据及D（比如一个点集吧），对于这些数据集上的点我们可以计算每个index下点的平均值（即期望）t(x) = E(y|x)，则我们有mean square error:</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div>MSE = 1/n * Σ(f(x)-t(x))^2</div><br><div></div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350019398_2892.jpg" alt=""></div><br><div></div><br><div>MSE（mean square error） = Bias2 + Variance +noise</div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350019410_6409.jpg" alt=""></div><br><div></div><br><div></div>
+
+<p>定义上是这么讲的：</p>
+<p>&nbsp;</p>
+<p>Variance: measures the extent to which the solutions for individual data sets vary around their average, hence this measures the extent to which the function f(x) is sensitive to theparticular choice of data set.</p>
+<p>Bias: represents the extent to which the average prediction over all data sets differs from the desired regression function.</p>
+<p>Our goal is to minimize the expected loss, which we havedecomposed into the sum of a (squared) bias, a variance, and a constant noiseterm. As we shall see, there is a trade-off between bias and variance, with very flexible models（overfit） having low bias and high variance, and relatively rigid models（underfit） having high bias and low variance</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>总结一下：</p>
+<p>variance：估计本身的方差。</p>
+<p>bias：估计的期望和样本数据样本希望得到的回归函数之间的差别。</p>
+<p>&nbsp;</p>
+<p>具 体来讲，我有一个统计量D（比如统计某大学研一学生身高在[0.5-1],[1,1.1],[1.1,1.2]……[1.9,2]之间的人数），这样可以 形成一些离散点。然后呢，本校研一有20个班，每个班就都可以拟合成一条估计曲线f(x)，这20条曲线呢，有一个平均值，也就是估计期望（均值）曲线 E(f(x,D))。</p>
+<p>&nbsp;</p>
+<p>variance是指，这20条估计曲线与最后估计期望（均值）之间的距离，也就是估计曲线本身的方差，是不可能为0的。</p>
+<p>bias是指，20条估计曲线的均值与实际最佳拟合情况之间的距离。</p>
+<p>&nbsp;</p>
+<p>这样一来呢，对于regularization项中的λ，</p>
+<p>&nbsp;</p>
+<p>λ小 -&gt; α大 -&gt; overfit（flexible） -&gt;</p>
+<p>对于不同的训练数据集（不同班级的数据）的拟合结果抖动很大 -&gt; variance大</p>
+<p>bias是估计均值与实际值期望的偏差 -&gt; bias小</p>
+<p>下图中，左图为拟合的20条曲线；右图红线为20条曲线的期望，绿色为实际数据期望所得的拟合曲线。</p>
+<p>&nbsp;</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350022126_6772.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>λ大 -&gt; α小 -&gt; underfit（stable） -&gt;</p>
+<p>对于不同的训练数据集（不同班级的数据）的拟合结果抖动较小 -&gt; variance小</p>
+<p>bias是估计均值与实际值期望的偏差 ，不能很好地进行回归-&gt; bias大</p>
+<p>下图中，左图为拟合的20条曲线；右图红线为20条曲线的期望，绿色为实际数据期望所得的拟合曲线。</p>
+<div></div><br><div><img src="http://img.my.csdn.net/uploads/201210/12/1350022146_1286.jpg" alt=""></div>
+
+<p>&nbsp;</p>
+<p>下图所示为λ与bias, variance, error之间的关系：</p>
+<p>&nbsp;</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350026192_9384.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>我们希望的数据的variance和bias都不要大：</p>
+<p><img src="http://img.my.csdn.net/uploads/201210/12/1350022363_3386.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>那么着就是一个variance和bias之间的tradeoff 了~</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p>规则化 和 bias/variance</p>
+<p>&nbsp;</p>
+<p>上面一节中讲了bias和variance的诞生，那么这一节中偶们就将他们应用于regularization中。</p>
+<p>大家还记的什么是<a href="http://blog.csdn.net/abcjennifer/article/details/7732417" target="_blank" rel="external">regularization</a>么？regularization就是为了防止overfit而在cost function中引入的一个分量。</p>
+<p>还不清楚？看下图吧，regularization项就是cost function J(θ)中的最后一项，其中λ太大导致underfit，λ太小导致overfit……</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343485336_9809.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>将λ从0，0.01，一直往上每次乘以2，那么到10.24总共可以试12次λ。</p>
+<p>这12个λ会得到12个model的 cost function，每个对应有J(θ)和 Jcv(θ).</p>
+<p>和模型选择的方法相同，首先选出每个cost function下令J(θ)最小的θ，然后取出令Jcv（θ）最小的一组定为最终的λ。</p>
+<div><img src="file:///C:/Temp/ISLZT%60Q$@7Z85N$JT99OQAW.gif" alt=""></div>
+
+<p><img src="http://my.csdn.net/uploads/201207/28/1343488015_9752.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>来来，看看你做的对不：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489949_8716.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>图画出来就是这个样子滴：</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343489520_3981.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>λ太小导致overfit，产生variance，J(train)&lt;&lt;J(cv)</p>
+<p>λ太大导致underfit，产生bias，J(train) ≈ J(cv)</p>
+<p>能明白我的意思么？</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>===============================</strong></p>
+<p><strong>Learning Curve：什么时候增加训练数据training set才是有效的？</strong></p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/28/1343491055_2077.jpg" alt=""></p>
+<p>这 一小节想要讲讲训练数据个数m和error之间的关系。从上面这幅图中我们可知（不知的话用极限思维想想），训练数据越少（如果只有一 个），J(train)越小，J(cv)越大；m越大，J(train)越大（因为越难perfectly拟合），J(cv)越小（因为越精确），懂我的 意思吧？</p>
+<p>&nbsp;</p>
+<p>那么我们分别就High Bias 和 High Variance来看看增加training set个数，即m，是否有意义？！</p>
+<p>&nbsp;</p>
+<p>Underfit 的 High bias: 增加m无济于事！</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491397_1191.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>Overfit的 High Variance: 增加m使得J(train)和J(cv)之间gap减小，有助于performance提高！</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491414_9656.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>来来，做道题：</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491551_2985.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>由图中可见，增加训练数据的个数对于过拟合是有用的，对于underfit是徒劳！</p>
+<p>下面总结一下，重温最初的解决方案列表：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491833_8587.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>针对underfit和overfit，分别是什么情况呢？见下图：</p>
+<p>&nbsp;</p>
+<p><img src="http://my.csdn.net/uploads/201207/29/1343491992_8029.jpg" alt=""></p>
+<p>&nbsp;</p>
+<p>这章非常有用，讲了选择最佳拟合model的问题，是machine learning的常见问题，希望能对大家选择ml 模型有所帮助。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag">#Machine Learning</a>
+          
+            <a href="/tags/MachineLearning/" rel="tag">#MachineLearning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/06/02/Machine-Learning-Week6-Ex5/" rel="prev">Machine Learning Week6 Ex5</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/27/5-Neural-Network-Learning/" rel="next">(5) Neural Network Learning</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

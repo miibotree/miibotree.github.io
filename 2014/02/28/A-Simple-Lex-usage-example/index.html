@@ -1,0 +1,649 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Compilers," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="Recently I&amp;#8217;m learning a course: Compilers.
+And after I have the classes and read the dragon book, I am going to use Lex in my linux OS.
+here are some references:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Simple Lex usage example">
+<meta property="og:url" content="http://yoursite.com/2014/02/28/A-Simple-Lex-usage-example/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="Recently I&amp;#8217;m learning a course: Compilers.
+And after I have the classes and read the dragon book, I am going to use Lex in my linux OS.
+here are some references:">
+<meta property="og:updated_time" content="2015-07-25T11:36:20.822Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Simple Lex usage example">
+<meta name="twitter:description" content="Recently I&amp;#8217;m learning a course: Compilers.
+And after I have the classes and read the dragon book, I am going to use Lex in my linux OS.
+here are some references:">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> A Simple Lex usage example // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              A Simple Lex usage example
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-02-28T20:28:05+08:00" content="2014-02-28">
+            2014-02-28
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>Recently I&#8217;m learning a course: Compilers.</p>
+<p>And after I have the classes and read the dragon book, I am going to use Lex in my linux OS.</p>
+<p>here are some references:<br><a id="more"></a></p>
+<p>&nbsp;</p>
+<p><strong>1.Lex &#8211; A Lexical Analyzer Generator:</strong></p>
+<p><a href="http://dinosaur.compilertools.net/lex/index.html" target="_blank" rel="external">http://dinosaur.compilertools.net/lex/index.html</a></p>
+<p><strong>2.</strong></p>
+<p><strong>Yacc 与 Lex 快速入门</strong></p>
+<p><a href="http://www.ibm.com/developerworks/cn/linux/sdk/lex/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/linux/sdk/lex/</a></p>
+<p><strong>3.Lex和Yacc应用方法(一).初识Lex</strong></p>
+<p><a href="http://blog.csdn.net/liwei_cmg/article/details/1530492" target="_blank" rel="external">http://blog.csdn.net/liwei_cmg/article/details/1530492</a></p>
+<p><span id="more-910"></span></p>
+<p><strong>1.The regular expressions defined in the Lex:</strong></p>
+<table width="590" border="1" cellspacing="0" cellpadding="3"><br><tbody><br><tr valign="top"><br><td valign="top" width="25%"><strong>字符</strong></td><br><td valign="top" width="75%"><strong>含义</strong></td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>A-Z, 0-9, a-z</strong></td><br><td valign="top" width="75%">构成了部分模式的字符和数字。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>.</strong></td><br><td valign="top" width="75%">匹配任意字符，除了 \n。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>-</strong></td><br><td valign="top" width="75%">用来指定范围。例如：A-Z 指从 A 到 Z 之间的所有字符。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>[ ]</strong></td><br><td valign="top" width="75%">一个字符集合。匹配括号内的 _任意_ 字符。如果第一个字符是 <strong>^</strong> 那么它表示否定模式。例如: [abC] 匹配 a, b, 和 C中的任何一个。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>*</strong></td><br><td valign="top" width="75%">匹配 _0个_或者多个上述的模式。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>+</strong></td><br><td valign="top" width="75%">匹配 _1个_或者多个上述模式。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>?</strong></td><br><td valign="top" width="75%">匹配 _0个或1个_上述模式。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>$</strong></td><br><td valign="top" width="75%">作为模式的最后一个字符匹配一行的结尾。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>{ }</strong></td><br><td valign="top" width="75%">指出一个模式可能出现的次数。 例如: A{1,3} 表示 A 可能出现1次或3次。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>\</strong></td><br><td valign="top" width="75%">用来转义元字符。同样用来覆盖字符在此表中定义的特殊意义，只取字符的本意。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>^</strong></td><br><td valign="top" width="75%">否定。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>|</strong></td><br><td valign="top" width="75%">表达式间的逻辑或。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>&#8220;&lt;一些符号&gt;&#8221;</strong></td><br><td valign="top" width="75%">字符的字面含义。元字符具有。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>/</strong></td><br><td valign="top" width="75%">向前匹配。如果在匹配的模版中的“/”后跟有后续表达式，只匹配模版中“/”前 面的部分。如：如果输入 A01，那么在模版 A0/1 中的 A0 是匹配的。</td><br></tr><br><tr valign="top"><br><td valign="top" width="25%"><strong>( )</strong></td><br><td valign="top" width="75%">将一系列常规表达式分组。</td><br></tr><br></tbody><br></table>
+
+<p><strong>of course we should know learn these special symbols first.</strong></p>
+<p>&nbsp;</p>
+<p><strong>2.The relationship between Lex and Yacc:</strong></p>
+<p>&nbsp;</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Source -&#38;gt; |  Lex  |  -&#38;gt; yylex&#10;          +-------+&#10;&#10;          +-------+&#10;Input -&#38;gt;  | yylex | -&#38;gt; Output&#10;          +-------+&#10;&#10;     An overview of Lex&#10;          Figure 1</span><br></pre></td></tr></table></figure>
+<p>source is our regular file.</p>
+<p>we use the command below and get a file named lex.yy.c:</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lex</span> &amp;<span class="keyword">lt</span>;<span class="keyword">file</span> name. <span class="keyword">lex</span>&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>lex.yy.c is a c sourse file. It have two usages:</p>
+<p>1.we can use this file for the input file of Yacc, as is showed in the figure 2:</p>
+<figure class="highlight"><figcaption><span>grammar</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">            rules          rules&#10;              |              |&#10;              v              v&#10;         +---------+    +---------+&#10;         |   Lex   |    |  Yacc   |&#10;         +---------+    +---------+&#10;              |              |&#10;              v              v&#10;         +---------+    +---------+&#10;Input -&#38;gt; |  yylex  | -&#38;gt; | yyparse | -&#38;gt; Parsed input&#10;         +---------+    +---------+</span><br></pre></td></tr></table></figure>
+<p>2.we can also compile lex.yy.c by using gcc and we can get a execute file.</p>
+<p>If we don&#8217;t use the -o param, the default file name is a.out.</p>
+<p>a.out file provides lexical analyse functions.</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./a.<span class="keyword">out</span> &amp;lt; <span class="keyword">file</span>.txt</span><br></pre></td></tr></table></figure>
+<p>file.txt is a test file.</p>
+<p>&nbsp;</p>
+<p><strong>3. The format of the Lex source:</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%%&#10;&#123;rules&#125;&#10;%%&#10;&#123;user routines&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>4.A simple example:</strong></p>
+<p>exsec.l</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">%&#123;</span><br><span class="line"><span class="comment">#include "stdio.h"</span></span><br><span class="line"><span class="keyword">int</span> linenum;</span><br><span class="line"><span class="variable">%&#125;</span></span><br><span class="line"><span class="variable">%%</span></span><br><span class="line"></span><br><span class="line">title showtitle();</span><br><span class="line">[\n] linenum++;</span><br><span class="line">[<span class="number">0</span>-<span class="number">9</span>]+ <span class="keyword">printf</span>(<span class="string">"Int : <span class="variable">%s</span>\n"</span>,yytext);</span><br><span class="line">[<span class="number">0</span>-<span class="number">9</span>]*\.[<span class="number">0</span>-<span class="number">9</span>]+ <span class="keyword">printf</span>(<span class="string">"Float : <span class="variable">%s</span>\n"</span>,yytext);</span><br><span class="line">[a-zA-Z][a-zA-Z<span class="number">0</span>-<span class="number">9</span>]* <span class="keyword">printf</span>(<span class="string">"Var : <span class="variable">%s</span>\n"</span>,yytext);</span><br><span class="line">[\+\-\*\/\<span class="variable">%]</span> <span class="keyword">printf</span>(<span class="string">"Op : <span class="variable">%s</span>\n"</span>,yytext);</span><br><span class="line">[=] <span class="keyword">printf</span>(<span class="string">"Equal : <span class="variable">%s</span>\n"</span>, yytext);</span><br><span class="line">. <span class="keyword">printf</span>(<span class="string">"Unknown : <span class="variable">%c</span>\n"</span>,yytext[<span class="number">0</span>]);</span><br><span class="line"><span class="variable">%%</span></span><br><span class="line"></span><br><span class="line">showtitle()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"----- Lex Example -----\n"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> main()</span><br><span class="line">&#123;</span><br><span class="line">linenum=<span class="number">0</span>;</span><br><span class="line">yylex(); <span class="regexp">/* 进行分析 */</span></span><br><span class="line"><span class="keyword">printf</span>(<span class="string">"\nLine Count: <span class="variable">%d</span>\n"</span>, linenum);</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> yywrap()</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>use the lex tool:</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">lex</span> <span class="tag">exsec</span><span class="class">.l</span></span><br></pre></td></tr></table></figure>
+<p>we get a file lex.yy.c</p>
+<p>use the gcc:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc lex<span class="class">.yy</span><span class="class">.c</span> -o exsec</span><br></pre></td></tr></table></figure>
+<p>and we get an execute file  exsec</p>
+<p>write a file.txt:</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">title</span><br><span class="line">i=1+3.9<span class="comment">;</span></span><br><span class="line">a<span class="number">3=909/6</span></span><br><span class="line">bcd=<span class="number">4%9-333</span></span><br></pre></td></tr></table></figure>
+<p>execute the exsec</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./exsec &amp;<span class="keyword">lt</span>; <span class="keyword">file</span>.txt</span><br></pre></td></tr></table></figure>
+<p>&#8212;&#8211; Lex Example &#8212;&#8211;</p>
+<p>Var : i</p>
+<p>Equal : =</p>
+<p>Int : 1</p>
+<p>Op : +</p>
+<p>Float : 3.9</p>
+<p>Unknown : ;</p>
+<p>Var : a3</p>
+<p>Equal : =</p>
+<p>Int : 909</p>
+<p>Op : /</p>
+<p>Int : 6</p>
+<p>Var : bcd</p>
+<p>Equal : =</p>
+<p>Int : 4</p>
+<p>Op : %</p>
+<p>Int : 9</p>
+<p>Op : -</p>
+<p>Int : 333</p>
+<p>Line Count: 4</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Compilers/" rel="tag">#Compilers</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/03/20/Heap-Corruption-in-Linux/" rel="prev">Heap Corruption in Linux</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/02/22/Fedora-19更新内核导致VirtualBox无法启动/" rel="next">Fedora 19更新内核导致VirtualBox无法启动</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

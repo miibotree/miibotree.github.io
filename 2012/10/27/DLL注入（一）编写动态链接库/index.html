@@ -1,0 +1,627 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="DLL,windowsSDK," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="想写个远程线程注入的东西&amp;#8230;&amp;#8230;
+问了下栋哥终于把机理给搞明白了。
+参考的书本是《Windows API 开发详解 &amp;#8212;函数、接口、编程实例》和《windows核心编程》
+首先我们从编写一个dll开始。
+为了统一起见，下面的代码中所有函数全部使用宽字符版本。
+首先把代码给贴出来：
+12345678910111213141516171819202122232425262">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DLL注入（一）编写动态链接库">
+<meta property="og:url" content="http://yoursite.com/2012/10/27/DLL注入（一）编写动态链接库/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="想写个远程线程注入的东西&amp;#8230;&amp;#8230;
+问了下栋哥终于把机理给搞明白了。
+参考的书本是《Windows API 开发详解 &amp;#8212;函数、接口、编程实例》和《windows核心编程》
+首先我们从编写一个dll开始。
+为了统一起见，下面的代码中所有函数全部使用宽字符版本。
+首先把代码给贴出来：
+12345678910111213141516171819202122232425262">
+<meta property="og:updated_time" content="2015-07-25T04:45:17.580Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DLL注入（一）编写动态链接库">
+<meta name="twitter:description" content="想写个远程线程注入的东西&amp;#8230;&amp;#8230;
+问了下栋哥终于把机理给搞明白了。
+参考的书本是《Windows API 开发详解 &amp;#8212;函数、接口、编程实例》和《windows核心编程》
+首先我们从编写一个dll开始。
+为了统一起见，下面的代码中所有函数全部使用宽字符版本。
+首先把代码给贴出来：
+12345678910111213141516171819202122232425262">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> DLL注入（一）编写动态链接库 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              DLL注入（一）编写动态链接库
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-10-27T11:05:04+08:00" content="2012-10-27">
+            2012-10-27
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>想写个远程线程注入的东西&#8230;&#8230;</p>
+<p>问了下栋哥终于把机理给搞明白了。</p>
+<p>参考的书本是《Windows API 开发详解 &#8212;函数、接口、编程实例》和《windows核心编程》</p>
+<p>首先我们从编写一个dll开始。</p>
+<p>为了统一起见，下面的代码中所有函数全部使用宽字符版本。</p>
+<p>首先把代码给贴出来：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/<span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line"><span class="keyword">*</span> msg.c动态链接库</span><br><span class="line"><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span><span class="keyword">*</span>/</span><br><span class="line"><span class="comment">#include &amp;lt;Windows.h&amp;gt;</span></span><br><span class="line"><span class="comment">#include &amp;lt;Psapi.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#pragma comment(lib, &amp;quot;Psapi.lib&amp;quot;)</span></span><br><span class="line"></span><br><span class="line">__declspec(dllexport) DWORD ExportExample(LPSTR sMsg, DWORD dwCode);</span><br><span class="line"></span><br><span class="line">//dll main</span><br><span class="line">BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)</span><br><span class="line">&#123;</span><br><span class="line">	switch (fdwReason)</span><br><span class="line">	&#123;</span><br><span class="line">	case DLL_PROCESS_ATTACH:</span><br><span class="line">		&#123;</span><br><span class="line">			TCHAR lpMainMoudleName[MAX_PATH];</span><br><span class="line">			TCHAR lpMessage[MAX_PATH + 64];</span><br><span class="line">			//获取PID和主模块名，将弹出消息框</span><br><span class="line">			DWORD dwPID = GetCurrentProcessId();</span><br><span class="line">			GetModuleBaseName(GetCurrentProcess(), NULL, lpMainMoudleName, MAX_PATH);</span><br><span class="line">			wsprintf(lpMessage, L&amp;quot;process name: %s, PID: %u &amp;quot;, lpMainMoudleName, dwPID);</span><br><span class="line">			MessageBox(NULL, lpMessage, L&amp;quot;msg.dll&amp;quot;, MB_OK);</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	case DLL_THREAD_ATTACH:</span><br><span class="line">		break;</span><br><span class="line">	case DLL_PROCESS_DETACH:</span><br><span class="line">		break;</span><br><span class="line">	case DLL_THREAD_DETACH:</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br><span class="line">	return TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//导出函数，显示消息</span><br><span class="line">DWORD ExportExample(LPWSTR szMsg, DWORD dwCode)</span><br><span class="line">&#123;</span><br><span class="line">	LPVOID lpShowOut = HeapAlloc(GetProcessHeap(), NULL, lstrlen(szMsg) + 100);</span><br><span class="line">	wsprintf((LPWSTR)lpShowOut, L&amp;quot;%s,%d&amp;quot;, szMsg, dwCode);</span><br><span class="line">	MessageBox(NULL, (LPWSTR)lpShowOut, L&amp;quot;由导出函数弹出的消息! &amp;quot;, MB_OK);</span><br><span class="line">	HeapFree(GetProcessHeap(), NULL, lpShowOut);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后我们来分析一下代码：</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">__declspec<span class="list">(<span class="keyword">dllexport</span>)</span> DWORD ExportExample<span class="list">(<span class="keyword">LPSTR</span> sMsg, DWORD dwCode)</span><span class="comment">;</span></span><br></pre></td></tr></table></figure>
+<p>这是个导出函数的声明，声明了这个函数是从dll中导出的函数。</p>
+<p>接下来是dll的主函数入口。跟main 和WinMain 差不多。它是DllMain</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">BOOL WINAPI <span class="function"><span class="title">DllMain</span><span class="params">(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpReserved)</span></span></span><br></pre></td></tr></table></figure>
+<p>dwnReason可以是下面四个值：</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (fdwReason)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_PROCESS_ATTACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_THREAD_ATTACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_PROCESS_DETACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line"><span class="keyword">case</span> <span class="string">DLL_THREAD_DETACH:</span></span><br><span class="line">	<span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通俗的理解，分别是附加进程，附加线程，分离进程，分离线程的意思。</p>
+<p>具体的理解，大家可以查看《windows核心编程》，下面的博客也分别摘录了核心编程里面的东西：</p>
+<p><a href="http://blog.csdn.net/ithzhang/article/details/7051558" target="_blank" rel="external">http://blog.csdn.net/ithzhang/article/details/7051558</a></p>
+<p>本例子中的代码是这样的，在DLL_PROCESS_ATTACH的时候执行下面的代码：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">case DLL_PROCESS_ATTACH:</span><br><span class="line">	&#123;</span><br><span class="line">		TCHAR lpMainMoudleName[MAX_PATH];</span><br><span class="line">		TCHAR lpMessage[MAX_PATH + <span class="number">64</span>];</span><br><span class="line">		<span class="comment">//获取PID和主模块名，将弹出消息框</span></span><br><span class="line">		DWORD dwPID = GetCurrentProcessId<span class="params">()</span>;</span><br><span class="line">		GetModuleBaseName<span class="params">(GetCurrentProcess<span class="params">()</span>, NULL, lpMainMoudleName, MAX_PATH)</span>;</span><br><span class="line">		wsprintf<span class="params">(lpMessage, L<span class="string">"process name: %s, PID: %u "</span>, lpMainMoudleName, dw<span class="literal">PI</span>D)</span>;</span><br><span class="line">		MessageBox<span class="params">(NULL, lpMessage, L<span class="string">"msg.dll"</span>, MB_OK)</span>;</span><br><span class="line">		break;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<p>代码很简单，获得进程ID并且用对话框的方式显示出来。</p>
+<p>接下来我们看看导出函数：</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//导出函数，显示消息</span></span><br><span class="line">DWORD ExportExample<span class="params">(LPWSTR szMsg, DWORD dwCode)</span></span><br><span class="line">&#123;</span><br><span class="line">	LPVOID lpShowOut = HeapAlloc<span class="params">(GetProcessHeap<span class="params">()</span>, NULL, lstrlen<span class="params">(szMsg)</span> + <span class="number">100</span>)</span>;</span><br><span class="line">	wsprintf<span class="params">(<span class="params">(LPWSTR)</span>lpShowOut, L<span class="string">"%s,%d"</span>, szMsg, dwCode)</span>;</span><br><span class="line">	MessageBox<span class="params">(NULL, <span class="params">(LPWSTR)</span>lpShowOut, L<span class="string">"由导出函数弹出的消息! "</span>, MB_OK)</span>;</span><br><span class="line">	HeapFree<span class="params">(GetProcessHeap<span class="params">()</span>, NULL, lpShowOut)</span>;</span><br><span class="line">	return <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>导出函数也很简单，就是弹出一个对话框。这个没什么好说的。</p>
+<p>加载了动态链接库之后我们就可以直接使用这个dll中的接口函数了。dll的方便性就体现在这里了。^_^</p>
+<p>然后我们简单的重新写个代码测试一下这个dll的正确性：</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;stdio<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;windows<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"></span><br><span class="line">typedef DWORD (<span class="subst">*</span>MY_EXPORT_PROC)(LPWSTR, DWORD);</span><br><span class="line"></span><br><span class="line"><span class="literal">void</span> main(<span class="literal">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">    HINSTANCE hinstLib;</span><br><span class="line">    MY_EXPORT_PROC lpProcAdd;</span><br><span class="line">    BOOL fFreeResult, fRunTimeLinkSuccess <span class="subst">=</span> <span class="literal">FALSE</span>;</span><br><span class="line">    <span class="comment">//获得DLL模块句柄</span></span><br><span class="line">    hinstLib <span class="subst">=</span> LoadLibrary(TEXT(<span class="subst">&amp;</span>quot;msg<span class="built_in">.</span>dll<span class="subst">&amp;</span>quot;));</span><br><span class="line">    <span class="comment">//是否加载成功</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">!=</span> hinstLib)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">//获得指定导出函数的地址</span></span><br><span class="line">        lpProcAdd <span class="subst">=</span> (MY_EXPORT_PROC)GetProcAddress(hinstLib, <span class="subst">&amp;</span>quot;ExportExample<span class="subst">&amp;</span>quot;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//判断是否成功</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">!=</span> lpProcAdd)</span><br><span class="line">        &#123;</span><br><span class="line">            fRunTimeLinkSuccess <span class="subst">=</span> <span class="literal">TRUE</span>;</span><br><span class="line">            (lpProcAdd) (TEXT(<span class="subst">&amp;</span>quot;hello<span class="subst">&amp;</span>quot;), <span class="number">123</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//释放dll</span></span><br><span class="line">        fFreeResult <span class="subst">=</span> FreeLibrary(hinstLib);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="subst">!</span>fRunTimeLinkSuccess)</span><br><span class="line">        printf(<span class="subst">&amp;</span>quot;error; <span class="subst">%</span>un<span class="subst">&amp;</span>quot;, GetLastError());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里使用的一种比较麻烦的方法。跟#pragma comment（“xxx.lib”, lib）有点不一样的地方。</p>
+<h1 id="pragma_comment（“xxx-lib”,_lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。">pragma comment（“xxx.lib”, lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。</h1><p>使用这种方法的话，有没有lib文件的必要了。因为他在LoadLibrary之后直接获得了导出函数的地址</p>
+<figure class="highlight openscad"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//获得指定导出函数的地址</span></span><br><span class="line">  lpProcAdd = <span class="params">(MY_EXPORT_PROC)</span>GetProcAddress<span class="params">(hinstLib, <span class="string">"ExportExample"</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>然后我们测试一下，发现成功弹出了dll中的两个对话框~~~！！</p>
+<p>OK，第一步我们先到这里了，接下来就是伟大的远程线程注入了，哈哈。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/DLL/" rel="tag">#DLL</a>
+          
+            <a href="/tags/windowsSDK/" rel="tag">#windowsSDK</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/10/27/DLL注入（二）线程注入/" rel="prev">DLL注入（二）线程注入</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/10/16/windows内存堆的数据结构/" rel="next">windows内存堆的数据结构</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pragma_comment（“xxx-lib”,_lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。"><span class="nav-text">pragma comment（“xxx.lib”, lib）这种方式会在程序的可执行文件中创建导入表，并在程序加载时进行函数的链接。</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

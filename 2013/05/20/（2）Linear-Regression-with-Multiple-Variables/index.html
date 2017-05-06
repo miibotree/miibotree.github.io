@@ -1,0 +1,655 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Machine Learning,MachineLearning," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="**MachineLearning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8867992)**
+**http://blog.csdn.net/xuexiang0704/article/details/8867992
+**
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zh">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（2）Linear Regression with Multiple Variables">
+<meta property="og:url" content="http://yoursite.com/2013/05/20/（2）Linear-Regression-with-Multiple-Variables/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="**MachineLearning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8867992)**
+**http://blog.csdn.net/xuexiang0704/article/details/8867992
+**
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zh">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429212616796">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429212731575">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429212909369">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429212912603">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429213024712">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429213334110">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429213716166">
+<meta property="og:image" content="http://img.blog.csdn.net/20130429213611547">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.906Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（2）Linear Regression with Multiple Variables">
+<meta name="twitter:description" content="**MachineLearning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8867992)**
+**http://blog.csdn.net/xuexiang0704/article/details/8867992
+**
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zh">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> （2）Linear Regression with Multiple Variables // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              （2）Linear Regression with Multiple Variables
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-05-20T21:52:34+08:00" content="2013-05-20">
+            2013-05-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>**Machine<span style="font-size: large;">Le<span style="font-size: large;">arning<span style="font-size: large;">系列，转载自[</span></span></span></p>
+<p>](<a href="http://blog.csdn.net/xuexiang0704/article/details/8867992" target="_blank" rel="external">http://blog.csdn.net/xuexiang0704/article/details/8867992</a>)**</p>
+<p>**<span style="font-size: large;"><span style="font-size: large;"><span style="font-size: large;"><a href="http://blog.csdn.net/xuexiang0704/article/details/8867992" target="_blank" rel="external">http://blog.csdn.net/xuexiang0704/article/details/8867992</a></span></span></span></p>
+<p>**</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>以下内容源自coursera上的machine learning，同时参考了<a href="http://my.csdn.net/abcjennifer" target="_blank" rel="external">Rachel-Zhang</a>的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>上一节讲了只有一个特征的情况，下面聊聊多特征的。</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>（一）：多特征的例子以及多特征的的cost function和得到的函数h</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;">**<img src="http://img.blog.csdn.net/20130429212616796" alt=""></span></p>
+<p>**</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><span id="more-685"></span><strong>（二）：单特征和多特征的梯度算法的比较：</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;">**<img src="http://img.blog.csdn.net/20130429212731575" alt=""></span></p>
+<p>**</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>（三）：应用<b><span style="font-family: 宋体;">梯度算法时的小技巧</span></b></strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;">**<b><span style="font-family: 宋体;"><img src="http://img.blog.csdn.net/20130429212909369" alt=""><img src="http://img.blog.csdn.net/20130429212912603" alt=""></span></b></span></p>
+<p>**</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;">**<img src="http://img.blog.csdn.net/20130429213024712" alt=""></span></p>
+<p>**</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">（四）：如何选取特征和模型函数？</span></strong></p>
+<p>&nbsp;</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>有 时候并不是特征越多效果就越好，我们可以考虑特征A和特征B相乘作为一个新的特征，或者特征C和特征D相除作为一个新特征等等之类的。但是需要在理论上合 理。另外在建立模型是，可以选择三次，二次，甚至开方，我们在刚建模型的时候，都可以尝试，但需要在理论上说的过去，比如房价几乎只会随着面积的增大而增 大，不可能减小，即这个时候某些二次函数就不适合，因为会降低，而三次函数就更可能建立起一个更好的预测模型！</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>当然需要格外注意归一化问题，因为平方开方三次方会导致数据相差很大！</strong></span></p>
+<p>&nbsp;</p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>（五）：Normal Equation : method to solve for theta  analytically<span>（</span></strong></span><strong><span>这时没必要用feature scaling）</span></strong></p>
+<p><img src="http://img.blog.csdn.net/20130429213334110" alt=""></p>
+<p><span style="font-family: SimSun; font-size: large;">至于为什么这样一个公式就搞定了呢？</span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong><span>请参考：<a href="http://cs229.stanford.edu/notes/cs229-notes1.pdf" target="_blank" rel="external">http://cs229.stanford.edu/notes/cs229-notes1.pdf</a>  （P7-P11）</span></strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong><span>（请注意，在使用normal equation的时候，在使用公式</span></strong></span><img src="http://img.blog.csdn.net/20130429213716166" alt=""><span style="font-family: SimSun; font-size: large;">可能会有不可逆的情况：此时可以尝试减少特征数！还有一点在特征数目很大的情况下（比如n》10000，需格外注意normal equation的效率！）</span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>（六）：gradient descent和normal equation的对比</strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong>后 者的适用范围没有前者广，在特征数目比较少的情况下，normal equation比较方便，因为不需要选取学习速率，不需要迭代。但在特征数目n比较大的情况下，normal equation就比较耗时（因为求逆的时间）（n=1000是，对于当代计算机还是很轻松的，但当n=10000是就需要考虑了）。而gradient decent在即使n很大的情况下也可以比较快的计算出最后结果！</strong></span></p>
+<p><img src="http://img.blog.csdn.net/20130429213611547" alt=""></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag">#Machine Learning</a>
+          
+            <a href="/tags/MachineLearning/" rel="tag">#MachineLearning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/05/20/（3）Logistic-Regression-and-Regularization/" rel="prev">（3）Logistic Regression and Regularization</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/20/（1）Linear-Regression-with-One-Variable/" rel="next">（1）Linear Regression with One Variable</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

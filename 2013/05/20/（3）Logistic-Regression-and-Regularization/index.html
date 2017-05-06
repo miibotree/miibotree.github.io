@@ -1,0 +1,831 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Machine Learning,MachineLearning," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="**Machine Learning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8903907)**
+http://blog.csdn.net/xuexiang0704/article/details/8903907
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（3）Logistic Regression and Regularization">
+<meta property="og:url" content="http://yoursite.com/2013/05/20/（3）Logistic-Regression-and-Regularization/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="**Machine Learning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8903907)**
+http://blog.csdn.net/xuexiang0704/article/details/8903907
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509100647950">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509100650849">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509101234267">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509101412510">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509101914191">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509101954907">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509102205685">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509102514039">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509102609413">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509102709848">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509103002921">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509103006767">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509102914985">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509141140223">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509141144792">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509103226010">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509104526047">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509104648725">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509105240888">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509105244810">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509105841834">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509105949410">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509110821644">
+<meta property="og:image" content="http://img.blog.csdn.net/20130509110927736">
+<meta property="og:updated_time" content="2015-07-24T13:48:26.907Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（3）Logistic Regression and Regularization">
+<meta name="twitter:description" content="**Machine Learning系列，转载自[
+](http://blog.csdn.net/xuexiang0704/article/details/8903907)**
+http://blog.csdn.net/xuexiang0704/article/details/8903907
+ 
+以下内容源自coursera上的machine learning，同时参考了Rachel-Zhang的">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> （3）Logistic Regression and Regularization // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              （3）Logistic Regression and Regularization
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-05-20T21:53:13+08:00" content="2013-05-20">
+            2013-05-20
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>**<span style="font-family: SimSun; font-size: large;">Machine Learning<span style="font-size: large;">系列，转载自[</span></span></p>
+<p>](<a href="http://blog.csdn.net/xuexiang0704/article/details/8903907" target="_blank" rel="external">http://blog.csdn.net/xuexiang0704/article/details/8903907</a>)**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><span style="font-size: large;"><a href="http://blog.csdn.net/xuexiang0704/article/details/8903907" target="_blank" rel="external">http://blog.csdn.net/xuexiang0704/article/details/8903907</a></span></span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">以下内容源自coursera上的machine learning，同时参考了<a href="http://my.csdn.net/abcjennifer" target="_blank" rel="external">Rachel-Zhang</a>的博客(<a href="http://blog.csdn.net/abcjennifer" target="_blank" rel="external">http://blog.csdn.net/abcjennifer</a>)</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">前面两节讲的主要是线性回归的（单特征和多特征）：最主要的步骤就是得出cost function，求出令cost function最小的的参数theta。至于如何求呢？有两种方法，一种是梯度下降，一种是normal equation。</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span style="font-family: SimSun; font-size: large;"><strong> </strong></span></p>
+<p><span id="more-687"></span></p>
+<p><span style="font-family: SimSun; font-size: x-large;"><strong>%%%%%%%%%%%%%%%%%%首先是第一部分Logistic Regression%%%%%%%%%%%%%%%</strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">下面讲的是，对于分类问题怎么做？</span></strong></p>
+<p><span style="color: #cc66cc;"><strong><span style="font-family: SimSun; font-size: large;">（一）先探究分类问题可以用线性回归的方法还是其他方法呢？</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509100647950" alt=""></span></strong></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509100650849" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">那为什么logistic regression的Hypothesis就是0-1的范围呢？</span></strong></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509101234267" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">搞清楚了原因，我们就需要更深了解下logistic regression的Hypothesis了</span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（二）Hypothesis Representation</span></strong></span></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509101412510" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">如果是分两类的话，需要在X维空间中画出一挑线或者一个平面(X由training data的特征数决定)</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">我们这里以只有两个特征为例。来熟悉熟悉这样一条线，定义为decision boundary</span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（三）decision boundary（这里有两种情况，一种是线性的，一种是非线性的）</span></strong></span></p>
+<p><span style="color: #cc9933;"><strong><span style="font-family: SimSun; font-size: large;">1.线性的decision boundary</span></strong></span></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509101914191" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span style="font-family: SimSun; font-size: large;"><span style="color: #cc9933;">2.非线性的decision boundary</span></span></p>
+<p></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509101954907" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">在linear regression中有cost function。在logistic regression中的cost function是怎么样呢？</span></strong></p>
+<a id="more"></a>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（四）.cost function</span></strong></span></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509102205685" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">前面四小部分就是坐logistic regression的准备工作，</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">归结下前四部分的总体思想：</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">1．分类问题用logistic regression，而不用线性回归；</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">2. 为什么用logistic regression呢。因为其中用到了sigmoid函数；</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">3. 为了将类别分开，定义一个decision boundary。他就是将类别分开的线（可以是直线也可以是曲线）；</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">4. 如同线性回归，为了验证算法是否好，定义cost function。为了得到好的结果，我们需要最小化cost function。</span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">OK，这就是四部分的大致思想，下面介绍后面的，也是logistic regression最重要的部分。</span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（五）Simplified Cost Function and Gradient Descent</span></strong></span></p>
+<p>（<span>这部分是logistic regression 的核心，可能比较乱，耐心看看噢^_^</span>）</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509102514039" alt=""></span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509102609413" alt=""></span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509102709848" alt=""></span></span></p>
+<p>**</p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun;"><span style="font-size: x-large;">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span></strong></span></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">（PS：这里补充一下，有些可能会对的化简存在疑惑，这里推导下面的过程：)(会的人这部分可以跳过了）</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">Q:</span></strong></p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509103002921" alt="">  </span></strong></span></p>
+<p><span>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509103006767" alt=""></span></span></p>
+<p>**</p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509102914985" alt=""></span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">A：</span></strong></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509141140223" alt=""><img src="http://img.blog.csdn.net/20130509141144792" alt=""></span></p>
+<p>**</p>
+<p><span><strong><span style="font-family: SimSun; font-size: large;">视频中的结果是不是少了一个1/m?退到结果是有的吧？！</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span><strong><span style="font-family: SimSun;"><span style="font-size: x-large;">%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%</span></span></strong></span></p>
+<div><span><strong><span style="font-family: SimSun;"><span style="font-size: x-large;"> </span></span></strong></span></div>
+
+<p>&nbsp;</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509103226010" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">以上对于logistic regression就介绍完了，有没有一点点感觉呢？</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">下面的两部分就是：</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">1.不用logistic regression还可以用什么呢？</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">2.前面讲的都是分两类的，多类的怎么办呢？</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">相对应的题目就是：</span></strong></p>
+<p>（六）Advanced Optimization：</p>
+<p>（七）Multiclass Classification</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">这两部分，我觉得<a href="http://blog.csdn.net/abcjennifer/article/details/7716281" target="_blank" rel="external">http://blog.csdn.net/abcjennifer/article/details/7716281</a>看看也就差不多了，毕竟不是重点。我就不截图了，因为有现成的可以用的代码，大家可以参考。</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span style="font-family: SimSun; font-size: x-large;"><strong>%%%%%%%%%%%%%%%下面的第二大部分：Regularization%%%%%%%%%%%%%%%%%%%%%</strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">是针对<span>线性回归</span>和<span>logistic regression</span> 过拟合的情况的解释和解决办法。</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（一）过拟合问题</span></strong></span></p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509104526047" alt=""></span></p>
+<p>**</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509104648725" alt=""></span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">上面给了两种解决过拟合的办法，我们下面主要讲第二种，regularization</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">那应该如何修改linear regression和logistic regression的算法才能避免overfitting的问题呢？</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">在这之前，我们需要先修改cost function，因为不论是linear regression还是logistic regression都是基于cost function的。</span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（二）cost function</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509105240888" alt=""></span></strong></p>
+<p><span style="font-size: small;"><span style="font-family: SimSun; font-size: large;"><strong>有没有发现cost function后面的加的，是从下标1开始的，实际上，从theta(0)还是theta(1)相加没有根本上的差别！</strong></span></span></p>
+<p><img src="http://img.blog.csdn.net/20130509105244810" alt=""></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">上面讲了cost function的修改，那么具体到算法的步骤是怎么样的，求导以后会怎么样呢？</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">先讲linear regression的</span></strong></p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（三）Regularized Linear Regression</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">因为在做linear regression有两种方法，一为梯度下降；二为normal equation</span></strong></p>
+<p>1.用梯度下降时，怎么让</p>
+<p>&nbsp;</p>
+<p>linear</p>
+<p>&nbsp;</p>
+<p> regression变成</p>
+<p>&nbsp;</p>
+<p>Regularized Linear Regression</p>
+<p>**<span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509105841834" alt=""></span></p>
+<p>**</p>
+<p>2.用normal equation时，怎么让</p>
+<p>&nbsp;</p>
+<p>linear</p>
+<p>&nbsp;</p>
+<p> regression变成</p>
+<p>&nbsp;</p>
+<p>Regularized Linear Regression</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509105949410" alt=""></span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">（这里的证明我也证不来）</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">讲完将linear regression 变成 Regularized Linear Regression</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">就要讲</span></strong></p>
+<p>Logistic</p>
+<p>&nbsp;</p>
+<p>regression 变成</p>
+<p>&nbsp;</p>
+<p>Regularized Logistic Regression</p>
+<p><span style="color: #cc33cc;"><strong><span style="font-family: SimSun; font-size: large;">（四）Regularized Logistic Regression</span></strong></span></p>
+<p><strong><span style="font-family: SimSun; font-size: large;">同样因为，logistic regression时有两种方法。一为梯度下降；二为advanced algorithm</span></strong></p>
+<p><strong><span style="font-family: SimSun; font-size: large;"> </span></strong></p>
+<p><span style="color: #cc9933; font-family: SimSun; font-size: large;"><strong>1.</strong></span></p>
+<p>用梯度下降时，怎么让</p>
+<p>&nbsp;</p>
+<p>logistic</p>
+<p>&nbsp;</p>
+<p> regression变成</p>
+<p>&nbsp;</p>
+<p>Regularized logistic Regression</p>
+<p><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509110821644" alt=""></span></strong></p>
+<p>2.用advanced algorithm时，怎么让</p>
+<p>&nbsp;</p>
+<p>logistic</p>
+<p>&nbsp;</p>
+<p> regression变成</p>
+<p>&nbsp;</p>
+<p>Regularized logistic Regression</p>
+<div><strong><span style="font-family: SimSun; font-size: large;"><img src="http://img.blog.csdn.net/20130509110927736" alt=""></span></strong></div></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Machine-Learning/" rel="tag">#Machine Learning</a>
+          
+            <a href="/tags/MachineLearning/" rel="tag">#MachineLearning</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/05/20/（4）Neural-Networks-Representation/" rel="prev">（4）Neural Networks: Representation</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/05/20/（2）Linear-Regression-with-Multiple-Variables/" rel="next">（2）Linear Regression with Multiple Variables</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

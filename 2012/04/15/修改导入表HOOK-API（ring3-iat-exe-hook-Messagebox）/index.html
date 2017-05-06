@@ -1,0 +1,592 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="PE," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="IAT即Import Address Table 是PE（可以理解为EXE）的输入地址表，我们知道一个程序运行时可以要调用多个模块，或都说要调用许多API函数，但这些函数不一定都在EXE本身中，例如你调用Messagebox来显示一个对话框时，你只需要调用它，你并没有编写Messagebox的函数的实现过程，Messagebox的函数的实现过程实际上是在user32.dll这个库文件中，当这个程序">
+<meta property="og:type" content="article">
+<meta property="og:title" content="修改导入表HOOK API（ring3_iat_exe_hook_Messagebox）">
+<meta property="og:url" content="http://yoursite.com/2012/04/15/修改导入表HOOK-API（ring3-iat-exe-hook-Messagebox）/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="IAT即Import Address Table 是PE（可以理解为EXE）的输入地址表，我们知道一个程序运行时可以要调用多个模块，或都说要调用许多API函数，但这些函数不一定都在EXE本身中，例如你调用Messagebox来显示一个对话框时，你只需要调用它，你并没有编写Messagebox的函数的实现过程，Messagebox的函数的实现过程实际上是在user32.dll这个库文件中，当这个程序">
+<meta property="og:updated_time" content="2015-07-25T04:53:25.220Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="修改导入表HOOK API（ring3_iat_exe_hook_Messagebox）">
+<meta name="twitter:description" content="IAT即Import Address Table 是PE（可以理解为EXE）的输入地址表，我们知道一个程序运行时可以要调用多个模块，或都说要调用许多API函数，但这些函数不一定都在EXE本身中，例如你调用Messagebox来显示一个对话框时，你只需要调用它，你并没有编写Messagebox的函数的实现过程，Messagebox的函数的实现过程实际上是在user32.dll这个库文件中，当这个程序">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 修改导入表HOOK API（ring3_iat_exe_hook_Messagebox） // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              修改导入表HOOK API（ring3_iat_exe_hook_Messagebox）
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-04-15T19:04:26+08:00" content="2012-04-15">
+            2012-04-15
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><span style="color: #000000; font-size: x-small;"><span style="font-family: Verdana;">IAT即Import Address Table 是PE（可以理解为EXE）的输入地址表，我们知道一个程序运行时可以要调用多个模块，或都说要调用许多API函数，但这些函数不一定都在EXE本身中，例如你调用<span style="font-family: Verdana;">Messagebox</span>来显示一个对话框时，你只需要调用它，你并没有编写<span style="font-family: Verdana;">Messagebox</span>的函数的实现过程，<span style="font-family: Verdana;">Messagebox</span>的函数的实现过程实际上是在<span style="color: #c60a00;"><span style="color: #c60a00;">user32</span>.dll这个库文件中，</span>当这个程序运行时会在user32.dll中找到<span style="font-family: Verdana;">Messagebox</span>并调用它。</span></span></p>
+<p><span style="color: #000000; font-size: x-small;"><span style="font-family: Verdana;">那么具体的调入过程是怎样的呢？下面来谈谈其中的重要环节即：<span style="font-family: Verdana;">IMAGE_IMPORT_BY_NAME</span>，那么<span style="font-family: Verdana;">IMAGE_IMPORT_BY_NAME</span>的<span style="font-size: x-small;">结构到底是什么样子的呢</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">:？下面是引入表图</span></span></span></p>
+<p>&nbsp;</p>
+<table border="0" cellspacing="1"><br><tbody><br><tr><br><th bgcolor="#006666" width="152"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">OriginalFirstThunk</span></th><br><th width="58"><span style="color: #ffffff;">　</span></th><br><th bgcolor="#006666" width="183"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_IMPORT_BY_NAME</span></th><br><th width="27"><span style="color: #ffffff;">　</span></th><br><th bgcolor="#006666" width="152"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">FirstThunk</span></th><br></tr><br><tr><br><td align="center" width="152"><br><br><span style="color: #ffffff;">|</span><br><br></td><br><td align="center" width="58"><span style="color: #ffffff;">　</span></td><br><td align="center" width="183"><span style="color: #ffffff;">　</span></td><br><td align="center" width="27"><span style="color: #ffffff;">　</span></td><br><td align="center" width="152"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">|</span></span></td><br></tr><br><tr><br><td align="center" width="152"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br></tbody><br></table><br></td><br><td align="center" width="58"><br><table border="0" cellpadding="2"><br><tbody><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br></tbody><br></table><br></td><br><td align="center" width="183"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 1</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 2</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 3</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">Function 4</span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function n</span></span></td><br></tr><br></tbody><br></table><br></td><br><td align="center" width="27"><br><table border="0" cellpadding="2"><br><tbody><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&lt;&#8212;</span></td><br></tr><br></tbody><br></table><br></td><br><td align="center" width="152"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #000000;"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br></tbody><br></table><br></td><br></tr><br></tbody><br></table>
+
+<p>&nbsp;</p>
+<p><span style="color: #000000;"><span style="font-size: x-small;">首先不要被</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_THUNK_DATA</strong></span><span style="font-size: x-small;">这个名字弄糊涂</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">: </span><span style="font-size: x-small;">它仅是指向 </span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_IMPORT_BY_NAME </strong></span><span style="font-size: x-small;">结构的</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">RVA</span><span style="font-size: x-small;">。</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>OriginalFirstThunk</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">和 </span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>FirstThunk</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">所指向的这两个数组大小取决于</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">PE</span><span style="font-size: x-small;">文件从</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">DLL</span><span style="font-size: x-small;">中引入函数的数目。比如，如果</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">PE</span><span style="font-size: x-small;">文件从</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">kernel32.dll</span><span style="font-size: x-small;">中引入</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">10</span><span style="font-size: x-small;">个函数，那么</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_IMPORT_DESCRIPTOR</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">结构的 </span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>Name1</strong></span><span style="font-size: x-small;">域包含指向字符串</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8220;kernel32.dll&#8221;</span><span style="font-size: x-small;">的</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">RVA</span><span style="font-size: x-small;">，同时每个</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_THUNK_DATA</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">数组有</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">10</span><span style="font-size: x-small;">个元素。</span></span><span style="color: #000000;"><span style="font-size: x-small;">为什么我们需要两个完全相同的数组</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">? </span><span style="font-size: x-small;">为了回答该问题，我们需要了解当</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">PE</span><span style="font-size: x-small;">文件被装载到内存时，</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">PE</span><span style="font-size: x-small;">装载器将查找</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_THUNK_DATA</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">和 </span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_IMPORT_BY_NAME</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">这些结构数组，以此决定引入函数的地址。然后用引入函数真实地址来替代由</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>FirstThunk</strong></span><span style="font-size: x-small;">指向的</span><span style="font-size: x-small;"><strong> </strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"><strong>IMAGE_THUNK_DATA</strong></span><span style="font-family: 'MS Sans Serif'; font-size: x-small;"> </span><span style="font-size: x-small;">数组里的元素值。因此当</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">PE</span><span style="font-size: x-small;">文件准备执行时，上图已转换成</span><span style="font-family: 'MS Sans Serif'; font-size: x-small;">:</span></span></p>
+<p>&nbsp;</p>
+<table border="0" cellspacing="1"><br><tbody><br><tr><br><th bgcolor="#006666"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">OriginalFirstThunk</span></th><br><th><span style="color: #ffffff;">　</span></th><br><th bgcolor="#006666"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_IMPORT_BY_NAME</span></th><br><th><span style="color: #ffffff;">　</span></th><br><th bgcolor="#006666"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">FirstThunk</span></th><br></tr><br><tr><br><td align="center"><br><br><span style="color: #ffffff;">|</span><br><br></td><br><td align="center"><span style="color: #ffffff;">　</span></td><br><td align="center"><span style="color: #ffffff;">　</span></td><br><td align="center"><span style="color: #ffffff;">　</span></td><br><td align="center"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">|</span></span></td><br></tr><br><tr><br><td align="center"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">IMAGE_THUNK_DATA</span></span></td><br></tr><br></tbody><br></table><br></td><br><td align="center"><br><table border="0" cellpadding="2"><br><tbody><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">&#8212;&gt;</span></td><br></tr><br></tbody><br></table><br></td><br><td align="center"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 1</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 2</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function 3</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff; font-family: 'MS Sans Serif'; font-size: x-small;">Function 4</span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#660066"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Function n</span></span></td><br></tr><br></tbody><br></table><br></td><br><td align="center"><br><table border="0" cellpadding="2"><br><tbody><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">   </span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">　</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">　</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">　</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">　</span></td><br></tr><br><tr><br><td align="center" nowrap="nowrap"><span style="color: #ffffff;">　</span></td><br></tr><br></tbody><br></table><br></td><br><td align="center"><br><table border="1" cellpadding="2"><br><tbody><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Address of Function 1</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Address of Function 2</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Address of Function 3</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">Address of Function 4</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #ffffff;"><span style="font-family: 'MS Sans Serif'; font-size: x-small;">&#8230;</span></span></td><br></tr><br><tr><br><td align="center" bgcolor="#666600"><span style="color: #000000; font-family: 'MS Sans Serif'; font-size: x-small;"><span style="color: #ffffff;">Address of Function n</span></span></td><br></tr><br></tbody><br></table><br></td><br></tr><br></tbody><br></table>
+
+<p>&nbsp;</p>
+<p>我们现在要做的是把后面的地址改成我们自己的函数地址，例如当EXE调用Messagebox时让它转入我们的函数，我们处理完后再转入真正的函数地址。</p>
+<p>因此API HOOK和其它HOOK存在本质的区别，可以理解为API劫持，说一行道一万不如动手去实践，下面代码演示了如何HOOK本进程中的Messagebox，当本EXE调用Messagebox时会先转入到我们的函数中，请看清是怎样找到PE的引入表并修改的。</p>
+<div><br><figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;stdio<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;windows<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#include</span> <span class="subst">&amp;</span><span class="literal">lt</span>;Dbghelp<span class="built_in">.</span>h<span class="subst">&amp;</span><span class="literal">gt</span>;</span><br><span class="line"><span class="variable">#pragma</span> comment(lib,<span class="string">"Dbghelp.lib"</span>)</span><br><span class="line"><span class="variable">#pragma</span> comment(lib,<span class="string">"User32.lib"</span>)</span><br><span class="line">typedef int (__stdcall <span class="subst">*</span>OLD_MessageBox)( HWND hWnd, LPCTSTR lpText, LPCTSTR lpCaption,UINT uType );</span><br><span class="line">OLD_MessageBox g_procOldMessageBox <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">int __stdcall HOOK_MessageBox( HWND hWnd, LPCTSTR lpText, LPCTSTR lpCaption,UINT uType)</span><br><span class="line">&#123;</span><br><span class="line">printf(<span class="string">"%st%drn"</span>,__FUNCTION__,__LINE__);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">!=</span> g_procOldMessageBox)</span><br><span class="line"><span class="keyword">return</span> g_procOldMessageBox(hWnd,lpText,<span class="string">"不好意思,hook到了!"</span>,uType);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line"><span class="keyword">return</span> MessageBox(hWnd,lpText,lpCaption,uType); ;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int replace_IAT(const char <span class="subst">*</span>pDllName,const char <span class="subst">*</span>pApiName,bool bReplace)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">HANDLE</span> hProcess <span class="subst">=</span> <span class="tag">::GetModuleHandle</span> (<span class="built_in">NULL</span>);</span><br><span class="line">DWORD dwSize <span class="subst">=</span> <span class="number">0</span>;</span><br><span class="line">PIMAGE_IMPORT_DESCRIPTOR pImageImport <span class="subst">=</span> (PIMAGE_IMPORT_DESCRIPTOR)ImageDirectoryEntryToData(hProcess,<span class="literal">TRUE</span>,</span><br><span class="line">IMAGE_DIRECTORY_ENTRY_IMPORT,<span class="subst">&amp;</span>amp;dwSize);</span><br><span class="line"><span class="keyword">if</span> (<span class="built_in">NULL</span> <span class="subst">==</span> pImageImport)</span><br><span class="line"><span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">PIMAGE_IMPORT_BY_NAME pImageImportByName <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">PIMAGE_THUNK_DATA  pImageThunkOriginal <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line">PIMAGE_THUNK_DATA  pImageThunkReal  <span class="subst">=</span> <span class="built_in">NULL</span>;</span><br><span class="line"><span class="keyword">while</span> (pImageImport<span class="subst">-&amp;</span><span class="literal">gt</span>;Name)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span> <span class="subst">==</span> strcmpi((char<span class="subst">*</span>)((PBYTE)hProcess<span class="subst">+</span>pImageImport<span class="subst">-&amp;</span><span class="literal">gt</span>;Name),pDllName))</span><br><span class="line">&#123;</span><br><span class="line">break;</span><br><span class="line">&#125;</span><br><span class="line"><span class="subst">++</span>pImageImport;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span> (<span class="subst">!</span> pImageImport<span class="subst">-&amp;</span><span class="literal">gt</span>;Name)</span><br><span class="line"><span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">pImageThunkOriginal <span class="subst">=</span> (PIMAGE_THUNK_DATA)((PBYTE)hProcess<span class="subst">+</span>pImageImport<span class="subst">-&amp;</span><span class="literal">gt</span>;OriginalFirstThunk  );</span><br><span class="line">pImageThunkReal <span class="subst">=</span> (PIMAGE_THUNK_DATA)((PBYTE)hProcess<span class="subst">+</span>pImageImport<span class="subst">-&amp;</span><span class="literal">gt</span>;FirstThunk   );</span><br><span class="line"><span class="keyword">while</span> (pImageThunkOriginal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1<span class="built_in">.</span>Function)</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">if</span> ((pImageThunkOriginal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1 <span class="built_in">.</span>Ordinal <span class="subst">&amp;</span>amp; IMAGE_ORDINAL_FLAG) <span class="subst">!=</span> IMAGE_ORDINAL_FLAG)</span><br><span class="line">&#123;</span><br><span class="line">pImageImportByName <span class="subst">=</span> (PIMAGE_IMPORT_BY_NAME)((PBYTE)hProcess<span class="subst">+</span>pImageThunkOriginal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1 <span class="built_in">.</span>AddressOfData );</span><br><span class="line"><span class="keyword">if</span> (<span class="number">0</span> <span class="subst">==</span> strcmpi(pApiName,(char<span class="subst">*</span>)pImageImportByName<span class="subst">-&amp;</span><span class="literal">gt</span>;Name))</span><br><span class="line">&#123;</span><br><span class="line">MEMORY_BASIC_INFORMATION mbi_thunk;</span><br><span class="line">VirtualQuery(pImageThunkReal, <span class="subst">&amp;</span>amp;mbi_thunk, sizeof(MEMORY_BASIC_INFORMATION));</span><br><span class="line">VirtualProtect(mbi_thunk<span class="built_in">.</span>BaseAddress,mbi_thunk<span class="built_in">.</span>RegionSize, PAGE_READWRITE, <span class="subst">&amp;</span>amp;mbi_thunk<span class="built_in">.</span><span class="keyword">Protect</span>);</span><br><span class="line"><span class="keyword">if</span> (<span class="literal">true</span> <span class="subst">==</span> bReplace)</span><br><span class="line">&#123;</span><br><span class="line">g_procOldMessageBox <span class="subst">=</span>(OLD_MessageBox) pImageThunkReal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1<span class="built_in">.</span>Function;</span><br><span class="line">pImageThunkReal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1<span class="built_in">.</span>Function <span class="subst">=</span> (DWORD)HOOK_MessageBox;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">pImageThunkReal<span class="subst">-&amp;</span><span class="literal">gt</span>;u1<span class="built_in">.</span>Function <span class="subst">=</span> (DWORD)g_procOldMessageBox;</span><br><span class="line">DWORD dwOldProtect;</span><br><span class="line">VirtualProtect(mbi_thunk<span class="built_in">.</span>BaseAddress, mbi_thunk<span class="built_in">.</span>RegionSize, mbi_thunk<span class="built_in">.</span><span class="keyword">Protect</span>, <span class="subst">&amp;</span>amp;dwOldProtect);</span><br><span class="line">break;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="subst">++</span>pImageThunkOriginal;</span><br><span class="line"><span class="subst">++</span>pImageThunkReal;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">replace_IAT(<span class="string">"User32.dll"</span>,<span class="string">"MessageBoxA"</span>,<span class="literal">true</span>);</span><br><span class="line">MessageBox(<span class="built_in">NULL</span>,<span class="string">"EnumIAT User32.dll MessageBoxA true;"</span>,<span class="string">"没有Hook"</span>,MB_OK);</span><br><span class="line">replace_IAT(<span class="string">"User32.dll"</span>,<span class="string">"MessageBoxA"</span>,<span class="literal">false</span>);</span><br><span class="line">MessageBox(<span class="built_in">NULL</span>,<span class="string">"EnumIAT User32.dll MessageBoxA false;"</span>,<span class="string">"没有Hook"</span>,MB_OK);</span><br><span class="line"><span class="keyword">return</span> getchar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><br></div>
+
+<p><span style="color: #000000; font-size: x-small;"><span style="font-family: Verdana;">上面的代码修改一下随可用于全局HOOK，但我不看好IAT HOOK，虽然<span style="font-family: Verdana;">WINDOWS核心编程</span>看好这种做法。因为现在主流操作系统是XP和WINDOWS2003，都是数据执行保护（也可能某个补丁前没有这个功能），它们会保护多数进程在内在中不被修改，所以IAT全局HOOK会被系统拦截从而失败，但也同时发现它能保护进程却不保护模块，因此用INLINE HOOK可能会更可行些。但IAT的原理和思想仍值得进一步学习。</span></span></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/PE/" rel="tag">#PE</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/04/15/PE格式之千里追踪输入表/" rel="prev">PE格式之千里追踪输入表</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/04/10/Writefile与SetFilePointer函数的使用/" rel="next">Writefile与SetFilePointer函数的使用</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

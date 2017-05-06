@@ -1,0 +1,611 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="OS," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="自己动手写操作系统（1）里面写了create函数来创建线程。
+这篇博客要完成的任务是进行CPU的调度，实现线程的唤醒和阻塞。
+1.CPU调度：
+我们要完成的任务：
+（1） old_int8 = getvect(8); 来保存 int8 时间中断的中断处理函数地址
+setvect(8, new_int8);  通过自己写新的中断处理函数new_int8，来重新关联int8中断的中断处理函数new_i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自己动手写操作系统(2)–CPU调度">
+<meta property="og:url" content="http://yoursite.com/2013/11/07/自己动手写操作系统-2-–CPU调度/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="自己动手写操作系统（1）里面写了create函数来创建线程。
+这篇博客要完成的任务是进行CPU的调度，实现线程的唤醒和阻塞。
+1.CPU调度：
+我们要完成的任务：
+（1） old_int8 = getvect(8); 来保存 int8 时间中断的中断处理函数地址
+setvect(8, new_int8);  通过自己写新的中断处理函数new_int8，来重新关联int8中断的中断处理函数new_i">
+<meta property="og:updated_time" content="2015-07-25T05:11:10.592Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自己动手写操作系统(2)–CPU调度">
+<meta name="twitter:description" content="自己动手写操作系统（1）里面写了create函数来创建线程。
+这篇博客要完成的任务是进行CPU的调度，实现线程的唤醒和阻塞。
+1.CPU调度：
+我们要完成的任务：
+（1） old_int8 = getvect(8); 来保存 int8 时间中断的中断处理函数地址
+setvect(8, new_int8);  通过自己写新的中断处理函数new_int8，来重新关联int8中断的中断处理函数new_i">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 自己动手写操作系统(2)–CPU调度 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              自己动手写操作系统(2)–CPU调度
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2013-11-07T11:00:57+08:00" content="2013-11-07">
+            2013-11-07
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>自己动手写操作系统（1）里面写了create函数来创建线程。</p>
+<p>这篇博客要完成的任务是进行CPU的调度，实现线程的唤醒和阻塞。</p>
+<p>1.CPU调度：</p>
+<p>我们要完成的任务：</p>
+<p>（1） old_int8 = getvect(8); 来保存 int8 时间中断的中断处理函数地址</p>
+<pre><code>setvect<span class="comment">(8, new_int8)</span>;  通过自己写新的中断处理函数<span class="label">new_int8</span>，来重新关联i<span class="label">nt8</span>中断的中断处理函数<span class="label">new_int8</span>
+</code></pre><p>（2）new_int8做的工作如下：每次触发int8时钟中断的时候，该中断处理函数就对timecount变量进行自加，如果 timecount== TL，这里设置TL为1，则进行CPU调度函数my_swtch</p>
+<figure class="highlight nimrod"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> interrupt new_int8(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">int</span> <span class="literal">result</span> = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	(*old_int8)();</span><br><span class="line">	timecount++;</span><br><span class="line">	<span class="keyword">if</span> (timecount == <span class="type">TL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="literal">result</span> = <span class="type">DosBusy</span>();</span><br><span class="line">		<span class="keyword">if</span> (<span class="literal">result</span> == <span class="number">0</span>)	/*dos <span class="keyword">is</span> <span class="keyword">not</span> busy*/</span><br><span class="line">			my_swtch();</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(<span class="literal">result</span> == <span class="number">1</span>)	/*dos <span class="keyword">is</span> busy*/</span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>（3）my_swtch 函数</p>
+<p>该函数完成了CPU的调度，从TCB中选取一块状态为READY的可用的TCB控制块，保存现场，改变现场来转换寄存器的值进行 CPU调度：</p>
+<p><span id="more-778"></span></p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">void interrupt my_swtch(void)</span><br><span class="line">&#123;</span><br><span class="line">	int <span class="variable">i =</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	disable();</span><br><span class="line">	tcb[current].<span class="variable">ss =</span> _SS;</span><br><span class="line">	tcb[current].<span class="variable">sp =</span> _SP;</span><br><span class="line">	<span class="keyword">if</span> ( tcb[current].<span class="variable">state =</span>= RUNNING )</span><br><span class="line">		tcb[current].<span class="variable">state =</span> READY;</span><br><span class="line"></span><br><span class="line">	<span class="variable">i =</span> find();</span><br><span class="line">	<span class="keyword">if</span>(i &lt; <span class="number">0</span>)</span><br><span class="line">		<span class="variable">i =</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="variable">_SS =</span> tcb[i].ss;</span><br><span class="line">	<span class="variable">_SP =</span> tcb[i].sp;</span><br><span class="line"></span><br><span class="line">	tcb[i].<span class="variable">state =</span> RUNNING;</span><br><span class="line"></span><br><span class="line">	<span class="variable">current =</span> i;</span><br><span class="line">	<span class="variable">timecount =</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	enable();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(4)find函数：该函数完成了从tcb中选取一个可用的tcb块，返回内部表示符 id</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> find()</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> <span class="keyword">id</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">id</span> = current + <span class="number">1</span>; <span class="keyword">id</span> &amp;lt; NTCB; <span class="keyword">id</span>++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[<span class="keyword">id</span>]<span class="variable">.state</span> == READY)</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">id</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">id</span> = <span class="number">1</span>; <span class="keyword">id</span> &amp;lt;= current; <span class="keyword">id</span>++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[<span class="keyword">id</span>]<span class="variable">.state</span> == READY)</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">id</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>2.线程阻塞，唤醒</p>
+<p>（1）semophare结构体</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> value;</span><br><span class="line">	<span class="keyword">struct</span> TCB *wq; <span class="comment">/*thread block quene head node*/</span></span><br><span class="line">&#125;semaphore;</span><br></pre></td></tr></table></figure>
+<p>wq是一个阻塞队列指针</p>
+<p>（2）P V 操作函数以后block wakeup_first操作函数</p>
+<p>最终实现的代码：完成了资源互斥访问。f3 和 f4两个线程互斥的访问全局变量 n</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br></pre></td><td class="code"><pre><span class="line"><span class="preprocessor">#include &amp;lt;stdio.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;dos.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;string.h&amp;gt;</span></span><br><span class="line"><span class="preprocessor">#include &amp;lt;stdlib.h&amp;gt;</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> null 0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> NTCB 10</span></span><br><span class="line"></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> GET_INDOS 0x34</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> GET_CRIT_ERR 0x5d06</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*thread state*/</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> FINISHED 	0</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> RUNNING 	1</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> READY		2</span></span><br><span class="line"><span class="preprocessor">#<span class="keyword">define</span> BLOCKED		3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*TCB structs*/</span></span><br><span class="line"><span class="keyword">struct</span> TCB&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> far* <span class="built_in">stack</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> 	ss;</span><br><span class="line">	<span class="keyword">unsigned</span> 	sp;</span><br><span class="line">	<span class="keyword">char</span> 		state;</span><br><span class="line">	<span class="keyword">char</span>		name[<span class="number">10</span>];</span><br><span class="line">	<span class="keyword">struct</span> TCB  *next;</span><br><span class="line">&#125;tcb[NTCB];</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> value;</span><br><span class="line">	<span class="keyword">struct</span> TCB *wq; <span class="comment">/*thread block quene head node*/</span></span><br><span class="line">&#125;semaphore;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*stack structs*/</span></span><br><span class="line"><span class="keyword">struct</span> int_regs&#123;</span><br><span class="line">	<span class="keyword">unsigned</span> BP, DI, SI, DS, ES, DX, CX, BX, AX, IP, CS, Flags, Off, Seg;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">int</span> <span class="params">(far *codeptr)</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitDos</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initTcb</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DosBusy</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tcb_state</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create</span><span class="params">(<span class="keyword">char</span> *name, codeptr code, <span class="keyword">int</span> <span class="built_in">stack</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">over</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">block</span><span class="params">(<span class="keyword">struct</span> TCB **qp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">P</span><span class="params">(semaphore *sem)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">V</span><span class="params">(semaphore *sem)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wakeup_first</span><span class="params">(<span class="keyword">struct</span> TCB **qp)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">interrupt</span> <span class="params">(*old_int8)</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> interrupt <span class="title">new_int8</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> interrupt <span class="title">my_swtch</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f3</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f4</span><span class="params">(<span class="keyword">void</span>)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> far *indos_ptr = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">char</span> far *crit_err_ptr = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> current = <span class="number">1</span>, timecount = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">int</span> TL = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> n = <span class="number">0</span>;</span><br><span class="line">semaphore mutex = &#123;<span class="number">1</span>, NULL&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">/*InitDos get INDOS flag &amp;amp; srvious error flag address*/</span></span><br><span class="line">	InitDos();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*TCB array init*/</span></span><br><span class="line">	initTcb();</span><br><span class="line">	old_int8 = getvect(<span class="number">8</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*Create 0# thread*/</span></span><br><span class="line">	<span class="built_in">strcpy</span>(tcb[<span class="number">0</span>].name, &amp;quot;main&amp;quot;);</span><br><span class="line">	tcb[<span class="number">0</span>].state = RUNNING;</span><br><span class="line">	current = <span class="number">0</span>;</span><br><span class="line">	tcb[<span class="number">0</span>].ss = _SS;</span><br><span class="line">	tcb[<span class="number">0</span>].sp = _SP;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*   print a &amp;amp;&amp;amp; b   */</span></span><br><span class="line">	<span class="comment">/*</span><br><span class="line">	create(&amp;quot;f1&amp;quot;, (codeptr)f1, 1024);</span><br><span class="line">	create(&amp;quot;f2&amp;quot;, (codeptr)f2, 1024);</span><br><span class="line">	*/</span></span><br><span class="line">	<span class="comment">/*  mutex   */</span></span><br><span class="line"></span><br><span class="line">	create(&amp;quot;f3&amp;quot;, (codeptr)f3, <span class="number">1024</span>);</span><br><span class="line">	create(&amp;quot;f4&amp;quot;, (codeptr)f4, <span class="number">1024</span>);</span><br><span class="line"></span><br><span class="line">	tcb_state();</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*start multi threads*/</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*set a new alarm break deal proc</span><br><span class="line"> 	  it main contains my_swtch proc*/</span></span><br><span class="line">	setvect(<span class="number">8</span>, new_int8);</span><br><span class="line">	my_swtch();</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span>(!finished());</span><br><span class="line"></span><br><span class="line">	tcb[<span class="number">0</span>].state   = FINISHED;</span><br><span class="line">	setvect(<span class="number">8</span>, old_int8);</span><br><span class="line">	tcb_state();</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;\nM<span class="keyword">ulti_t</span>ask system terminated. \n&amp;quot;);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InitDos</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">union</span> REGS regs;</span><br><span class="line">	<span class="keyword">struct</span> SREGS segregs;</span><br><span class="line"></span><br><span class="line">	regs.h.ah = GET_INDOS;</span><br><span class="line">	intdosx(&amp;amp;regs, &amp;amp;regs, &amp;amp;segregs);</span><br><span class="line">	indos_ptr = MK_FP(segregs.es, regs.x.bx);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (_osmajor &amp;lt; <span class="number">3</span>)</span><br><span class="line">		crit_err_ptr = indos_ptr + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (_osmajor == <span class="number">3</span> &amp;amp;&amp;amp; _osminor == <span class="number">0</span>)</span><br><span class="line">		crit_err_ptr = indos_ptr - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		regs.x.ax = GET_CRIT_ERR;</span><br><span class="line">		intdosx(&amp;amp;regs, &amp;amp;regs, &amp;amp;segregs);</span><br><span class="line">		crit_err_ptr = MK_FP(segregs.ds, regs.x.si);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">DosBusy</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (indos_ptr &amp;amp;&amp;amp; crit_err_ptr)</span><br><span class="line">		<span class="keyword">return</span> (*indos_ptr || *crit_err_ptr);</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> (-<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">initTcb</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">for</span> (id = <span class="number">0</span>; id &amp;lt; NTCB; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		tcb[id].<span class="built_in">stack</span> = NULL;</span><br><span class="line">		tcb[id].ss = <span class="number">0</span>;</span><br><span class="line">		tcb[id].sp = <span class="number">0</span>;</span><br><span class="line">		tcb[id].state = FINISHED;</span><br><span class="line">		tcb[id].name[<span class="number">0</span>] = &amp;<span class="preprocessor">#039;\0&amp;#039;;</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">create</span><span class="params">(<span class="keyword">char</span> *name, codeptr code, <span class="keyword">int</span> <span class="built_in">stack</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="comment">/*init thread TCB*/</span></span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">struct</span> int_regs *thread_regs;</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*find avail tcb id*/</span></span><br><span class="line">	<span class="keyword">for</span> (id = <span class="number">1</span>; id &amp;lt; NTCB; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[id].state == FINISHED)</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> (id == NTCB)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;thread create failed\n&amp;quot;);</span><br><span class="line">		<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="comment">/*create private stack for new thread*/</span></span><br><span class="line">		tcb[id].<span class="built_in">stack</span> = (<span class="keyword">unsigned</span> <span class="keyword">char</span>*)<span class="built_in">malloc</span>(<span class="built_in">stack</span>);</span><br><span class="line"></span><br><span class="line">		thread_regs = (<span class="keyword">struct</span> int_regs *)(tcb[id].<span class="built_in">stack</span> + <span class="built_in">stack</span>);</span><br><span class="line">		thread_regs--;</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*init TCB*/</span></span><br><span class="line">		tcb[id].ss = FP_SEG(thread_regs);</span><br><span class="line">		tcb[id].sp = FP_OFF(thread_regs);</span><br><span class="line">		tcb[id].state = READY;</span><br><span class="line">		<span class="built_in">strcpy</span>(tcb[id].name, name);</span><br><span class="line"></span><br><span class="line">		<span class="comment">/*init registers*/</span></span><br><span class="line">		thread_regs-&amp;gt;CS = FP_SEG(code);</span><br><span class="line">		thread_regs-&amp;gt;IP = FP_OFF(code);</span><br><span class="line">		thread_regs-&amp;gt;DS = _DS;</span><br><span class="line">		thread_regs-&amp;gt;ES = _DS;</span><br><span class="line">		thread_regs-&amp;gt;Flags = <span class="number">0x200</span>;</span><br><span class="line">		thread_regs-&amp;gt;Seg = FP_SEG(over);</span><br><span class="line">		thread_regs-&amp;gt;Off = FP_OFF(over);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">over</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	destroy(current);</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*CPU control*/</span></span><br><span class="line">	my_swtch();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">destroy</span><span class="params">(<span class="keyword">int</span> id)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	disable();</span><br><span class="line">	<span class="built_in">free</span>(tcb[id].<span class="built_in">stack</span>);</span><br><span class="line">	tcb[id].<span class="built_in">stack</span> = NULL;</span><br><span class="line">	tcb[id].state = FINISHED;</span><br><span class="line">	<span class="comment">/*tcb[id].name[0] = &amp;#039;\0&amp;#039;;*/</span></span><br><span class="line">	enable();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f1</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i, j, k;</span><br><span class="line">	<span class="keyword">for</span>(i = <span class="number">0</span>; i &amp;lt; <span class="number">20</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">putchar</span>(&amp;<span class="preprocessor">#039;a&amp;#039;);</span></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">1000</span>; j++)</span><br><span class="line">			<span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;\nf1 function end\n&amp;quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f2</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">long</span> i, j, k;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; <span class="number">1</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">putchar</span>(&amp;<span class="preprocessor">#039;b&amp;#039;);</span></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">1000</span>; j++)</span><br><span class="line">			<span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(&amp;quot;\nf2 function end\n&amp;quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f3</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		P(&amp;amp;mutex);</span><br><span class="line"></span><br><span class="line">		p = n;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span>  (j = <span class="number">0</span>; j &amp;lt; <span class="number">1000</span>; j++)</span><br><span class="line">		    <span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">1000</span>; k++);</span><br><span class="line"></span><br><span class="line">		p = p + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">10000</span>; j++)</span><br><span class="line">		    <span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line"></span><br><span class="line">		n = p;</span><br><span class="line"></span><br><span class="line">		V(&amp;amp;mutex);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;n=%d\n&amp;quot;, n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">f4</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> p;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; <span class="number">10</span>; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		P(&amp;amp;mutex);</span><br><span class="line"></span><br><span class="line">		p = n;</span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">10000</span>; j++)</span><br><span class="line">		    <span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line"></span><br><span class="line">		p = p + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (j = <span class="number">0</span>; j &amp;lt; <span class="number">10000</span>; j++)</span><br><span class="line">		    <span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line"></span><br><span class="line">		n = p;</span><br><span class="line"></span><br><span class="line">		V(&amp;amp;mutex);</span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;n=%d\n&amp;quot;, n);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> interrupt <span class="title">new_int8</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	(*old_int8)();</span><br><span class="line">	timecount++;</span><br><span class="line">	<span class="keyword">if</span> (timecount == TL)</span><br><span class="line">	&#123;</span><br><span class="line">		result = DosBusy();</span><br><span class="line">		<span class="keyword">if</span> (result == <span class="number">0</span>)	<span class="comment">/*dos is not busy*/</span></span><br><span class="line">			my_swtch();</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span>(result == <span class="number">1</span>)	<span class="comment">/*dos is busy*/</span></span><br><span class="line">			<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> id;</span><br><span class="line">	<span class="keyword">for</span> (id = current + <span class="number">1</span>; id &amp;lt; NTCB; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[id].state == READY)</span><br><span class="line">			<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (id = <span class="number">1</span>; id &amp;lt;= current; id++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[id].state == READY)</span><br><span class="line">			<span class="keyword">return</span> id;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> interrupt <span class="title">my_swtch</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	disable();</span><br><span class="line">	tcb[current].ss = _SS;</span><br><span class="line">	tcb[current].sp = _SP;</span><br><span class="line">	<span class="keyword">if</span> ( tcb[current].state == RUNNING )</span><br><span class="line">		tcb[current].state = READY;</span><br><span class="line"></span><br><span class="line">	i = find();</span><br><span class="line">	<span class="keyword">if</span>(i &amp;lt; <span class="number">0</span>)</span><br><span class="line">		i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	_SS = tcb[i].ss;</span><br><span class="line">	_SP = tcb[i].sp;</span><br><span class="line"></span><br><span class="line">	tcb[i].state = RUNNING;</span><br><span class="line"></span><br><span class="line">	current = i;</span><br><span class="line">	timecount = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	enable();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">finished</span><span class="params">(<span class="keyword">void</span>)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>, k = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">1</span>; i &amp;lt; NTCB; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (tcb[i].state != FINISHED)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">for</span>(j = <span class="number">0</span>; j &amp;lt; <span class="number">10000</span>; j++)</span><br><span class="line">			    <span class="keyword">for</span> (k = <span class="number">0</span>; k &amp;lt; <span class="number">10000</span>; k++);</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">tcb_state</span><span class="params">()</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &amp;lt; NTCB; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(&amp;quot;thread %d&amp;<span class="preprocessor">#039;s name is %s\t&amp;quot;, i, tcb[i].name);</span></span><br><span class="line">		<span class="keyword">switch</span>(tcb[i].state)</span><br><span class="line">		&#123;</span><br><span class="line">		 <span class="keyword">case</span> FINISHED: <span class="built_in">printf</span>(&amp;quot;finished\n&amp;quot;);<span class="keyword">break</span>;</span><br><span class="line">		 <span class="keyword">case</span> RUNNING:	<span class="built_in">printf</span>(&amp;quot;running\n&amp;quot;);<span class="keyword">break</span>;</span><br><span class="line">		 <span class="keyword">case</span> READY:    <span class="built_in">printf</span>(&amp;quot;ready\n&amp;quot;);<span class="keyword">break</span>;</span><br><span class="line">		 <span class="keyword">case</span> BLOCKED:  <span class="built_in">printf</span>(&amp;quot;blocked\n&amp;quot;);<span class="keyword">break</span>;</span><br><span class="line">		 <span class="keyword">default</span>:       <span class="built_in">printf</span>(&amp;quot;unknown\n&amp;quot;);<span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">block</span><span class="params">(<span class="keyword">struct</span> TCB **qp)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> TCB *tcbp;</span><br><span class="line">	tcb[current].state = BLOCKED;</span><br><span class="line">	<span class="keyword">if</span>((*qp == NULL)) <span class="comment">/*block quene is null*/</span></span><br><span class="line">		(*qp) = &amp;amp;tcb[current];</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		tcbp = (*qp);</span><br><span class="line">		<span class="keyword">while</span>(tcbp-&amp;gt;next != NULL)</span><br><span class="line">			tcbp = tcbp-&amp;gt;next;</span><br><span class="line">		tcbp-&amp;gt;next = &amp;amp;tcb[current];</span><br><span class="line">	&#125;</span><br><span class="line">	tcb[current].next = NULL;</span><br><span class="line">	my_swtch();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">wakeup_first</span><span class="params">(<span class="keyword">struct</span> TCB **qp)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> TCB *tcbp;</span><br><span class="line">	<span class="keyword">if</span> ((*qp) == NULL)</span><br><span class="line">		<span class="keyword">return</span> ;</span><br><span class="line">	tcbp = *qp;</span><br><span class="line">	(*qp) = (*qp)-&amp;gt;next;</span><br><span class="line"></span><br><span class="line">	tcbp-&amp;gt;state = READY;</span><br><span class="line">	tcbp-&amp;gt;next  = NULL;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">P</span><span class="params">(semaphore *sem)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> TCB **qp;</span><br><span class="line">	disable();</span><br><span class="line">	sem-&amp;gt;value = sem-&amp;gt;value - <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (sem-&amp;gt;value &amp;lt; <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		qp = &amp;amp;(sem-&amp;gt;wq);</span><br><span class="line">		block(qp);</span><br><span class="line">	&#125;</span><br><span class="line">	enable();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">V</span><span class="params">(semaphore *sem)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">struct</span> TCB **qp;</span><br><span class="line">	disable();</span><br><span class="line">	qp = &amp;amp;(sem-&amp;gt;wq);</span><br><span class="line">	sem-&amp;gt;value = sem-&amp;gt;value + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">if</span> (sem-&amp;gt;value &amp;lt;= <span class="number">0</span>)</span><br><span class="line">		wakeup_first(qp);</span><br><span class="line">	enable();</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/OS/" rel="tag">#OS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2013/11/07/生产者和消费者问题/" rel="prev">生产者和消费者问题</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2013/10/31/linux一条命令批量压缩jpg图像/" rel="next">linux一条命令批量压缩jpg图像</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

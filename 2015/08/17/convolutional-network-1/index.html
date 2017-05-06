@@ -1,0 +1,687 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="cnn," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="convolutional network">
+<meta property="og:url" content="http://yoursite.com/2015/08/17/convolutional-network-1/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+<meta property="og:image" content="http://yoursite.com/images/conv.JPG">
+<meta property="og:image" content="http://yoursite.com/images/multi_matrix.JPG">
+<meta property="og:image" content="http://yoursite.com/images/conv.JPG">
+<meta property="og:image" content="http://yoursite.com/images/influence.JPG">
+<meta property="og:image" content="http://yoursite.com/images/compare.JPG">
+<meta property="og:image" content="http://yoursite.com/images/line.JPG">
+<meta property="og:image" content="http://yoursite.com/images/max_pooling.JPG">
+<meta property="og:image" content="http://yoursite.com/images/sownsampling.JPG">
+<meta property="og:image" content="http://yoursite.com/images/shrink_cnn.JPG">
+<meta property="og:image" content="http://yoursite.com/images/zero-pading_cnn.JPG">
+<meta property="og:updated_time" content="2015-08-18T03:20:55.061Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="convolutional network">
+<meta name="twitter:description" content="文章来自MIT的Deep Learning未出版版本:
+
+@unpublished{Bengio-et-al-2015-Book,    title={Deep Learning},    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},    note={Book in preparation for MIT Pr">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> convolutional network // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              convolutional network
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-17T15:15:59+08:00" content="2015-08-17">
+            2015-08-17
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>文章来自MIT的Deep Learning未出版版本:</p>
+<blockquote>
+<p>@unpublished{Bengio-et-al-2015-Book,<br>    title={Deep Learning},<br>    author={Yoshua Bengio and Ian J. Goodfellow and Aaron Courville},<br>    note={Book in preparation for MIT Press},<br>    url={<a href="http://www.iro.umontreal.ca/~bengioy/dlbook}" target="_blank" rel="external">http://www.iro.umontreal.ca/~bengioy/dlbook}</a>,<br>    year={2015}<br>}</p>
+</blockquote>
+<p><a href="http://www.iro.umontreal.ca/~bengioy/dlbook/convnets.html" target="_blank" rel="external">Deep learning Book: Chapter 9. Convolutional Networks</a><br><a id="more"></a></p>
+<h2 id="9_Convolutional_Networks">9 Convolutional Networks</h2><blockquote>
+<p>Convolutional networks are simply neural networks that use convolution in place of generalmatrix multiplication in at least one of their layers</p>
+</blockquote>
+<p>用线性的简单卷积操作来代替复杂的矩阵相乘，作者认为这是卷积操作被使用的核心思想</p>
+<h2 id="9-1_Convolutional_Operations_卷积操作">9.1 Convolutional Operations 卷积操作</h2><p>由于以前学过信号与系统，对于卷积操作还是比较熟悉的。这里重新回顾一下卷积操作。<br>作者拿了宇宙飞船定位的例子引出了卷积操作：<br>假设现在要对一艘宇宙飞船进行定位（作者是科幻迷么），雷达提供了关于时间的定位函数$x(t)$。现在由于有噪声干扰，我们希望多取几个时间，做平均值作为最终的定位函数$s(t)$。但是我们知道：假设我们要定位时刻t飞船位置，那么x(t)是最重要的依据，x(t-1)和x(t+1)相对x(t)次要一点，而像x(t+8)就更次要了，也就是说<strong>离当前时刻t越远的数据对于当前时刻t的定位信息越次要</strong>。所以我们引入权重w，比如给w(t)赋最高权重，而w(t-1)就相应低一点。如此我们就重新得到了经过加权处理的定位函数：</p>
+<p>$$ s(t) = \int x(a) w(t - a) d_a$$</p>
+<p>上面这样的式子就是卷积操作。<br>为了方便起见，我们把上式写为:</p>
+<p> $$ s(t) = (x * w)(t) $$</p>
+<p>这里我想说明几点（文章中未提到，但对于卷积不熟悉的人可能会有疑惑）：</p>
+<ol>
+<li>$积分上下限是从-\infty 到+\infty$</li>
+<li>计算t时刻的位置，把t看成常量，a是变量，对a积分。物理意义表示不同的时间点a的加权和作为t时刻飞船的位置。</li>
+</ol>
+<p>把宇宙飞船中的例子拿到神经网络中来，</p>
+<ul>
+<li>x就是输入</li>
+<li>w就是kernel</li>
+<li>输出就是feature map</li>
+</ul>
+<p>在上面的基础上对卷积进行三点扩展：</p>
+<ol>
+<li><p>通常情况下时间是离散化的，那么卷积的操作相应地就变成了：<br>$$s[t] = (x * w) (t) = \sum ^\infty _{a=-\infty} x[a] w[t-a]$$<br>注意公式里卷积操作时候上下限是$\infty$,但是我们实际存储中只存储部分值，规定之外的那些x[a]和w[t-a]都是0，卷积的时候为0的项相乘是0。这样把无穷变成了有穷，符合实际操作。</p>
+</li>
+<li><p>在Machine Learning中，x和w都是向量，也就是说都是多维的。我们把这些多维的向量叫做<strong>tensors</strong>。</p>
+</li>
+<li><p>卷积操作可以使用多个坐标轴。对于二维图像，我们需要使用二维的Kernel函数K：<br>$$ s[i, j] = (I ∗K)[i, j] =\sum _m \sum_nI[m, n]K[i − m, j −n] $$<br>由于是卷积符合交换律，上式也可以写成：<br>$$ s[i, j] = (I ∗K)[i, j] =\sum _m \sum_nI[i - m, j - n]K[m, n] $$<br>然而在有些ML库里面，使用了cross-correlation函数,跟卷积很相似：<br>$$ s[i, j] = (I ∗K)[i, j] =\sum _m \sum_nI[i + m, j + n]K[m, n] $$<br>这里卷积核kernel没有翻转。本书中认为包括cross-correlation函数在内的上面两种方式都是卷积。</p>
+</li>
+</ol>
+<p>下图是Input图像的二坐标轴卷积示意图：<br><img src="/images/conv.JPG" alt="Alt text"></p>
+<h2 id="9-2_Motivation_动机">9.2 Motivation 动机</h2><p>卷积的以下三个特点能改进机器学习系统：</p>
+<ul>
+<li>sparse interactions 稀疏交互</li>
+<li>parameter sharing 参数共享</li>
+<li>equivariant representations 等变化表示</li>
+</ul>
+<p>此外，卷积对于不同大小的输入都可以进行处理。<br>下面我们具体来看看这三个特点：</p>
+<ol>
+<li><p>sparse interactions<br>现在假设有m个输入和n个输出，如果采用矩阵相乘的操作，那么就需要m _ n个参数，同时算法的时间复杂度有o(m _n),如下图所示：<br><img src="/images/multi_matrix.JPG" alt="Alt text"><br>该图中输入x有5个，输出s也是5个。s3同时受x1到x5这5个输入变量的影响。<br>而在引入了卷积操作之后，我们可以大大地简化存储开销和时间开销。具体地，如果我们限定连接数k（也就是说s3现在只和k个输入有关，而不是与所有的输入都有关），那么我们现在仅需要k_n个参数，而时间复杂度也变成了o(k_n),如下图所示：<br><img src="/images/conv.JPG" alt="Alt text"><br>这里取k=3，则s3仅仅和x2、x3、x4这三个输入有关了。<br>这里限定k的操作就可以通过引入卷积核来完成，<strong>一般来说k比m小好几个数量级别</strong>。<br>而且对于深度网络来说，<strong>影响性会通过深度不断累积叠加</strong>，我们看下面这个图：<br><img src="/images/influence.JPG" alt="Alt text"><br>对于两层的卷积网络来说，h2只受x1,x2,x3的影响，但是g3由于受到h2,h3,h4的影响，导致g3最终受到了x1,x2,x3,x4,x5五个输入的影响。<br>从这个例子中我们可以得出：虽然输入可能是稀疏的，但是深度越深，可能导致越不稀疏； 从另一个方面也说明了卷积相对矩阵相乘在深度网络中的优势是随着深度越深，优势越大。</p>
+</li>
+<li><p>parameter sharing<br>其实从9.1节最后那个图就已经很直观地看出卷积的参数共享了。在那幅图里面w,x,y,z这四个kernel核参数被用在每一次卷积操作当中。矩阵相乘需要m * n个权重参数，每个参数都仅仅只用了一次，并没有像卷积那样是重复利用的。下面这个图说明了这个问题(我觉得图画的并不是很有说服力，所以把图改了一下)：<br><img src="/images/compare.JPG" alt="Alt text"><br>左图是卷积操作，计算每一个s的时候，都用到了三个权值(s1和s5两个边缘情况除外)，而且它们共用红色、黑色、蓝色三个权重。<br>而右图每一条边对应的权值都不共用。</p>
+</li>
+<li><p>equivariant representations<br>如果说$f(g(x)) = g(f(x))$，那么我们就说$f(x)$关于函数$g$是equivariant的。<br>对于卷积操作来讲，如果我们把g看成是输入的一个变换函数，比如平移操作，那么卷积函数f就关于平移函数g是equivariant的。<br>具体地，我们首先定义平移操作g：<br>$$g(x)[i] = x[i-1]$$<br>上面这个函数g相当于把所有输入右移了一个单位。然后我们再对右移后的操作进行卷积。这样得到的结果和先对输入进行卷积，再进行平移操作的结果是一样的。<br>这有一个好处，比如我们在卷积网络的第一层做边缘检测的时候，相同的边缘可能会出现在图像中的很多地方。这样只用一个函数就可以在输入中的任何位置（相当于上下或者左右平移）都能检测目标边缘。<br>但是注意这里的变换函数g不能是缩放或者旋转操作函数。</p>
+</li>
+</ol>
+<h2 id="9-3_Pooling">9.3 Pooling</h2><p>一个经典的卷积网络如下：<br><img src="/images/line.JPG" alt="Alt text"><br>以左图为例子，一个卷积层分为三个部分：</p>
+<ol>
+<li>convolution stage，并行的执行卷积操作，产生一系列presynaptic activations</li>
+<li>detector stage, 每一个presynaptic activation执行一个nonlinear activation function,例如rectified linear activation function。</li>
+<li>pooling stage，使用pooling function修改输出</li>
+</ol>
+<p>pooling操作的定义如下：</p>
+<blockquote>
+<p>A pooling function replaces the output of the net at a certain location with asummary statistic of the nearby outputs.<br>就是用某种方法，用某一个点的值代替该点所在的某个区域。</p>
+</blockquote>
+<p>下图举了一个max pooling的例子：<br><img src="/images/max_pooling.JPG" alt="Alt text"><br>下面一层是detector stage，上面一层是pooling stage，从下面一层到上面一层使用了max pooling。具体地，上层中最左边的那个1选自与下层相连的两个结点的最大值。上层的其他节点也是如此。<br>注意右图的下层是左图下层右移一个单位的结果。对比左右两幅图我们发现，下层每个节点都不同，上层却有一半的节点是相同的。<br>从中我们可以得出一个结论：</p>
+<blockquote>
+<p>pooling helps to make the representation become invariant tosmall translations of the input. This means that if we translate the input bya small amount, the values of most of the pooled outputs do not change.<br>就是说pooling操作可以使得输入那些微小的变化经过pooling操作之后变成相同。</p>
+</blockquote>
+<p>pooling操作的关键思想：</p>
+<blockquote>
+<p>Invariance to local translationcan be a very useful property if we care more about whether some feature is present than exactly where it is.<br>当我们关注某个特征是否存在而不是它确切的位置的时候，使用pooling操作会很有用。</p>
+</blockquote>
+<p>所以我们在使用pooling的时候必须有一个很强的先验在里面：</p>
+<blockquote>
+<p>我们必须保证网络层学习得到的函数是invariant to small translations的，也就是可以忽略微小变化的。只有当这个假设成立的时候，pooling才可以大大提高网络中统计的效率。</p>
+</blockquote>
+<p>最后，如果我们用1个pixel代替原来的k个pixels， pooling操作使得传给下一层网络的输入减少了k倍，如果后面的网络是做矩阵相乘的全连接层，将会大大提高效率，减少存储空间，如下图所示（相当于下采样）：<br><img src="/images/sownsampling.JPG" alt="Alt text"><br>还是使用max pooling，节点数减少了一倍。</p>
+<h2 id="9-4_Convolution_and_Pooling_as_an_Inﬁnitely_Strong_Prior">9.4 Convolution and Pooling as an Inﬁnitely Strong Prior</h2><p>为了更加直观的理解卷积和pooling操作，我们把它们看成是具有无限强先验的矩阵相乘操作。<br>先验Prior可以有强或者弱两种。强先验有着很低的熵，比如具有低方差的高斯分布函数。而一个无限强先验则把某些参数的出现概率设置成为0，也就是说不管实际数据如何，我们都禁止这些参数的出现。<br>如此一来，我们把卷积网络看成是具有无限强先验的全连接网络。虽然这样不太准确，但是对于我们理解卷积网络有帮助。<br>通过这样一个类比，我们可以通过直觉容易地得出下面两个结论：</p>
+<ol>
+<li>卷积网络容易欠拟合。因为只有先验假设是正确的情况下，预测才会准确。如果先验不太准确，那么预测就会产生偏差，也就发生了欠拟合。</li>
+<li>在比较两个卷积模型的时候需要在相同的基准下比较。</li>
+</ol>
+<h2 id="9-5_Variants_of_the_Basic_Convolution_Function基本卷积函数的一些变体">9.5 Variants of the Basic Convolution Function基本卷积函数的一些变体</h2><p>在实际使用中，我们的卷积操作跟标准的离散卷积操作略微不同，下面来看看有哪些不同之处：</p>
+<ol>
+<li>当我们提到神经网络中的卷积的时候，我们实际上指的是<strong>并行</strong>的卷积操作。因为一个卷积核虽然可以提取不同位置的特征，但是提取的都是同一个特征，但是我们希望能够提取不同位置的多个特征。<br>另外，输入的x也是向量而不是单一的实数。比如对于rgb图像而言，每一个像素点输入就有三个通道。后面作者写了两个公式作为例子，但是自己没有看懂。</li>
+<li>另外一个重要的特征是输入V可以向两边隐式地扩展0，这样整个输入V向量就会变长。<br>我们来看下面这个例子：<br><img src="/images/shrink_cnn.JPG" alt="Alt text"><br>上面这幅图中，我们使用的kernel的大小是6，从下到上每经过一层，单元数目就会少5个。这样就会导致单元数目越来越少。虽然我们可以通过减小kernel来让每次减少的单元数目变少，但是一者kernel不是取越小越好的，二者还是不能从根本上解决问题。<br>所以我们才有了zero-padding：<br><img src="/images/zero-pading_cnn.JPG" alt="Alt text"><br>这幅图中每一层都添加了5个值为0的单元(左边三个，右边两个，用黑色圆圈表示出来),这样一来，保证了每一层单元数目是不变的，没有减少。就解决了上面的那个问题。<br>在做zero-padding的时候，我们需要注意三个特殊情况：</li>
+</ol>
+<ul>
+<li><p>valid convolution，没有使用zero-padding，也就是第一个图的情况。如果输入大小是m * m, kernel大小是k * k，那么输出大小就是(m - k + 1) * (m - k + 1)。由于最后一层长度是1，所以这种方法的层数有限。</p>
+</li>
+<li><p>same convolution，就是第二幅图片的情况。输出层和输入层的长度是相等的，所以网络的层数在硬件支持的基础上可以无限加深。但是我们需要注意边界的情况，<strong>输出层最边界的节点受到输入层节点的影响较少</strong>（因为有些是与黑色的zeo-padding连接，卷积结果是0），这使得边界像素不能很好地体现模型的效果。这就促成了第三种网络：</p>
+</li>
+<li>full convolution，两边zero-padding，然后每一个节点都用了k次，输出层的大小变成了(m + k - 1) * (m + k - 1),相当于把第一幅图从上往下看。</li>
+</ul>
+<p>通常我们的zero-padding基于valid 和 same convolution之间。<br>后面作者还讲了几种：</p>
+<ul>
+<li>unshared convolution，结构和卷积网络一样的，但是实际上做的不是卷积，而是使用locally connected layers，这个时候参数就不共享了。</li>
+<li>tiled convolution，模型相当于convolution layer和locally connected layer的折中，使用了一系列的kernels。</li>
+</ul>
+<p>后面就没有看下去了。总之看完这一章之后解决了我对CNN的很多疑惑，虽然没有讲解具体的CNN算法，但是感觉还是非常有用。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/cnn/" rel="tag">#cnn</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/20/recurrent-neural-network/" rel="prev">recurrent neural network</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/16/2015-summer-seminar/" rel="next">2015 summer seminar</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#9_Convolutional_Networks"><span class="nav-text">9 Convolutional Networks</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1_Convolutional_Operations_卷积操作"><span class="nav-text">9.1 Convolutional Operations 卷积操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2_Motivation_动机"><span class="nav-text">9.2 Motivation 动机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-3_Pooling"><span class="nav-text">9.3 Pooling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-4_Convolution_and_Pooling_as_an_Inﬁnitely_Strong_Prior"><span class="nav-text">9.4 Convolution and Pooling as an Inﬁnitely Strong Prior</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-5_Variants_of_the_Basic_Convolution_Function基本卷积函数的一些变体"><span class="nav-text">9.5 Variants of the Basic Convolution Function基本卷积函数的一些变体</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>

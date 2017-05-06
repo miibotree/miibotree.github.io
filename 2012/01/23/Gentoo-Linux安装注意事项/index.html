@@ -1,0 +1,687 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+
+
+  <meta name="keywords" content="Linux,gentoo,未分类," />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="今天想安装个gentoo,其实以前是安装过的，但是每一次都是在 grub地方卡住了，所以这次心想趁着寒假的时间再次实践一下，把每一步都记录下来。
+1.下载ISO镜像文件。可以从官方网站下载http://www.gentoo.org/main/en/where.xml&amp;amp;nbsp; 有时候从官方网站下载起来会比较慢，163有个开源的镜像网站，也可以从那里去下&amp;nbsp;&amp;nbsp; 载http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gentoo Linux安装注意事项">
+<meta property="og:url" content="http://yoursite.com/2012/01/23/Gentoo-Linux安装注意事项/index.html">
+<meta property="og:site_name" content="Miibotree'thinking">
+<meta property="og:description" content="今天想安装个gentoo,其实以前是安装过的，但是每一次都是在 grub地方卡住了，所以这次心想趁着寒假的时间再次实践一下，把每一步都记录下来。
+1.下载ISO镜像文件。可以从官方网站下载http://www.gentoo.org/main/en/where.xml&amp;amp;nbsp; 有时候从官方网站下载起来会比较慢，163有个开源的镜像网站，也可以从那里去下&amp;nbsp;&amp;nbsp; 载http">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/23/0_1327301500hLf4.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/23/0_1327305347c79z.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/23/0_1327305928tSad.gif">
+<meta property="og:image" content="http://miibotree.com/wp-includes/images/smilies/icon_biggrin.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201201/23/0_1327305964aPIp.gif">
+<meta property="og:updated_time" content="2015-07-25T04:47:35.074Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gentoo Linux安装注意事项">
+<meta name="twitter:description" content="今天想安装个gentoo,其实以前是安装过的，但是每一次都是在 grub地方卡住了，所以这次心想趁着寒假的时间再次实践一下，把每一步都记录下来。
+1.下载ISO镜像文件。可以从官方网站下载http://www.gentoo.org/main/en/where.xml&amp;amp;nbsp; 有时候从官方网站下载起来会比较慢，163有个开源的镜像网站，也可以从那里去下&amp;nbsp;&amp;nbsp; 载http">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> Gentoo Linux安装注意事项 // Miibotree'thinking </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">Miibotree'thinking</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Gentoo Linux安装注意事项
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2012-01-23T15:47:00+08:00" content="2012-01-23">
+            2012-01-23
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>今天想安装个gentoo,其实以前是安装过的，但是每一次都是在 grub地方卡住了，所以这次心想趁着寒假的时间再次实践一下，把每一步都记录下来。</p>
+<p>1.下载ISO镜像文件。可以从官方网站下载<a href="http://www.gentoo.org/main/en/where.xml&amp;nbsp" target="_blank" rel="external">http://www.gentoo.org/main/en/where.xml&amp;nbsp</a>; 有时候从官方网站下载起来会比较慢，163有个开源的镜像网站，也可以从那里去下&nbsp;&nbsp; 载<a href="http://mirrors.163.com/" target="_blank" rel="external">http://mirrors.163.com/</a></p>
+<p>我下载的是minimal版本的，安装这个版本的步骤最复杂，也最麻烦，如果这个都能搞定，那其它版本的肯定也没问题了不是?</p>
+<p>2.在安装的时候，手册肯定是必不可少的。我们就根据官网的安装手册一步步的搞下来吧^_^ </p>
+<p>&nbsp;&nbsp;&nbsp; <a href="http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml" target="_blank" rel="external">http://www.gentoo.org/doc/zh_cn/gentoo-x86-quickinstall.xml</a></p>
+<p>3. 我是在虚拟机里面安装的，虚拟机的话大家可以选择virtualbox,当然wmworkstation也是一样好的。这里我选择的是wmworkstation，虚拟机里面的设置我就不详细介绍来，这个应该是比较简单的。如果你是直接装在硬盘上面的，那你可得小心了，如果没有以前安装的经验的话，还是先在虚拟机里面操练几遍再实践吧，:-)</p>
+<p>4.下面打开虚拟机，我们就真正开始了！</p>
+<p>&nbsp; <span style="color:#3366ff">启动</span>的时候boot有好几个选项，按F1可以查看的，gentoo-nofb，这个选项禁用帧缓冲（noframebuffer）。那么什么是帧缓冲呢？这里我给个链接大家有兴趣的可以去看一下<a href="http://blog.csdn.net/sdvch/article/details/5941067" target="_blank" rel="external">http://blog.csdn.net/sdvch/article/details/5941067</a></p>
+<p>我们boot的时候一般就选这个选项了</p>
+<p>&nbsp; <span style="color:#3366ff">配置网络</span>，其实这里我不是太懂的，所以也就不详细讲了，大家按照手册上面的来好了。&nbsp; 但是这里一定要强调配置网络的重要性啊！！后面下载stage3的包和portage可是全部都要用到网络的啊，其实是挺方面的，gentoo有自动搜索的，搜索到了就好办了，最后别忘了再查看一下确认网络哦～～注意哦，这一步真的非常关键哦!!!!</p>
+<p>&nbsp; <span style="color:#3366ff">创建分区</span>。这里大概是个难点吧。我第一次安装的时候在这里卡了好长时间。</p>
+<p>&nbsp; fdisk /dev/sda 意思是用fdisk这个磁盘分区指令（工具）来对dev/sda进行分区</p>
+<p>&nbsp; 那么如何进行分区呢？手册里面是没有详细介绍的。这里就要考验你的英语水平了，按m可以取得帮助菜单。首先你把帮助菜单看一下吧，菜单里面有说的哦。</p>
+<p><img src="http://hi.csdn.net/attachment/201201/23/0_1327301500hLf4.gif" alt=""></p>
+<p>p是瞟一&#30524;的意思，看一看目前的分区状况是什么样子。</p>
+<p>n是划分一块新地。当你输入n按回车后，系统提示你硬盘类型是primary(主分区)还是extened(扩展分区)，我们按照手册来，将3个分区全部划分为主分区。当然你也可以按照自己的喜好自己设定硬盘分区咯。</p>
+<p>然后让你选择序号，默认的从1开始，一直到4.（为什么只到4呢？因为主分区加扩展分区加起来最多只能有4个哦？那为什么最多只能有4个呢？这是因为在硬盘的开头，也就是0磁头（head）、0柱（cyliner）、0面（side）、0磁道（track）、0扇区（sector）总共512字节存放着硬盘最重要的信息MBR（Master Boot Record，主引导记录）和分区的相关信息，由于记录空间只有那么大，所以也只能记录这4个分区的信息。主分区表占用64个字节，每个主分区的信息只占用16个字节，因此最多可以有四个主分区。）</p>
+<p>有点跑题了，接下来选择序号好了以后第一个是初始位置大小，我们直接按回车默认，第二个是你要选择分区的大小，我们可以使用<span style="color:#ff00">&#43;2G</span>这样的命令来下达，当然你也可以使用<span style="color:#ff00">&#43;2048M</span>来达到同样的效果。同样的方法分好3个区。那么分多少合适呢？手册里面已经给了我们一个方案，一般的话可以参照下面这个分区方案</p>
+<table><br><tbody><br><tr><br><td><strong>分区</strong></td><br><td><strong>文件系统</strong></td><br><td><strong>大小</strong></td><br><td><strong>说明</strong></td><br></tr><br><tr><br><td>/dev/sda1</td><br><td>ext2</td><br><td>32M</td><br><td>启动分区</td><br></tr><br><tr><br><td>/dev/sda2</td><br><td>(swap)</td><br><td>512M</td><br><td>交换分区</td><br></tr><br><tr><br><td>/dev/sda3</td><br><td>ext3</td><br><td>剩余磁盘</td><br><td>根分区</td><br></tr><br></tbody><br></table>
+
+<p>如果你想详细了解，手册里面也是有的，另外你也可以看下面这么链接<a href="http://www.maoegg.com/gentoo-partition-scheme/" target="_blank" rel="external">http://www.maoegg.com/gentoo-partition-scheme/</a></p>
+<p>分完以后，我们要改变文件系统的&#26684;式。输入<span style="color:#ff00">t</span> (change a partition&#8217;s system id )</p>
+<p>我们选择2，也就是交换分区，输入id为82，你也可以输入<span style="color:#ff00">l</span> 来查看对应类型的id</p>
+<p>手册里面将sda1作为boot，上图中我们看到打了*号标志，这里我们输入<span style="color:#ff00">c </span>，选择1，给sda1表示为boot</p>
+<p>好了，现在我们可以输入p再次瞟一&#30524;了，如果你确定了以后，请输入<span style="color:#ff00">w</span>表示我就这么定了。记得在输入w之前都是图纸，没有保存都是无效的哦～～</p>
+<p>接下来按照手册一步一步来给机器下达指令就好了，挂载文件系统应该没什么大问题。</p>
+<p>接下来就是<span style="color:#3366ff">安装stage3包</span>了。</p>
+<p>文档里面提供的链接貌&#20284;不太好用，这里给大家推荐两个下载地址：</p>
+<p><a href="http://gentoo.osuosl.org/releases/x86/current-stage3" target="_blank" rel="external">http://gentoo.osuosl.org/releases/x86/current-stage3</a></p>
+<p><a href="http://mirrors.163.com/gentoo/releases/x86/current-stage3" target="_blank" rel="external">http://mirrors.163.com/gentoo/releases/x86/current-stage3</a></p>
+<p>大家可以选择links 上面的网址来选择最新的stage3进行下载，方法在手册里面有的。我使用wget的方法好像有一些问题，大家可以都试一试的，总有办法解决的嘛。</p>
+<p><span style="color:#3366ff">安装portage包</span>也是一样，同样给出两个地址：</p>
+<p><a href="http://mirrors.163.com/gentoo/snapshots/" target="_blank" rel="external">http://mirrors.163.com/gentoo/snapshots/</a></p>
+<p><a href="http://gentoo.osuosl.org/snapshots/" target="_blank" rel="external">http://gentoo.osuosl.org/snapshots/</a></p>
+<p>我个人还是推荐163的开源镜像，可能速度会快一点，呵呵</p>
+<p>然后再次按照手册的步骤来，切换系统这里的命令有点长，大家在输入的时候不时的按一按<span style="color:#ff00">tab键</span>可以自动补全的，可以节省一点时间。（如果你不知道为什么按tab键可以自动补全，那么搜索一下linux shell吧）</p>
+<p>最关键的一步就是<span style="color:#3366ff">配置内核</span>了，很多很多的安装错误都是因为内核配置不正确引起的。当然首先你必须了解错误的原因。</p>
+<p></p><br><figure class="highlight"><figcaption><span>linux # <span class="code-input">make menuconfig</span></span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#60;span class=&#34;code-comment&#34;&#62;&#65288;&#37197;&#32622;&#20869;&#26680;&#65289;&#60;/span&#62;</span><br></pre></td></tr></table></figure><p></p>
+<p>输入这条命令后会进入一个蓝色背景的界面（感觉有点像以前的PASCAL界面，呵呵）</p>
+<p><img src="http://hi.csdn.net/attachment/201201/23/0_1327305347c79z.gif" alt=""></p>
+<p>这里你可以选择你要编译的内核选项。不要心急，到这里以后还是先喝杯茶晒会太阳吧。然后用快照（snapshot）照一张，因为很有可能最后重启会出错哦。先看看下面这个链接了解下预备知识（^_^）</p>
+<p></p><p></p>
+<p><a href="http://apps.hi.baidu.com/share/detail/5955962" target="_blank" rel="external">http://apps.hi.baidu.com/share/detail/5955962</a></p>
+<p>这里先介绍下我的一个内核配置错误：</p>
+<p><img src="http://hi.csdn.net/attachment/201201/23/0_1327305928tSad.gif" alt=""></p>
+<p>开机以后就卡在那里进不去了，最后查资料发现是SCSI的硬盘驱动问题，如果你也遇到了和我类&#20284;的错误，请参照下面这个链接：</p>
+<p><a href="http://chen.junchang.blog.163.com/blog/static/6344519201054114356742/" target="_blank" rel="external">http://chen.junchang.blog.163.com/blog/static/6344519201054114356742/</a></p>
+<p>然后打开你的快照，重新选择内核选项吧（<span style="color:#ff00">重点是Device Drivers</span> 那里哦）</p>
+<p>当你把内核编译好了以后，中间的过程先跳过了，大家自己看看手册就好了，像<span style="color:#3366ff">安装系统文件</span>的话，如果你真的赶时间，可以选择以后再安装。</p>
+<p>好了，终于到了<span style="color:#3366ff">配置grub</span>这一步了。这一步也是很会出错的地方。</p>
+<p>首先大家在看手册的时候必须<span style="color:#ff00">保证操作时候的目录没有错误</span>，否则会像我一样连续安装了3遍都在配置grub的时候出错，最后才发现是没有切换到正确目录下面造成的。</p>
+<p>这里讲一下 grub.conf范例</p>
+<p></p><p></p>
+<style type="text/css">
+<!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+-->
+</style>
+
+<style type="text/css">
+<!--
+@page
+    {margin:2cm}
+p
+    {margin-bottom:0.21cm}
+-->
+</style>
+
+<p><span style="font-family:Liberation Serif,serif">default0</span></p>
+<p><span style="font-family:Liberation Serif,serif">timeout10</span></p>
+<p><span style="font-family:Liberation Serif,serif">titleGentoo</span></p>
+<p><span style="font-family:Liberation Serif,serif">root(hd0,0)</span></p>
+<p><span style="font-family:Liberation Serif,serif">kernel/boot/kernel root=/dev/sda3</span></p>
+<p><span style="font-family:Liberation Serif,serif"></span></p>
+<p></p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>default</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">默认引导的菜单条目。在本例中，默认引导第一个条目</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">Fedora(2.6.32.9-67.fc12.i686.PAE)</span></span><span style="font-family:宋体; font-size:13px">。如果将</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">default</span></span><span style="font-family:宋体; font-size:13px">的&#20540;改成</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">1,</span></span><span style="font-family:宋体; font-size:13px">则会默认引导</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">Windows7</span></span><span style="font-family:宋体; font-size:13px">。</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">**</span></span></p>
+<p>**</p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>timeout</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">自动选择默认引导前菜单显示的时间。本例中，如果用户没有在</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">30</span></span><span style="font-family:宋体; font-size:13px">秒之内选择操作系统，则会默认引导第一个条目</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">(</span></span><span style="font-family:宋体; font-size:13px">即</span><span style="font-size:13px">default0)</span></p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>splashimage</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">指定</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">GRUB</span></span><span style="font-family:宋体; font-size:13px">引导菜单的界面风&#26684;。</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">(hd0,0)/grub/splash.xpm.gz</span></span><span style="font-family:宋体; font-size:13px">，是指在第一块硬盘的第一个分区</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">(hd0,0)</span></span><span style="font-family:宋体; font-size:13px">中，使用</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">grub</span></span><span style="font-family:宋体; font-size:13px">目录下的</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">splash.xpm.gz</span></span><span style="font-family:宋体; font-size:13px">文件作为界面风&#26684;。一般来讲，无需更改这个配置</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"> <img src="http://miibotree.com/wp-includes/images/smilies/icon_biggrin.gif" alt=":D"> </span></span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">**</span></span></p>
+<p>**</p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>hiddenmenu</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">隐藏</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">GRUB</span></span><span style="font-family:宋体; font-size:13px">引导菜单。如果不想在启动时显示</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">GRUB</span></span><span style="font-family:宋体; font-size:13px">引导菜单，则删除此条目。</span></p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>title</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">引导条目的名称。通常使用操作系统的名称做为标识，你可以自行更改这个名称，例如使用</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">&amp;quot;Fedora12&amp;quot;,</span></span></p>
+<p> &amp;quot;Fedora&amp;quot;,<span style="font-family:宋体; font-size:13px">或者是</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">&amp;quot;MyLinux&amp;quot;</span></span><span style="font-family:宋体; font-size:13px">都可以。这个标题将显示在</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">GRUB</span></span><span style="font-family:宋体; font-size:13px">引导菜单中。</span></p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>root</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">操作系统内核和引导文件所在的磁盘分区。</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">(hd0,0)</span></span><span style="font-family:宋体; font-size:13px">表示第一块硬盘的第一个分区，</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">(hd0,2)</span></span><span style="font-family:宋体; font-size:13px">表示第一块硬盘的第</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">3</span></span><span style="font-family:宋体; font-size:13px">个分区，依次类推。</span></p>
+<p><span style="font-family:宋体; font-size:13px"></span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>kernel</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">系统内核及</span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif">boot</span></span><span style="font-family:Liberation Serif,serif; font-size:13px">命令用到的参数<span style="font-weight:bold"></span></span><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-weight:bold"></span><span style="font-family:宋体,serif">**</span></span></p>
+<p>**</p>
+<p><span style="font-family:Liberation Serif,serif; font-size:13px"><span style="font-family:宋体,serif"><strong>initrd</strong></span><span style="font-family:宋体,serif">-</span></span><span style="font-family:宋体; font-size:13px">系统引导程序</span></p>
+<p>配置完grub以后，执行最后一组命令，reboot，好吧，接下来就是激动人心见证成败的时刻了～～～！！</p>
+<p><img src="http://hi.csdn.net/attachment/201201/23/0_1327305964aPIp.gif" alt=""></p>
+<p>如果失败了，请不要灰心，我自己安装gentoo已经7遍了，不过其中的很多地方还不是很理解，而且每次安装都会出现各种各样的错误。</p>
+<p>最后再次申明，这篇文章只是我自己安装gentoo以后的心得，不是安装教程，也不是详解。只是把自己的错误和觉得重要的地方给大家说一下。</p>
+<p>如果大家想看详细教程，可以看下面这个链接</p>
+<p><a href="http://club.topsage.com/thread-2359462-1-1.html" target="_blank" rel="external">http://club.topsage.com/thread-2359462-1-1.html</a></p>
+<p>上面讲的很详细。</p>
+<p>另外手册里面的帮助信息也是很有用的。</p>
+<p><span style="color:#3366ff">最后希望大家支持一下，谢谢^_^</span></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" rel="tag">#Linux</a>
+          
+            <a href="/tags/gentoo/" rel="tag">#gentoo</a>
+          
+            <a href="/tags/未分类/" rel="tag">#未分类</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2012/01/24/widowsSDK创建对话框的三种方法/" rel="prev">widowsSDK创建对话框的三种方法</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2012/01/20/windowsSDK利用子窗口控件设置窗口透明/" rel="next">windowsSDK利用子窗口控件设置窗口透明</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/about me.JPG" alt="Miibotree" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">Miibotree</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">211</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            
+              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-name">分类</span>
+              
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">111</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2015</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Miibotree</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+          var self = this;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      $(indicator).velocity('stop').velocity({
+        opacity: action === 'show' ? 0.4 : 0
+      }, { duration: 100 });
+    }
+
+  });
+</script>
+
+
+  <script type="text/javascript" id="sidebar.nav">
+    $(document).ready(function () {
+      var html = $('html');
+
+      $('.sidebar-nav li').on('click', function () {
+        var item = $(this);
+        var activeTabClassName = 'sidebar-nav-active';
+        var activePanelClassName = 'sidebar-panel-active';
+        if (item.hasClass(activeTabClassName)) {
+          return;
+        }
+
+        var currentTarget = $('.' + activePanelClassName);
+        var target = $('.' + item.data('target'));
+
+        currentTarget.velocity('transition.slideUpOut', 200, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', 200)
+            .addClass(activePanelClassName);
+        });
+
+        item.siblings().removeClass(activeTabClassName);
+        item.addClass(activeTabClassName);
+      });
+
+      $('.post-toc a').on('click', function (e) {
+        e.preventDefault();
+        var offset = $(escapeSelector(this.getAttribute('href'))).offset().top;
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        });
+      });
+
+      // Expand sidebar on post detail page by default, when post has a toc.
+      var $tocContent = $('.post-toc-content');
+      if (isDesktop() && CONFIG.sidebar === 'post') {
+        if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+          displaySidebar();
+        }
+      }
+    });
+  </script>
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
